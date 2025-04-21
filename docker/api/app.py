@@ -18,7 +18,7 @@ def create_emulator():
         container = client.containers.run(
             EMULATOR_IMAGE,
             detach=True,
-            ports={'5554/tcp': None, '5555/tcp': None},
+            ports={'5554/tcp': None, '5555/tcp': None, '5037/tcp': None},
             name=f"emu_{session_id}",
             privileged=True
         )

@@ -5,9 +5,16 @@ services:
       context: ./docker/emulator
     image: qemu-emulator
     privileged: true
-    command: tail -f /dev/null
-
-
+    environment:
+      - ANDROID_EMULATOR_WAIT_TIME=120
+    devices:
+      - /dev/kvm:/dev/kvm  # Only if KVM is available on host
+    volumes:
+      - ./avd-data:/root/.android/avd  # Optional: persist AVD data
+    ports:
+      - "5554:5554"  # Emulator console
+      - "5555:5555"  # ADB connection
+      - "5037:5037"  # ADB server
   api:
     build:
       context: ./docker/api
