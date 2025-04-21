@@ -1,0 +1,21 @@
+services:
+  emulator:
+    platform: linux/amd64
+    build:
+      context: ./docker/emulator
+    image: qemu-emulator
+    privileged: true
+    command: tail -f /dev/null
+
+
+  api:
+    build:
+      context: ./docker/api
+    image: emulator-api
+    ports:
+      - "5001:5001"
+    depends_on:
+      - emulator
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    privileged: true
