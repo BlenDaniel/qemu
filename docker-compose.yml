@@ -1,6 +1,6 @@
 services:
   emulator:
-    platform: linux/amd64
+    # platform: linux/amd64
     build:
       context: ./docker/emulator
     image: qemu-emulator
