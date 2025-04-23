@@ -78,11 +78,17 @@ RUN echo "no" | avdmanager create avd -n test -k "system-images;android-30;googl
 RUN mkdir -p /root/.android && \
     chmod -R 755 /root/.android
 
-# Copy entrypoint script
-COPY /adb/start-emulator.sh /usr/local/bin/
-COPY /adb/enable_adb_connection.sh /usr/local/bin/
+# Create directory for scripts
+RUN mkdir -p /usr/local/bin
+
+# Copy entrypoint scripts - using absolute path to avoid issues
+COPY adb/start-emulator.sh /usr/local/bin/
+COPY adb/enable_adb_connection.sh /usr/local/bin/
+
+# Ensure scripts are executable
 RUN chmod +x /usr/local/bin/start-emulator.sh && \
-    chmod +x /usr/local/bin/enable_adb_connection.sh
+    chmod +x /usr/local/bin/enable_adb_connection.sh && \
+    ls -la /usr/local/bin/
 
 # Verify ADB and emulator are in PATH
 RUN which adb || echo "WARNING: adb not in PATH" && \
