@@ -42,7 +42,8 @@ RUN mkdir -p ~/.android && touch ~/.android/repositories.cfg && \
       "build-tools;30.0.3" \
       "platforms;android-30"
 
-# Verify ADB is installed properly and create symlinks if needed
+# Fix timezone issues
+RUN ln -snf /usr/share# Verify ADB is installed properly and create symlinks if needed
 RUN if [ ! -e "${ANDROID_SDK_ROOT}/platform-tools/adb" ]; then \
         echo "ERROR: ADB not found in expected location"; \
         exit 1; \
@@ -75,10 +76,7 @@ RUN echo "no" | avdmanager create avd -n test -k "system-images;android-30;googl
     echo "hw.ramSize=1536" >> ~/.android/avd/test.avd/config.ini
 
 # Create Android config directory and ensure proper permissions
-RUN mkdir -p /root/.android && \
-    chmod -R 755 /root/.android
-
-# Create directory for scripts
+RUN mkdir -p /root/.andr# Create directory for scripts
 RUN mkdir -p /usr/local/bin
 
 # Copy entrypoint scripts - using absolute path to avoid issues
@@ -95,9 +93,5 @@ RUN which adb || echo "WARNING: adb not in PATH" && \
     which emulator || echo "WARNING: emulator not in PATH" && \
     adb version || echo "WARNING: adb command failed" && \
     ls -la /usr/local/bin/
-
-# Expose ports: console, ADB, ADB-server
-EXPOSE 5554 5555 5037
-
 WORKDIR ${ANDROID_SDK_ROOT}
 CMD ["/usr/local/bin/start-emulator.sh"]
