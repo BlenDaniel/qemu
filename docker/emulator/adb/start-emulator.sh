@@ -74,6 +74,8 @@ echo "Still waiting for emulator device... (${ELAPSED_TIME}s)"
 sleep 5
 done
 
+
+# ---------------------------------------- FIND AND FIX PROBLEM FROM HERE ONWARDS,
 echo "Emulator device detected! Enabling ADB over TCP/IP on port 5555..."
 echo "Emulator serial detected: $SERIAL"
 
