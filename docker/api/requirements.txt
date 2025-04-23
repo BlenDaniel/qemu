@@ -1,3 +1,5 @@
-flask
-docker
-uuid
+flask==3.1.0
+docker==7.1.0
+uuid==1.30
+requests==2.31.0
+Werkzeug==3.1.3

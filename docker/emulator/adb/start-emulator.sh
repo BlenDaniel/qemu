@@ -1,10 +1,18 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
+
+# Check if script is executable and has correct line endings
+echo "===== SCRIPT CHECK ====="
+echo "Starting script at: $(date)"
+echo "Script path: $0"
+echo "Script permissions: $(ls -la $0)"
 
 # Check if ADB is installed and in PATH
 if ! command -v adb &> /dev/null; then
     echo "ERROR: 'adb' command not found. Please ensure Android SDK platform-tools are installed and in PATH."
     echo "PATH is currently: $PATH"
+    echo "Searching for adb:"
+    find / -name adb 2>/dev/null || echo "No adb found on system"
     exit 1
 fi
 
@@ -27,6 +35,8 @@ echo "Launching Android emulator AVD 'test'..."
 if ! command -v emulator &> /dev/null; then
     echo "ERROR: 'emulator' command not found. Please ensure Android emulator is installed and in PATH."
     echo "PATH is currently: $PATH"
+    echo "Searching for emulator:"
+    find / -name emulator 2>/dev/null || echo "No emulator found on system"
     exit 1
 fi
 
@@ -120,12 +130,18 @@ echo "You can connect to it from your development environment"
 echo "Container is ready to use for Android application testing"
 echo "====================================="
 
-# Check if enable_adb_connection.sh exists and is executable
-if [ -f /usr/local/bin/enable_adb_connection.sh ] && [ -x /usr/local/bin/enable_adb_connection.sh ]; then
-    # Enable ADB over TCP/IP for remote connections (external script)
-    echo "Enabling ADB over TCP/IP for remote connections..."
-    /usr/local/bin/enable_adb_connection.sh || echo "WARNING: Failed to run enable_adb_connection.sh"
-else
+# Check multiple locations for the enable_adb_connection.sh script
+for SCRIPT_PATH in "/usr/local/bin/enable_adb_connection.sh" "/enable_adb_connection.sh"; do
+    if [ -f "$SCRIPT_PATH" ] && [ -x "$SCRIPT_PATH" ]; then
+        echo "Found enable_adb_connection.sh at $SCRIPT_PATH"
+        echo "Enabling ADB over TCP/IP for remote connections..."
+        "$SCRIPT_PATH" || echo "WARNING: Failed to run enable_adb_connection.sh"
+        break
+    fi
+done
+
+# If script not found, do it manually
+if [ ! -f "/usr/local/bin/enable_adb_connection.sh" ] && [ ! -f "/enable_adb_connection.sh" ]; then
     echo "WARNING: enable_adb_connection.sh not found or not executable"
     echo "Enabling TCP/IP manually..."
     adb tcpip 5555 || echo "WARNING: Could not set ADB to TCP mode, connections may not work"
