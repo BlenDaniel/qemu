@@ -6,7 +6,9 @@ This project provides a Dockerized, API-driven emulator farm using QEMU and the 
 
 - Linux host with KVM nested virtualization (recommended) OR macOS with Docker Desktop
 - Docker & Docker Compose v2+
-- (Optional) Android platform-tools on host: `brew install android-platform-tools` or `sudo apt install adb`
+- (Optional) Android platform-tools on host: `brew install android-platform-tools` or `sudo apt install adb` or `choco install android-sdk` or `choco install android-sdk-platform-tools-common` (for windows)
+- choco install jq -y
+
 
 ## Services
 
@@ -38,6 +40,10 @@ docker compose ps
   ```bash
   curl -s -X POST http://localhost:5001/emulators | jq .
   ```
+  or
+  ```bash
+   Invoke-WebRequest -Method Post -Uri http://localhost:5001/emulators | Select-Object -ExpandProperty Content | jq .
+  ```
   Response:
   ```json
   {
@@ -53,6 +59,10 @@ docker compose ps
 - **List sessions**
   ```bash
   curl http://localhost:5001/emulators | jq .
+  ```
+
+  ```bash
+  Invoke-WebRequest -Method Get -Uri http://localhost:5001/emulators  
   ```
 - **Delete session**
   ```bash
@@ -75,8 +85,8 @@ Choose one:
 # Wait for boot and run tests:
 
 ```bash
-  adb -s localhost:<PORT_5555> wait-for-device 
-  until [ "$(adb -s localhost:<PORT_5555> shell getprop sys.boot_completed)" = "1" ]; do sleep 1; done
+  adb -s localhost:32770 wait-for-device 
+  until [ "$(adb -s localhost:32770 shell getprop sys.boot_completed)" = "1" ]; do sleep 1; done
   adb -s localhost:<PORT_5555> install app.apk
 
   adb kill-server && adb start-server
@@ -93,7 +103,7 @@ until [ "$(adb -s localhost:<PORT_5555> shell getprop sys.boot_completed)" = "1"
 
 Install APK and run tests:
 ```bash
-adb -s localhost:<PORT_5555> install path/to/app.apk
+adb -s localhost:<PORT_5555> 
 adb -s localhost:<PORT_5555> shell am instrument -w <TEST_RUNNER>
 adb -s localhost:<PORT_5555> pull /sdcard/results.xml .
 ```
@@ -105,17 +115,36 @@ docker compose down --volumes
 docker system prune -af
 ```
 
-To proceed you have two paths:
+## Running with Vagrant + KVM (Recommended)
 
-Move to a Linux host (or VM) with KVM enabled, rebuild your containers there, and the x86 AVD will boot as expected.
-Swap to an ARM‐based system image which runs in pure QEMU “soft” mode. It’s very slow, but it doesn’t need KVM. You’d change your Dockerfile’s sdkmanager line to:
+This project provides a Vagrantfile to spin up a Linux VM (Ubuntu 20.04) with KVM enabled, Docker, and Docker Compose. It will automatically build and launch the emulator farm inside the VM. Ports 5554, 5555, 5037, and 5001 are forwarded to your host.
+
+### Prerequisites
+
+- Host machine with KVM support
+- Vagrant
+- vagrant-libvirt plugin (`vagrant plugin install vagrant-libvirt`)
+
+### Usage
 
 ```bash
-  sdkmanager \
-    "system-images;android-30;google_apis;arm64-v8a" \
-    ...
+git clone <repo_url>
+cd QEMU
+vagrant up
 ```
 
-and launch the emulator with -no-accel (or let it default to software). It will at least start and eventually boot—then you can connect and test, albeit at a snail’s pace.
+This will provision the VM, install necessary packages, and start the emulator and API services. To verify:
 
-If you really need performance and multi‑tenant emulators, you’ll want to deploy on Linux + KVM. Let me know which route you’d like to take next!
+```bash
+docker-compose ps
+# qemu-emulator-1 Up (healthy)
+# qemu-api-1      Up 5001/tcp
+```
+
+### VM Cleanup
+
+To destroy the VM and remove resources:
+
+```bash
+vagrant destroy -f
+```
