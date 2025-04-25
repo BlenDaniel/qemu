@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-set -e
+# Don't use 'set -e' as it will cause the script to exit on any error
+# We need the script to stay running even if some commands fail
 
 # Check if script is executable and has correct line endings
 echo "===== SCRIPT CHECK ====="
@@ -63,11 +64,14 @@ echo "Emulator process started with PID: $EMU_PID"
 echo "Waiting for emulator device to become available..."
 
 # Wait for the emulator device to appear in adb devices list with longer timeout
+# Note: The emulator will initially appear as emulator-5554 via ADB's default connection method
+# This is the native connection method that uses Unix sockets or local protocols
 TIMEOUT=180
 START_TIME=$(date +%s)
 SERIAL=""
 
 while true; do
+    # Look for devices with pattern emulator-XXXX where XXXX is typically a port number
     DEVICES=$(adb devices | grep -E "emulator-[0-9]+" || echo "")
     
     if [ -n "$DEVICES" ]; then
@@ -206,7 +210,21 @@ verify_device() {
     return $?
 }
 
-# Enable ADB over TCP/IP with progressive approach - FIXED VERSION
+# ============================================================================================
+# ADB CONNECTION MANAGEMENT
+# ============================================================================================
+# The Android emulator supports two connection methods:
+# 1. Native connection (emulator-5554): This is created automatically by ADB when it detects
+#    an emulator running. It uses special protocols and is only accessible on the local machine.
+#
+# 2. TCP/IP connection (localhost:5555 or IP:5555): This is what we set up to allow remote
+#    access to the emulator over the network from outside the container.
+#
+# Both connections point to the SAME emulator instance, just with different protocols.
+# We need the TCP/IP connection for remote access, but the native connection is still useful
+# for internal operations.
+# ============================================================================================
+
 echo "===== CONFIGURING ADB REMOTE ACCESS ====="
 
 # CRITICAL FIX: First make sure device is still responsive
@@ -248,45 +266,39 @@ else
     echo "⚠️ Device not responding, cannot verify TCP mode"
 fi
 
-# Get device IP for more reliable connection
-DEVICE_IP=""
-if verify_device; then
-    # Try multiple methods to get device IP
-    DEVICE_IP=$(adb -s "$SERIAL" shell "ip addr show | grep -E 'inet 10\\.' | cut -d/ -f1 | awk '{print \$2}'" 2>/dev/null || echo "")
-    if [ -z "$DEVICE_IP" ]; then
-        DEVICE_IP=$(adb -s "$SERIAL" shell "getprop dhcp.eth0.ipaddress" 2>/dev/null || echo "")
-    fi
-    if [ -z "$DEVICE_IP" ]; then
-        DEVICE_IP="localhost"
-    fi
-else
-    DEVICE_IP="localhost"
-fi
+# Store the connection names for better readability
+# The default ADB connection - always accessible from inside the container
+NATIVE_CONNECTION="$SERIAL" 
+# The TCP connection for remote access - will be used for external connections
+TCP_CONNECTION="localhost:5555"
+# Container IP for external connections from host machine
+CONTAINER_IP=$(hostname -I 2>/dev/null | awk '{print $1}' || echo "localhost")
+# The connection string for external clients connecting to this container
+EXTERNAL_CONNECTION="${CONTAINER_IP}:5555"
 
-# Try connecting to the device over TCP/IP with both localhost and specific IP
+# Don't try to connect via emulator internal IP - it will fail and that's expected
+# The emulator has its own internal network (10.0.2.X) that is not accessible
+# from the container directly by hostname
+echo "Note: Skipping connection attempts to emulator's internal IP addresses (10.0.2.X)"
+echo "These addresses are only accessible from within the emulator itself."
+
+# Try connecting to the device over TCP/IP with localhost
 echo "Testing TCP/IP connection..."
-# First disconnect existing connections
+# First disconnect existing connections to ensure clean state
 adb disconnect "$SERIAL" 2>/dev/null || true
 sleep 2
 
-# Try connection to local IP first
+# Try connection to local IP first - this should work reliably
 echo "Connecting to ADB over TCP using localhost:5555..."
-adb connect localhost:5555 || echo "⚠️ Failed to connect to localhost:5555"
+adb connect $TCP_CONNECTION || echo "⚠️ Failed to connect to $TCP_CONNECTION"
 sleep 3
 
-# Try device IP if available
-if [ -n "$DEVICE_IP" ] && [ "$DEVICE_IP" != "localhost" ]; then
-    echo "Connecting to ADB over TCP using device IP: $DEVICE_IP:5555..."
-    adb connect "$DEVICE_IP:5555" || echo "⚠️ Failed to connect to $DEVICE_IP:5555"
-    sleep 3
-fi
-
-# Check if either connection was successful
+# Check if the connection was successful
 ADB_DEVICES=$(adb devices)
-if echo "$ADB_DEVICES" | grep -E "localhost:5555|$DEVICE_IP:5555" | grep -q "device"; then
-    echo "✅ Successfully connected to emulator via TCP/IP!"
+if echo "$ADB_DEVICES" | grep -E "$TCP_CONNECTION" | grep -q "device"; then
+    echo "✅ Successfully connected to emulator via TCP/IP (localhost)!"
 else
-    echo "⚠️ Failed to establish reliable TCP/IP connection, falling back to original connection"
+    echo "⚠️ Failed to establish TCP/IP connection via localhost, falling back to native connection"
 fi
 
 # Display connection information
@@ -295,58 +307,61 @@ echo "===== EMULATOR INFORMATION ====="
 echo "Listing connected devices:"
 adb devices
 
+# Explain the connections that are shown
 echo ""
+echo "Connection types:"
+echo "1. $NATIVE_CONNECTION - Native ADB connection (internal use)"
+echo "2. $TCP_CONNECTION - TCP/IP connection (local container access)"
+echo "3. $EXTERNAL_CONNECTION - External connection string (for host machine)"
+echo ""
+
 echo "System information:"
-adb -s "$SERIAL" shell getprop ro.build.version.release 2>/dev/null || echo "Android version: Unable to retrieve"
-adb -s "$SERIAL" shell getprop ro.build.version.sdk 2>/dev/null || echo "API Level: Unable to retrieve"
-adb -s "$SERIAL" shell getprop ro.product.model 2>/dev/null || echo "Device model: Unable to retrieve"
+adb -s "$NATIVE_CONNECTION" shell getprop ro.build.version.release 2>/dev/null || echo "Android version: Unable to retrieve"
+adb -s "$NATIVE_CONNECTION" shell getprop ro.build.version.sdk 2>/dev/null || echo "API Level: Unable to retrieve"
+adb -s "$NATIVE_CONNECTION" shell getprop ro.product.model 2>/dev/null || echo "Device model: Unable to retrieve"
 
 echo ""
 echo "===== ADB REMOTE CONNECTION INFO ====="
-# Get container IP for external connection
-CONTAINER_IP=$(hostname -I 2>/dev/null | awk '{print $1}' || echo "localhost")
 echo "ADB server is running and accessible at:"
 echo "Host: $CONTAINER_IP"
 echo "Port: 5555"
-echo "You can connect from your development machine using: adb connect $CONTAINER_IP:5555"
+echo "You can connect from your development machine using: adb connect $EXTERNAL_CONNECTION"
 echo "====================================="
 
 # Verify network connectivity
 echo "Checking network connectivity to emulator..."
 nc -z -v localhost 5555 || echo "WARNING: Cannot connect to emulator on port 5555"
 
+# Create a helper function to check device status that handles different status formats
+# This function checks if ANY connection to the emulator is online (either native or TCP/IP)
+device_is_online() {
+    local devices_output=$(adb devices)
+    
+    # Check if any device has status "device"
+    if echo "$devices_output" | grep -E "$NATIVE_CONNECTION|$TCP_CONNECTION" | grep -q "device"; then
+        return 0  # Online
+    else
+        return 1  # Offline or not found
+    fi
+}
+
 # Function to check if emulator is responsive and reconnect if needed
 check_and_fix_emulator() {
+    local status=0  # Default to success
+    
     # First check if the emulator process is still running
-    if ! ps -p $EMU_PID > /dev/null; then
+    if ! ps -p $EMU_PID > /dev/null 2>&1; then
         echo "⚠️ Emulator process (PID $EMU_PID) died!"
-        return 1
+        status=1
     fi
     
-    # Then check device connectivity
-    local device_status=$(adb devices | grep -E "emulator-[0-9]+|localhost:5555|$DEVICE_IP:5555" | awk '{print $2}')
-    
-    if [ -z "$device_status" ]; then
-        echo "⚠️ No device found in ADB devices list, attempting reconnection..."
-        adb kill-server
-        sleep 2
-        adb -a start-server
-        sleep 3
-        adb connect localhost:5555
-        if [ -n "$DEVICE_IP" ] && [ "$DEVICE_IP" != "localhost" ]; then
-            adb connect "$DEVICE_IP:5555"
-        fi
-        sleep 2
-        return 1
-    elif [ "$device_status" = "offline" ]; then
-        echo "⚠️ Device is offline, attempting to reconnect..."
+    # Try to detect if the emulator is online with any of our expected connections
+    if ! device_is_online; then
+        echo "⚠️ No device found in online state, attempting reconnection..."
         
-        # Try full reconnection sequence
-        adb disconnect "$SERIAL" 2>/dev/null || true
-        adb disconnect localhost:5555 2>/dev/null || true
-        if [ -n "$DEVICE_IP" ] && [ "$DEVICE_IP" != "localhost" ]; then
-            adb disconnect "$DEVICE_IP:5555" 2>/dev/null || true
-        fi
+        # Full reconnection sequence - disconnect from all possible endpoints
+        adb disconnect "$NATIVE_CONNECTION" 2>/dev/null || true
+        adb disconnect "$TCP_CONNECTION" 2>/dev/null || true
         sleep 2
         
         # Restart ADB server
@@ -355,47 +370,63 @@ check_and_fix_emulator() {
         adb -a start-server
         sleep 3
         
-        # Connect to all possible endpoints
-        adb connect localhost:5555
-        if [ -n "$DEVICE_IP" ] && [ "$DEVICE_IP" != "localhost" ]; then
-            adb connect "$DEVICE_IP:5555"
-        fi
+        # Connect via TCP/IP
+        adb connect "$TCP_CONNECTION"
         sleep 3
         
-        # Verify if reconnection worked
-        local new_status=$(adb devices | grep -E "localhost:5555|$DEVICE_IP:5555" | awk '{print $2}')
-        if [ "$new_status" = "device" ]; then
+        # Check if we succeeded
+        if device_is_online; then
             echo "✅ Successfully reconnected to emulator"
-            # Re-enable TCP mode just to be sure
-            adb tcpip 5555
-            return 0
+            adb tcpip 5555  # Re-enable TCP mode
         else
             echo "⚠️ Failed to reconnect to emulator"
-            return 1
+            status=1
         fi
-    elif [ "$device_status" = "device" ]; then
-        # Device is online, just verify TCP mode
-        return 0
-    else
-        echo "⚠️ Unknown device status: $device_status"
-        return 1
     fi
+    
+    # Always report success to the infinite loop - we want it to keep running
+    # even if we've detected failures
+    return $status
 }
+
+# CRITICAL: Create a heartbeat file in the container to help detect if the script is still running
+HEARTBEAT_FILE="/tmp/emulator_heartbeat"
+touch $HEARTBEAT_FILE
 
 # CRITICAL: Keep the emulator process running and monitor its status
 echo "Starting emulator monitoring to keep it alive..."
 
+# Trap signals to ensure we handle termination properly
+trap "echo 'Received termination signal. Cleaning up...'; exit 130" SIGINT SIGTERM
+
 # Infinite loop to keep container running and monitor emulator status
+# Using true as the condition ensures the loop will never exit from a condition check
 while true; do
+    # Update heartbeat
+    date +%s > $HEARTBEAT_FILE
+    
     # Check if emulator process is still running
-    if ! ps -p $EMU_PID > /dev/null; then
-        echo "⚠️ Emulator process (PID $EMU_PID) died! Will continue monitoring ADB connection."
+    if ! ps -p $EMU_PID > /dev/null 2>&1; then
+        echo "⚠️ [$(date)] Emulator process (PID $EMU_PID) died! Will continue monitoring ADB connection."
     fi
     
-    # Check and fix emulator connection if needed
-    check_and_fix_emulator
+    # Run the check and fix function but ignore its return code
+    # This ensures that the loop keeps running even if check_and_fix_emulator fails
+    check_and_fix_emulator || true
     
-    # Sleep for a while before next check (15 seconds instead of 30)
+    # Explicitly test and output device status to debug log
+    if device_is_online; then
+        echo "[$(date)] Device status check: ONLINE"
+    else
+        echo "[$(date)] Device status check: OFFLINE"
+    fi
+    
+    # Always print current device list for monitoring
+    echo "[$(date)] Current devices:"
+    adb devices
+    
+    # Sleep for a while before next check (15 seconds)
+    # Using a series of short sleeps makes the script more responsive to signals
     for i in {1..15}; do
         sleep 1
     done
