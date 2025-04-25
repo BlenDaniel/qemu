@@ -15,9 +15,7 @@ services:
       - "5554:5554"  # Emulator console
       - "5555:5555"  # ADB connection
       - "5037:5037"  # ADB server
-      - "5556-5560:5556-5560"  # Additional ports for device connections
-    # network_mode: host  # Removing host network mode to use specific ports
-    command: ["sh", "-c", "adb start-server && /usr/local/bin/start-emulator.sh && sleep infinity"]
+    command: ["sleep", "infinity"]
   api:
     build:
       context: ./docker/api
