@@ -42,7 +42,7 @@ docker compose ps
   ```
   or
   ```bash
-   Invoke-WebRequest -Method Post -Uri http://localhost:5001/emulators | Select-Object -ExpandProperty Content | jq .
+  Invoke-WebRequest -Method Post -Uri http://localhost:5001/emulators | Select-Object -ExpandProperty Content | jq .
   ```
   Response:
   ```json
