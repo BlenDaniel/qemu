@@ -1,249 +1,537 @@
-2025-04-25 09:40:48 ===== SCRIPT CHECK =====
-2025-04-25 09:40:48 Starting script at: Fri Apr 25 07:40:48 UTC 2025
-2025-04-25 09:40:48 Script path: /usr/local/bin/start-emulator.sh
-2025-04-25 09:40:48 Script permissions: -rwxr-xr-x 1 root root 16571 Apr 25 07:37 /usr/local/bin/start-emulator.sh
-2025-04-25 09:40:50 ===== ANDROID EMULATOR INITIALIZATION =====
-2025-04-25 09:40:50 Starting Android Emulator services...
-2025-04-25 09:40:50 Starting ADB server...
-2025-04-25 09:40:58 ===== ADB PORT FORWARDING HELPER =====
-2025-04-25 09:40:58 Starting port forwarding to ensure external connections work correctly
-2025-04-25 09:40:58 Waiting for ADB device to be available...
-2025-04-25 09:40:50 cannot connect to daemon at tcp:5037: Connection refused
-2025-04-25 09:40:53 * daemon not running; starting now at tcp:5037
-2025-04-25 09:40:56 * daemon started successfully
-2025-04-25 09:40:59 I0425 07:40:59.412055      30 opengles.cpp:285] android_startOpenglesRenderer: gpu info
-2025-04-25 09:40:59 I0425 07:40:59.412117      30 opengles.cpp:286] 
-2025-04-25 09:40:58 Still waiting for ADB device... (0s)
-2025-04-25 09:40:59 Launching Android emulator AVD 'test'...
-2025-04-25 09:40:59 Emulator process started with PID: 30
-2025-04-25 09:40:59 Waiting for emulator device to become available...
-2025-04-25 09:40:59 INFO         | Android emulator version 35.4.9.0 (build_id 13025442) (CL:N/A)
-2025-04-25 09:40:59 INFO         | Graphics backend: gfxstream
-2025-04-25 09:40:59 INFO         | Found systemPath /opt/android-sdk/system-images/android-30/google_apis/x86/
-2025-04-25 09:40:59 INFO         | Found systemPath /opt/android-sdk/system-images/android-30/google_apis/x86/
-2025-04-25 09:40:59 Still waiting for emulator device... (0s)
-2025-04-25 09:40:59 WARNING      | Please update the emulator to one that supports the feature(s): Vulkan
-2025-04-25 09:40:59 INFO         | Increasing RAM size to 2048MB
-2025-04-25 09:40:59 INFO         | Checking system compatibility:
-2025-04-25 09:40:59 INFO         |   Checking: hasSufficientDiskSpace
-2025-04-25 09:40:59 INFO         |      Ok: Disk space requirements to run avd: `test` are met
-2025-04-25 09:40:59 INFO         |   Checking: hasSufficientHwGpu
-2025-04-25 09:40:59 INFO         |      Ok: Hardware GPU requirements to run avd: `test` are passed
-2025-04-25 09:40:59 INFO         |   Checking: hasSufficientSystem
-2025-04-25 09:40:59 INFO         |      Ok: System requirements to run avd: `test` are met
-2025-04-25 09:40:59 WARNING      | File System is not ext4, disable QuickbootFileBacked feature
-2025-04-25 09:40:59 WARNING      | FeatureControl is requesting a non existing feature.
-2025-04-25 09:40:59 INFO         | Storing crashdata in: /tmp/android-unknown/emu-crash-35.4.9.db, detection is enabled for process: 30
-2025-04-25 09:40:59 INFO         | Guest Driver: Auto (ext controls)
-2025-04-25 09:40:59 library_mode swiftshader_indirect gpu mode swiftshader_indirect
-2025-04-25 09:40:59 INFO         | Initializing hardware OpenGLES emulation support
-2025-04-25 09:40:59 INFO         | Not raising nofile soft limit from 1048576.
-2025-04-25 09:40:59 INFO         | HealthMonitor disabled.
-2025-04-25 09:40:59 INFO         | initIcdPaths: ICD set to 'swiftshader', using Swiftshader ICD
-2025-04-25 09:40:59 INFO         | Setting ICD filenames for the loader = /opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/vk_swiftshader_icd.json:/opt/android-sdk/emulator/lib64/vulkan/vk_swiftshader_icd.json
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so]
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so]: not found in map, open for the first time
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so] (posix): begin
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so] (posix,linux): call dlopen on [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so]
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so] failed (posix). dlerror: []
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1]
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1]: not found in map, open for the first time
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1] (posix): begin
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1] (posix,linux): call dlopen on [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1]
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1] failed (posix). dlerror: []
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/lib64/vulkan/libvulkan.so]
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/lib64/vulkan/libvulkan.so]: not found in map, open for the first time
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/lib64/vulkan/libvulkan.so] (posix): begin
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/lib64/vulkan/libvulkan.so] (posix,linux): call dlopen on [/opt/android-sdk/emulator/lib64/vulkan/libvulkan.so]
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | Added library: /opt/android-sdk/emulator/lib64/vulkan/libvulkan.so
-2025-04-25 09:40:59 INFO         | Selecting Vulkan device: SwiftShader Device (Subzero), Version: 1.3.0
-2025-04-25 09:40:59 INFO         | Supports id properties, got a vulkan device UUID
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [libGLESv2.so]: not found in map, open for the first time
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [libGLESv2.so] (posix): begin
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [libGLESv2.so] (posix,linux): call dlopen on [libGLESv2.so]
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [libEGL.so]: not found in map, open for the first time
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [libEGL.so] (posix): begin
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [libEGL.so] (posix,linux): call dlopen on [libEGL.so]
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [libX11]
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [libX11]: not found in map, open for the first time
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [libX11] (posix): begin
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | SharedLibrary::open for [libX11] (posix,linux): call dlopen on [libX11.so]
-2025-04-25 09:40:59 
-2025-04-25 09:40:59 INFO         | Initializing VkEmulation features:
-2025-04-25 09:40:59 INFO         |     glInteropSupported: false
-2025-04-25 09:40:59 INFO         |     useDeferredCommands: true
-2025-04-25 09:40:59 INFO         |     createResourceWithRequirements: true
-2025-04-25 09:40:59 INFO         |     useVulkanComposition: false
-2025-04-25 09:40:59 INFO         |     useVulkanNativeSwapchain: false
-2025-04-25 09:40:59 INFO         |     enable guestRenderDoc: false
-2025-04-25 09:40:59 INFO         |     ASTC LDR emulation mode: 2
-2025-04-25 09:40:59 INFO         |     enable ETC2 emulation: true
-2025-04-25 09:40:59 INFO         |     enable Ycbcr emulation: false
-2025-04-25 09:40:59 INFO         |     guestVulkanOnly: false
-2025-04-25 09:40:59 INFO         |     useDedicatedAllocations: false
-2025-04-25 09:40:59 INFO         | Graphics Adapter Vendor Google (Google Inc.)
-2025-04-25 09:40:59 INFO         | Graphics Adapter Android Emulator OpenGL ES Translator (Google SwiftShader)
-2025-04-25 09:40:59 INFO         | Graphics API Version OpenGL ES 3.0 (OpenGL ES 3.0 SwiftShader 4.0.0.1)
-2025-04-25 09:40:59 INFO         | Graphics API Extensions GL_OES_EGL_sync GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_depth24 GL_OES_depth32 GL_OES_element_index_uint GL_OES_texture_float GL_OES_texture_float_linear GL_OES_compressed_paletted_texture GL_OES_compressed_ETC1_RGB8_texture GL_OES_depth_texture GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_packed_depth_stencil GL_OES_vertex_half_float GL_OES_standard_derivatives GL_OES_texture_npot GL_OES_rgb8_rgba8 GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_texture_format_BGRA8888 GL_APPLE_texture_format_BGRA8888 
-2025-04-25 09:40:59 INFO         | Graphics Device Extensions N/A
-2025-04-25 09:40:59 INFO         | Userspace boot properties:
-2025-04-25 09:40:59 INFO         |   android.bootanim=0
-2025-04-25 09:40:59 INFO         |   android.qemud=1
-2025-04-25 09:40:59 INFO         |   androidboot.boot_devices=pci0000:00/0000:00:03.0 pci0000:00/0000:00:06.0
-2025-04-25 09:40:59 INFO         |   androidboot.hardware=ranchu
-2025-04-25 09:40:59 INFO         |   androidboot.hardware.vulkan=ranchu
-2025-04-25 09:40:59 INFO         |   androidboot.serialno=EMULATOR35X4X9X0
-2025-04-25 09:40:59 INFO         |   androidboot.vbmeta.digest=22632f66be5ef8f2181b7f14ab33fac3a6d82c7c65d6172a59d3484281605e20
-2025-04-25 09:40:59 INFO         |   androidboot.vbmeta.hash_alg=sha256
-2025-04-25 09:40:59 INFO         |   androidboot.vbmeta.size=6144
-2025-04-25 09:40:59 INFO         |   qemu=1
-2025-04-25 09:40:59 INFO         |   qemu.avd_name=test
-2025-04-25 09:40:59 INFO         |   qemu.camera_hq_edge_processing=0
-2025-04-25 09:40:59 INFO         |   qemu.camera_protocol_ver=1
-2025-04-25 09:40:59 INFO         |   qemu.dalvik.vm.heapsize=512m
-2025-04-25 09:40:59 INFO         |   qemu.encrypt=1
-2025-04-25 09:40:59 INFO         |   qemu.gles=1
-2025-04-25 09:40:59 INFO         |   qemu.gltransport=pipe
-2025-04-25 09:40:59 INFO         |   qemu.gltransport.drawFlushInterval=800
-2025-04-25 09:40:59 INFO         |   qemu.hwcodec.avcdec=2
-2025-04-25 09:40:59 INFO         |   qemu.hwcodec.hevcdec=2
-2025-04-25 09:40:59 INFO         |   qemu.hwcodec.vpxdec=2
-2025-04-25 09:40:59 INFO         |   qemu.opengles.version=196608
-2025-04-25 09:40:59 INFO         |   qemu.settings.system.screen_off_timeout=2147483647
-2025-04-25 09:40:59 INFO         |   qemu.uirenderer=skiagl
-2025-04-25 09:40:59 INFO         |   qemu.virtiowifi=1
-2025-04-25 09:40:59 INFO         |   qemu.vsync=60
-2025-04-25 09:40:59 INFO         | Monitoring duration of emulator setup.
-2025-04-25 09:40:59 INFO         | Setting display: 0 configuration to: 320x640, dpi: 160x160 
-2025-04-25 09:40:59 INFO         | setDisplayActiveConfig 0
-2025-04-25 09:40:59 USER_INFO    | Emulator is performing a full startup. This may take upto two minutes, or more.
-2025-04-25 09:40:59 WARNING      | Failed to process .ini file /root/.android/emu-update-last-check.ini for reading.
-2025-04-25 09:40:59 WARNING: cannnot unmap ptr 0x7f52a2f38000 as it is in the protected range from 0x7f52a2f38000 to 0x7f5323138000
-2025-04-25 09:40:59 WARNING: cannnot unmap ptr 0x7f5323001000 as it is in the protected range from 0x7f52a2f38000 to 0x7f5323138000
-2025-04-25 09:40:59 WARNING      | UpdateCheck: Failure: Error
-2025-04-25 09:40:59 WARNING      | UpdateCheck: failed to get the latest version, skipping check (current version '35.4.9-13025442')
-2025-04-25 09:41:03 Still waiting for ADB device... (5s)
-2025-04-25 09:41:04 Emulator found in device list: emulator-5554offline
-2025-04-25 09:41:04 Emulator found but not ready yet
-2025-04-25 09:41:04 Device status: offline
-2025-04-25 09:41:04 Still waiting for emulator device... (5s)
-2025-04-25 09:41:08 Still waiting for ADB device... (10s)
-2025-04-25 09:41:09 Emulator found in device list: emulator-5554offline
-2025-04-25 09:41:09 Emulator found but not ready yet
-2025-04-25 09:41:09 Device status: offline
-2025-04-25 09:41:09 Still waiting for emulator device... (10s)
-2025-04-25 09:41:13 Still waiting for ADB device... (15s)
-2025-04-25 09:41:14 Emulator found in device list: emulator-5554device
-2025-04-25 09:41:14 ***** Emulator detected and ready!
-2025-04-25 09:41:14 Using device: emulator-5554
-2025-04-25 09:41:14 Waiting for system boot to complete...
-2025-04-25 09:41:14 Current device state: device
-2025-04-25 09:41:14 Boot status: 
-2025-04-25 09:41:14 Waiting for system boot... (0s)
-2025-04-25 09:41:18 ADB device found and ready
-2025-04-25 09:41:18 Setting up port forwarding for ADB...
-2025-04-25 09:41:18 Port forwarding started with PID: 259
-2025-04-25 09:41:18 Starting port forwarding monitor...
-2025-04-25 09:41:18 2025/04/25 07:41:18 socat[259] E bind(5, {AF=2 0.0.0.0:5555}, 16): Address already in use
-2025-04-25 09:41:19 Current device state: device
-2025-04-25 09:41:19 Boot status: 
-2025-04-25 09:41:19 Waiting for system boot... (5s)
-2025-04-25 09:41:24 Current device state: device
-2025-04-25 09:41:24 Boot status: 1
-2025-04-25 09:41:24 Package service is up and running
-2025-04-25 09:41:24 ===== SUCCESS: Emulator booted successfully in 5 seconds! =====
-2025-04-25 09:41:24 Waiting additional time for system services stabilization...
-2025-04-25 09:41:24 INFO         | Boot completed in 25344 ms
-2025-04-25 09:41:24 INFO         | Increasing screen off timeout, logcat buffer size to 2M.
-2025-04-25 09:41:28 Port forwarding not running, restarting...
-2025-04-25 09:41:28 Setting up port forwarding for ADB...
-2025-04-25 09:41:28 Port forwarding started with PID: 452
-2025-04-25 09:41:28 2025/04/25 07:41:28 socat[452] E bind(5, {AF=2 0.0.0.0:5555}, 16): Address already in use
-2025-04-25 09:41:34 ===== CONFIGURING ADB REMOTE ACCESS =====
-2025-04-25 09:41:34 Setting TCP port property directly via setprop...
-2025-04-25 09:41:37 Enabling TCP/IP mode using direct tcpip command...
-2025-04-25 09:41:37 restarting in TCP mode port: 5555
-2025-04-25 09:41:38 Port forwarding not running, restarting...
-2025-04-25 09:41:38 Setting up port forwarding for ADB...
-2025-04-25 09:41:38 Port forwarding started with PID: 481
-2025-04-25 09:41:38 2025/04/25 07:41:38 socat[481] E bind(5, {AF=2 0.0.0.0:5555}, 16): Address already in use
-2025-04-25 09:41:42 Verifying TCP mode...
-2025-04-25 09:41:42 ***** TCP port property set correctly to 5555
-2025-04-25 09:41:42 Note: Skipping connection attempts to emulator's internal IP addresses (10.0.2.X)
-2025-04-25 09:41:42 These addresses are only accessible from within the emulator itself.
-2025-04-25 09:41:42 Testing TCP/IP connection...
-2025-04-25 09:41:42 disconnected emulator-5554
-2025-04-25 09:41:44 Connecting to ADB over TCP using localhost:5555...
-2025-04-25 09:41:44 connected to localhost:5555
-2025-04-25 09:41:47 ***** Successfully connected to emulator via TCP/IP (localhost)!
-2025-04-25 09:41:47 
-2025-04-25 09:41:47 ===== EMULATOR INFORMATION =====
-2025-04-25 09:41:47 Listing connected devices:
-2025-04-25 09:41:47 List of devices attached
-2025-04-25 09:41:47 emulator-5554device
-2025-04-25 09:41:47 localhost:5555device
-2025-04-25 09:41:47 
-2025-04-25 09:41:47 
-2025-04-25 09:41:47 Connection types:
-2025-04-25 09:41:47 1. emulator-5554 - Native ADB connection (internal use)
-2025-04-25 09:41:47 2. localhost:5555 - TCP/IP connection (local container access)
-2025-04-25 09:41:47 3. 172.17.0.2:5555 - External connection string (for host machine)
-2025-04-25 09:41:47 
-2025-04-25 09:41:47 System information:
-2025-04-25 09:41:47 11
-2025-04-25 09:41:47 30
-2025-04-25 09:41:47 sdk_gphone_x86
-2025-04-25 09:41:47 
-2025-04-25 09:41:47 ===== ADB REMOTE CONNECTION INFO =====
-2025-04-25 09:41:47 ADB server is running and accessible at:
-2025-04-25 09:41:47 Host: 172.17.0.2
-2025-04-25 09:41:47 Port: 5555
-2025-04-25 09:41:47 You can connect from your development machine using: adb connect 172.17.0.2:5555
-2025-04-25 09:41:47 =====================================
-2025-04-25 09:41:47 Checking network connectivity to emulator...
-2025-04-25 09:41:47 Connection to localhost (::1) 5555 port [tcp/*] succeeded!
-2025-04-25 09:41:47 Starting emulator monitoring to keep it alive...
-2025-04-25 09:41:47 [Fri Apr 25 07:41:47 UTC 2025] Device status check: ONLINE
-2025-04-25 09:41:47 [Fri Apr 25 07:41:47 UTC 2025] Current devices:
-2025-04-25 09:41:47 List of devices attached
-2025-04-25 09:41:47 emulator-5554device
-2025-04-25 09:41:47 localhost:5555device
-2025-04-25 09:41:47 
-2025-04-25 09:41:48 Port forwarding not running, restarting...
-2025-04-25 09:41:48 Setting up port forwarding for ADB...
-2025-04-25 09:41:48 Port forwarding started with PID: 533
-2025-04-25 09:41:48 2025/04/25 07:41:48 socat[533] E bind(5, {AF=2 0.0.0.0:5555}, 16): Address already in use
-2025-04-25 09:41:58 Port forwarding not running, restarting...
-2025-04-25 09:41:58 Setting up port forwarding for ADB...
-2025-04-25 09:41:58 Port forwarding started with PID: 548
-2025-04-25 09:41:58 2025/04/25 07:41:58 socat[548] E bind(5, {AF=2 0.0.0.0:5555}, 16): Address already in use
-2025-04-25 09:42:02 [Fri Apr 25 07:42:02 UTC 2025] Device status check: ONLINE
-2025-04-25 09:42:02 [Fri Apr 25 07:42:02 UTC 2025] Current devices:
-2025-04-25 09:42:02 List of devices attached
-2025-04-25 09:42:02 emulator-5554device
-2025-04-25 09:42:02 localhost:5555device
-2025-04-25 09:42:02 
-
+2025-04-25 11:14:13 ===== SCRIPT CHECK =====
+2025-04-25 11:14:13 Starting script at: Fri Apr 25 09:14:13 UTC 2025
+2025-04-25 11:14:13 Script path: /usr/local/bin/start-emulator.sh
+2025-04-25 11:14:13 Script permissions: -rwxr-xr-x 1 root root 16571 Apr 25 09:10 /usr/local/bin/start-emulator.sh
+2025-04-25 11:14:15 ===== ANDROID EMULATOR INITIALIZATION =====
+2025-04-25 11:14:15 Starting Android Emulator services...
+2025-04-25 11:14:15 Starting ADB server...
+2025-04-25 11:14:24 Launching Android emulator AVD 'test'...
+2025-04-25 11:14:24 INFO         | Android emulator version 35.4.9.0 (build_id 13025442) (CL:N/A)
+2025-04-25 11:14:24 INFO         | Graphics backend: gfxstream
+2025-04-25 11:14:24 INFO         | Found systemPath /opt/android-sdk/system-images/android-30/google_apis/x86/
+2025-04-25 11:14:24 INFO         | Found systemPath /opt/android-sdk/system-images/android-30/google_apis/x86/
+2025-04-25 11:14:24 Emulator process started with PID: 25
+2025-04-25 11:14:24 Waiting for emulator device to become available...
+2025-04-25 11:14:24 Still waiting for emulator device... (0s)
+2025-04-25 11:14:24 WARNING      | Please update the emulator to one that supports the feature(s): Vulkan
+2025-04-25 11:14:24 INFO         | Increasing RAM size to 2048MB
+2025-04-25 11:14:24 INFO         | Checking system compatibility:
+2025-04-25 11:14:24 INFO         |   Checking: hasSufficientDiskSpace
+2025-04-25 11:14:24 INFO         |      Ok: Disk space requirements to run avd: `test` are met
+2025-04-25 11:14:24 INFO         |   Checking: hasSufficientHwGpu
+2025-04-25 11:14:15 cannot connect to daemon at tcp:5037: Connection refused
+2025-04-25 11:14:18 * daemon not running; starting now at tcp:5037
+2025-04-25 11:14:21 * daemon started successfully
+2025-04-25 11:14:24 I0425 09:14:24.507670      25 opengles.cpp:285] android_startOpenglesRenderer: gpu info
+2025-04-25 11:14:24 I0425 09:14:24.507749      25 opengles.cpp:286] 
+2025-04-25 11:14:24 WARNING: cannnot unmap ptr 0x7f552a389000 as it is in the protected range from 0x7f552a389000 to 0x7f55aa589000
+2025-04-25 11:14:24 INFO         |      Ok: Hardware GPU requirements to run avd: `test` are passed
+2025-04-25 11:14:24 INFO         |   Checking: hasSufficientSystem
+2025-04-25 11:14:24 INFO         |      Ok: System requirements to run avd: `test` are met
+2025-04-25 11:14:24 WARNING      | File System is not ext4, disable QuickbootFileBacked feature
+2025-04-25 11:14:24 WARNING      | FeatureControl is requesting a non existing feature.
+2025-04-25 11:14:24 INFO         | Storing crashdata in: /tmp/android-unknown/emu-crash-35.4.9.db, detection is enabled for process: 25
+2025-04-25 11:14:24 INFO         | Guest Driver: Auto (ext controls)
+2025-04-25 11:14:24 library_mode swiftshader_indirect gpu mode swiftshader_indirect
+2025-04-25 11:14:24 INFO         | Initializing hardware OpenGLES emulation support
+2025-04-25 11:14:24 INFO         | Not raising nofile soft limit from 1048576.
+2025-04-25 11:14:24 INFO         | HealthMonitor disabled.
+2025-04-25 11:14:24 INFO         | initIcdPaths: ICD set to 'swiftshader', using Swiftshader ICD
+2025-04-25 11:14:24 INFO         | Setting ICD filenames for the loader = /opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/vk_swiftshader_icd.json:/opt/android-sdk/emulator/lib64/vulkan/vk_swiftshader_icd.json
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so]
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so]: not found in map, open for the first time
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so] (posix): begin
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so] (posix,linux): call dlopen on [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so]
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so] failed (posix). dlerror: []
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1]
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1]: not found in map, open for the first time
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1] (posix): begin
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1] (posix,linux): call dlopen on [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1]
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1] failed (posix). dlerror: []
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/lib64/vulkan/libvulkan.so]
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/lib64/vulkan/libvulkan.so]: not found in map, open for the first time
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/lib64/vulkan/libvulkan.so] (posix): begin
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/lib64/vulkan/libvulkan.so] (posix,linux): call dlopen on [/opt/android-sdk/emulator/lib64/vulkan/libvulkan.so]
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | Added library: /opt/android-sdk/emulator/lib64/vulkan/libvulkan.so
+2025-04-25 11:14:24 INFO         | Selecting Vulkan device: SwiftShader Device (Subzero), Version: 1.3.0
+2025-04-25 11:14:24 INFO         | Supports id properties, got a vulkan device UUID
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [libGLESv2.so]: not found in map, open for the first time
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [libGLESv2.so] (posix): begin
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [libGLESv2.so] (posix,linux): call dlopen on [libGLESv2.so]
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [libEGL.so]: not found in map, open for the first time
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [libEGL.so] (posix): begin
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [libEGL.so] (posix,linux): call dlopen on [libEGL.so]
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [libX11]
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [libX11]: not found in map, open for the first time
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [libX11] (posix): begin
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | SharedLibrary::open for [libX11] (posix,linux): call dlopen on [libX11.so]
+2025-04-25 11:14:24 
+2025-04-25 11:14:24 INFO         | Initializing VkEmulation features:
+2025-04-25 11:14:24 INFO         |     glInteropSupported: false
+2025-04-25 11:14:24 INFO         |     useDeferredCommands: true
+2025-04-25 11:14:24 INFO         |     createResourceWithRequirements: true
+2025-04-25 11:14:24 INFO         |     useVulkanComposition: false
+2025-04-25 11:14:24 INFO         |     useVulkanNativeSwapchain: false
+2025-04-25 11:14:24 INFO         |     enable guestRenderDoc: false
+2025-04-25 11:14:24 INFO         |     ASTC LDR emulation mode: 2
+2025-04-25 11:14:24 INFO         |     enable ETC2 emulation: true
+2025-04-25 11:14:24 INFO         |     enable Ycbcr emulation: false
+2025-04-25 11:14:24 INFO         |     guestVulkanOnly: false
+2025-04-25 11:14:24 INFO         |     useDedicatedAllocations: false
+2025-04-25 11:14:24 INFO         | Graphics Adapter Vendor Google (Google Inc.)
+2025-04-25 11:14:24 INFO         | Graphics Adapter Android Emulator OpenGL ES Translator (Google SwiftShader)
+2025-04-25 11:14:24 INFO         | Graphics API Version OpenGL ES 3.0 (OpenGL ES 3.0 SwiftShader 4.0.0.1)
+2025-04-25 11:14:24 INFO         | Graphics API Extensions GL_OES_EGL_sync GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_depth24 GL_OES_depth32 GL_OES_element_index_uint GL_OES_texture_float GL_OES_texture_float_linear GL_OES_compressed_paletted_texture GL_OES_compressed_ETC1_RGB8_texture GL_OES_depth_texture GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_packed_depth_stencil GL_OES_vertex_half_float GL_OES_standard_derivatives GL_OES_texture_npot GL_OES_rgb8_rgba8 GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_texture_format_BGRA8888 GL_APPLE_texture_format_BGRA8888 
+2025-04-25 11:14:24 INFO         | Graphics Device Extensions N/A
+2025-04-25 11:14:24 INFO         | Userspace boot properties:
+2025-04-25 11:14:24 INFO         |   android.bootanim=0
+2025-04-25 11:14:24 INFO         |   android.qemud=1
+2025-04-25 11:14:24 INFO         |   androidboot.boot_devices=pci0000:00/0000:00:03.0 pci0000:00/0000:00:06.0
+2025-04-25 11:14:24 INFO         |   androidboot.hardware=ranchu
+2025-04-25 11:14:24 INFO         |   androidboot.hardware.vulkan=ranchu
+2025-04-25 11:14:24 INFO         |   androidboot.serialno=EMULATOR35X4X9X0
+2025-04-25 11:14:24 INFO         |   androidboot.vbmeta.digest=22632f66be5ef8f2181b7f14ab33fac3a6d82c7c65d6172a59d3484281605e20
+2025-04-25 11:14:24 INFO         |   androidboot.vbmeta.hash_alg=sha256
+2025-04-25 11:14:24 INFO         |   androidboot.vbmeta.size=6144
+2025-04-25 11:14:24 INFO         |   qemu=1
+2025-04-25 11:14:24 INFO         |   qemu.avd_name=test
+2025-04-25 11:14:24 INFO         |   qemu.camera_hq_edge_processing=0
+2025-04-25 11:14:24 INFO         |   qemu.camera_protocol_ver=1
+2025-04-25 11:14:24 INFO         |   qemu.dalvik.vm.heapsize=512m
+2025-04-25 11:14:24 INFO         |   qemu.encrypt=1
+2025-04-25 11:14:24 INFO         |   qemu.gles=1
+2025-04-25 11:14:24 INFO         |   qemu.gltransport=pipe
+2025-04-25 11:14:24 INFO         |   qemu.gltransport.drawFlushInterval=800
+2025-04-25 11:14:24 INFO         |   qemu.hwcodec.avcdec=2
+2025-04-25 11:14:24 INFO         |   qemu.hwcodec.hevcdec=2
+2025-04-25 11:14:24 INFO         |   qemu.hwcodec.vpxdec=2
+2025-04-25 11:14:24 INFO         |   qemu.opengles.version=196608
+2025-04-25 11:14:24 INFO         |   qemu.settings.system.screen_off_timeout=2147483647
+2025-04-25 11:14:24 INFO         |   qemu.uirenderer=skiagl
+2025-04-25 11:14:24 INFO         |   qemu.virtiowifi=1
+2025-04-25 11:14:24 INFO         |   qemu.vsync=60
+2025-04-25 11:14:24 INFO         | Monitoring duration of emulator setup.
+2025-04-25 11:14:24 INFO         | Setting display: 0 configuration to: 320x640, dpi: 160x160 
+2025-04-25 11:14:24 INFO         | setDisplayActiveConfig 0
+2025-04-25 11:14:24 USER_INFO    | Emulator is performing a full startup. This may take upto two minutes, or more.
+2025-04-25 11:14:24 WARNING      | Failed to process .ini file /root/.android/emu-update-last-check.ini for reading.
+2025-04-25 11:14:24 WARNING      | UpdateCheck: Failure: Error
+2025-04-25 11:14:24 WARNING      | UpdateCheck: failed to get the latest version, skipping check (current version '35.4.9-13025442')
+2025-04-25 11:14:29 Emulator found in device list: emulator-5554offline
+2025-04-25 11:14:29 Emulator found but not ready yet
+2025-04-25 11:14:29 Device status: offline
+2025-04-25 11:14:29 Still waiting for emulator device... (5s)
+2025-04-25 11:14:33 ===== ADB PORT FORWARDING HELPER =====
+2025-04-25 11:14:33 Starting port forwarding to ensure external connections work correctly
+2025-04-25 11:14:33 Configuring ADB networking...
+2025-04-25 11:14:37 Emulator found in device list: emulator-5554offline
+2025-04-25 11:14:37 Emulator found but not ready yet
+2025-04-25 11:14:37 Device status: offline
+2025-04-25 11:14:37 Still waiting for emulator device... (13s)
+2025-04-25 11:14:39 Waiting for emulator to fully boot...
+2025-04-25 11:14:39 Still waiting for emulator to boot... (0s)
+2025-04-25 11:14:42 Emulator found in device list: emulator-5554device
+2025-04-25 11:14:42 ***** Emulator detected and ready!
+2025-04-25 11:14:42 Using device: emulator-5554
+2025-04-25 11:14:42 Waiting for system boot to complete...
+2025-04-25 11:14:42 Current device state: device
+2025-04-25 11:14:42 Boot status: 
+2025-04-25 11:14:42 Waiting for system boot... (0s)
+2025-04-25 11:14:44 Still waiting for emulator to boot... (5s)
+2025-04-25 11:14:47 Current device state: device
+2025-04-25 11:14:47 Boot status: 1
+2025-04-25 11:14:47 Package service is up and running
+2025-04-25 11:14:47 ===== SUCCESS: Emulator booted successfully in 0 seconds! =====
+2025-04-25 11:14:47 Waiting additional time for system services stabilization...
+2025-04-25 11:14:49 Emulator is fully booted and ready
+2025-04-25 11:14:49 Setting up ADB in TCP/IP mode...
+2025-04-25 11:14:49 restarting in TCP mode port: 5555
+2025-04-25 11:14:49 INFO         | Boot completed in 25402 ms
+2025-04-25 11:14:49 INFO         | Increasing screen off timeout, logcat buffer size to 2M.
+2025-04-25 11:14:51 ADB bound to localhost only, setting up port forwarding...
+2025-04-25 11:14:51 Port 5555 is already bound on external interface, finding alternative port...
+2025-04-25 11:14:51 Using alternative port 5556 for forwarding
+2025-04-25 11:14:51 Starting socat to handle port forwarding from 0.0.0.0:5556 to localhost:5555
+2025-04-25 11:14:51 connected to localhost:5555
+2025-04-25 11:14:53 ADB networking configured successfully
+2025-04-25 11:14:53 Starting network monitoring...
+2025-04-25 11:14:53 [Fri Apr 25 09:14:53 UTC 2025] ADB connection status:
+2025-04-25 11:14:53 List of devices attached
+2025-04-25 11:14:53 emulator-5554device
+2025-04-25 11:14:53 localhost:5555device
+2025-04-25 11:14:53 
+2025-04-25 11:14:53 Monitoring ADB connection...
+2025-04-25 11:14:53 Port forwarding rules missing, re-establishing...
+2025-04-25 11:14:24 WARNING: cannnot unmap ptr 0x7f55aa401000 as it is in the protected range from 0x7f552a389000 to 0x7f55aa589000
+2025-04-25 11:14:34 * daemon not running; starting now at tcp:5037
+2025-04-25 11:14:37 * daemon started successfully
+2025-04-25 11:15:10 Connection to localhost (::1) 5555 port [tcp/*] succeeded!
+2025-04-25 11:15:28 * daemon not running; starting now at tcp:5037
+2025-04-25 11:15:31 * daemon started successfully
+2025-04-25 11:17:38 error: more than one device/emulator
+2025-04-25 11:18:04 * daemon not running; starting now at tcp:5037
+2025-04-25 11:18:07 * daemon started successfully
+2025-04-25 11:20:14 error: more than one device/emulator
+2025-04-25 11:14:53 Configuring ADB networking...
+2025-04-25 11:14:54 ERROR        | Unable to connect to adb daemon on port: 5037
+2025-04-25 11:14:57 ===== CONFIGURING ADB REMOTE ACCESS =====
+2025-04-25 11:14:57 Setting TCP port property directly via setprop...
+2025-04-25 11:14:59 Waiting for emulator to fully boot...
+2025-04-25 11:14:59 Emulator is fully booted and ready
+2025-04-25 11:14:59 Setting up ADB in TCP/IP mode...
+2025-04-25 11:14:59 restarting in TCP mode port: 5555
+2025-04-25 11:15:00 Enabling TCP/IP mode using direct tcpip command...
+2025-04-25 11:15:00 restarting in TCP mode port: 5555
+2025-04-25 11:15:01 ADB bound to localhost only, setting up port forwarding...
+2025-04-25 11:15:01 Port 5555 is already bound on external interface, finding alternative port...
+2025-04-25 11:15:01 Using alternative port 5557 for forwarding
+2025-04-25 11:15:01 Starting socat to handle port forwarding from 0.0.0.0:5557 to localhost:5555
+2025-04-25 11:15:04 connected to localhost:5555
+2025-04-25 11:15:05 Verifying TCP mode...
+2025-04-25 11:15:05 ***** TCP port property set correctly to 5555
+2025-04-25 11:15:05 Note: Skipping connection attempts to emulator's internal IP addresses (10.0.2.X)
+2025-04-25 11:15:05 These addresses are only accessible from within the emulator itself.
+2025-04-25 11:15:05 Testing TCP/IP connection...
+2025-04-25 11:15:05 disconnected emulator-5554
+2025-04-25 11:15:06 ADB networking configured successfully
+2025-04-25 11:15:07 Connecting to ADB over TCP using localhost:5555...
+2025-04-25 11:15:07 already connected to localhost:5555
+2025-04-25 11:15:10 ***** Successfully connected to emulator via TCP/IP (localhost)!
+2025-04-25 11:15:10 
+2025-04-25 11:15:10 ===== EMULATOR INFORMATION =====
+2025-04-25 11:15:10 Listing connected devices:
+2025-04-25 11:15:10 List of devices attached
+2025-04-25 11:15:10 emulator-5554device
+2025-04-25 11:15:10 localhost:5555device
+2025-04-25 11:15:10 
+2025-04-25 11:15:10 
+2025-04-25 11:15:10 Connection types:
+2025-04-25 11:15:10 1. emulator-5554 - Native ADB connection (internal use)
+2025-04-25 11:15:10 2. localhost:5555 - TCP/IP connection (local container access)
+2025-04-25 11:15:10 3. 172.17.0.2:5555 - External connection string (for host machine)
+2025-04-25 11:15:10 
+2025-04-25 11:15:10 System information:
+2025-04-25 11:15:10 11
+2025-04-25 11:15:10 30
+2025-04-25 11:15:10 sdk_gphone_x86
+2025-04-25 11:15:10 
+2025-04-25 11:15:10 ===== ADB REMOTE CONNECTION INFO =====
+2025-04-25 11:15:10 ADB server is running and accessible at:
+2025-04-25 11:15:10 Host: 172.17.0.2
+2025-04-25 11:15:10 Port: 5555
+2025-04-25 11:15:10 You can connect from your development machine using: adb connect 172.17.0.2:5555
+2025-04-25 11:15:10 =====================================
+2025-04-25 11:15:10 Checking network connectivity to emulator...
+2025-04-25 11:15:10 Starting emulator monitoring to keep it alive...
+2025-04-25 11:15:10 [Fri Apr 25 09:15:10 UTC 2025] Device status check: ONLINE
+2025-04-25 11:15:10 [Fri Apr 25 09:15:10 UTC 2025] Current devices:
+2025-04-25 11:15:10 List of devices attached
+2025-04-25 11:15:10 emulator-5554device
+2025-04-25 11:15:10 localhost:5555device
+2025-04-25 11:15:10 
+2025-04-25 11:15:25 [Fri Apr 25 09:15:25 UTC 2025] Device status check: ONLINE
+2025-04-25 11:15:25 [Fri Apr 25 09:15:25 UTC 2025] Current devices:
+2025-04-25 11:15:25 List of devices attached
+2025-04-25 11:15:25 emulator-5554device
+2025-04-25 11:15:25 localhost:5555device
+2025-04-25 11:15:25 
+2025-04-25 11:15:26 [Fri Apr 25 09:15:26 UTC 2025] ADB connection status:
+2025-04-25 11:15:26 List of devices attached
+2025-04-25 11:15:26 emulator-5554device
+2025-04-25 11:15:26 localhost:5555device
+2025-04-25 11:15:26 
+2025-04-25 11:15:26 Monitoring ADB connection...
+2025-04-25 11:15:26 Port forwarding rules missing, re-establishing...
+2025-04-25 11:15:26 Configuring ADB networking...
+2025-04-25 11:15:33 Waiting for emulator to fully boot...
+2025-04-25 11:15:33 Still waiting for emulator to boot... (0s)
+2025-04-25 11:15:38 Still waiting for emulator to boot... (5s)
+2025-04-25 11:15:40 [Fri Apr 25 09:15:40 UTC 2025] Device status check: ONLINE
+2025-04-25 11:15:40 [Fri Apr 25 09:15:40 UTC 2025] Current devices:
+2025-04-25 11:15:40 List of devices attached
+2025-04-25 11:15:40 emulator-5554device
+2025-04-25 11:15:40 emulator-5556device
+2025-04-25 11:15:40 
+2025-04-25 11:15:43 Still waiting for emulator to boot... (10s)
+2025-04-25 11:15:48 Still waiting for emulator to boot... (15s)
+2025-04-25 11:15:53 Still waiting for emulator to boot... (20s)
+2025-04-25 11:15:55 [Fri Apr 25 09:15:55 UTC 2025] Device status check: ONLINE
+2025-04-25 11:15:55 [Fri Apr 25 09:15:55 UTC 2025] Current devices:
+2025-04-25 11:15:55 List of devices attached
+2025-04-25 11:15:55 emulator-5554device
+2025-04-25 11:15:55 emulator-5556device
+2025-04-25 11:15:55 
+2025-04-25 11:15:58 Still waiting for emulator to boot... (25s)
+2025-04-25 11:16:03 Still waiting for emulator to boot... (30s)
+2025-04-25 11:16:08 Still waiting for emulator to boot... (35s)
+2025-04-25 11:16:10 [Fri Apr 25 09:16:10 UTC 2025] Device status check: ONLINE
+2025-04-25 11:16:10 [Fri Apr 25 09:16:10 UTC 2025] Current devices:
+2025-04-25 11:16:10 List of devices attached
+2025-04-25 11:16:10 emulator-5554device
+2025-04-25 11:16:10 emulator-5556device
+2025-04-25 11:16:10 
+2025-04-25 11:16:13 Still waiting for emulator to boot... (40s)
+2025-04-25 11:16:18 Still waiting for emulator to boot... (45s)
+2025-04-25 11:16:23 Still waiting for emulator to boot... (50s)
+2025-04-25 11:16:25 [Fri Apr 25 09:16:25 UTC 2025] Device status check: ONLINE
+2025-04-25 11:16:25 [Fri Apr 25 09:16:25 UTC 2025] Current devices:
+2025-04-25 11:16:25 List of devices attached
+2025-04-25 11:16:25 emulator-5554device
+2025-04-25 11:16:25 emulator-5556device
+2025-04-25 11:16:25 
+2025-04-25 11:16:28 Still waiting for emulator to boot... (55s)
+2025-04-25 11:16:33 Still waiting for emulator to boot... (60s)
+2025-04-25 11:16:38 Still waiting for emulator to boot... (65s)
+2025-04-25 11:16:40 [Fri Apr 25 09:16:40 UTC 2025] Device status check: ONLINE
+2025-04-25 11:16:40 [Fri Apr 25 09:16:40 UTC 2025] Current devices:
+2025-04-25 11:16:40 List of devices attached
+2025-04-25 11:16:40 emulator-5554device
+2025-04-25 11:16:40 emulator-5556device
+2025-04-25 11:16:40 
+2025-04-25 11:16:43 Still waiting for emulator to boot... (70s)
+2025-04-25 11:16:48 Still waiting for emulator to boot... (75s)
+2025-04-25 11:16:53 Still waiting for emulator to boot... (80s)
+2025-04-25 11:16:55 [Fri Apr 25 09:16:55 UTC 2025] Device status check: ONLINE
+2025-04-25 11:16:55 [Fri Apr 25 09:16:55 UTC 2025] Current devices:
+2025-04-25 11:16:55 List of devices attached
+2025-04-25 11:16:55 emulator-5554device
+2025-04-25 11:16:55 emulator-5556device
+2025-04-25 11:16:55 
+2025-04-25 11:16:58 Still waiting for emulator to boot... (85s)
+2025-04-25 11:17:03 Still waiting for emulator to boot... (90s)
+2025-04-25 11:17:08 Still waiting for emulator to boot... (95s)
+2025-04-25 11:17:11 [Fri Apr 25 09:17:11 UTC 2025] Device status check: ONLINE
+2025-04-25 11:17:11 [Fri Apr 25 09:17:11 UTC 2025] Current devices:
+2025-04-25 11:17:11 List of devices attached
+2025-04-25 11:17:11 emulator-5554device
+2025-04-25 11:17:11 emulator-5556device
+2025-04-25 11:17:11 
+2025-04-25 11:17:13 Still waiting for emulator to boot... (100s)
+2025-04-25 11:17:18 Still waiting for emulator to boot... (105s)
+2025-04-25 11:17:23 Still waiting for emulator to boot... (110s)
+2025-04-25 11:17:26 [Fri Apr 25 09:17:26 UTC 2025] Device status check: ONLINE
+2025-04-25 11:17:26 [Fri Apr 25 09:17:26 UTC 2025] Current devices:
+2025-04-25 11:17:26 List of devices attached
+2025-04-25 11:17:26 emulator-5554device
+2025-04-25 11:17:26 emulator-5556device
+2025-04-25 11:17:26 
+2025-04-25 11:17:28 Still waiting for emulator to boot... (115s)
+2025-04-25 11:17:33 Still waiting for emulator to boot... (120s)
+2025-04-25 11:17:38 Timeout waiting for emulator to boot
+2025-04-25 11:17:38 Setting up ADB in TCP/IP mode...
+2025-04-25 11:17:40 ADB bound to localhost only, setting up port forwarding...
+2025-04-25 11:17:40 Port 5555 is already bound on external interface, finding alternative port...
+2025-04-25 11:17:40 Using alternative port 5558 for forwarding
+2025-04-25 11:17:40 Starting socat to handle port forwarding from 0.0.0.0:5558 to localhost:5555
+2025-04-25 11:17:40 connected to localhost:5555
+2025-04-25 11:17:41 [Fri Apr 25 09:17:41 UTC 2025] Device status check: ONLINE
+2025-04-25 11:17:41 [Fri Apr 25 09:17:41 UTC 2025] Current devices:
+2025-04-25 11:17:41 List of devices attached
+2025-04-25 11:17:41 emulator-5554device
+2025-04-25 11:17:41 emulator-5556device
+2025-04-25 11:17:41 localhost:5555device
+2025-04-25 11:17:41 
+2025-04-25 11:17:42 ADB networking configured successfully
+2025-04-25 11:17:56 [Fri Apr 25 09:17:56 UTC 2025] Device status check: ONLINE
+2025-04-25 11:17:56 [Fri Apr 25 09:17:56 UTC 2025] Current devices:
+2025-04-25 11:17:56 List of devices attached
+2025-04-25 11:17:56 emulator-5554device
+2025-04-25 11:17:56 emulator-5556device
+2025-04-25 11:17:56 localhost:5555device
+2025-04-25 11:17:56 
+2025-04-25 11:18:02 [Fri Apr 25 09:18:02 UTC 2025] ADB connection status:
+2025-04-25 11:18:02 List of devices attached
+2025-04-25 11:18:02 emulator-5554device
+2025-04-25 11:18:02 emulator-5556device
+2025-04-25 11:18:02 localhost:5555device
+2025-04-25 11:18:02 
+2025-04-25 11:18:02 Monitoring ADB connection...
+2025-04-25 11:18:02 Port forwarding rules missing, re-establishing...
+2025-04-25 11:18:02 Configuring ADB networking...
+2025-04-25 11:18:09 Waiting for emulator to fully boot...
+2025-04-25 11:18:09 Still waiting for emulator to boot... (0s)
+2025-04-25 11:18:11 [Fri Apr 25 09:18:11 UTC 2025] Device status check: ONLINE
+2025-04-25 11:18:11 [Fri Apr 25 09:18:11 UTC 2025] Current devices:
+2025-04-25 11:18:11 List of devices attached
+2025-04-25 11:18:11 emulator-5554device
+2025-04-25 11:18:11 emulator-5556device
+2025-04-25 11:18:11 
+2025-04-25 11:18:14 Still waiting for emulator to boot... (5s)
+2025-04-25 11:18:19 Still waiting for emulator to boot... (10s)
+2025-04-25 11:18:24 Still waiting for emulator to boot... (15s)
+2025-04-25 11:18:26 [Fri Apr 25 09:18:26 UTC 2025] Device status check: ONLINE
+2025-04-25 11:18:26 [Fri Apr 25 09:18:26 UTC 2025] Current devices:
+2025-04-25 11:18:26 List of devices attached
+2025-04-25 11:18:26 emulator-5554device
+2025-04-25 11:18:26 emulator-5556device
+2025-04-25 11:18:26 
+2025-04-25 11:18:29 Still waiting for emulator to boot... (20s)
+2025-04-25 11:18:34 Still waiting for emulator to boot... (25s)
+2025-04-25 11:18:39 Still waiting for emulator to boot... (30s)
+2025-04-25 11:18:41 [Fri Apr 25 09:18:41 UTC 2025] Device status check: ONLINE
+2025-04-25 11:18:41 [Fri Apr 25 09:18:41 UTC 2025] Current devices:
+2025-04-25 11:18:41 List of devices attached
+2025-04-25 11:18:41 emulator-5554device
+2025-04-25 11:18:41 emulator-5556device
+2025-04-25 11:18:41 
+2025-04-25 11:18:44 Still waiting for emulator to boot... (35s)
+2025-04-25 11:18:49 Still waiting for emulator to boot... (40s)
+2025-04-25 11:18:54 Still waiting for emulator to boot... (45s)
+2025-04-25 11:18:56 [Fri Apr 25 09:18:56 UTC 2025] Device status check: ONLINE
+2025-04-25 11:18:56 [Fri Apr 25 09:18:56 UTC 2025] Current devices:
+2025-04-25 11:18:56 List of devices attached
+2025-04-25 11:18:56 emulator-5554device
+2025-04-25 11:18:56 emulator-5556device
+2025-04-25 11:18:56 
+2025-04-25 11:18:59 Still waiting for emulator to boot... (50s)
+2025-04-25 11:19:04 Still waiting for emulator to boot... (55s)
+2025-04-25 11:19:09 Still waiting for emulator to boot... (60s)
+2025-04-25 11:19:11 [Fri Apr 25 09:19:11 UTC 2025] Device status check: ONLINE
+2025-04-25 11:19:11 [Fri Apr 25 09:19:11 UTC 2025] Current devices:
+2025-04-25 11:19:11 List of devices attached
+2025-04-25 11:19:11 emulator-5554device
+2025-04-25 11:19:11 emulator-5556device
+2025-04-25 11:19:11 
+2025-04-25 11:19:14 Still waiting for emulator to boot... (65s)
+2025-04-25 11:19:19 Still waiting for emulator to boot... (70s)
+2025-04-25 11:19:24 Still waiting for emulator to boot... (75s)
+2025-04-25 11:19:26 [Fri Apr 25 09:19:26 UTC 2025] Device status check: ONLINE
+2025-04-25 11:19:26 [Fri Apr 25 09:19:26 UTC 2025] Current devices:
+2025-04-25 11:19:26 List of devices attached
+2025-04-25 11:19:26 emulator-5554device
+2025-04-25 11:19:26 emulator-5556device
+2025-04-25 11:19:26 
+2025-04-25 11:19:29 Still waiting for emulator to boot... (80s)
+2025-04-25 11:19:34 Still waiting for emulator to boot... (85s)
+2025-04-25 11:19:39 Still waiting for emulator to boot... (90s)
+2025-04-25 11:19:41 [Fri Apr 25 09:19:41 UTC 2025] Device status check: ONLINE
+2025-04-25 11:19:41 [Fri Apr 25 09:19:41 UTC 2025] Current devices:
+2025-04-25 11:19:41 List of devices attached
+2025-04-25 11:19:41 emulator-5554device
+2025-04-25 11:19:41 emulator-5556device
+2025-04-25 11:19:41 
+2025-04-25 11:19:44 Still waiting for emulator to boot... (95s)
+2025-04-25 11:19:49 Still waiting for emulator to boot... (100s)
+2025-04-25 11:19:54 Still waiting for emulator to boot... (105s)
+2025-04-25 11:19:56 [Fri Apr 25 09:19:56 UTC 2025] Device status check: ONLINE
+2025-04-25 11:19:56 [Fri Apr 25 09:19:56 UTC 2025] Current devices:
+2025-04-25 11:19:56 List of devices attached
+2025-04-25 11:19:56 emulator-5554device
+2025-04-25 11:19:56 emulator-5556device
+2025-04-25 11:19:56 
+2025-04-25 11:19:59 Still waiting for emulator to boot... (110s)
+2025-04-25 11:20:04 Still waiting for emulator to boot... (115s)
+2025-04-25 11:20:09 Still waiting for emulator to boot... (120s)
+2025-04-25 11:20:11 [Fri Apr 25 09:20:11 UTC 2025] Device status check: ONLINE
+2025-04-25 11:20:11 [Fri Apr 25 09:20:11 UTC 2025] Current devices:
+2025-04-25 11:20:11 List of devices attached
+2025-04-25 11:20:11 emulator-5554device
+2025-04-25 11:20:11 emulator-5556device
+2025-04-25 11:20:11 
+2025-04-25 11:20:14 Timeout waiting for emulator to boot
+2025-04-25 11:20:14 Setting up ADB in TCP/IP mode...
+2025-04-25 11:20:16 ADB bound to localhost only, setting up port forwarding...
+2025-04-25 11:20:16 Port 5555 is already bound on external interface, finding alternative port...
+2025-04-25 11:20:16 Using alternative port 5559 for forwarding
+2025-04-25 11:20:16 Starting socat to handle port forwarding from 0.0.0.0:5559 to localhost:5555
+2025-04-25 11:20:16 connected to localhost:5555
+2025-04-25 11:20:18 ADB networking configured successfully
+2025-04-25 11:20:26 [Fri Apr 25 09:20:26 UTC 2025] Device status check: ONLINE
+2025-04-25 11:20:26 [Fri Apr 25 09:20:26 UTC 2025] Current devices:
+2025-04-25 11:20:26 List of devices attached
+2025-04-25 11:20:26 emulator-5554device
+2025-04-25 11:20:26 emulator-5556device
+2025-04-25 11:20:26 localhost:5555device
+2025-04-25 11:20:26 
+2025-04-25 11:20:38 [Fri Apr 25 09:20:38 UTC 2025] ADB connection status:
+2025-04-25 11:20:38 List of devices attached
+2025-04-25 11:20:38 emulator-5554device
+2025-04-25 11:20:38 emulator-5556device
+2025-04-25 11:20:38 localhost:5555device
+2025-04-25 11:20:38 
+2025-04-25 11:20:38 Monitoring ADB connection...
+2025-04-25 11:20:38 Port forwarding rules missing, re-establishing...
+2025-04-25 11:20:38 Configuring ADB networking...
+2025-04-25 11:20:40 * daemon not running; starting now at tcp:5037
+2025-04-25 11:20:43 [Fri Apr 25 09:20:43 UTC 2025] Device status check: ONLINE
+2025-04-25 11:20:43 [Fri Apr 25 09:20:43 UTC 2025] Current devices:
+2025-04-25 11:20:43 List of devices attached
+2025-04-25 11:20:43 emulator-5554device
+2025-04-25 11:20:43 emulator-5556device
+2025-04-25 11:20:43 emulator-5558device
+2025-04-25 11:20:43 
+2025-04-25 11:20:43 * daemon started successfully
+2025-04-25 11:20:45 Waiting for emulator to fully boot...
+2025-04-25 11:20:45 Still waiting for emulator to boot... (0s)
+2025-04-25 11:20:50 Still waiting for emulator to boot... (5s)
+2025-04-25 11:20:55 Still waiting for emulator to boot... (10s)
+2025-04-25 11:20:58 [Fri Apr 25 09:20:58 UTC 2025] Device status check: ONLINE
+2025-04-25 11:20:58 [Fri Apr 25 09:20:58 UTC 2025] Current devices:
+2025-04-25 11:20:58 List of devices attached
+2025-04-25 11:20:58 emulator-5554device
+2025-04-25 11:20:58 emulator-5556device
+2025-04-25 11:20:58 emulator-5558device
+2025-04-25 11:20:58 
+2025-04-25 11:21:00 Still waiting for emulator to boot... (15s)
+2025-04-25 11:21:05 Still waiting for emulator to boot... (20s)
+2025-04-25 11:21:10 Still waiting for emulator to boot... (25s)
+2025-04-25 11:21:13 [Fri Apr 25 09:21:13 UTC 2025] Device status check: ONLINE
+2025-04-25 11:21:13 [Fri Apr 25 09:21:13 UTC 2025] Current devices:
+2025-04-25 11:21:13 List of devices attached
+2025-04-25 11:21:13 emulator-5554device
+2025-04-25 11:21:13 emulator-5556device
+2025-04-25 11:21:13 emulator-5558device
+2025-04-25 11:21:13 
+2025-04-25 11:21:15 Still waiting for emulator to boot... (30s)
+2025-04-25 11:21:20 Still waiting for emulator to boot... (35s)
+2025-04-25 11:21:25 Still waiting for emulator to boot... (40s)
+2025-04-25 11:21:28 [Fri Apr 25 09:21:28 UTC 2025] Device status check: ONLINE
+2025-04-25 11:21:28 [Fri Apr 25 09:21:28 UTC 2025] Current devices:
+2025-04-25 11:21:28 List of devices attached
+2025-04-25 11:21:28 emulator-5554device
+2025-04-25 11:21:28 emulator-5556device
+2025-04-25 11:21:28 emulator-5558device
+2025-04-25 11:21:28 
+2025-04-25 11:21:30 Still waiting for emulator to boot... (45s)
+2025-04-25 11:21:35 Still waiting for emulator to boot... (50s)
+2025-04-25 11:21:40 Still waiting for emulator to boot... (55s)
+2025-04-25 11:21:43 [Fri Apr 25 09:21:43 UTC 2025] Device status check: ONLINE
+2025-04-25 11:21:43 [Fri Apr 25 09:21:43 UTC 2025] Current devices:
+2025-04-25 11:21:43 List of devices attached
+2025-04-25 11:21:43 emulator-5554device
+2025-04-25 11:21:43 emulator-5556device
+2025-04-25 11:21:43 emulator-5558device
+2025-04-25 11:21:43 
+2025-04-25 11:21:45 Still waiting for emulator to boot... (60s)
+2025-04-25 11:21:50 Still waiting for emulator to boot... (65s)
+2025-04-25 11:21:55 Still waiting for emulator to boot... (70s)
+2025-04-25 11:21:58 [Fri Apr 25 09:21:58 UTC 2025] Device status check: ONLINE
+2025-04-25 11:21:58 [Fri Apr 25 09:21:58 UTC 2025] Current devices:
+2025-04-25 11:21:58 List of devices attached
+2025-04-25 11:21:58 emulator-5554device
+2025-04-25 11:21:58 emulator-5556device
+2025-04-25 11:21:58 emulator-5558device
+2025-04-25 11:21:58 
