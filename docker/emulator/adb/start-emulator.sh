@@ -79,7 +79,7 @@ while true; do
         
         # Check if device is in 'device' state (not offline)
         if echo "$DEVICES" | grep -q "device"; then
-            echo "✅ Emulator detected and ready!"
+            echo "***** Emulator detected and ready!"
             SERIAL=$(echo "$DEVICES" | grep "device" | head -n 1 | awk '{print $1}')
             echo "Using device: $SERIAL"
             break
@@ -256,7 +256,7 @@ echo "Verifying TCP mode..."
 if verify_device; then
     TCP_PORT=$(adb -s "$SERIAL" shell getprop service.adb.tcp.port 2>/dev/null || echo "")
     if [ "$TCP_PORT" = "5555" ]; then
-        echo "✅ TCP port property set correctly to 5555"
+        echo "***** TCP port property set correctly to 5555"
     else
         echo "⚠️ TCP port property not set correctly, trying universal command..."
         adb tcpip 5555 || echo "⚠️ Universal tcpip command failed"
@@ -296,7 +296,7 @@ sleep 3
 # Check if the connection was successful
 ADB_DEVICES=$(adb devices)
 if echo "$ADB_DEVICES" | grep -E "$TCP_CONNECTION" | grep -q "device"; then
-    echo "✅ Successfully connected to emulator via TCP/IP (localhost)!"
+    echo "***** Successfully connected to emulator via TCP/IP (localhost)!"
 else
     echo "⚠️ Failed to establish TCP/IP connection via localhost, falling back to native connection"
 fi
@@ -376,7 +376,7 @@ check_and_fix_emulator() {
         
         # Check if we succeeded
         if device_is_online; then
-            echo "✅ Successfully reconnected to emulator"
+            echo "***** Successfully reconnected to emulator"
             adb tcpip 5555  # Re-enable TCP mode
         else
             echo "⚠️ Failed to reconnect to emulator"
