@@ -11,7 +11,7 @@ RUN apt-get update && \
     libfontconfig1 libsm6 libice6 libdbus-1-3 libxcb1 \
     libegl1-mesa libgbm1 libvulkan1 mesa-vulkan-drivers \
     android-tools-adb android-sdk-platform-tools-common \
-    pulseaudio tzdata alsa-utils netcat-openbsd dos2unix && \
+    pulseaudio tzdata alsa-utils netcat-openbsd dos2unix iptables socat && \
     rm -rf /var/lib/apt/lists/*
 
 # Set SDK paths and environment variables
@@ -83,15 +83,20 @@ RUN mkdir -p /usr/local/bin
 
 # Copy entrypoint scripts - using absolute path to avoid issues
 COPY adb/start-emulator.sh /usr/local/bin/
+COPY adb/port-forward.sh /usr/local/bin/
 
 # Fix line endings and ensure scripts are executable
 RUN dos2unix /usr/local/bin/start-emulator.sh && \
+    dos2unix /usr/local/bin/port-forward.sh && \
     chmod +x /usr/local/bin/start-emulator.sh && \
+    chmod +x /usr/local/bin/port-forward.sh && \
     ls -la /usr/local/bin/
 
 # Create backup copies of the scripts in case the originals are not found
 RUN cp /usr/local/bin/start-emulator.sh /start-emulator.sh && \
+    cp /usr/local/bin/port-forward.sh /port-forward.sh && \
     chmod +x /start-emulator.sh && \
+    chmod +x /port-forward.sh
 
 # Verify ADB and emulator are in PATH
 RUN which adb || echo "WARNING: adb not in PATH" && \
@@ -100,8 +105,12 @@ RUN which adb || echo "WARNING: adb not in PATH" && \
     ls -la /usr/local/bin/
 
 # Expose ports: console, ADB, ADB-server
-EXPOSE 5554 5555 5037
+# 5037: ADB server
+# 5554: Emulator console
+# 5555: ADB over TCP/IP
+# Important: Make all ports available for binding on 0.0.0.0 to ensure they're accessible from outside
+EXPOSE 5037/tcp 5554/tcp 5555/tcp
 
 WORKDIR ${ANDROID_SDK_ROOT}
-# Modified to use both potential script locations
-CMD ["sh", "-c", "if [ -x /usr/local/bin/start-emulator.sh ]; then /usr/local/bin/start-emulator.sh; else /start-emulator.sh; fi"]
+# Modified to run the port-forward.sh script alongside the main emulator startup
+CMD ["sh", "-c", "if [ -x /usr/local/bin/start-emulator.sh ]; then /usr/local/bin/port-forward.sh & /usr/local/bin/start-emulator.sh; else /port-forward.sh & /start-emulator.sh; fi"]
