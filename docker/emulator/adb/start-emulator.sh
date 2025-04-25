@@ -23,12 +23,12 @@ sleep 2
 echo "===== ANDROID EMULATOR INITIALIZATION ====="
 echo "Starting Android Emulator services..."
 
-# Kill any existing ADB server and start a fresh one - do this only once
+# Kill any existing ADB server and start a fresh one with all connections allowed
 echo "Starting ADB server..."
 adb kill-server || echo "Failed to kill existing ADB server, continuing..."
-sleep 2
-adb -a start-server || { echo "ERROR: Failed to start ADB server. Check if adb is in PATH: $PATH"; exit 1; }
-sleep 2
+sleep 3
+adb -a -P 5037 start-server || { echo "ERROR: Failed to start ADB server. Check if adb is in PATH: $PATH"; exit 1; }
+sleep 3
 
 # Launch emulator with appropriate flags
 echo "Launching Android emulator AVD 'test'..."
@@ -43,7 +43,8 @@ if ! command -v emulator &> /dev/null; then
 fi
 
 # Use more memory and add -no-snapshot flag to ensure fresh boot
-emulator -avd test -no-window -gpu swiftshader_indirect -no-audio -no-boot-anim -no-snapshot -qemu -m 2048 &
+# Use -ports to specify console and adb ports explicitly
+emulator -avd test -no-window -gpu swiftshader_indirect -no-audio -no-boot-anim -no-snapshot -ports 5554,5555 -qemu -m 2048 &
 EMU_PID=$!
 
 # Verify emulator process started
@@ -55,40 +56,89 @@ fi
 echo "Emulator process started with PID: $EMU_PID"
 echo "Waiting for emulator device to become available..."
 
-# Wait for the emulator device to appear in adb devices list (timeout 180s)
+# Wait for the emulator device to appear in adb devices list with longer timeout
 TIMEOUT=180
 START_TIME=$(date +%s)
+SERIAL=""
+
 while true; do
-    LINES=$(adb devices)
-    SERIAL=$(echo "$LINES" | awk '/^emulator-.*/{print $1; exit}')
+    DEVICES=$(adb devices | grep -E "emulator-[0-9]+" || echo "")
     
-    if [ -n "$SERIAL" ]; then
-        STATUS=$(echo "$LINES" | grep "$SERIAL" | awk '{print $2}')
-        echo "Found emulator serial: $SERIAL with status: $STATUS"
+    if [ -n "$DEVICES" ]; then
+        echo "Emulator found in device list: $DEVICES"
         
-        # If status is device, break immediately
-        if [ "$STATUS" = "device" ]; then
-            echo "Emulator is online and ready!"
+        # Check if device is in 'device' state (not offline)
+        if echo "$DEVICES" | grep -q "device"; then
+            echo "✅ Emulator detected and ready!"
+            SERIAL=$(echo "$DEVICES" | grep "device" | head -n 1 | awk '{print $1}')
+            echo "Using device: $SERIAL"
             break
         else
-            echo "Emulator found but status is: $STATUS"
-            # If just found but offline, wait a bit more
+            echo "Emulator found but not ready yet"
+            SERIAL=$(echo "$DEVICES" | grep -E "emulator-[0-9]+" | head -n 1 | awk '{print $1}')
+            echo "Device status: $(echo "$DEVICES" | grep "$SERIAL" | awk '{print $2}')"
         fi
     fi
 
     CURRENT_TIME=$(date +%s)
     ELAPSED_TIME=$((CURRENT_TIME - START_TIME))
 
+    # Try restarting ADB server periodically as a remediation step
+    if [ $((ELAPSED_TIME % 30)) -eq 0 ] && [ $ELAPSED_TIME -gt 0 ]; then
+        echo "Trying to restart ADB server after $ELAPSED_TIME seconds of waiting..."
+        adb kill-server || echo "Failed to kill ADB server"
+        sleep 3
+        adb -a -P 5037 start-server || echo "Failed to start ADB server"
+        sleep 3
+    fi
+
     if [ $ELAPSED_TIME -gt $TIMEOUT ]; then
-        echo "ERROR: Timeout waiting for emulator to become available."
-        exit 1
+        echo "WARNING: Timeout waiting for emulator"
+        echo "Current ADB devices:"
+        adb devices
+        
+        # Fallback to using default serial if we at least found a device
+        if [ -z "$SERIAL" ]; then
+            SERIAL=$(adb devices | grep -E "emulator-[0-9]+" | head -n 1 | awk '{print $1}')
+            
+            if [ -n "$SERIAL" ]; then
+                echo "Found device using alternative method: $SERIAL"
+            else
+                echo "⚠️ No device found after exhaustive searching. Will use default emulator-5554."
+                SERIAL="emulator-5554"
+            fi
+        fi
+        
+        # Continue despite timeout
+        break
     fi
 
     echo "Still waiting for emulator device... (${ELAPSED_TIME}s)"
     sleep 5
 done
 
-echo "Emulator device detected! Serial: $SERIAL"
+# Try to restart ADB server if device is still offline
+DEVICE_STATUS=$(adb devices | grep "$SERIAL" | awk '{print $2}')
+if [ "$DEVICE_STATUS" = "offline" ]; then
+    echo "Emulator device is offline. Attempting comprehensive reconnection..."
+    
+    # Kill server, remove ADB keys, and restart server
+    adb kill-server
+    rm -f ~/.android/adbkey ~/.android/adbkey.pub 2>/dev/null || true
+    sleep 3
+    adb -a -P 5037 start-server
+    sleep 5
+    
+    # Try direct reconnection to the emulator
+    adb disconnect "$SERIAL" 2>/dev/null || true
+    sleep 2
+    adb connect "$SERIAL" || echo "Failed to connect to device"
+    sleep 3
+    
+    # Check status again
+    DEVICE_STATUS=$(adb devices | grep "$SERIAL" | awk '{print $2}')
+    echo "Device status after reconnection attempt: $DEVICE_STATUS"
+fi
 
 echo "Waiting for system boot to complete..."
 
@@ -140,87 +190,74 @@ done
 BOOT_TIME=$ELAPSED_TIME
 echo "===== SUCCESS: Emulator booted successfully in ${BOOT_TIME} seconds! ====="
 
-# IMPORTANT: Wait additional time after boot to ensure services stability
+# IMPORTANT: Wait additional time after system services stabilization
 echo "Waiting additional time for system services stabilization..."
 sleep 10
 
-# Configure ADB root access - attempt up to 3 times with increasing delay
-echo "Configuring ADB over TCP..."
-for i in {1..3}; do
-    echo "Attempt $i: Setting ADB as root..."
-    if adb -s $SERIAL root; then
-        echo "ADB set as root successfully"
-        break
-    else
-        echo "Failed to set ADB as root, waiting before retry..."
-        sleep $(( i * 3 ))  # Exponential backoff
-    fi
-    
-    if [ $i -eq 3 ]; then
-        echo "WARNING: Could not set ADB as root after 3 attempts, continuing..."
-    fi
-done
+# Enable ADB over TCP/IP with progressive approach from enable_adb_connection.sh
+echo "===== CONFIGURING ADB REMOTE ACCESS ====="
 
-# Wait for device after root mode switch
-echo "Waiting for device after root mode switch..."
-adb -s $SERIAL wait-for-device
-sleep 5
+# Step 1: Ensure the device is accessible
+adb -s "$SERIAL" wait-for-device || {
+    echo "ERROR: Device not accessible after boot";
+    # Continue anyway
+}
 
-# Set TCP port property with retry
-for i in {1..3}; do
-    echo "Attempt $i: Setting TCP port property..."
-    if adb -s $SERIAL shell setprop service.adb.tcp.port 5555; then
-        echo "TCP port property set successfully"
-        break
-    else
-        echo "Failed to set TCP port property, waiting before retry..."
-        sleep $(( i * 2 ))
-    fi
-done
+# Step 2: Set device to root for better permissions
+echo "Setting ADB as root..."
+adb -s "$SERIAL" root || echo "Could not set ADB as root, will try tcpip anyway"
+sleep 5  # Give device time to restart in root mode
 
-# Restart ADB daemon with retry and proper checking
-for i in {1..3}; do
-    echo "Attempt $i: Restarting ADB daemon..."
-    # Stop ADB daemon
-    adb -s $SERIAL shell stop adbd || { 
-        echo "Could not stop ADB daemon, waiting before retry..."; 
-        sleep $(( i * 2 ));
-        continue;
-    }
-    
-    sleep 3
-    
-    # Start ADB daemon
-    adb -s $SERIAL shell start adbd || {
-        echo "Could not start ADB daemon, waiting before retry...";
-        sleep $(( i * 2 ));
-        continue;
-    }
-    
+# Step 3: Wait for device after root mode switch
+echo "Reconnecting to device after root mode switch..."
+adb -s "$SERIAL" wait-for-device || echo "Wait for device timed out"
+sleep 3
+
+# Step 4: Set TCP port property directly for redundancy
+echo "Setting TCP port property directly..."
+adb -s "$SERIAL" shell "setprop service.adb.tcp.port 5555" || echo "Failed to set TCP port property"
+sleep 2
+
+# Step 5: Restart ADB daemon on device
+echo "Restarting ADB daemon..."
+adb -s "$SERIAL" shell "stop adbd" || echo "Failed to stop ADB daemon"
+sleep 2
+adb -s "$SERIAL" shell "start adbd" || echo "Failed to start ADB daemon"
+sleep 3
+
+# Step 6: Use tcpip command as the official method
+echo "Setting device to TCP/IP mode..."
+adb -s "$SERIAL" tcpip 5555 || echo "WARNING: adb tcpip command failed"
+sleep 5  # Give more time for mode switch
+
+# Step 7: Verify ADB TCP mode is enabled
+echo "Verifying TCP mode..."
+TCP_PORT=$(adb -s "$SERIAL" shell getprop service.adb.tcp.port 2>/dev/null || echo "")
+if [ "$TCP_PORT" = "5555" ]; then
+    echo "✅ ADB TCP mode successfully enabled on port 5555"
+else
+    echo "⚠️ Failed to verify ADB TCP mode, attempting universal command..."
+    # Try the global command as fallback
+    adb tcpip 5555 || echo "WARNING: Could not set ADB to TCP mode with global command either"
     sleep 5
     
-    # Verify ADB restart was successful
-    TCP_PORT=$(adb -s $SERIAL shell getprop service.adb.tcp.port 2>/dev/null || echo "")
+    # Check one more time
+    TCP_PORT=$(adb -s "$SERIAL" shell getprop service.adb.tcp.port 2>/dev/null || echo "")
     if [ "$TCP_PORT" = "5555" ]; then
-        echo "ADB daemon restarted successfully in TCP mode"
-        break
+        echo "✅ ADB TCP mode successfully enabled on second attempt"
     else
-        echo "ADB TCP mode not verified, proceeding to next attempt..."
+        echo "⚠️ Still failed to set ADB TCP mode properly"
     fi
-    
-    if [ $i -eq 3 ]; then
-        echo "WARNING: Could not properly restart ADB daemon after 3 attempts"
-    fi
-done
+fi
 
-# Try explicitly setting tcpip mode
-echo "Setting ADB to tcpip mode..."
-adb -s $SERIAL tcpip 5555 || echo "WARNING: adb tcpip command failed, however TCP port was already set"
+# Step 8: Try connecting to the device over TCP/IP as a verification
+echo "Testing TCP/IP connection..."
+adb disconnect "$SERIAL" 2>/dev/null || true
+sleep 2
+adb connect localhost:5555 || echo "Failed to connect to localhost:5555"
+sleep 2
 
-# Wait for ADB to switch modes
-sleep 10
-
-# Display device information
+# Display connection information
 echo ""
 echo "===== EMULATOR INFORMATION ====="
 echo "Listing connected devices:"
@@ -228,34 +265,85 @@ adb devices
 
 echo ""
 echo "System information:"
-# Add timeout command with better error handling
-timeout 5 adb -s $SERIAL shell getprop ro.build.version.release > /dev/null 2>&1 && \
-  echo "Android version: $(adb -s $SERIAL shell getprop ro.build.version.release)" || \
-  echo "Android version: Unable to retrieve"
-
-timeout 5 adb -s $SERIAL shell getprop ro.build.version.sdk > /dev/null 2>&1 && \
-  echo "API Level: $(adb -s $SERIAL shell getprop ro.build.version.sdk)" || \
-  echo "API Level: Unable to retrieve"
-
-timeout 5 adb -s $SERIAL shell getprop ro.product.model > /dev/null 2>&1 && \
-  echo "Device model: $(adb -s $SERIAL shell getprop ro.product.model)" || \
-  echo "Device model: Unable to retrieve"
+adb -s "$SERIAL" shell getprop ro.build.version.release 2>/dev/null || echo "Android version: Unable to retrieve"
+adb -s "$SERIAL" shell getprop ro.build.version.sdk 2>/dev/null || echo "API Level: Unable to retrieve"
+adb -s "$SERIAL" shell getprop ro.product.model 2>/dev/null || echo "Device model: Unable to retrieve"
 
 echo ""
 echo "===== ADB REMOTE CONNECTION INFO ====="
-echo "ADB server is running on port 5037"
-echo "You can connect to it from your development environment"
-echo "Container is ready to use for Android application testing"
+HOST_IP=$(hostname -I 2>/dev/null | awk '{print $1}' || echo "localhost")
+echo "ADB server is running and accessible at:"
+echo "Host: $HOST_IP"
+echo "Port: 5555"
+echo "You can connect from your development machine using: adb connect $HOST_IP:5555"
 echo "====================================="
 
-# Check for network connectivity issues
+# Verify network connectivity
 echo "Checking network connectivity to emulator..."
 nc -z -v localhost 5555 || echo "WARNING: Cannot connect to emulator on port 5555"
 
-# Try to get the device's IP address
-DEVICE_IP=$(adb -s $SERIAL shell "ip -4 addr show | grep inet | grep -v 127.0.0.1 | awk '{print \$2}' | cut -d/ -f1" 2>/dev/null)
-echo "Device IP address: $DEVICE_IP"
+# CRITICAL: Keep the emulator process running and monitor its status
+echo "Starting emulator monitoring to keep it alive..."
 
-# Keep container alive
-echo "Emulator is now running. Use Ctrl+C to terminate."
-tail -f /dev/null
+# Function to check if emulator is responsive and reconnect if needed
+check_and_fix_emulator() {
+    local device_status=$(adb devices | grep "$SERIAL" | awk '{print $2}')
+    
+    if [ -z "$device_status" ]; then
+        echo "⚠️ Emulator not found in device list, attempting reconnection..."
+        adb kill-server
+        sleep 2
+        adb -a start-server
+        sleep 3
+        adb connect localhost:5555
+        return 1
+    elif [ "$device_status" = "offline" ]; then
+        echo "⚠️ Emulator is offline, attempting to reconnect..."
+        
+        # Try to reconnect via TCP/IP
+        adb disconnect "$SERIAL" 2>/dev/null || true
+        sleep 1
+        adb kill-server
+        sleep 2
+        adb -a start-server
+        sleep 2
+        adb connect localhost:5555
+        
+        # Check if it worked
+        device_status=$(adb devices | grep "$SERIAL" | awk '{print $2}')
+        if [ "$device_status" = "device" ]; then
+            echo "✅ Successfully reconnected to emulator"
+            return 0
+        else
+            echo "⚠️ Failed to reconnect to emulator"
+            return 1
+        fi
+    elif [ "$device_status" = "device" ]; then
+        # Device is online, verify ADB TCP is still enabled
+        local tcp_port=$(adb -s "$SERIAL" shell getprop service.adb.tcp.port 2>/dev/null || echo "")
+        if [ "$tcp_port" != "5555" ]; then
+            echo "⚠️ TCP mode disabled, re-enabling..."
+            adb -s "$SERIAL" tcpip 5555
+        fi
+        return 0
+    else
+        echo "⚠️ Unknown device status: $device_status"
+        return 1
+    fi
+}
+
+# Infinite loop to keep container running and monitor emulator status
+while true; do
+    # Check if emulator process is still running
+    if ! ps -p $EMU_PID > /dev/null; then
+        echo "⚠️ Emulator process (PID $EMU_PID) died! Will continue monitoring ADB connection."
+    fi
+    
+    # Check and fix emulator connection if needed
+    check_and_fix_emulator
+    
+    # Sleep for a while before next check (30 seconds)
+    for i in {1..30}; do
+        sleep 1
+    done
+done

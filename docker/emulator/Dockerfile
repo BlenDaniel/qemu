@@ -83,20 +83,15 @@ RUN mkdir -p /usr/local/bin
 
 # Copy entrypoint scripts - using absolute path to avoid issues
 COPY adb/start-emulator.sh /usr/local/bin/
-COPY adb/enable_adb_connection.sh /usr/local/bin/
 
 # Fix line endings and ensure scripts are executable
 RUN dos2unix /usr/local/bin/start-emulator.sh && \
-    dos2unix /usr/local/bin/enable_adb_connection.sh && \
     chmod +x /usr/local/bin/start-emulator.sh && \
-    chmod +x /usr/local/bin/enable_adb_connection.sh && \
     ls -la /usr/local/bin/
 
 # Create backup copies of the scripts in case the originals are not found
 RUN cp /usr/local/bin/start-emulator.sh /start-emulator.sh && \
-    cp /usr/local/bin/enable_adb_connection.sh /enable_adb_connection.sh && \
     chmod +x /start-emulator.sh && \
-    chmod +x /enable_adb_connection.sh
 
 # Verify ADB and emulator are in PATH
 RUN which adb || echo "WARNING: adb not in PATH" && \
