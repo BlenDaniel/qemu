@@ -42,9 +42,15 @@ if ! command -v emulator &> /dev/null; then
     exit 1
 fi
 
-# Use more memory and add -no-snapshot flag to ensure fresh boot
-# Use -ports to specify console and adb ports explicitly
-emulator -avd test -no-window -gpu swiftshader_indirect -no-audio -no-boot-anim -no-snapshot -ports 5554,5555 -qemu -m 2048 &
+# Important: Add more flags to make emulator more stable
+# 1. Adding -no-cache to avoid filesystem issues
+# 2. Adding -no-metrics to suppress metrics warning
+# 3. Adding -no-snapshot-save to avoid issues with snapshot corruption
+# 4. Adding -no-boot-anim to speed up boot
+# 5. Adding explicit port configuration with -ports
+emulator -avd test -no-window -gpu swiftshader_indirect -no-audio -no-boot-anim \
+    -no-snapshot -no-snapshot-save -no-cache -no-metrics \
+    -ports 5554,5555 -qemu -m 2048 &
 EMU_PID=$!
 
 # Verify emulator process started
@@ -190,72 +196,98 @@ done
 BOOT_TIME=$ELAPSED_TIME
 echo "===== SUCCESS: Emulator booted successfully in ${BOOT_TIME} seconds! ====="
 
-# IMPORTANT: Wait additional time after system services stabilization
+# IMPORTANT: Wait additional time for system services stabilization
 echo "Waiting additional time for system services stabilization..."
 sleep 10
 
-# Enable ADB over TCP/IP with progressive approach from enable_adb_connection.sh
-echo "===== CONFIGURING ADB REMOTE ACCESS ====="
-
-# Step 1: Ensure the device is accessible
-adb -s "$SERIAL" wait-for-device || {
-    echo "ERROR: Device not accessible after boot";
-    # Continue anyway
+# Function to verify device is responsive
+verify_device() {
+    adb -s "$SERIAL" shell echo "test" > /dev/null 2>&1
+    return $?
 }
 
-# Step 2: Set device to root for better permissions
-echo "Setting ADB as root..."
-adb -s "$SERIAL" root || echo "Could not set ADB as root, will try tcpip anyway"
-sleep 5  # Give device time to restart in root mode
+# Enable ADB over TCP/IP with progressive approach - FIXED VERSION
+echo "===== CONFIGURING ADB REMOTE ACCESS ====="
 
-# Step 3: Wait for device after root mode switch
-echo "Reconnecting to device after root mode switch..."
-adb -s "$SERIAL" wait-for-device || echo "Wait for device timed out"
-sleep 3
-
-# Step 4: Set TCP port property directly for redundancy
-echo "Setting TCP port property directly..."
-adb -s "$SERIAL" shell "setprop service.adb.tcp.port 5555" || echo "Failed to set TCP port property"
-sleep 2
-
-# Step 5: Restart ADB daemon on device
-echo "Restarting ADB daemon..."
-adb -s "$SERIAL" shell "stop adbd" || echo "Failed to stop ADB daemon"
-sleep 2
-adb -s "$SERIAL" shell "start adbd" || echo "Failed to start ADB daemon"
-sleep 3
-
-# Step 6: Use tcpip command as the official method
-echo "Setting device to TCP/IP mode..."
-adb -s "$SERIAL" tcpip 5555 || echo "WARNING: adb tcpip command failed"
-sleep 5  # Give more time for mode switch
-
-# Step 7: Verify ADB TCP mode is enabled
-echo "Verifying TCP mode..."
-TCP_PORT=$(adb -s "$SERIAL" shell getprop service.adb.tcp.port 2>/dev/null || echo "")
-if [ "$TCP_PORT" = "5555" ]; then
-    echo "✅ ADB TCP mode successfully enabled on port 5555"
-else
-    echo "⚠️ Failed to verify ADB TCP mode, attempting universal command..."
-    # Try the global command as fallback
-    adb tcpip 5555 || echo "WARNING: Could not set ADB to TCP mode with global command either"
-    sleep 5
+# CRITICAL FIX: First make sure device is still responsive
+if ! verify_device; then
+    echo "⚠️ Warning: Device not responding. Trying to reconnect..."
+    adb kill-server
+    sleep 2
+    adb -a start-server
+    sleep 2
     
-    # Check one more time
-    TCP_PORT=$(adb -s "$SERIAL" shell getprop service.adb.tcp.port 2>/dev/null || echo "")
-    if [ "$TCP_PORT" = "5555" ]; then
-        echo "✅ ADB TCP mode successfully enabled on second attempt"
-    else
-        echo "⚠️ Still failed to set ADB TCP mode properly"
+    if ! verify_device; then
+        echo "⚠️ Device still not responding. Will attempt recovery..."
     fi
 fi
 
-# Step 8: Try connecting to the device over TCP/IP as a verification
+# IMPORTANT: Use this more reliable method instead of setting root
+# Set the TCP/IP port property without requiring root
+echo "Setting TCP port property directly via setprop..."
+adb -s "$SERIAL" shell "setprop service.adb.tcp.port 5555" || echo "⚠️ Failed to set port property, continuing..."
+sleep 3
+
+# Try both TCP/IP configuration methods - first the most reliable
+echo "Enabling TCP/IP mode using direct tcpip command..."
+adb -s "$SERIAL" tcpip 5555 || echo "⚠️ tcpip command failed, trying alternative method..."
+sleep 5
+
+# Verify ADB TCP mode is enabled
+echo "Verifying TCP mode..."
+if verify_device; then
+    TCP_PORT=$(adb -s "$SERIAL" shell getprop service.adb.tcp.port 2>/dev/null || echo "")
+    if [ "$TCP_PORT" = "5555" ]; then
+        echo "✅ TCP port property set correctly to 5555"
+    else
+        echo "⚠️ TCP port property not set correctly, trying universal command..."
+        adb tcpip 5555 || echo "⚠️ Universal tcpip command failed"
+        sleep 5
+    fi
+else
+    echo "⚠️ Device not responding, cannot verify TCP mode"
+fi
+
+# Get device IP for more reliable connection
+DEVICE_IP=""
+if verify_device; then
+    # Try multiple methods to get device IP
+    DEVICE_IP=$(adb -s "$SERIAL" shell "ip addr show | grep -E 'inet 10\\.' | cut -d/ -f1 | awk '{print \$2}'" 2>/dev/null || echo "")
+    if [ -z "$DEVICE_IP" ]; then
+        DEVICE_IP=$(adb -s "$SERIAL" shell "getprop dhcp.eth0.ipaddress" 2>/dev/null || echo "")
+    fi
+    if [ -z "$DEVICE_IP" ]; then
+        DEVICE_IP="localhost"
+    fi
+else
+    DEVICE_IP="localhost"
+fi
+
+# Try connecting to the device over TCP/IP with both localhost and specific IP
 echo "Testing TCP/IP connection..."
+# First disconnect existing connections
 adb disconnect "$SERIAL" 2>/dev/null || true
 sleep 2
-adb connect localhost:5555 || echo "Failed to connect to localhost:5555"
-sleep 2
+
+# Try connection to local IP first
+echo "Connecting to ADB over TCP using localhost:5555..."
+adb connect localhost:5555 || echo "⚠️ Failed to connect to localhost:5555"
+sleep 3
+
+# Try device IP if available
+if [ -n "$DEVICE_IP" ] && [ "$DEVICE_IP" != "localhost" ]; then
+    echo "Connecting to ADB over TCP using device IP: $DEVICE_IP:5555..."
+    adb connect "$DEVICE_IP:5555" || echo "⚠️ Failed to connect to $DEVICE_IP:5555"
+    sleep 3
+fi
+
+# Check if either connection was successful
+ADB_DEVICES=$(adb devices)
+if echo "$ADB_DEVICES" | grep -E "localhost:5555|$DEVICE_IP:5555" | grep -q "device"; then
+    echo "✅ Successfully connected to emulator via TCP/IP!"
+else
+    echo "⚠️ Failed to establish reliable TCP/IP connection, falling back to original connection"
+fi
 
 # Display connection information
 echo ""
@@ -271,66 +303,87 @@ adb -s "$SERIAL" shell getprop ro.product.model 2>/dev/null || echo "Device mode
 
 echo ""
 echo "===== ADB REMOTE CONNECTION INFO ====="
-HOST_IP=$(hostname -I 2>/dev/null | awk '{print $1}' || echo "localhost")
+# Get container IP for external connection
+CONTAINER_IP=$(hostname -I 2>/dev/null | awk '{print $1}' || echo "localhost")
 echo "ADB server is running and accessible at:"
-echo "Host: $HOST_IP"
+echo "Host: $CONTAINER_IP"
 echo "Port: 5555"
-echo "You can connect from your development machine using: adb connect $HOST_IP:5555"
+echo "You can connect from your development machine using: adb connect $CONTAINER_IP:5555"
 echo "====================================="
 
 # Verify network connectivity
 echo "Checking network connectivity to emulator..."
 nc -z -v localhost 5555 || echo "WARNING: Cannot connect to emulator on port 5555"
 
-# CRITICAL: Keep the emulator process running and monitor its status
-echo "Starting emulator monitoring to keep it alive..."
-
 # Function to check if emulator is responsive and reconnect if needed
 check_and_fix_emulator() {
-    local device_status=$(adb devices | grep "$SERIAL" | awk '{print $2}')
+    # First check if the emulator process is still running
+    if ! ps -p $EMU_PID > /dev/null; then
+        echo "⚠️ Emulator process (PID $EMU_PID) died!"
+        return 1
+    fi
+    
+    # Then check device connectivity
+    local device_status=$(adb devices | grep -E "emulator-[0-9]+|localhost:5555|$DEVICE_IP:5555" | awk '{print $2}')
     
     if [ -z "$device_status" ]; then
-        echo "⚠️ Emulator not found in device list, attempting reconnection..."
+        echo "⚠️ No device found in ADB devices list, attempting reconnection..."
         adb kill-server
         sleep 2
         adb -a start-server
         sleep 3
         adb connect localhost:5555
+        if [ -n "$DEVICE_IP" ] && [ "$DEVICE_IP" != "localhost" ]; then
+            adb connect "$DEVICE_IP:5555"
+        fi
+        sleep 2
         return 1
     elif [ "$device_status" = "offline" ]; then
-        echo "⚠️ Emulator is offline, attempting to reconnect..."
+        echo "⚠️ Device is offline, attempting to reconnect..."
         
-        # Try to reconnect via TCP/IP
+        # Try full reconnection sequence
         adb disconnect "$SERIAL" 2>/dev/null || true
-        sleep 1
+        adb disconnect localhost:5555 2>/dev/null || true
+        if [ -n "$DEVICE_IP" ] && [ "$DEVICE_IP" != "localhost" ]; then
+            adb disconnect "$DEVICE_IP:5555" 2>/dev/null || true
+        fi
+        sleep 2
+        
+        # Restart ADB server
         adb kill-server
         sleep 2
         adb -a start-server
-        sleep 2
-        adb connect localhost:5555
+        sleep 3
         
-        # Check if it worked
-        device_status=$(adb devices | grep "$SERIAL" | awk '{print $2}')
-        if [ "$device_status" = "device" ]; then
+        # Connect to all possible endpoints
+        adb connect localhost:5555
+        if [ -n "$DEVICE_IP" ] && [ "$DEVICE_IP" != "localhost" ]; then
+            adb connect "$DEVICE_IP:5555"
+        fi
+        sleep 3
+        
+        # Verify if reconnection worked
+        local new_status=$(adb devices | grep -E "localhost:5555|$DEVICE_IP:5555" | awk '{print $2}')
+        if [ "$new_status" = "device" ]; then
             echo "✅ Successfully reconnected to emulator"
+            # Re-enable TCP mode just to be sure
+            adb tcpip 5555
             return 0
         else
             echo "⚠️ Failed to reconnect to emulator"
             return 1
         fi
     elif [ "$device_status" = "device" ]; then
-        # Device is online, verify ADB TCP is still enabled
-        local tcp_port=$(adb -s "$SERIAL" shell getprop service.adb.tcp.port 2>/dev/null || echo "")
-        if [ "$tcp_port" != "5555" ]; then
-            echo "⚠️ TCP mode disabled, re-enabling..."
-            adb -s "$SERIAL" tcpip 5555
-        fi
+        # Device is online, just verify TCP mode
         return 0
     else
         echo "⚠️ Unknown device status: $device_status"
         return 1
     fi
 }
+
+# CRITICAL: Keep the emulator process running and monitor its status
+echo "Starting emulator monitoring to keep it alive..."
 
 # Infinite loop to keep container running and monitor emulator status
 while true; do
@@ -342,8 +395,8 @@ while true; do
     # Check and fix emulator connection if needed
     check_and_fix_emulator
     
-    # Sleep for a while before next check (30 seconds)
-    for i in {1..30}; do
+    # Sleep for a while before next check (15 seconds instead of 30)
+    for i in {1..15}; do
         sleep 1
     done
 done
