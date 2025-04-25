@@ -247,31 +247,3 @@
 2025-04-25 09:42:02 localhost:5555device
 2025-04-25 09:42:02 
 
-
-PS D:\Project\QEMU> Invoke-WebRequest -Method Post -Uri http://localhost:5001/emulators | Select-Object -ExpandProperty Content | jq .
-{
-  "id": "1c6a78a4-48c7-4bd9-aac9-42c836206418",                                                                                                                                               
-  "ip": "172.17.0.2",                                                                                                                                                                         
-  "ports": {                                                                                                                                                                                  
-    "5037/tcp": [                                                                                                                                                                             
-      {
-        "HostIp": "0.0.0.0",
-        "HostPort": "53066"
-      }
-    ],
-    "5554/tcp": [
-      {
-        "HostIp": "0.0.0.0",
-        "HostPort": "53067"
-      }
-    ],
-    "5555/tcp": [
-      {
-        "HostIp": "0.0.0.0",
-        "HostPort": "53065"
-      }
-    ]
-  },
-  "status": "running"
-}
-PS D:\Project\QEMU> 
