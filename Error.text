@@ -1,224 +1,228 @@
-2025-04-25 08:49:48 ===== SCRIPT CHECK =====
-2025-04-25 08:49:48 Starting script at: Fri Apr 25 06:49:48 UTC 2025
-2025-04-25 08:49:48 Script path: /usr/local/bin/start-emulator.sh
-2025-04-25 08:49:48 Script permissions: -rwxr-xr-x 1 root root 8759 Apr 24 14:03 /usr/local/bin/start-emulator.sh
-2025-04-25 08:49:50 ===== ANDROID EMULATOR INITIALIZATION =====
-2025-04-25 08:49:50 Starting Android Emulator services...
-2025-04-25 08:49:50 Starting ADB server...
-2025-04-25 08:49:57 Launching Android emulator AVD 'test'...
-2025-04-25 08:49:57 Emulator process started with PID: 23
-2025-04-25 08:49:57 Waiting for emulator device to become available...
-2025-04-25 08:49:57 Still waiting for emulator device... (0s)
-2025-04-25 08:49:57 INFO         | Android emulator version 35.4.9.0 (build_id 13025442) (CL:N/A)
-2025-04-25 08:49:57 INFO         | Graphics backend: gfxstream
-2025-04-25 08:49:57 INFO         | Found systemPath /opt/android-sdk/system-images/android-30/google_apis/x86/
-2025-04-25 08:49:57 INFO         | Found systemPath /opt/android-sdk/system-images/android-30/google_apis/x86/
-2025-04-25 08:49:57 WARNING      | Please update the emulator to one that supports the feature(s): Vulkan
-2025-04-25 08:49:57 INFO         | Increasing RAM size to 2048MB
-2025-04-25 08:49:57 INFO         | Checking system compatibility:
-2025-04-25 08:49:57 INFO         |   Checking: hasSufficientDiskSpace
-2025-04-25 08:49:57 INFO         |      Ok: Disk space requirements to run avd: `test` are met
-2025-04-25 08:49:57 INFO         |   Checking: hasSufficientHwGpu
-2025-04-25 08:49:57 INFO         |      Ok: Hardware GPU requirements to run avd: `test` are passed
-2025-04-25 08:49:57 INFO         |   Checking: hasSufficientSystem
-2025-04-25 08:49:57 INFO         |      Ok: System requirements to run avd: `test` are met
-2025-04-25 08:49:57 WARNING      | File System is not ext4, disable QuickbootFileBacked feature
-2025-04-25 08:49:57 WARNING      | FeatureControl is requesting a non existing feature.
-2025-04-25 08:49:57 INFO         | Storing crashdata in: /tmp/android-unknown/emu-crash-35.4.9.db, detection is enabled for process: 23
-2025-04-25 08:49:50 cannot connect to daemon at tcp:5037: Connection refused
-2025-04-25 08:49:52 * daemon not running; starting now at tcp:5037
-2025-04-25 08:49:55 * daemon started successfully
-2025-04-25 08:49:57 I0425 06:49:57.791609      23 opengles.cpp:285] android_startOpenglesRenderer: gpu info
-2025-04-25 08:49:57 I0425 06:49:57.791693      23 opengles.cpp:286] 
-2025-04-25 08:49:57 WARNING: cannnot unmap ptr 0x7efd25489000 as it is in the protected range from 0x7efd25489000 to 0x7efda5689000
-2025-04-25 08:49:57 WARNING: cannnot unmap ptr 0x7efda5601000 as it is in the protected range from 0x7efd25489000 to 0x7efda5689000
-2025-04-25 08:50:41 adb: device offline
-2025-04-25 08:50:45 adb: device offline
-2025-04-25 08:50:51 error: device offline
-2025-04-25 08:49:57 INFO         | Guest Driver: Auto (ext controls)
-2025-04-25 08:49:57 library_mode swiftshader_indirect gpu mode swiftshader_indirect
-2025-04-25 08:49:57 INFO         | Initializing hardware OpenGLES emulation support
-2025-04-25 08:49:57 INFO         | Not raising nofile soft limit from 1048576.
-2025-04-25 08:49:57 INFO         | HealthMonitor disabled.
-2025-04-25 08:49:57 INFO         | initIcdPaths: ICD set to 'swiftshader', using Swiftshader ICD
-2025-04-25 08:49:57 INFO         | Setting ICD filenames for the loader = /opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/vk_swiftshader_icd.json:/opt/android-sdk/emulator/lib64/vulkan/vk_swiftshader_icd.json
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so]
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so]: not found in map, open for the first time
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so] (posix): begin
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so] (posix,linux): call dlopen on [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so]
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so] failed (posix). dlerror: []
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1]
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1]: not found in map, open for the first time
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1] (posix): begin
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1] (posix,linux): call dlopen on [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1]
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1] failed (posix). dlerror: []
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/lib64/vulkan/libvulkan.so]
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/lib64/vulkan/libvulkan.so]: not found in map, open for the first time
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/lib64/vulkan/libvulkan.so] (posix): begin
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/lib64/vulkan/libvulkan.so] (posix,linux): call dlopen on [/opt/android-sdk/emulator/lib64/vulkan/libvulkan.so]
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | Added library: /opt/android-sdk/emulator/lib64/vulkan/libvulkan.so
-2025-04-25 08:49:57 INFO         | Selecting Vulkan device: SwiftShader Device (Subzero), Version: 1.3.0
-2025-04-25 08:49:57 INFO         | Supports id properties, got a vulkan device UUID
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [libGLESv2.so]: not found in map, open for the first time
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [libGLESv2.so] (posix): begin
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [libGLESv2.so] (posix,linux): call dlopen on [libGLESv2.so]
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [libEGL.so]: not found in map, open for the first time
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [libEGL.so] (posix): begin
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [libEGL.so] (posix,linux): call dlopen on [libEGL.so]
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [libX11]
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [libX11]: not found in map, open for the first time
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [libX11] (posix): begin
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | SharedLibrary::open for [libX11] (posix,linux): call dlopen on [libX11.so]
-2025-04-25 08:49:57 
-2025-04-25 08:49:57 INFO         | Initializing VkEmulation features:
-2025-04-25 08:49:57 INFO         |     glInteropSupported: false
-2025-04-25 08:49:57 INFO         |     useDeferredCommands: true
-2025-04-25 08:49:57 INFO         |     createResourceWithRequirements: true
-2025-04-25 08:49:57 INFO         |     useVulkanComposition: false
-2025-04-25 08:49:57 INFO         |     useVulkanNativeSwapchain: false
-2025-04-25 08:49:57 INFO         |     enable guestRenderDoc: false
-2025-04-25 08:49:57 INFO         |     ASTC LDR emulation mode: 2
-2025-04-25 08:49:57 INFO         |     enable ETC2 emulation: true
-2025-04-25 08:49:57 INFO         |     enable Ycbcr emulation: false
-2025-04-25 08:49:57 INFO         |     guestVulkanOnly: false
-2025-04-25 08:49:57 INFO         |     useDedicatedAllocations: false
-2025-04-25 08:49:57 INFO         | Graphics Adapter Vendor Google (Google Inc.)
-2025-04-25 08:49:57 INFO         | Graphics Adapter Android Emulator OpenGL ES Translator (Google SwiftShader)
-2025-04-25 08:49:57 INFO         | Graphics API Version OpenGL ES 3.0 (OpenGL ES 3.0 SwiftShader 4.0.0.1)
-2025-04-25 08:49:57 INFO         | Graphics API Extensions GL_OES_EGL_sync GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_depth24 GL_OES_depth32 GL_OES_element_index_uint GL_OES_texture_float GL_OES_texture_float_linear GL_OES_compressed_paletted_texture GL_OES_compressed_ETC1_RGB8_texture GL_OES_depth_texture GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_packed_depth_stencil GL_OES_vertex_half_float GL_OES_standard_derivatives GL_OES_texture_npot GL_OES_rgb8_rgba8 GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_texture_format_BGRA8888 GL_APPLE_texture_format_BGRA8888 
-2025-04-25 08:49:57 INFO         | Graphics Device Extensions N/A
-2025-04-25 08:49:57 INFO         | Userspace boot properties:
-2025-04-25 08:49:57 INFO         |   android.bootanim=0
-2025-04-25 08:49:57 INFO         |   android.qemud=1
-2025-04-25 08:49:57 INFO         |   androidboot.boot_devices=pci0000:00/0000:00:03.0 pci0000:00/0000:00:06.0
-2025-04-25 08:49:57 INFO         |   androidboot.hardware=ranchu
-2025-04-25 08:49:57 INFO         |   androidboot.hardware.vulkan=ranchu
-2025-04-25 08:49:57 INFO         |   androidboot.serialno=EMULATOR35X4X9X0
-2025-04-25 08:49:57 INFO         |   androidboot.vbmeta.digest=22632f66be5ef8f2181b7f14ab33fac3a6d82c7c65d6172a59d3484281605e20
-2025-04-25 08:49:57 INFO         |   androidboot.vbmeta.hash_alg=sha256
-2025-04-25 08:49:57 INFO         |   androidboot.vbmeta.size=6144
-2025-04-25 08:49:57 INFO         |   qemu=1
-2025-04-25 08:49:57 INFO         |   qemu.avd_name=test
-2025-04-25 08:49:57 INFO         |   qemu.camera_hq_edge_processing=0
-2025-04-25 08:49:57 INFO         |   qemu.camera_protocol_ver=1
-2025-04-25 08:49:57 INFO         |   qemu.dalvik.vm.heapsize=512m
-2025-04-25 08:49:57 INFO         |   qemu.encrypt=1
-2025-04-25 08:49:57 INFO         |   qemu.gles=1
-2025-04-25 08:49:57 INFO         |   qemu.gltransport=pipe
-2025-04-25 08:49:57 INFO         |   qemu.gltransport.drawFlushInterval=800
-2025-04-25 08:49:57 INFO         |   qemu.hwcodec.avcdec=2
-2025-04-25 08:49:57 INFO         |   qemu.hwcodec.hevcdec=2
-2025-04-25 08:49:57 INFO         |   qemu.hwcodec.vpxdec=2
-2025-04-25 08:49:57 INFO         |   qemu.opengles.version=196608
-2025-04-25 08:49:57 INFO         |   qemu.settings.system.screen_off_timeout=2147483647
-2025-04-25 08:49:57 INFO         |   qemu.uirenderer=skiagl
-2025-04-25 08:49:57 INFO         |   qemu.virtiowifi=1
-2025-04-25 08:49:57 INFO         |   qemu.vsync=60
-2025-04-25 08:49:57 INFO         | Monitoring duration of emulator setup.
-2025-04-25 08:49:57 WARNING      | Using fallback path for the emulator registration directory.
-2025-04-25 08:49:57 WARNING      | The emulator now requires a signed jwt token for gRPC access! Use the -grpc flag if you really want an open unprotected grpc port
-2025-04-25 08:49:57 INFO         | Using security allow list from: /opt/android-sdk/emulator/lib/emulator_access.json
-2025-04-25 08:49:57 WARNING      | *** Basic token auth should only be used by android-studio ***
-2025-04-25 08:49:57 INFO         | The active JSON Web Key Sets can be found here: /root/.android/avd/running/23/jwks/0b4de428-6d6e-4551-8d5b-4a5a217409da/active.jwk
-2025-04-25 08:49:57 INFO         | Scanning /root/.android/avd/running/23/jwks/0b4de428-6d6e-4551-8d5b-4a5a217409da for jwk keys.
-2025-04-25 08:49:57 INFO         | Started GRPC server at 127.0.0.1:8554, security: Local, auth: +token
-2025-04-25 08:49:57 WARNING      | Using fallback path for the emulator registration directory.
-2025-04-25 08:49:57 INFO         | Advertising in: /root/.android/avd/running/pid_23.ini
-2025-04-25 08:49:57 INFO         | Setting display: 0 configuration to: 320x640, dpi: 160x160 
-2025-04-25 08:49:57 INFO         | setDisplayActiveConfig 0
-2025-04-25 08:49:57 ##############################################################################
-2025-04-25 08:49:57 ##                        WARNING - ACTION REQUIRED                         ##
-2025-04-25 08:49:57 ##  Consider using the '-metrics-collection' flag to help improve the       ##
-2025-04-25 08:49:57 ##  emulator by sending anonymized usage data. Or use the '-no-metrics'     ##
-2025-04-25 08:49:57 ##  flag to bypass this warning and turn off the metrics collection.        ##
-2025-04-25 08:49:57 ##  In a future release this warning will turn into a one-time blocking     ##
-2025-04-25 08:49:57 ##  prompt to ask for explicit user input regarding metrics collection.     ##
-2025-04-25 08:49:57 ##                                                                          ##
-2025-04-25 08:49:57 ##  Please see '-help-metrics-collection' for more details. You can use     ##
-2025-04-25 08:49:57 ##  '-metrics-to-file' or '-metrics-to-console' flags to see what type of   ##
-2025-04-25 08:49:57 ##  data is being collected by emulator as part of usage statistics.        ##
-2025-04-25 08:49:57 ##############################################################################
-2025-04-25 08:49:57 USER_INFO    | Emulator is performing a full startup. This may take upto two minutes, or more.
-2025-04-25 08:49:57 WARNING      | Failed to process .ini file /root/.android/emu-update-last-check.ini for reading.
-2025-04-25 08:49:58 WARNING      | UpdateCheck: Failure: Error
-2025-04-25 08:49:58 WARNING      | UpdateCheck: failed to get the latest version, skipping check (current version '35.4.9-13025442')
-2025-04-25 08:50:02 Found emulator serial: emulator-5554 with status: offline
-2025-04-25 08:50:02 Emulator found but status is: offline
-2025-04-25 08:50:02 Still waiting for emulator device... (5s)
-2025-04-25 08:50:07 Found emulator serial: emulator-5554 with status: offline
-2025-04-25 08:50:07 Emulator found but status is: offline
-2025-04-25 08:50:07 Still waiting for emulator device... (10s)
-2025-04-25 08:50:12 Found emulator serial: emulator-5554 with status: device
-2025-04-25 08:50:12 Emulator is online and ready!
-2025-04-25 08:50:12 Emulator device detected! Serial: emulator-5554
-2025-04-25 08:50:12 Waiting for system boot to complete...
-2025-04-25 08:50:12 Current device state: device
-2025-04-25 08:50:12 Boot status: 
-2025-04-25 08:50:12 Waiting for system boot... (0s)
-2025-04-25 08:50:17 Current device state: device
-2025-04-25 08:50:17 Boot status: 
-2025-04-25 08:50:17 Waiting for system boot... (5s)
-2025-04-25 08:50:22 Current device state: device
-2025-04-25 08:50:22 Boot status: 1
-2025-04-25 08:50:22 Package service is up and running
-2025-04-25 08:50:22 ===== SUCCESS: Emulator booted successfully in 5 seconds! =====
-2025-04-25 08:50:22 Waiting additional time for system services stabilization...
-2025-04-25 08:50:23 INFO         | Boot completed in 25541 ms
-2025-04-25 08:50:23 INFO         | Increasing screen off timeout, logcat buffer size to 2M.
-2025-04-25 08:50:32 Configuring ADB over TCP...
-2025-04-25 08:50:32 Attempt 1: Setting ADB as root...
-2025-04-25 08:50:32 restarting adbd as root
-2025-04-25 08:50:34 ADB set as root successfully
-2025-04-25 08:50:34 Waiting for device after root mode switch...
-2025-04-25 08:50:39 Attempt 1: Setting TCP port property...
-2025-04-25 08:50:39 TCP port property set successfully
-2025-04-25 08:50:39 Attempt 1: Restarting ADB daemon...
-2025-04-25 08:50:39 Could not stop ADB daemon, waiting before retry...
-2025-04-25 08:50:41 Attempt 2: Restarting ADB daemon...
-2025-04-25 08:50:41 Could not stop ADB daemon, waiting before retry...
-2025-04-25 08:50:45 Attempt 3: Restarting ADB daemon...
-2025-04-25 08:50:45 Could not stop ADB daemon, waiting before retry...
-2025-04-25 08:50:51 Setting ADB to tcpip mode...
-2025-04-25 08:50:51 WARNING: adb tcpip command failed, however TCP port was already set
-2025-04-25 08:51:01 
-2025-04-25 08:51:01 ===== EMULATOR INFORMATION =====
-2025-04-25 08:51:01 Listing connected devices:
-2025-04-25 08:51:01 List of devices attached
-2025-04-25 08:51:01 emulator-5554offline
-2025-04-25 08:51:01 
-2025-04-25 08:51:01 
-2025-04-25 08:51:01 System information:
-2025-04-25 08:51:01 Android version: Unable to retrieve
-2025-04-25 08:51:01 API Level: Unable to retrieve
-2025-04-25 08:51:01 Device model: Unable to retrieve
-2025-04-25 08:51:01 
-2025-04-25 08:51:01 ===== ADB REMOTE CONNECTION INFO =====
-2025-04-25 08:51:01 ADB server is running on port 5037
-2025-04-25 08:51:01 You can connect to it from your development environment
-2025-04-25 08:51:01 Container is ready to use for Android application testing
-2025-04-25 08:51:01 =====================================
-2025-04-25 08:51:01 Checking network connectivity to emulator...
-2025-04-25 08:51:01 Connection to localhost (::1) 5555 port [tcp/*] succeeded!
+2025-04-25 09:04:19 ===== SCRIPT CHECK =====
+2025-04-25 09:04:19 Starting script at: Fri Apr 25 07:04:19 UTC 2025
+2025-04-25 09:04:19 Script path: /usr/local/bin/start-emulator.sh
+2025-04-25 09:04:19 Script permissions: -rwxr-xr-x 1 root root 12582 Apr 25 07:03 /usr/local/bin/start-emulator.sh
+2025-04-25 09:04:21 ===== ANDROID EMULATOR INITIALIZATION =====
+2025-04-25 09:04:21 Starting Android Emulator services...
+2025-04-25 09:04:21 Starting ADB server...
+2025-04-25 09:04:21 cannot connect to daemon at tcp:5037: Connection refused
+2025-04-25 09:04:24 * daemon not running; starting now at tcp:5037
+2025-04-25 09:04:27 * daemon started successfully
+2025-04-25 09:04:30 Launching Android emulator AVD 'test'...
+2025-04-25 09:04:30 Emulator process started with PID: 23
+2025-04-25 09:04:30 Waiting for emulator device to become available...
+2025-04-25 09:04:30 Still waiting for emulator device... (0s)
+2025-04-25 09:04:30 INFO         | Android emulator version 35.4.9.0 (build_id 13025442) (CL:N/A)
+2025-04-25 09:04:30 INFO         | Graphics backend: gfxstream
+2025-04-25 09:04:30 INFO         | Found systemPath /opt/android-sdk/system-images/android-30/google_apis/x86/
+2025-04-25 09:04:30 INFO         | Found systemPath /opt/android-sdk/system-images/android-30/google_apis/x86/
+2025-04-25 09:04:31 WARNING      | Please update the emulator to one that supports the feature(s): Vulkan
+2025-04-25 09:04:31 INFO         | Increasing RAM size to 2048MB
+2025-04-25 09:04:31 INFO         | Checking system compatibility:
+2025-04-25 09:04:31 INFO         |   Checking: hasSufficientDiskSpace
+2025-04-25 09:04:31 INFO         |      Ok: Disk space requirements to run avd: `test` are met
+2025-04-25 09:04:31 INFO         |   Checking: hasSufficientHwGpu
+2025-04-25 09:04:31 INFO         |      Ok: Hardware GPU requirements to run avd: `test` are passed
+2025-04-25 09:04:31 INFO         |   Checking: hasSufficientSystem
+2025-04-25 09:04:31 INFO         |      Ok: System requirements to run avd: `test` are met
+2025-04-25 09:04:31 WARNING      | File System is not ext4, disable QuickbootFileBacked feature
+2025-04-25 09:04:31 WARNING      | FeatureControl is requesting a non existing feature.
+2025-04-25 09:04:31 INFO         | Storing crashdata in: /tmp/android-unknown/emu-crash-35.4.9.db, detection is enabled for process: 23
+2025-04-25 09:04:31 INFO         | Guest Driver: Auto (ext controls)
+2025-04-25 09:04:31 library_mode swiftshader_indirect gpu mode swiftshader_indirect
+2025-04-25 09:04:31 INFO         | Initializing hardware OpenGLES emulation support
+2025-04-25 09:04:31 I0425 07:04:31.162048      23 opengles.cpp:285] android_startOpenglesRenderer: gpu info
+2025-04-25 09:04:31 I0425 07:04:31.162108      23 opengles.cpp:286] 
+2025-04-25 09:04:31 INFO         | Not raising nofile soft limit from 1048576.
+2025-04-25 09:04:31 INFO         | HealthMonitor disabled.
+2025-04-25 09:04:31 INFO         | initIcdPaths: ICD set to 'swiftshader', using Swiftshader ICD
+2025-04-25 09:04:31 INFO         | Setting ICD filenames for the loader = /opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/vk_swiftshader_icd.json:/opt/android-sdk/emulator/lib64/vulkan/vk_swiftshader_icd.json
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so]
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so]: not found in map, open for the first time
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so] (posix): begin
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so] (posix,linux): call dlopen on [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so]
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so] failed (posix). dlerror: []
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1]
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1]: not found in map, open for the first time
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1] (posix): begin
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1] (posix,linux): call dlopen on [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1]
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so.1] failed (posix). dlerror: []
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/lib64/vulkan/libvulkan.so]
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/lib64/vulkan/libvulkan.so]: not found in map, open for the first time
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/lib64/vulkan/libvulkan.so] (posix): begin
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/lib64/vulkan/libvulkan.so] (posix,linux): call dlopen on [/opt/android-sdk/emulator/lib64/vulkan/libvulkan.so]
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | Added library: /opt/android-sdk/emulator/lib64/vulkan/libvulkan.so
+2025-04-25 09:04:31 INFO         | Selecting Vulkan device: SwiftShader Device (Subzero), Version: 1.3.0
+2025-04-25 09:04:31 INFO         | Supports id properties, got a vulkan device UUID
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [libGLESv2.so]: not found in map, open for the first time
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [libGLESv2.so] (posix): begin
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [libGLESv2.so] (posix,linux): call dlopen on [libGLESv2.so]
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [libEGL.so]: not found in map, open for the first time
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [libEGL.so] (posix): begin
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [libEGL.so] (posix,linux): call dlopen on [libEGL.so]
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [libX11]
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [libX11]: not found in map, open for the first time
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [libX11] (posix): begin
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | SharedLibrary::open for [libX11] (posix,linux): call dlopen on [libX11.so]
+2025-04-25 09:04:31 
+2025-04-25 09:04:31 INFO         | Initializing VkEmulation features:
+2025-04-25 09:04:31 INFO         |     glInteropSupported: false
+2025-04-25 09:04:31 INFO         |     useDeferredCommands: true
+2025-04-25 09:04:31 INFO         |     createResourceWithRequirements: true
+2025-04-25 09:04:31 INFO         |     useVulkanComposition: false
+2025-04-25 09:04:31 INFO         |     useVulkanNativeSwapchain: false
+2025-04-25 09:04:31 INFO         |     enable guestRenderDoc: false
+2025-04-25 09:04:31 INFO         |     ASTC LDR emulation mode: 2
+2025-04-25 09:04:31 INFO         |     enable ETC2 emulation: true
+2025-04-25 09:04:31 INFO         |     enable Ycbcr emulation: false
+2025-04-25 09:04:31 INFO         |     guestVulkanOnly: false
+2025-04-25 09:04:31 INFO         |     useDedicatedAllocations: false
+2025-04-25 09:04:31 INFO         | Graphics Adapter Vendor Google (Google Inc.)
+2025-04-25 09:04:31 INFO         | Graphics Adapter Android Emulator OpenGL ES Translator (Google SwiftShader)
+2025-04-25 09:04:31 INFO         | Graphics API Version OpenGL ES 3.0 (OpenGL ES 3.0 SwiftShader 4.0.0.1)
+2025-04-25 09:04:31 INFO         | Graphics API Extensions GL_OES_EGL_sync GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_depth24 GL_OES_depth32 GL_OES_element_index_uint GL_OES_texture_float GL_OES_texture_float_linear GL_OES_compressed_paletted_texture GL_OES_compressed_ETC1_RGB8_texture GL_OES_depth_texture GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_packed_depth_stencil GL_OES_vertex_half_float GL_OES_standard_derivatives GL_OES_texture_npot GL_OES_rgb8_rgba8 GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_texture_format_BGRA8888 GL_APPLE_texture_format_BGRA8888 
+2025-04-25 09:04:31 INFO         | Graphics Device Extensions N/A
+2025-04-25 09:04:31 INFO         | Userspace boot properties:
+2025-04-25 09:04:31 INFO         |   android.bootanim=0
+2025-04-25 09:04:31 INFO         |   android.qemud=1
+2025-04-25 09:04:31 INFO         |   androidboot.boot_devices=pci0000:00/0000:00:03.0 pci0000:00/0000:00:06.0
+2025-04-25 09:04:31 INFO         |   androidboot.hardware=ranchu
+2025-04-25 09:04:31 INFO         |   androidboot.hardware.vulkan=ranchu
+2025-04-25 09:04:31 INFO         |   androidboot.serialno=EMULATOR35X4X9X0
+2025-04-25 09:04:31 INFO         |   androidboot.vbmeta.digest=22632f66be5ef8f2181b7f14ab33fac3a6d82c7c65d6172a59d3484281605e20
+2025-04-25 09:04:31 INFO         |   androidboot.vbmeta.hash_alg=sha256
+2025-04-25 09:04:31 INFO         |   androidboot.vbmeta.size=6144
+2025-04-25 09:04:31 INFO         |   qemu=1
+2025-04-25 09:04:31 INFO         |   qemu.avd_name=test
+2025-04-25 09:04:31 INFO         |   qemu.camera_hq_edge_processing=0
+2025-04-25 09:04:31 INFO         |   qemu.camera_protocol_ver=1
+2025-04-25 09:04:31 INFO         |   qemu.dalvik.vm.heapsize=512m
+2025-04-25 09:04:31 INFO         |   qemu.encrypt=1
+2025-04-25 09:04:31 INFO         |   qemu.gles=1
+2025-04-25 09:04:31 INFO         |   qemu.gltransport=pipe
+2025-04-25 09:04:31 INFO         |   qemu.gltransport.drawFlushInterval=800
+2025-04-25 09:04:31 INFO         |   qemu.hwcodec.avcdec=2
+2025-04-25 09:04:31 INFO         |   qemu.hwcodec.hevcdec=2
+2025-04-25 09:04:31 INFO         |   qemu.hwcodec.vpxdec=2
+2025-04-25 09:04:31 INFO         |   qemu.opengles.version=196608
+2025-04-25 09:04:31 INFO         |   qemu.settings.system.screen_off_timeout=2147483647
+2025-04-25 09:04:31 INFO         |   qemu.uirenderer=skiagl
+2025-04-25 09:04:31 INFO         |   qemu.virtiowifi=1
+2025-04-25 09:04:31 INFO         |   qemu.vsync=60
+2025-04-25 09:04:31 WARNING: cannnot unmap ptr 0x7f1589d64000 as it is in the protected range from 0x7f1589d64000 to 0x7f1609f64000
+2025-04-25 09:04:31 WARNING: cannnot unmap ptr 0x7f1609e01000 as it is in the protected range from 0x7f1589d64000 to 0x7f1609f64000
+2025-04-25 09:04:31 INFO         | Monitoring duration of emulator setup.
+2025-04-25 09:04:31 INFO         | Setting display: 0 configuration to: 320x640, dpi: 160x160 
+2025-04-25 09:04:31 INFO         | setDisplayActiveConfig 0
+2025-04-25 09:04:31 ##############################################################################
+2025-04-25 09:04:31 ##                        WARNING - ACTION REQUIRED                         ##
+2025-04-25 09:04:31 ##  Consider using the '-metrics-collection' flag to help improve the       ##
+2025-04-25 09:04:31 ##  emulator by sending anonymized usage data. Or use the '-no-metrics'     ##
+2025-04-25 09:04:31 ##  flag to bypass this warning and turn off the metrics collection.        ##
+2025-04-25 09:04:31 ##  In a future release this warning will turn into a one-time blocking     ##
+2025-04-25 09:04:31 ##  prompt to ask for explicit user input regarding metrics collection.     ##
+2025-04-25 09:04:31 ##                                                                          ##
+2025-04-25 09:04:31 ##  Please see '-help-metrics-collection' for more details. You can use     ##
+2025-04-25 09:04:31 ##  '-metrics-to-file' or '-metrics-to-console' flags to see what type of   ##
+2025-04-25 09:04:31 ##  data is being collected by emulator as part of usage statistics.        ##
+2025-04-25 09:04:31 ##############################################################################
+2025-04-25 09:04:31 USER_INFO    | Emulator is performing a full startup. This may take upto two minutes, or more.
+2025-04-25 09:04:31 WARNING      | Failed to process .ini file /root/.android/emu-update-last-check.ini for reading.
+2025-04-25 09:04:31 WARNING      | UpdateCheck: Failure: Error
+2025-04-25 09:04:31 WARNING      | UpdateCheck: failed to get the latest version, skipping check (current version '35.4.9-13025442')
+2025-04-25 09:04:35 Emulator found in device list: emulator-5554offline
+2025-04-25 09:04:35 Emulator found but not ready yet
+2025-04-25 09:04:35 Device status: offline
+2025-04-25 09:04:35 Still waiting for emulator device... (5s)
+2025-04-25 09:04:40 Emulator found in device list: emulator-5554offline
+2025-04-25 09:04:40 Emulator found but not ready yet
+2025-04-25 09:04:40 Device status: offline
+2025-04-25 09:04:40 Still waiting for emulator device... (10s)
+2025-04-25 09:04:45 Emulator found in device list: emulator-5554device
+2025-04-25 09:04:45 ✅ Emulator detected and ready!
+2025-04-25 09:04:45 Using device: emulator-5554
+2025-04-25 09:04:45 Waiting for system boot to complete...
+2025-04-25 09:04:45 Current device state: device
+2025-04-25 09:04:45 Boot status: 
+2025-04-25 09:04:45 Waiting for system boot... (0s)
+2025-04-25 09:04:50 Current device state: device
+2025-04-25 09:04:51 Boot status: 
+2025-04-25 09:04:51 Waiting for system boot... (6s)
+2025-04-25 09:04:56 Current device state: device
+2025-04-25 09:04:56 Boot status: 1
+2025-04-25 09:04:56 Package service is up and running
+2025-04-25 09:04:56 ===== SUCCESS: Emulator booted successfully in 6 seconds! =====
+2025-04-25 09:04:56 Waiting additional time for system services stabilization...
+2025-04-25 09:04:56 INFO         | Boot completed in 25338 ms
+2025-04-25 09:04:56 INFO         | Increasing screen off timeout, logcat buffer size to 2M.
+2025-04-25 09:05:06 ===== CONFIGURING ADB REMOTE ACCESS =====
+2025-04-25 09:05:06 Setting ADB as root...
+2025-04-25 09:05:06 restarting adbd as root
+2025-04-25 09:05:12 Reconnecting to device after root mode switch...
+2025-04-25 09:05:15 Setting TCP port property directly...
+2025-04-25 09:05:17 Restarting ADB daemon...
+2025-04-25 09:05:17 Failed to stop ADB daemon
+2025-04-25 09:05:19 adb: device offline
+2025-04-25 09:05:19 Failed to start ADB daemon
+2025-04-25 09:05:22 error: device offline
+2025-04-25 09:05:22 Setting device to TCP/IP mode...
+2025-04-25 09:05:22 WARNING: adb tcpip command failed
+2025-04-25 09:05:27 Verifying TCP mode...
+2025-04-25 09:05:27 ⚠️ Failed to verify ADB TCP mode, attempting universal command...
+2025-04-25 09:05:27 error: device offline
+2025-04-25 09:05:27 WARNING: Could not set ADB to TCP mode with global command either
+2025-04-25 09:05:32 ⚠️ Still failed to set ADB TCP mode properly
+2025-04-25 09:05:32 Testing TCP/IP connection...
+2025-04-25 09:05:32 disconnected emulator-5554
+2025-04-25 09:05:44 failed to connect to localhost:5555
+2025-04-25 09:05:46 
+2025-04-25 09:05:46 ===== EMULATOR INFORMATION =====
+2025-04-25 09:05:46 Listing connected devices:
+2025-04-25 09:05:46 List of devices attached
+2025-04-25 09:05:46 emulator-5554offline
+2025-04-25 09:05:46 localhost:5555offline
+2025-04-25 09:05:46 
+2025-04-25 09:05:46 
+2025-04-25 09:05:46 System information:
+2025-04-25 09:05:46 Android version: Unable to retrieve
+2025-04-25 09:05:46 API Level: Unable to retrieve
+2025-04-25 09:05:46 Device model: Unable to retrieve
+2025-04-25 09:05:46 
+2025-04-25 09:05:46 ===== ADB REMOTE CONNECTION INFO =====
+2025-04-25 09:05:46 ADB server is running and accessible at:
+2025-04-25 09:05:46 Host: 172.17.0.2
+2025-04-25 09:05:46 Port: 5555
+2025-04-25 09:05:46 You can connect from your development machine using: adb connect 172.17.0.2:5555
+2025-04-25 09:05:46 =====================================
+2025-04-25 09:05:46 Checking network connectivity to emulator...
+2025-04-25 09:05:46 Connection to localhost (::1) 5555 port [tcp/*] succeeded!
+2025-04-25 09:05:46 Starting emulator monitoring to keep it alive...
+2025-04-25 09:05:46 ⚠️ Emulator is offline, attempting to reconnect...
+2025-04-25 09:05:46 disconnected emulator-5554
+2025-04-25 09:05:49 * daemon not running; starting now at tcp:5037
+2025-04-25 09:05:52 * daemon started successfully
+2025-04-25 09:06:04 failed to connect to localhost:5555
+2025-04-25 09:06:04 ⚠️ Failed to reconnect to emulator
