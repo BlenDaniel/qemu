@@ -31,101 +31,110 @@ sleep 3
 adb -a -P 5037 start-server || { echo "ERROR: Failed to start ADB server. Check if adb is in PATH: $PATH"; exit 1; }
 sleep 3
 
-# Launch emulator with appropriate flags
-echo "Launching Android emulator AVD 'test'..."
+# Check if emulator is already running
+RUNNING_EMU=$(adb devices | grep -E "emulator-[0-9]+" || echo "")
+if [ -n "$RUNNING_EMU" ]; then
+    echo "Emulator is already running: $RUNNING_EMU"
+    # Extract the serial from running emulator
+    SERIAL=$(echo "$RUNNING_EMU" | grep -E "emulator-[0-9]+" | head -n 1 | awk '{print $1}')
+    echo "Using existing emulator with serial: $SERIAL"
+else
+    # Launch emulator with appropriate flags only if not already running
+    echo "Launching Android emulator AVD 'test'..."
 
-# Check if emulator command exists
-if ! command -v emulator &> /dev/null; then
-    echo "ERROR: 'emulator' command not found. Please ensure Android emulator is installed and in PATH."
-    echo "PATH is currently: $PATH"
-    echo "Searching for emulator:"
-    find / -name emulator 2>/dev/null || echo "No emulator found on system"
-    exit 1
-fi
-
-# Important: Add more flags to make emulator more stable
-# 1. Adding -no-cache to avoid filesystem issues
-# 2. Adding -no-metrics to suppress metrics warning
-# 3. Adding -no-snapshot-save to avoid issues with snapshot corruption
-# 4. Adding -no-boot-anim to speed up boot
-# 5. Adding explicit port configuration with -ports
-emulator -avd test -no-window -gpu swiftshader_indirect -no-audio -no-boot-anim \
-    -no-snapshot -no-snapshot-save -no-cache -no-metrics \
-    -ports 5554,5555 -qemu -m 2048 &
-EMU_PID=$!
-
-# Verify emulator process started
-if ! ps -p $EMU_PID > /dev/null; then
-    echo "ERROR: Failed to start the emulator. Check logs for details."
-    exit 1
-fi
-
-echo "Emulator process started with PID: $EMU_PID"
-echo "Waiting for emulator device to become available..."
-
-# Wait for the emulator device to appear in adb devices list with longer timeout
-# Note: The emulator will initially appear as emulator-5554 via ADB's default connection method
-# This is the native connection method that uses Unix sockets or local protocols
-TIMEOUT=180
-START_TIME=$(date +%s)
-SERIAL=""
-
-while true; do
-    # Look for devices with pattern emulator-XXXX where XXXX is typically a port number
-    DEVICES=$(adb devices | grep -E "emulator-[0-9]+" || echo "")
-    
-    if [ -n "$DEVICES" ]; then
-        echo "Emulator found in device list: $DEVICES"
-        
-        # Check if device is in 'device' state (not offline)
-        if echo "$DEVICES" | grep -q "device"; then
-            echo "***** Emulator detected and ready!"
-            SERIAL=$(echo "$DEVICES" | grep "device" | head -n 1 | awk '{print $1}')
-            echo "Using device: $SERIAL"
-            break
-        else
-            echo "Emulator found but not ready yet"
-            SERIAL=$(echo "$DEVICES" | grep -E "emulator-[0-9]+" | head -n 1 | awk '{print $1}')
-            echo "Device status: $(echo "$DEVICES" | grep "$SERIAL" | awk '{print $2}')"
-        fi
+    # Check if emulator command exists
+    if ! command -v emulator &> /dev/null; then
+        echo "ERROR: 'emulator' command not found. Please ensure Android emulator is installed and in PATH."
+        echo "PATH is currently: $PATH"
+        echo "Searching for emulator:"
+        find / -name emulator 2>/dev/null || echo "No emulator found on system"
+        exit 1
     fi
 
-    CURRENT_TIME=$(date +%s)
-    ELAPSED_TIME=$((CURRENT_TIME - START_TIME))
+    # Important: Add more flags to make emulator more stable
+    # 1. Adding -no-cache to avoid filesystem issues
+    # 2. Adding -no-metrics to suppress metrics warning
+    # 3. Adding -no-snapshot-save to avoid issues with snapshot corruption
+    # 4. Adding -no-boot-anim to speed up boot
+    # 5. Adding explicit port configuration with -ports
+    emulator -avd test -no-window -gpu swiftshader_indirect -no-audio -no-boot-anim \
+        -no-snapshot -no-snapshot-save -no-cache -no-metrics \
+        -ports 5554,5555 -qemu -m 2048 &
+    EMU_PID=$!
 
-    # Try restarting ADB server periodically as a remediation step
-    if [ $((ELAPSED_TIME % 30)) -eq 0 ] && [ $ELAPSED_TIME -gt 0 ]; then
-        echo "Trying to restart ADB server after $ELAPSED_TIME seconds of waiting..."
-        adb kill-server || echo "Failed to kill ADB server"
-        sleep 3
-        adb -a -P 5037 start-server || echo "Failed to start ADB server"
-        sleep 3
+    # Verify emulator process started
+    if ! ps -p $EMU_PID > /dev/null; then
+        echo "ERROR: Failed to start the emulator. Check logs for details."
+        exit 1
     fi
 
-    if [ $ELAPSED_TIME -gt $TIMEOUT ]; then
-        echo "WARNING: Timeout waiting for emulator"
-        echo "Current ADB devices:"
-        adb devices
+    echo "Emulator process started with PID: $EMU_PID"
+    echo "Waiting for emulator device to become available..."
+
+    # Wait for the emulator device to appear in adb devices list with longer timeout
+    # Note: The emulator will initially appear as emulator-5554 via ADB's default connection method
+    # This is the native connection method that uses Unix sockets or local protocols
+    TIMEOUT=180
+    START_TIME=$(date +%s)
+    SERIAL=""
+
+    while true; do
+        # Look for devices with pattern emulator-XXXX where XXXX is typically a port number
+        DEVICES=$(adb devices | grep -E "emulator-[0-9]+" || echo "")
         
-        # Fallback to using default serial if we at least found a device
-        if [ -z "$SERIAL" ]; then
-            SERIAL=$(adb devices | grep -E "emulator-[0-9]+" | head -n 1 | awk '{print $1}')
+        if [ -n "$DEVICES" ]; then
+            echo "Emulator found in device list: $DEVICES"
             
-            if [ -n "$SERIAL" ]; then
-                echo "Found device using alternative method: $SERIAL"
+            # Check if device is in 'device' state (not offline)
+            if echo "$DEVICES" | grep -q "device"; then
+                echo "***** Emulator detected and ready!"
+                SERIAL=$(echo "$DEVICES" | grep "device" | head -n 1 | awk '{print $1}')
+                echo "Using device: $SERIAL"
+                break
             else
-                echo "⚠️ No device found after exhaustive searching. Will use default emulator-5554."
-                SERIAL="emulator-5554"
+                echo "Emulator found but not ready yet"
+                SERIAL=$(echo "$DEVICES" | grep -E "emulator-[0-9]+" | head -n 1 | awk '{print $1}')
+                echo "Device status: $(echo "$DEVICES" | grep "$SERIAL" | awk '{print $2}')"
             fi
         fi
-        
-        # Continue despite timeout
-        break
-    fi
 
-    echo "Still waiting for emulator device... (${ELAPSED_TIME}s)"
-    sleep 5
-done
+        CURRENT_TIME=$(date +%s)
+        ELAPSED_TIME=$((CURRENT_TIME - START_TIME))
+
+        # Try restarting ADB server periodically as a remediation step
+        if [ $((ELAPSED_TIME % 30)) -eq 0 ] && [ $ELAPSED_TIME -gt 0 ]; then
+            echo "Trying to restart ADB server after $ELAPSED_TIME seconds of waiting..."
+            adb kill-server || echo "Failed to kill ADB server"
+            sleep 3
+            adb -a -P 5037 start-server || echo "Failed to start ADB server"
+            sleep 3
+        fi
+
+        if [ $ELAPSED_TIME -gt $TIMEOUT ]; then
+            echo "WARNING: Timeout waiting for emulator"
+            echo "Current ADB devices:"
+            adb devices
+            
+            # Fallback to using default serial if we at least found a device
+            if [ -z "$SERIAL" ]; then
+                SERIAL=$(adb devices | grep -E "emulator-[0-9]+" | head -n 1 | awk '{print $1}')
+                
+                if [ -n "$SERIAL" ]; then
+                    echo "Found device using alternative method: $SERIAL"
+                else
+                    echo "⚠️ No device found after exhaustive searching. Will use default emulator-5554."
+                    SERIAL="emulator-5554"
+                fi
+            fi
+            
+            # Continue despite timeout
+            break
+        fi
+
+        echo "Still waiting for emulator device... (${ELAPSED_TIME}s)"
+        sleep 5
+    done
+fi
 
 # Try to restart ADB server if device is still offline
 DEVICE_STATUS=$(adb devices | grep "$SERIAL" | awk '{print $2}')
@@ -301,6 +310,23 @@ else
     echo "⚠️ Failed to establish TCP/IP connection via localhost, falling back to native connection"
 fi
 
+# Set up port forwarding for external access
+# This ensures the host machine can connect to the emulator
+echo "Setting up port forwarding for external access..."
+# Make sure socat is installed
+if command -v socat &> /dev/null; then
+    # Kill any existing socat processes
+    pkill -f "socat TCP-LISTEN:5555" || true
+    sleep 2
+    
+    # Start socat to forward from all interfaces to localhost:5555
+    socat TCP-LISTEN:5555,fork,reuseaddr,bind=0.0.0.0 TCP:localhost:5555 &
+    SOCAT_PID=$!
+    echo "Started socat for port forwarding with PID: $SOCAT_PID"
+else
+    echo "WARNING: socat not installed, external connections may not work properly"
+fi
+
 # Display connection information
 echo ""
 echo "===== EMULATOR INFORMATION ====="
@@ -350,7 +376,7 @@ check_and_fix_emulator() {
     local status=0  # Default to success
     
     # First check if the emulator process is still running
-    if ! ps -p $EMU_PID > /dev/null 2>&1; then
+    if [ -n "$EMU_PID" ] && ! ps -p $EMU_PID > /dev/null 2>&1; then
         echo "⚠️ Emulator process (PID $EMU_PID) died!"
         status=1
     fi
@@ -378,6 +404,14 @@ check_and_fix_emulator() {
         if device_is_online; then
             echo "***** Successfully reconnected to emulator"
             adb tcpip 5555  # Re-enable TCP mode
+            sleep 2
+            
+            # Restart port forwarding
+            if [ -n "$SOCAT_PID" ] && ! ps -p $SOCAT_PID > /dev/null 2>&1; then
+                echo "Restarting port forwarding..."
+                socat TCP-LISTEN:5555,fork,reuseaddr,bind=0.0.0.0 TCP:localhost:5555 &
+                SOCAT_PID=$!
+            fi
         else
             echo "⚠️ Failed to reconnect to emulator"
             status=1
@@ -406,7 +440,7 @@ while true; do
     date +%s > $HEARTBEAT_FILE
     
     # Check if emulator process is still running
-    if ! ps -p $EMU_PID > /dev/null 2>&1; then
+    if [ -n "$EMU_PID" ] && ! ps -p $EMU_PID > /dev/null 2>&1; then
         echo "⚠️ [$(date)] Emulator process (PID $EMU_PID) died! Will continue monitoring ADB connection."
     fi
     
@@ -419,6 +453,13 @@ while true; do
         echo "[$(date)] Device status check: ONLINE"
     else
         echo "[$(date)] Device status check: OFFLINE"
+    fi
+    
+    # Check port forwarding is still active
+    if [ -n "$SOCAT_PID" ] && ! ps -p $SOCAT_PID > /dev/null 2>&1; then
+        echo "[$(date)] Port forwarding process died, restarting..."
+        socat TCP-LISTEN:5555,fork,reuseaddr,bind=0.0.0.0 TCP:localhost:5555 &
+        SOCAT_PID=$!
     fi
     
     # Always print current device list for monitoring

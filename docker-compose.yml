@@ -16,6 +16,8 @@ services:
       - "5555:5555"  # ADB connection
       - "5037:5037"  # ADB server
     command: ["sleep", "infinity"]
+    restart: unless-stopped
+    network_mode: "host"  # Use host networking for better ADB connectivity
   api:
     build:
       context: ./docker/api

@@ -112,5 +112,5 @@ RUN which adb || echo "WARNING: adb not in PATH" && \
 EXPOSE 5037/tcp 5554/tcp 5555/tcp
 
 WORKDIR ${ANDROID_SDK_ROOT}
-# Modified to run the port-forward.sh script alongside the main emulator startup
-CMD ["sh", "-c", "if [ -x /usr/local/bin/start-emulator.sh ]; then /usr/local/bin/port-forward.sh & /usr/local/bin/start-emulator.sh; else /port-forward.sh & /start-emulator.sh; fi"]
+# Run just the start-emulator.sh script since we've integrated port forwarding
+CMD ["/bin/bash", "-c", "if [ -x /usr/local/bin/start-emulator.sh ]; then /usr/local/bin/start-emulator.sh; else /start-emulator.sh; fi"]

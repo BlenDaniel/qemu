@@ -1,11 +1,21 @@
 #!/bin/bash
 # This script ensures proper port forwarding for ADB connections
 
+# Check if another instance of this script is already running
+if pgrep -f "port-forward.sh" | grep -v $$ > /dev/null; then
+    echo "Another instance of port-forward.sh is already running. Exiting."
+    exit 0
+fi
+
 # Give the main script time to set up
 sleep 20
 
 echo "===== ADB PORT FORWARDING HELPER ====="
 echo "Starting port forwarding to ensure external connections work correctly"
+
+# Create a heartbeat file to help detect if the script is still running
+HEARTBEAT_FILE="/tmp/port_forward_heartbeat"
+touch $HEARTBEAT_FILE
 
 # Function to wait for the emulator to be fully booted
 wait_for_emulator() {
@@ -62,57 +72,50 @@ find_available_port() {
 configure_adb_networking() {
     echo "Configuring ADB networking..."
     
-    # Restart ADB server to ensure clean state
-    adb kill-server
-    sleep 2
-    adb start-server
-    sleep 2
+    # Check if emulator is already running properly
+    if ! adb devices | grep -q "emulator"; then
+        echo "No emulator detected. Waiting for the main script to start it."
+        sleep 10
+        return 1
+    fi
     
     # Wait for device to be available
     wait_for_emulator
     
-    # Set ADB to listen on TCP/IP
-    echo "Setting up ADB in TCP/IP mode..."
-    adb tcpip 5555
-    sleep 2
-    
-    # Check if ADB is bound to localhost only or to all interfaces
-    if netstat -ln | grep -q "127.0.0.1:5555"; then
-        echo "ADB bound to localhost only, setting up port forwarding..."
-        
-        # Check if port 5555 is available on all interfaces
-        if is_port_bound 5555 "0.0.0.0"; then
-            echo "Port 5555 is already bound on external interface, finding alternative port..."
-            local new_port=$(find_available_port 5555)
-            
-            if [ "$new_port" = "-1" ]; then
-                echo "ERROR: Could not find available port for forwarding"
-                return 1
-            fi
-            
-            echo "Using alternative port $new_port for forwarding"
-            
-            # Set up iptables rules to forward from new_port to 5555
-            iptables -t nat -A PREROUTING -p tcp --dport $new_port -j DNAT --to-destination 127.0.0.1:5555
-            echo "Starting socat to handle port forwarding from 0.0.0.0:$new_port to localhost:5555"
-            socat TCP-LISTEN:$new_port,fork,reuseaddr TCP:localhost:5555 &
-        else
-            # Enable IP forwarding
-            echo 1 > /proc/sys/net/ipv4/ip_forward
-            
-            # Set up NAT redirection for standard ADB port
-            iptables -t nat -A PREROUTING -p tcp --dport 5555 -j DNAT --to-destination 127.0.0.1:5555
-            iptables -t nat -A POSTROUTING -j MASQUERADE
-            
-            # Also start socat to handle direct connections
-            echo "Starting socat to handle port forwarding from 0.0.0.0:5555 to localhost:5555"
-            socat TCP-LISTEN:5555,fork,reuseaddr TCP:localhost:5555 &
-        fi
+    # Set ADB to listen on TCP/IP if not already
+    if ! adb shell getprop service.adb.tcp.port | grep -q "5555"; then
+        echo "Setting up ADB in TCP/IP mode..."
+        adb tcpip 5555
+        sleep 2
     else
-        echo "ADB already bound to all interfaces, no additional forwarding needed"
+        echo "ADB already in TCP/IP mode"
     fi
     
-    # Connect ADB to the localhost to ensure connection
+    # Check if socat is already running for port 5555
+    if pgrep -f "socat.*5555" > /dev/null; then
+        echo "Port forwarding already active, skipping setup"
+        return 0
+    fi
+    
+    # Set up port forwarding with socat
+    echo "Setting up port forwarding with socat..."
+    
+    # Kill any existing socat processes
+    pkill -f "socat TCP-LISTEN:5555" || true
+    sleep 2
+    
+    # Start socat for port 5555
+    socat TCP-LISTEN:5555,fork,reuseaddr,bind=0.0.0.0 TCP:localhost:5555 &
+    SOCAT_PID=$!
+    
+    if [ -n "$SOCAT_PID" ] && ps -p $SOCAT_PID > /dev/null; then
+        echo "Successfully started socat with PID: $SOCAT_PID"
+    else
+        echo "Failed to start socat"
+        return 1
+    fi
+    
+    # Connect ADB to localhost to ensure connection
     adb connect localhost:5555
     sleep 2
     
@@ -124,43 +127,50 @@ configure_adb_networking() {
 monitor_connection() {
     echo "Monitoring ADB connection..."
     
+    # Update heartbeat
+    date +%s > $HEARTBEAT_FILE
+    
     # Check if ADB server is running
     if ! pgrep -x "adb" > /dev/null; then
-        echo "ADB server not running, restarting..."
-        adb start-server
-        sleep 2
-        configure_adb_networking
-        return
+        echo "ADB server not running, skipping checks"
+        return 1
     fi
     
-    # Check if ADB is still connected to the emulator
-    if ! adb devices | grep -q "emulator"; then
-        echo "Emulator not connected to ADB, reconnecting..."
-        adb connect localhost:5555
+    # Check if port forwarding is still active (socat process)
+    if ! pgrep -f "socat.*5555" > /dev/null; then
+        echo "Port forwarding not active, restarting..."
+        socat TCP-LISTEN:5555,fork,reuseaddr,bind=0.0.0.0 TCP:localhost:5555 &
         sleep 2
     fi
     
-    # Check if port forwarding is still active
-    if ! iptables -t nat -L PREROUTING | grep -q "dpt:5555"; then
-        echo "Port forwarding rules missing, re-establishing..."
+    # Check if ADB is available over network
+    if ! nc -z -w 2 localhost 5555 > /dev/null 2>&1; then
+        echo "ADB port 5555 not responding, attempting to reconfigure..."
         configure_adb_networking
     fi
+    
+    return 0
 }
 
 # Main execution
-configure_adb_networking
+# Wait for initial setup to complete
+sleep 30
+
+# Trap signals to ensure we handle termination properly
+trap "echo 'Received termination signal. Cleaning up...'; pkill -f 'socat.*5555' || true; exit 130" SIGINT SIGTERM
+
+# Try initial configuration but don't exit if it fails
+configure_adb_networking || echo "Initial configuration failed, will retry"
 
 # Keep monitoring container networking
 echo "Starting network monitoring..."
 
 while true; do
-    # Output status for debugging
-    echo "[$(date)] ADB connection status:"
-    adb devices
-    
     # Monitor connection and recover if needed
     monitor_connection
     
-    # Wait before next check
-    sleep 20
+    # Wait before next check (use short sleep intervals for better signal handling)
+    for i in {1..20}; do
+        sleep 1
+    done
 done 
