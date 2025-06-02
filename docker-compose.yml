@@ -1,20 +1,36 @@
 services:
   emulator:
-    platform: linux/amd64
+    # platform: linux/amd64
     build:
       context: ./docker/emulator
     image: qemu-emulator
     privileged: true
     environment:
       - ANDROID_EMULATOR_WAIT_TIME=120
-    devices:
-      - /dev/kvm:/dev/kvm  # Only if KVM is available on host
+      - ANDROID_EMULATED_DEVICE=11
+      - ANDROID_EXTRA_OPTS=-gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -no-snapshot-save
+      - DEVICE_PORT=5554
+      - ENABLE_VNC=true
+      - VNC_PORT=5900
     volumes:
-      - ./avd-data:/root/.android/avd  # Optional: persist AVD data
-    ports:
-      - "5554:5554"  # Emulator console
-      - "5555:5555"  # ADB connection
-      - "5037:5037"  # ADB server
+      - ./avd-data:/root/.android/avd
+    command: ["sleep", "infinity"]
+  emulator14:
+    platform: linux/amd64
+    build:
+      context: ./docker/emulator-android14
+    image: qemu-emulator-android14
+    privileged: true
+    environment:
+      - ANDROID_EMULATOR_WAIT_TIME=120
+      - ANDROID_EMULATED_DEVICE=14
+      - ANDROID_EXTRA_OPTS=-gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -no-snapshot-save
+      - DEVICE_PORT=6654
+      - ENABLE_VNC=true
+      - VNC_PORT=5900
+    volumes:
+      - ./avd-data:/root/.android/avd
+    command: ["sleep", "infinity"]
   api:
     build:
       context: ./docker/api
@@ -23,6 +39,9 @@ services:
       - "5001:5001"
     depends_on:
       - emulator
+      - emulator14
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     privileged: true
+    environment:
+      - FLASK_ENV=production

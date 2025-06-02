@@ -1,2 +1,6 @@
 flask
 docker
+pytest
+pytest-cov
+requests
+gunicorn
