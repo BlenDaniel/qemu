@@ -1,6 +1,7 @@
-flask
-docker
+Flask==2.3.3
+docker==7.1.0
 pytest
 pytest-cov
 requests
 gunicorn
+websockify==0.10.0

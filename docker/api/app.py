@@ -8,6 +8,8 @@ import string
 import shlex
 import logging
 import os
+import threading
+import socket
 from flask import Flask, jsonify, request, abort, render_template
 
 # External dependencies
@@ -25,7 +27,31 @@ client = None
 def get_docker_client():
     global client
     if client is None:
-        client = docker.from_env()
+        try:
+            # Try different connection methods
+            # First try the default method
+            client = docker.from_env()
+            # Test the connection
+            client.ping()
+            logger.info("Docker client connected successfully")
+        except Exception as e:
+            logger.warning(f"Default Docker connection failed: {e}")
+            try:
+                # Try explicit Unix socket connection
+                client = docker.DockerClient(base_url='unix://var/run/docker.sock')
+                client.ping()
+                logger.info("Docker client connected via Unix socket")
+            except Exception as e2:
+                logger.warning(f"Unix socket connection failed: {e2}")
+                try:
+                    # Try TCP connection
+                    client = docker.DockerClient(base_url='tcp://localhost:2376')
+                    client.ping()
+                    logger.info("Docker client connected via TCP")
+                except Exception as e3:
+                    logger.error(f"All Docker connection methods failed: {e3}")
+                    # Set client to None so we can provide better error messages
+                    client = None
     return client
 
 # Emulator image configurations
@@ -106,6 +132,31 @@ def wait_for_device(adb_server_port: str, device_port: str, timeout: int = 60, i
 # WEB INTERFACE ROUTES
 # ============================================================================
 
+@app.route('/health')
+def health_check():
+    """Health check endpoint"""
+    docker_client = get_docker_client()
+    if docker_client is None:
+        return jsonify({
+            "status": "unhealthy",
+            "docker": "disconnected",
+            "message": "Cannot connect to Docker daemon"
+        }), 503
+    
+    try:
+        docker_client.ping()
+        return jsonify({
+            "status": "healthy", 
+            "docker": "connected",
+            "message": "API and Docker are working properly"
+        })
+    except Exception as e:
+        return jsonify({
+            "status": "unhealthy",
+            "docker": "error", 
+            "message": f"Docker ping failed: {str(e)}"
+        }), 503
+
 @app.route('/')
 def index():
     """Render the main dashboard"""
@@ -120,6 +171,11 @@ def create_emulator():
     """Create a new emulator"""
     session_id = str(uuid.uuid4())
     device_id = generate_device_id()
+    
+    # Check Docker connection first
+    docker_client = get_docker_client()
+    if docker_client is None:
+        abort(500, description="Docker daemon is not accessible. Please check if Docker is running and the API container has proper permissions.")
     
     # Get request data
     data = request.get_json(silent=True) or {}
@@ -170,7 +226,7 @@ def create_emulator():
     
     try:
         # Run container with specified port bindings
-        container = get_docker_client().containers.run(
+        container = docker_client.containers.run(
             emulator_image,
             detach=True,
             privileged=True,
@@ -180,7 +236,11 @@ def create_emulator():
         )
     except docker.errors.ImageNotFound:
         abort(500, description=f"Emulator image {emulator_image} not found. Build the image first.")
+    except docker.errors.APIError as e:
+        logger.error(f"Docker API error: {e}")
+        abort(500, description=f"Docker API error: {str(e)}")
     except Exception as e:
+        logger.error(f"Failed to create emulator: {e}")
         abort(500, description=f"Failed to create emulator: {str(e)}")
 
     # Wait until emulator binds ADB port
@@ -502,43 +562,77 @@ def vnc_viewer(emulator_id):
                          vnc_port=vnc_port,
                          device_id=session['device_id'])
 
-@app.route('/api/emulators/<emulator_id>/vnc/connect')
-def vnc_websocket_proxy(emulator_id):
-    """WebSocket proxy for VNC connection"""
+@app.route('/api/emulators/<emulator_id>/vnc')
+def vnc_proxy(emulator_id):
+    """HTTP endpoint to get VNC connection info"""
     if emulator_id not in sessions:
-        return {"error": "Emulator not found"}, 404
+        return jsonify({"error": "Emulator not found"}), 404
     
     session = sessions[emulator_id]
     vnc_port = session.get('vnc_port')
     
-    if not vnc_port:
-        return {"error": "VNC not available"}, 404
+    if not vnc_port or vnc_port == 'unknown':
+        return jsonify({"error": "VNC not available for this emulator"}), 404
     
-    return {"vnc_url": f"ws://localhost:{vnc_port}"}
+    return jsonify({
+        "success": True,
+        "vnc_port": vnc_port,
+        "vnc_host": "localhost",
+        "connection_info": {
+            "direct_vnc": f"vnc://localhost:{vnc_port}",
+            "instructions": "VNC server is running but WebSocket connection may require additional setup. Use screenshot feature as alternative."
+        }
+    })
+
+@app.route('/api/emulators/<emulator_id>/live_view')
+def live_view(emulator_id):
+    """Provide a live view page with periodic screenshots"""
+    if emulator_id not in sessions:
+        return "Emulator not found", 404
+    
+    session = sessions[emulator_id]
+    device_id = session.get('device_id', 'unknown')
+    
+    return render_template('live_view.html', 
+                         emulator_id=emulator_id,
+                         device_id=device_id)
 
 @app.route('/api/emulators/<emulator_id>/screenshot')
 def get_screenshot(emulator_id):
     """Get screenshot from emulator"""
     if emulator_id not in sessions:
-        return {"error": "Emulator not found"}, 404
+        return jsonify({"error": "Emulator not found"}), 404
     
     session = sessions[emulator_id]
     adb_port = session['ports']['adb']
     adb_server_port = session['ports']['adb_server']
     
     try:
-        # Take screenshot using ADB
-        result = run_adb_command(f'-P {adb_server_port} -s localhost:{adb_port} exec-out screencap -p')
+        # Take screenshot using ADB with proper command structure
+        # Use exec-out to get binary data directly
+        cmd = [
+            "adb", "-P", str(adb_server_port), 
+            "-s", f"localhost:{adb_port}", 
+            "exec-out", "screencap", "-p"
+        ]
         
-        if result['success'] and result['output']:
+        logger.info(f"Running screenshot command: {' '.join(cmd)}")
+        result = subprocess.run(cmd, capture_output=True, check=True)
+        
+        if result.returncode == 0 and result.stdout:
             # Return screenshot as base64
             import base64
-            screenshot_b64 = base64.b64encode(result['output'].encode()).decode()
-            return {"success": True, "screenshot": f"data:image/png;base64,{screenshot_b64}"}
+            screenshot_b64 = base64.b64encode(result.stdout).decode()
+            return jsonify({"success": True, "screenshot": f"data:image/png;base64,{screenshot_b64}"})
         else:
-            return {"success": False, "error": "Failed to capture screenshot"}
+            return jsonify({"success": False, "error": "Failed to capture screenshot - no data returned"})
+            
+    except subprocess.CalledProcessError as e:
+        logger.error(f"Screenshot command failed: {e.stderr}")
+        return jsonify({"success": False, "error": f"ADB command failed: {e.stderr.decode() if e.stderr else 'Unknown error'}"})
     except Exception as e:
-        return {"success": False, "error": str(e)}
+        logger.error(f"Screenshot error: {str(e)}")
+        return jsonify({"success": False, "error": str(e)})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)

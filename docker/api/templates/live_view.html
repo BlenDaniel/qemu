@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ device_id }} - Android Emulator Live View</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #2c3e50;
+            color: white;
+        }
+
+        .header {
+            background: #34495e;
+            padding: 15px 20px;
+            border-bottom: 3px solid #3498db;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.5em;
+            color: #ecf0f1;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #229954;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e74c3c;
+            animation: pulse 2s infinite;
+        }
+
+        .status-indicator.connected {
+            background: #27ae60;
+            animation: none;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .screen-container {
+            position: relative;
+            width: 100%;
+            height: calc(100vh - 140px);
+            background: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .loading-message {
+            text-align: center;
+            color: #7f8c8d;
+        }
+
+        .loading-spinner {
+            border: 3px solid #34495e;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        #screen-image {
+            max-width: 90%;
+            max-height: 90%;
+            border: 2px solid #34495e;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(52, 73, 94, 0.5);
+        }
+
+        .error-message {
+            text-align: center;
+            color: #e74c3c;
+            padding: 20px;
+        }
+
+        .toolbar {
+            background: #34495e;
+            padding: 10px 20px;
+            border-top: 1px solid #4a5a6a;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .toolbar label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9em;
+        }
+
+        .toolbar input,
+        .toolbar select {
+            background: #2c3e50;
+            border: 1px solid #4a5a6a;
+            color: white;
+            padding: 5px 8px;
+            border-radius: 3px;
+        }
+
+        .refresh-info {
+            margin-left: auto;
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>📱 {{ device_id }} - Live View</h1>
+        <div class="controls">
+            <div class="status">
+                <div class="status-indicator" id="statusIndicator"></div>
+                <span id="statusText">Starting...</span>
+            </div>
+            <button class="btn btn-primary" onclick="takeScreenshot()">📸 Capture</button>
+            <button class="btn btn-success" onclick="toggleAutoRefresh()">🔄 <span
+                    id="refreshToggle">Pause</span></button>
+            <button class="btn btn-danger" onclick="window.close()">❌ Close</button>
+        </div>
+    </div>
+
+    <div class="screen-container">
+        <div class="loading-message" id="loadingMessage">
+            <div class="loading-spinner"></div>
+            <h3>Loading {{ device_id }}...</h3>
+            <p>Fetching emulator screen...</p>
+        </div>
+
+        <img id="screen-image" style="display: none;" alt="Emulator Screen">
+
+        <div class="error-message" id="errorMessage" style="display: none;">
+            <h3>❌ Connection Failed</h3>
+            <p>Unable to capture emulator screen.</p>
+            <button class="btn btn-primary" onclick="refreshScreen()">🔄 Try Again</button>
+        </div>
+    </div>
+
+    <div class="toolbar">
+        <label>
+            Refresh Rate:
+            <select id="refreshRate" onchange="updateRefreshRate()">
+                <option value="1000">1 second</option>
+                <option value="2000" selected>2 seconds</option>
+                <option value="5000">5 seconds</option>
+                <option value="10000">10 seconds</option>
+            </select>
+        </label>
+        <label>
+            <input type="checkbox" id="autoFit" checked onchange="updateImageFit()">
+            Auto-fit screen
+        </label>
+        <div class="refresh-info">
+            <span id="lastUpdate">Last update: --</span> |
+            <span id="refreshCounter">Updates: 0</span>
+        </div>
+    </div>
+
+    <script>
+        const emulatorId = {{ emulator_id | tojson }};
+        let refreshInterval;
+        let isAutoRefresh = true;
+        let refreshCount = 0;
+
+        function updateStatus(status, message) {
+            const indicator = document.getElementById('statusIndicator');
+            const text = document.getElementById('statusText');
+
+            indicator.className = 'status-indicator';
+            if (status === 'connected') {
+                indicator.classList.add('connected');
+            }
+
+            text.textContent = message;
+        }
+
+        function showElement(elementId) {
+            document.getElementById(elementId).style.display = 'block';
+        }
+
+        function hideElement(elementId) {
+            document.getElementById(elementId).style.display = 'none';
+        }
+
+        async function refreshScreen() {
+            try {
+                updateStatus('loading', 'Refreshing...');
+
+                const response = await fetch(`/api/emulators/${emulatorId}/screenshot`);
+                const data = await response.json();
+
+                if (data.success && data.screenshot) {
+                    const img = document.getElementById('screen-image');
+                    img.src = data.screenshot;
+                    img.onload = function () {
+                        updateStatus('connected', 'Connected');
+                        hideElement('loadingMessage');
+                        hideElement('errorMessage');
+                        showElement('screen-image');
+
+                        // Update counters
+                        refreshCount++;
+                        document.getElementById('refreshCounter').textContent = `Updates: ${refreshCount}`;
+                        document.getElementById('lastUpdate').textContent = `Last update: ${new Date().toLocaleTimeString()}`;
+                    };
+                } else {
+                    throw new Error(data.error || 'Failed to get screenshot');
+                }
+            } catch (error) {
+                console.error('Screenshot error:', error);
+                updateStatus('error', 'Connection failed');
+                hideElement('screen-image');
+                hideElement('loadingMessage');
+
+                const errorDiv = document.getElementById('errorMessage');
+                errorDiv.innerHTML = `
+                    <h3>❌ Connection Failed</h3>
+                    <p>Unable to capture emulator screen.</p>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                    <button class="btn btn-primary" onclick="refreshScreen()">🔄 Try Again</button>
+                `;
+                showElement('errorMessage');
+            }
+        }
+
+        function startAutoRefresh() {
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+            }
+
+            const rate = parseInt(document.getElementById('refreshRate').value);
+            refreshInterval = setInterval(refreshScreen, rate);
+        }
+
+        function stopAutoRefresh() {
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+                refreshInterval = null;
+            }
+        }
+
+        function toggleAutoRefresh() {
+            isAutoRefresh = !isAutoRefresh;
+            const toggleButton = document.getElementById('refreshToggle');
+
+            if (isAutoRefresh) {
+                startAutoRefresh();
+                toggleButton.textContent = 'Pause';
+                updateStatus('connected', 'Auto-refreshing');
+            } else {
+                stopAutoRefresh();
+                toggleButton.textContent = 'Resume';
+                updateStatus('paused', 'Paused');
+            }
+        }
+
+        function updateRefreshRate() {
+            if (isAutoRefresh) {
+                startAutoRefresh();
+            }
+        }
+
+        function updateImageFit() {
+            const img = document.getElementById('screen-image');
+            const autoFit = document.getElementById('autoFit').checked;
+
+            if (autoFit) {
+                img.style.maxWidth = '90%';
+                img.style.maxHeight = '90%';
+                img.style.width = 'auto';
+                img.style.height = 'auto';
+            } else {
+                img.style.maxWidth = 'none';
+                img.style.maxHeight = 'none';
+                img.style.width = 'auto';
+                img.style.height = 'auto';
+            }
+        }
+
+        function takeScreenshot() {
+            refreshScreen();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function () {
+            updateStatus('connecting', 'Initializing...');
+
+            // Initial screenshot
+            setTimeout(refreshScreen, 500);
+
+            // Start auto-refresh
+            setTimeout(startAutoRefresh, 1000);
+        });
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', function () {
+            stopAutoRefresh();
+        });
+    </script>
+</body>
+
+</html>

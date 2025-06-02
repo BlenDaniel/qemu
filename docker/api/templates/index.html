@@ -622,7 +622,8 @@
                 
                 <div style="display: flex; gap: 10px; margin-top: 15px;">
                     <button onclick="deleteEmulator('${id}')" class="btn-danger" style="flex: 1;">🗑️ Delete</button>
-                    <button onclick="openVNC('${id}')" class="btn-info" style="flex: 1;">🖥️ View Screen</button>
+                    <button onclick="openVNC('${id}')" class="btn-info" style="flex: 1;">🖥️ VNC Screen</button>
+                    <button onclick="openLiveView('${id}')" class="btn-info" style="flex: 1;">📺 Live View</button>
                     <button onclick="connectToEmulator('${emulator.ports.adb}', '${emulator.ports.adb_server}')" class="btn-info" style="flex: 1;">🔌 Connect ADB</button>
                 </div>
                 
@@ -692,6 +693,11 @@
             // This will be the VNC/noVNC URL - we'll implement this next
             vncFrame.src = `${API_BASE}/vnc/${emulatorId}`;
             vncContainer.style.display = 'block';
+        }
+
+        function openLiveView(emulatorId) {
+            // Open live view in a new window/tab
+            window.open(`${API_BASE}/api/emulators/${emulatorId}/live_view`, '_blank');
         }
 
         function closeVNC(emulatorId) {

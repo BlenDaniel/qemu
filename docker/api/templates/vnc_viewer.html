@@ -213,6 +213,13 @@
         <div class="error-message" id="errorMessage" style="display: none;">
             <h3>❌ Connection Failed</h3>
             <p>Unable to connect to the emulator screen.</p>
+            <div style="margin: 20px 0;">
+                <h4>Alternative Options:</h4>
+                <a href="/api/emulators/{{ emulator_id }}/live_view" class="btn btn-success" target="_blank">
+                    📺 Live View (Screenshots)
+                </a>
+                <button class="btn btn-primary" onclick="takeScreenshot()">📸 Single Screenshot</button>
+            </div>
             <button class="btn btn-primary" onclick="reconnect()">🔄 Try Again</button>
         </div>
     </div>
@@ -240,7 +247,39 @@
     </div>
 
     <!-- noVNC JavaScript -->
-    <script src="https://novnc.com/noVNC/core/rfb.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/novnc@1.4.0/core/rfb.js"></script>
+
+    <!-- Fallback noVNC sources -->
+    <script>
+        // Check if noVNC loaded, if not try fallback
+        if (typeof RFB === 'undefined') {
+            console.warn('Primary noVNC source failed, trying fallback...');
+
+            // Try alternative CDN
+            const fallbackScript = document.createElement('script');
+            fallbackScript.src = 'https://unpkg.com/novnc@1.4.0/core/rfb.js';
+            fallbackScript.onerror = function () {
+                console.error('All noVNC sources failed');
+                // Show error message
+                document.getElementById('errorMessage').innerHTML = `
+                    <h3>❌ VNC Library Error</h3>
+                    <p>Unable to load VNC viewer library. This may be due to network restrictions.</p>
+                    <div style="margin: 20px 0;">
+                        <h4>Alternative Options:</h4>
+                        <a href="/api/emulators/{{ emulator_id }}/live_view" class="btn btn-success" target="_blank">
+                            📺 Live View (Screenshots)
+                        </a>
+                        <button class="btn btn-primary" onclick="takeScreenshot()">📸 Single Screenshot</button>
+                    </div>
+                    <p><strong>VNC Port:</strong> {{ vnc_port }}</p>
+                    <p><strong>Direct VNC:</strong> vnc://localhost:{{ vnc_port }}</p>
+                `;
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('loadingMessage').style.display = 'none';
+            };
+            document.head.appendChild(fallbackScript);
+        }
+    </script>
 
     <script>
         let rfb;
@@ -269,57 +308,147 @@
 
         function connectVNC() {
             const target = document.getElementById('vnc-canvas');
-            const url = `ws://${window.location.hostname}:${vncPort}`;
 
-            try {
-                // Create RFB object
-                rfb = new RFB(target, url, {
-                    credentials: { password: '' },
-                    repeaterID: '',
-                    shared: true
-                });
-
-                // Set event handlers
-                rfb.addEventListener("connect", function () {
-                    updateStatus('connected', 'Connected');
-                    hideElement('loadingMessage');
-                    hideElement('errorMessage');
-                    showElement('vnc-canvas');
-                });
-
-                rfb.addEventListener("disconnect", function (e) {
-                    updateStatus('disconnected', 'Disconnected');
-                    hideElement('vnc-canvas');
-
-                    if (e.detail.clean) {
-                        showElement('loadingMessage');
-                    } else {
-                        showElement('errorMessage');
-                    }
-                });
-
-                rfb.addEventListener("credentialsrequired", function () {
-                    updateStatus('auth', 'Authentication required');
-                    // For simplicity, assume no password needed for local VNC
-                    rfb.sendCredentials({});
-                });
-
-                rfb.addEventListener("securityfailure", function () {
-                    updateStatus('error', 'Security failure');
-                    showElement('errorMessage');
-                });
-
-                // Set initial viewport scaling
-                updateViewport();
-                updateQuality();
-                updateCursor();
-
-            } catch (error) {
-                console.error('VNC connection error:', error);
-                updateStatus('error', 'Connection failed');
+            // Check if noVNC RFB is available
+            if (typeof RFB === 'undefined') {
+                console.error('RFB is not defined - noVNC library not loaded');
+                updateStatus('error', 'VNC library not available');
+                const errorDiv = document.getElementById('errorMessage');
+                errorDiv.innerHTML = `
+                    <h3>❌ VNC Library Error</h3>
+                    <p>The VNC viewer library (noVNC) failed to load. This may be due to network restrictions or CDN issues.</p>
+                    <div style="margin: 20px 0;">
+                        <h4>Alternative Options:</h4>
+                        <a href="/api/emulators/${emulatorId}/live_view" class="btn btn-success" target="_blank">
+                            📺 Live View (Screenshots)
+                        </a>
+                        <button class="btn btn-primary" onclick="takeScreenshot()">📸 Single Screenshot</button>
+                    </div>
+                    <p><strong>VNC Port:</strong> ${vncPort}</p>
+                    <p><strong>Direct VNC:</strong> vnc://localhost:${vncPort}</p>
+                `;
                 showElement('errorMessage');
                 hideElement('loadingMessage');
+                return;
             }
+
+            // First check if VNC is available for this emulator
+            fetch(`/api/emulators/${emulatorId}/vnc`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        let connectionUrl;
+
+                        if (data.ws_url) {
+                            // Use WebSocket proxy if available
+                            connectionUrl = data.ws_url;
+                            console.log(`Connecting to VNC via WebSocket proxy: ${connectionUrl}`);
+                        } else {
+                            // Try direct connection to VNC port
+                            const vncHost = window.location.hostname;
+                            const vncPort = data.vnc_port;
+                            connectionUrl = `ws://${vncHost}:${vncPort}`;
+                            console.log(`Attempting direct VNC connection: ${connectionUrl}`);
+                        }
+
+                        try {
+                            // Create RFB object
+                            rfb = new RFB(target, connectionUrl, {
+                                credentials: { password: '' },
+                                repeaterID: '',
+                                shared: true
+                            });
+
+                            // Set event handlers
+                            rfb.addEventListener("connect", function () {
+                                updateStatus('connected', 'Connected');
+                                hideElement('loadingMessage');
+                                hideElement('errorMessage');
+                                showElement('vnc-canvas');
+                            });
+
+                            rfb.addEventListener("disconnect", function (e) {
+                                updateStatus('disconnected', 'Disconnected');
+                                hideElement('vnc-canvas');
+
+                                if (e.detail.clean) {
+                                    showElement('loadingMessage');
+                                } else {
+                                    showElement('errorMessage');
+
+                                    // Show specific error info
+                                    const errorDiv = document.getElementById('errorMessage');
+                                    if (data.vnc_url) {
+                                        errorDiv.innerHTML = `
+                                            <h3>❌ Connection Failed</h3>
+                                            <p>Unable to connect to the emulator screen via WebSocket.</p>
+                                            <p><strong>VNC Port:</strong> ${data.vnc_port}</p>
+                                            <p><strong>Alternative:</strong> <a href="${data.vnc_url}" target="_blank">Open in VNC viewer</a></p>
+                                            <button class="btn btn-primary" onclick="reconnect()">🔄 Try Again</button>
+                                        `;
+                                    }
+                                }
+                            });
+
+                            rfb.addEventListener("credentialsrequired", function () {
+                                updateStatus('auth', 'Authentication required');
+                                // For simplicity, assume no password needed for local VNC
+                                rfb.sendCredentials({});
+                            });
+
+                            rfb.addEventListener("securityfailure", function () {
+                                updateStatus('error', 'Security failure');
+                                showElement('errorMessage');
+                                hideElement('loadingMessage');
+                            });
+
+                            // Set initial viewport scaling
+                            updateViewport();
+                            updateQuality();
+                            updateCursor();
+
+                        } catch (error) {
+                            console.error('VNC connection error:', error);
+                            updateStatus('error', 'Connection failed');
+                            const errorDiv = document.getElementById('errorMessage');
+                            errorDiv.innerHTML = `
+                                <h3>❌ Connection Failed</h3>
+                                <p>Unable to connect to the emulator screen.</p>
+                                <p><strong>Error:</strong> ${error.message}</p>
+                                <p><strong>VNC Port:</strong> ${data.vnc_port}</p>
+                                ${data.vnc_url ? `<p><strong>Alternative:</strong> <a href="${data.vnc_url}" target="_blank">Open in VNC viewer</a></p>` : ''}
+                                <button class="btn btn-primary" onclick="reconnect()">🔄 Try Again</button>
+                            `;
+                            showElement('errorMessage');
+                            hideElement('loadingMessage');
+                        }
+                    } else {
+                        console.error('VNC not available:', data.error);
+                        updateStatus('error', 'VNC not available');
+                        const errorDiv = document.getElementById('errorMessage');
+                        errorDiv.innerHTML = `
+                            <h3>❌ VNC Not Available</h3>
+                            <p>${data.error}</p>
+                            ${data.direct_vnc_url ? `<p><strong>Direct VNC:</strong> <a href="${data.direct_vnc_url}">Open in VNC client</a></p>` : ''}
+                            <button class="btn btn-primary" onclick="reconnect()">🔄 Try Again</button>
+                        `;
+                        showElement('errorMessage');
+                        hideElement('loadingMessage');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error getting VNC info:', error);
+                    updateStatus('error', 'Failed to get VNC info');
+                    const errorDiv = document.getElementById('errorMessage');
+                    errorDiv.innerHTML = `
+                        <h3>❌ Connection Error</h3>
+                        <p>Failed to get VNC connection information.</p>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <button class="btn btn-primary" onclick="reconnect()">🔄 Try Again</button>
+                    `;
+                    showElement('errorMessage');
+                    hideElement('loadingMessage');
+                });
         }
 
         function reconnect() {

@@ -3,6 +3,7 @@ import json
 from unittest.mock import Mock, patch, MagicMock
 import sys
 import os
+import subprocess
 
 # Add the current directory to the path so we can import app
 sys.path.insert(0, os.path.dirname(__file__))
@@ -49,7 +50,8 @@ class TestUnifiedEmulatorAPI(unittest.TestCase):
         self.assertIn(b'ADB Quick Actions', response.data)
         self.assertIn(b'Running Emulators', response.data)
         # Check for VNC-related UI elements
-        self.assertIn(b'View Screen', response.data)
+        self.assertIn(b'VNC Screen', response.data)
+        self.assertIn(b'Live View', response.data)
     
     @patch('app.get_docker_client')
     @patch('app.run_adb_command')
@@ -243,22 +245,8 @@ class TestUnifiedEmulatorAPI(unittest.TestCase):
         response = self.client.get('/vnc/test-no-vnc')
         self.assertEqual(response.status_code, 404)
     
-    def test_vnc_websocket_proxy(self):
-        """Test VNC WebSocket proxy endpoint"""
-        # Mock session with VNC port
-        self.sessions['test-ws-id'] = {
-            'device_id': 'testdev',
-            'vnc_port': '5905'
-        }
-        
-        response = self.client.get('/api/emulators/test-ws-id/vnc/connect')
-        self.assertEqual(response.status_code, 200)
-        data = json.loads(response.data)
-        self.assertIn('vnc_url', data)
-        self.assertEqual(data['vnc_url'], 'ws://localhost:5905')
-    
-    @patch('app.run_adb_command')
-    def test_screenshot_endpoint(self, mock_adb_command):
+    @patch('subprocess.run')
+    def test_screenshot_endpoint(self, mock_subprocess):
         """Test screenshot endpoint"""
         # Mock session
         self.sessions['test-screenshot'] = {
@@ -269,11 +257,11 @@ class TestUnifiedEmulatorAPI(unittest.TestCase):
             }
         }
         
-        # Mock successful screenshot
-        mock_adb_command.return_value = {
-            'success': True,
-            'output': 'fake_screenshot_data'
-        }
+        # Mock successful screenshot with binary data
+        mock_result = Mock()
+        mock_result.returncode = 0
+        mock_result.stdout = b'fake_png_data'
+        mock_subprocess.return_value = mock_result
         
         response = self.client.get('/api/emulators/test-screenshot/screenshot')
         self.assertEqual(response.status_code, 200)
@@ -282,8 +270,8 @@ class TestUnifiedEmulatorAPI(unittest.TestCase):
         self.assertIn('screenshot', data)
         self.assertTrue(data['screenshot'].startswith('data:image/png;base64,'))
     
-    @patch('app.run_adb_command')
-    def test_screenshot_failure(self, mock_adb_command):
+    @patch('subprocess.run')
+    def test_screenshot_failure(self, mock_subprocess):
         """Test screenshot endpoint failure"""
         # Mock session
         self.sessions['test-screenshot-fail'] = {
@@ -295,10 +283,7 @@ class TestUnifiedEmulatorAPI(unittest.TestCase):
         }
         
         # Mock failed screenshot
-        mock_adb_command.return_value = {
-            'success': False,
-            'output': ''
-        }
+        mock_subprocess.side_effect = subprocess.CalledProcessError(1, 'adb', stderr=b'device not found')
         
         response = self.client.get('/api/emulators/test-screenshot-fail/screenshot')
         self.assertEqual(response.status_code, 200)
