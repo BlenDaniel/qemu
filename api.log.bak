@@ -1,156 +1,290 @@
-2025-06-03 12:59:57 INFO:docker_manager:Docker client connected successfully
-2025-06-03 12:59:58 INFO:docker_manager:Found 4 running containers
-2025-06-03 12:59:58 INFO:docker_manager:Checking container: qemu-api-1
-2025-06-03 12:59:58 INFO:docker_manager:Checking container: qemu-emulator14-1
-2025-06-03 12:59:58 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator14-1 (sleeping)
-2025-06-03 12:59:58 INFO:docker_manager:Checking container: qemu-emulator-1
-2025-06-03 12:59:58 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator-1 (sleeping)
-2025-06-03 12:59:58 INFO:docker_manager:Checking container: emu_daycyphj_5bc64fd9
-2025-06-03 12:59:58 INFO:werkzeug:WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
-2025-06-03 12:59:58  * Running on all addresses (0.0.0.0)
-2025-06-03 12:59:58  * Running on http://127.0.0.1:5001
-2025-06-03 12:59:58  * Running on http://172.18.0.4:5001
-2025-06-03 12:59:58 INFO:werkzeug:Press CTRL+C to quit
-2025-06-03 12:59:58 INFO:werkzeug: * Restarting with stat
-2025-06-03 12:59:58 INFO:docker_manager:Docker client connected successfully
-2025-06-03 12:59:58 INFO:docker_manager:Found 4 running containers
-2025-06-03 12:59:58 INFO:docker_manager:Checking container: qemu-api-1
-2025-06-03 12:59:58 INFO:docker_manager:Checking container: qemu-emulator14-1
-2025-06-03 12:59:58 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator14-1 (sleeping)
-2025-06-03 12:59:58 INFO:docker_manager:Checking container: qemu-emulator-1
-2025-06-03 12:59:58  * Serving Flask app 'app.py'
-2025-06-03 12:59:58  * Debug mode: on
-2025-06-03 12:59:58 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator-1 (sleeping)
-2025-06-03 12:59:58 INFO:docker_manager:Checking container: emu_daycyphj_5bc64fd9
-2025-06-03 12:59:58 WARNING:werkzeug: * Debugger is active!
-2025-06-03 12:59:58 INFO:werkzeug: * Debugger PIN: 124-756-723
-2025-06-03 13:00:10 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:00:10] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 13:00:10 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:00:10] "GET /api/emulators/5bc64fd9-e366-4d25-a99b-97a1581a6dc6/screenshot HTTP/1.1" 404 -
-2025-06-03 13:00:23 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:00:23] "GET / HTTP/1.1" 200 -
-2025-06-03 13:00:23 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:00:23] "GET /static/css/style.css HTTP/1.1" 304 -
-2025-06-03 13:00:23 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:00:23] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 13:00:26 INFO:api_routes:Setting up ADB connection for new emulator...
-2025-06-03 13:00:26 INFO:adb_manager:Performing robust ADB server restart on port 5916
-2025-06-03 13:00:26 INFO:adb_manager:Killing all ADB processes...
-2025-06-03 13:00:26 INFO:adb_manager:Killed Unix ADB processes
-2025-06-03 13:00:26 INFO:adb_manager:Executed adb kill-server
-2025-06-03 13:00:28 INFO:adb_manager:Set ADB server port to: 5916
-2025-06-03 13:00:28 INFO:adb_manager:Set Unix shell ADB server port to: 5916
-2025-06-03 13:00:28 INFO:adb_manager:Set ADB server port to: 5916
-2025-06-03 13:00:28 INFO:adb_manager:Set Unix shell ADB server port to: 5916
-2025-06-03 13:00:28 INFO:adb_manager:Running ADB command: adb -P 5916 start-server
-2025-06-03 13:00:31 INFO:adb_manager:ADB server started successfully on port 5916
-2025-06-03 13:00:34 INFO:adb_manager:Device detection attempt 1/3 for localhost:5194
-2025-06-03 13:00:34 INFO:adb_manager:Set ADB server port to: 5916
-2025-06-03 13:00:34 INFO:adb_manager:Set Unix shell ADB server port to: 5916
-2025-06-03 13:00:34 INFO:adb_manager:Running ADB command: adb -P 5916 connect localhost:5194
-2025-06-03 13:00:34 INFO:adb_manager:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
-2025-06-03 13:00:36 INFO:adb_manager:Set ADB server port to: 5916
-2025-06-03 13:00:36 INFO:adb_manager:Set Unix shell ADB server port to: 5916
-2025-06-03 13:00:36 INFO:adb_manager:Running ADB command: adb -P 5916 devices
-2025-06-03 13:00:36 INFO:adb_manager:Devices output: List of devices attached
-2025-06-03 13:00:36 
-2025-06-03 13:00:36 
-2025-06-03 13:00:36 WARNING:adb_manager:Device localhost:5194 not found in devices list
-2025-06-03 13:00:36 INFO:adb_manager:Retrying device detection in 2 seconds...
-2025-06-03 13:00:38 INFO:adb_manager:Device detection attempt 2/3 for localhost:5194
-2025-06-03 13:00:38 INFO:adb_manager:Set ADB server port to: 5916
-2025-06-03 13:00:38 INFO:adb_manager:Set Unix shell ADB server port to: 5916
-2025-06-03 13:00:38 INFO:adb_manager:Running ADB command: adb -P 5916 connect localhost:5194
-2025-06-03 13:00:38 INFO:adb_manager:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
-2025-06-03 13:00:40 INFO:adb_manager:Set ADB server port to: 5916
-2025-06-03 13:00:40 INFO:adb_manager:Set Unix shell ADB server port to: 5916
-2025-06-03 13:00:40 INFO:adb_manager:Running ADB command: adb -P 5916 devices
-2025-06-03 13:00:40 INFO:adb_manager:Devices output: List of devices attached
-2025-06-03 13:00:40 
-2025-06-03 13:00:40 
-2025-06-03 13:00:40 WARNING:adb_manager:Device localhost:5194 not found in devices list
-2025-06-03 13:00:40 INFO:adb_manager:Retrying device detection in 2 seconds...
-2025-06-03 13:00:42 INFO:adb_manager:Device detection attempt 3/3 for localhost:5194
-2025-06-03 13:00:42 INFO:adb_manager:Set ADB server port to: 5916
-2025-06-03 13:00:42 INFO:adb_manager:Set Unix shell ADB server port to: 5916
-2025-06-03 13:00:42 INFO:adb_manager:Running ADB command: adb -P 5916 connect localhost:5194
-2025-06-03 13:00:42 INFO:adb_manager:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
-2025-06-03 13:00:44 INFO:adb_manager:Set ADB server port to: 5916
-2025-06-03 13:00:44 INFO:adb_manager:Set Unix shell ADB server port to: 5916
-2025-06-03 13:00:44 INFO:adb_manager:Running ADB command: adb -P 5916 devices
-2025-06-03 13:00:44 INFO:adb_manager:Devices output: List of devices attached
-2025-06-03 13:00:44 
-2025-06-03 13:00:44 
-2025-06-03 13:00:44 WARNING:adb_manager:Device localhost:5194 not found in devices list
-2025-06-03 13:00:44 ERROR:adb_manager:Failed to detect device localhost:5194 after 3 attempts
-2025-06-03 13:00:44 INFO:adb_manager:Set ADB server port to: 5916
-2025-06-03 13:00:44 INFO:adb_manager:Set Unix shell ADB server port to: 5916
-2025-06-03 13:00:44 INFO:adb_manager:Running ADB command: adb -P 5916 devices
-2025-06-03 13:00:44 INFO:api_routes:Created Android 11 emulator qnl7lnxm
-2025-06-03 13:00:44 INFO:api_routes:Console: telnet localhost 9514
-2025-06-03 13:00:44 INFO:api_routes:ADB Server Port: 5916
-2025-06-03 13:00:44 INFO:api_routes:Device status: not_found
-2025-06-03 13:00:44 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:00:44] "POST /api/emulators HTTP/1.1" 201 -
-2025-06-03 13:00:46 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:00:46] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 13:00:54 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:00:54] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 13:01:10 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:01:10] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 13:01:23 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:01:23] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 13:01:35 INFO:adb_manager:Set ADB server port to: 5037
-2025-06-03 13:01:35 INFO:adb_manager:Set Unix shell ADB server port to: 5037
-2025-06-03 13:01:35 INFO:adb_manager:Running ADB command: adb connect localhost:5194
-2025-06-03 13:01:38 INFO:adb_manager:Set default device to: localhost:5194
-2025-06-03 13:01:38 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:01:38] "POST /api/adb/connect HTTP/1.1" 200 -
-2025-06-03 13:01:54 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:01:54] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 13:02:04 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:02:04] "GET /vnc/af3c43da-24ce-41f1-8410-97be43159097 HTTP/1.1" 200 -
-2025-06-03 13:02:04 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:02:04] "GET /static/js/novnc-local.js HTTP/1.1" 304 -
-2025-06-03 13:02:05 INFO:api_routes:Taking screenshot for emulator af3c43da-24ce-41f1-8410-97be43159097 - ADB port: 5194, Server port: 5916
-2025-06-03 13:02:05 INFO:adb_manager:Restarting ADB server for screenshot...
-2025-06-03 13:02:05 INFO:adb_manager:Performing robust ADB server restart on port 5916
-2025-06-03 13:02:05 INFO:adb_manager:Killing all ADB processes...
-2025-06-03 13:02:05 INFO:adb_manager:Killed Unix ADB processes
-2025-06-03 13:02:05 INFO:adb_manager:Executed adb kill-server
-2025-06-03 13:02:07 INFO:adb_manager:Set ADB server port to: 5916
-2025-06-03 13:02:07 INFO:adb_manager:Set Unix shell ADB server port to: 5916
-2025-06-03 13:02:07 INFO:adb_manager:Set ADB server port to: 5916
-2025-06-03 13:02:07 INFO:adb_manager:Set Unix shell ADB server port to: 5916
-2025-06-03 13:02:07 INFO:adb_manager:Running ADB command: adb -P 5916 start-server
-2025-06-03 13:02:10 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:02:10] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 13:02:10 INFO:adb_manager:ADB server started successfully on port 5916
-2025-06-03 13:02:13 INFO:adb_manager:Detecting device...
-2025-06-03 13:02:13 INFO:adb_manager:Device detection attempt 1/3 for localhost:5194
-2025-06-03 13:02:13 INFO:adb_manager:Set ADB server port to: 5916
-2025-06-03 13:02:13 INFO:adb_manager:Set Unix shell ADB server port to: 5916
-2025-06-03 13:02:13 INFO:adb_manager:Running ADB command: adb -P 5916 connect localhost:5194
-2025-06-03 13:02:13 INFO:adb_manager:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
-2025-06-03 13:02:15 INFO:adb_manager:Set ADB server port to: 5916
-2025-06-03 13:02:15 INFO:adb_manager:Set Unix shell ADB server port to: 5916
-2025-06-03 13:02:15 INFO:adb_manager:Running ADB command: adb -P 5916 devices
-2025-06-03 13:02:15 INFO:adb_manager:Devices output: List of devices attached
-2025-06-03 13:02:15 
-2025-06-03 13:02:15 
-2025-06-03 13:02:15 WARNING:adb_manager:Device localhost:5194 not found in devices list
-2025-06-03 13:02:15 INFO:adb_manager:Retrying device detection in 3 seconds...
-2025-06-03 13:02:18 INFO:adb_manager:Device detection attempt 2/3 for localhost:5194
-2025-06-03 13:02:18 INFO:adb_manager:Set ADB server port to: 5916
-2025-06-03 13:02:18 INFO:adb_manager:Set Unix shell ADB server port to: 5916
-2025-06-03 13:02:18 INFO:adb_manager:Running ADB command: adb -P 5916 connect localhost:5194
-2025-06-03 13:02:18 INFO:adb_manager:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
-2025-06-03 13:02:20 INFO:adb_manager:Set ADB server port to: 5916
-2025-06-03 13:02:20 INFO:adb_manager:Set Unix shell ADB server port to: 5916
-2025-06-03 13:02:20 INFO:adb_manager:Running ADB command: adb -P 5916 devices
-2025-06-03 13:02:20 INFO:adb_manager:Devices output: List of devices attached
-2025-06-03 13:02:20 
-2025-06-03 13:02:20 
-2025-06-03 13:02:20 WARNING:adb_manager:Device localhost:5194 not found in devices list
-2025-06-03 13:02:20 INFO:adb_manager:Retrying device detection in 3 seconds...
-2025-06-03 13:02:23 INFO:adb_manager:Device detection attempt 3/3 for localhost:5194
-2025-06-03 13:02:23 INFO:adb_manager:Set ADB server port to: 5916
-2025-06-03 13:02:23 INFO:adb_manager:Set Unix shell ADB server port to: 5916
-2025-06-03 13:02:23 INFO:adb_manager:Running ADB command: adb -P 5916 connect localhost:5194
-2025-06-03 13:02:23 INFO:adb_manager:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
-2025-06-03 13:02:24 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:02:24] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 13:02:25 INFO:adb_manager:Set ADB server port to: 5916
-2025-06-03 13:02:25 INFO:adb_manager:Set Unix shell ADB server port to: 5916
-2025-06-03 13:02:25 INFO:adb_manager:Running ADB command: adb -P 5916 devices
-2025-06-03 13:02:25 INFO:adb_manager:Devices output: List of devices attached
-2025-06-03 13:02:25 
-2025-06-03 13:02:25 
-2025-06-03 13:02:25 WARNING:adb_manager:Device localhost:5194 not found in devices list
-2025-06-03 13:02:25 ERROR:adb_manager:Failed to detect device localhost:5194 after 3 attempts
-2025-06-03 13:02:25 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:02:25] "GET /api/emulators/af3c43da-24ce-41f1-8410-97be43159097/screenshot HTTP/1.1" 500 -
+2025-06-03 13:10:48 INFO:docker_manager:Docker client connected successfully
+2025-06-03 13:10:48 INFO:docker_manager:Found 3 running containers
+2025-06-03 13:10:48 INFO:docker_manager:Checking container: qemu-api-1
+2025-06-03 13:10:48 INFO:docker_manager:Checking container: qemu-emulator14-1
+2025-06-03 13:10:48 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator14-1 (sleeping)
+2025-06-03 13:10:48 INFO:docker_manager:Checking container: qemu-emulator-1
+2025-06-03 13:10:48 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator-1 (sleeping)
+2025-06-03 13:10:48 INFO:werkzeug:WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+2025-06-03 13:10:48  * Running on all addresses (0.0.0.0)
+2025-06-03 13:10:48  * Running on http://127.0.0.1:5001
+2025-06-03 13:10:48  * Running on http://172.18.0.4:5001
+2025-06-03 13:10:48 INFO:werkzeug:Press CTRL+C to quit
+2025-06-03 13:10:48 INFO:werkzeug: * Restarting with stat
+2025-06-03 13:10:49 INFO:docker_manager:Docker client connected successfully
+2025-06-03 13:10:49 INFO:docker_manager:Found 3 running containers
+2025-06-03 13:10:49 INFO:docker_manager:Checking container: qemu-api-1
+2025-06-03 13:10:49 INFO:docker_manager:Checking container: qemu-emulator14-1
+2025-06-03 13:10:49 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator14-1 (sleeping)
+2025-06-03 13:10:49 INFO:docker_manager:Checking container: qemu-emulator-1
+2025-06-03 13:10:49 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator-1 (sleeping)
+2025-06-03 13:10:49 WARNING:werkzeug: * Debugger is active!
+2025-06-03 13:10:49 INFO:werkzeug: * Debugger PIN: 102-327-009
+2025-06-03 13:10:57 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:10:57] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 13:11:06 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:11:06] "GET / HTTP/1.1" 200 -
+2025-06-03 13:11:06 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:11:06] "GET /static/css/style.css HTTP/1.1" 304 -
+2025-06-03 13:11:06 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:11:06] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 13:11:08 INFO:api_routes:Setting up ADB connection for new emulator...
+2025-06-03 13:11:08 INFO:adb_manager:Performing robust ADB server restart on port 9543
+2025-06-03 13:11:08 INFO:adb_manager:Killing all ADB processes...
+2025-06-03 13:11:08 INFO:adb_manager:Killed Unix ADB processes
+2025-06-03 13:11:08 INFO:adb_manager:Executed adb kill-server
+2025-06-03 13:11:10 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:11:10] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 13:10:48  * Serving Flask app 'app.py'
+2025-06-03 13:10:48  * Debug mode: on
+2025-06-03 13:11:10 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:11:10 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:11:10 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:11:10 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:11:10 INFO:adb_manager:Running ADB command: adb -P 9543 start-server
+2025-06-03 13:11:13 INFO:adb_manager:ADB server started successfully on port 9543
+2025-06-03 13:11:16 INFO:adb_manager:Device detection attempt 1/3 for localhost:9241
+2025-06-03 13:11:16 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:11:16 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:11:16 INFO:adb_manager:Running ADB command: adb -P 9543 connect localhost:9241
+2025-06-03 13:11:16 INFO:adb_manager:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
+2025-06-03 13:11:18 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:11:18 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:11:18 INFO:adb_manager:Running ADB command: adb -P 9543 devices
+2025-06-03 13:11:18 INFO:adb_manager:Devices output: List of devices attached
+2025-06-03 13:11:18 
+2025-06-03 13:11:18 
+2025-06-03 13:11:18 WARNING:adb_manager:Device localhost:9241 not found in devices list
+2025-06-03 13:11:18 INFO:adb_manager:Retrying device detection in 2 seconds...
+2025-06-03 13:11:20 INFO:adb_manager:Device detection attempt 2/3 for localhost:9241
+2025-06-03 13:11:20 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:11:20 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:11:20 INFO:adb_manager:Running ADB command: adb -P 9543 connect localhost:9241
+2025-06-03 13:11:20 INFO:adb_manager:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
+2025-06-03 13:11:22 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:11:22 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:11:22 INFO:adb_manager:Running ADB command: adb -P 9543 devices
+2025-06-03 13:11:22 INFO:adb_manager:Devices output: List of devices attached
+2025-06-03 13:11:22 
+2025-06-03 13:11:22 
+2025-06-03 13:11:22 WARNING:adb_manager:Device localhost:9241 not found in devices list
+2025-06-03 13:11:22 INFO:adb_manager:Retrying device detection in 2 seconds...
+2025-06-03 13:11:24 INFO:adb_manager:Device detection attempt 3/3 for localhost:9241
+2025-06-03 13:11:24 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:11:24 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:11:24 INFO:adb_manager:Running ADB command: adb -P 9543 connect localhost:9241
+2025-06-03 13:11:24 INFO:adb_manager:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
+2025-06-03 13:11:26 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:11:26 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:11:26 INFO:adb_manager:Running ADB command: adb -P 9543 devices
+2025-06-03 13:11:26 INFO:adb_manager:Devices output: List of devices attached
+2025-06-03 13:11:26 
+2025-06-03 13:11:26 
+2025-06-03 13:11:26 WARNING:adb_manager:Device localhost:9241 not found in devices list
+2025-06-03 13:11:26 ERROR:adb_manager:Failed to detect device localhost:9241 after 3 attempts
+2025-06-03 13:11:26 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:11:26 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:11:26 INFO:adb_manager:Running ADB command: adb -P 9543 devices
+2025-06-03 13:11:26 INFO:api_routes:Created Android 11 emulator 8w26mnhr
+2025-06-03 13:11:26 INFO:api_routes:Console: telnet localhost 8551
+2025-06-03 13:11:26 INFO:api_routes:ADB Server Port: 9543
+2025-06-03 13:11:26 INFO:api_routes:Device status: not_found
+2025-06-03 13:11:26 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:11:26] "POST /api/emulators HTTP/1.1" 201 -
+2025-06-03 13:11:28 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:11:28] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 13:11:28 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:11:28] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 13:11:36 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:11:36] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 13:11:55 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:11:55] "GET /vnc/a350f662-2b6e-4e34-b297-f1eaa4e3c926 HTTP/1.1" 200 -
+2025-06-03 13:11:55 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:11:55] "GET /static/js/novnc-local.js HTTP/1.1" 304 -
+2025-06-03 13:11:55 INFO:api_routes:Taking screenshot for emulator a350f662-2b6e-4e34-b297-f1eaa4e3c926 - ADB port: 9241, Server port: 9543
+2025-06-03 13:11:55 INFO:adb_manager:Restarting ADB server for screenshot...
+2025-06-03 13:11:55 INFO:adb_manager:Performing robust ADB server restart on port 9543
+2025-06-03 13:11:55 INFO:adb_manager:Killing all ADB processes...
+2025-06-03 13:11:55 INFO:adb_manager:Killed Unix ADB processes
+2025-06-03 13:11:55 INFO:adb_manager:Executed adb kill-server
+2025-06-03 13:11:57 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:11:57 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:11:57 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:11:57 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:11:57 INFO:adb_manager:Running ADB command: adb -P 9543 start-server
+2025-06-03 13:12:00 INFO:adb_manager:ADB server started successfully on port 9543
+2025-06-03 13:12:03 INFO:adb_manager:Detecting device...
+2025-06-03 13:12:03 INFO:adb_manager:Device detection attempt 1/3 for localhost:9241
+2025-06-03 13:12:03 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:03 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:03 INFO:adb_manager:Running ADB command: adb -P 9543 connect localhost:9241
+2025-06-03 13:12:03 INFO:adb_manager:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
+2025-06-03 13:12:05 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:05 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:05 INFO:adb_manager:Running ADB command: adb -P 9543 devices
+2025-06-03 13:12:05 INFO:adb_manager:Devices output: List of devices attached
+2025-06-03 13:12:05 
+2025-06-03 13:12:05 
+2025-06-03 13:12:05 WARNING:adb_manager:Device localhost:9241 not found in devices list
+2025-06-03 13:12:05 INFO:adb_manager:Retrying device detection in 3 seconds...
+2025-06-03 13:12:06 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:12:06] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 13:12:08 INFO:adb_manager:Device detection attempt 2/3 for localhost:9241
+2025-06-03 13:12:08 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:08 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:08 INFO:adb_manager:Running ADB command: adb -P 9543 connect localhost:9241
+2025-06-03 13:12:08 INFO:adb_manager:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
+2025-06-03 13:12:10 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:12:10] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 13:12:10 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:10 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:10 INFO:adb_manager:Running ADB command: adb -P 9543 devices
+2025-06-03 13:12:10 INFO:adb_manager:Devices output: List of devices attached
+2025-06-03 13:12:10 
+2025-06-03 13:12:10 
+2025-06-03 13:12:10 WARNING:adb_manager:Device localhost:9241 not found in devices list
+2025-06-03 13:12:10 INFO:adb_manager:Retrying device detection in 3 seconds...
+2025-06-03 13:12:13 INFO:adb_manager:Device detection attempt 3/3 for localhost:9241
+2025-06-03 13:12:13 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:13 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:13 INFO:adb_manager:Running ADB command: adb -P 9543 connect localhost:9241
+2025-06-03 13:12:13 INFO:adb_manager:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
+2025-06-03 13:12:15 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:12:15] "GET /api/emulators/a350f662-2b6e-4e34-b297-f1eaa4e3c926/live_view HTTP/1.1" 200 -
+2025-06-03 13:12:15 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:15 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:15 INFO:adb_manager:Running ADB command: adb -P 9543 devices
+2025-06-03 13:12:15 INFO:adb_manager:Devices output: List of devices attached
+2025-06-03 13:12:15 
+2025-06-03 13:12:15 
+2025-06-03 13:12:15 WARNING:adb_manager:Device localhost:9241 not found in devices list
+2025-06-03 13:12:15 ERROR:adb_manager:Failed to detect device localhost:9241 after 3 attempts
+2025-06-03 13:12:15 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:12:15] "GET /api/emulators/a350f662-2b6e-4e34-b297-f1eaa4e3c926/screenshot HTTP/1.1" 500 -
+2025-06-03 13:12:16 INFO:api_routes:Taking screenshot for emulator a350f662-2b6e-4e34-b297-f1eaa4e3c926 - ADB port: 9241, Server port: 9543
+2025-06-03 13:12:16 INFO:adb_manager:Restarting ADB server for screenshot...
+2025-06-03 13:12:16 INFO:adb_manager:Performing robust ADB server restart on port 9543
+2025-06-03 13:12:16 INFO:adb_manager:Killing all ADB processes...
+2025-06-03 13:12:16 INFO:adb_manager:Killed Unix ADB processes
+2025-06-03 13:12:16 INFO:adb_manager:Executed adb kill-server
+2025-06-03 13:12:18 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:18 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:18 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:18 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:18 INFO:adb_manager:Running ADB command: adb -P 9543 start-server
+2025-06-03 13:12:21 INFO:adb_manager:ADB server started successfully on port 9543
+2025-06-03 13:12:24 INFO:adb_manager:Detecting device...
+2025-06-03 13:12:24 INFO:adb_manager:Device detection attempt 1/3 for localhost:9241
+2025-06-03 13:12:24 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:24 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:24 INFO:adb_manager:Running ADB command: adb -P 9543 connect localhost:9241
+2025-06-03 13:12:24 INFO:adb_manager:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
+2025-06-03 13:12:26 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:26 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:26 INFO:adb_manager:Running ADB command: adb -P 9543 devices
+2025-06-03 13:12:26 INFO:adb_manager:Devices output: List of devices attached
+2025-06-03 13:12:26 
+2025-06-03 13:12:26 
+2025-06-03 13:12:26 WARNING:adb_manager:Device localhost:9241 not found in devices list
+2025-06-03 13:12:26 INFO:adb_manager:Retrying device detection in 3 seconds...
+2025-06-03 13:12:29 INFO:adb_manager:Device detection attempt 2/3 for localhost:9241
+2025-06-03 13:12:29 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:29 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:29 INFO:adb_manager:Running ADB command: adb -P 9543 connect localhost:9241
+2025-06-03 13:12:29 INFO:adb_manager:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
+2025-06-03 13:12:31 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:31 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:31 INFO:adb_manager:Running ADB command: adb -P 9543 devices
+2025-06-03 13:12:31 INFO:adb_manager:Devices output: List of devices attached
+2025-06-03 13:12:31 
+2025-06-03 13:12:31 
+2025-06-03 13:12:31 WARNING:adb_manager:Device localhost:9241 not found in devices list
+2025-06-03 13:12:31 INFO:adb_manager:Retrying device detection in 3 seconds...
+2025-06-03 13:12:34 INFO:adb_manager:Device detection attempt 3/3 for localhost:9241
+2025-06-03 13:12:34 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:34 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:34 INFO:adb_manager:Running ADB command: adb -P 9543 connect localhost:9241
+2025-06-03 13:12:34 INFO:adb_manager:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
+2025-06-03 13:12:36 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:36 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:36 INFO:adb_manager:Running ADB command: adb -P 9543 devices
+2025-06-03 13:12:36 INFO:adb_manager:Devices output: List of devices attached
+2025-06-03 13:12:36 
+2025-06-03 13:12:36 
+2025-06-03 13:12:36 WARNING:adb_manager:Device localhost:9241 not found in devices list
+2025-06-03 13:12:36 ERROR:adb_manager:Failed to detect device localhost:9241 after 3 attempts
+2025-06-03 13:12:36 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:12:36] "GET /api/emulators/a350f662-2b6e-4e34-b297-f1eaa4e3c926/screenshot HTTP/1.1" 500 -
+2025-06-03 13:12:36 INFO:api_routes:Taking screenshot for emulator a350f662-2b6e-4e34-b297-f1eaa4e3c926 - ADB port: 9241, Server port: 9543
+2025-06-03 13:12:36 INFO:adb_manager:Restarting ADB server for screenshot...
+2025-06-03 13:12:36 INFO:adb_manager:Performing robust ADB server restart on port 9543
+2025-06-03 13:12:36 INFO:adb_manager:Killing all ADB processes...
+2025-06-03 13:12:36 INFO:adb_manager:Killed Unix ADB processes
+2025-06-03 13:12:36 INFO:adb_manager:Executed adb kill-server
+2025-06-03 13:12:36 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:12:36] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 13:12:38 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:38 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:38 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:38 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:38 INFO:adb_manager:Running ADB command: adb -P 9543 start-server
+2025-06-03 13:12:41 INFO:api_routes:Taking screenshot for emulator a350f662-2b6e-4e34-b297-f1eaa4e3c926 - ADB port: 9241, Server port: 9543
+2025-06-03 13:12:41 INFO:adb_manager:Restarting ADB server for screenshot...
+2025-06-03 13:12:41 INFO:adb_manager:Performing robust ADB server restart on port 9543
+2025-06-03 13:12:41 INFO:adb_manager:Killing all ADB processes...
+2025-06-03 13:12:41 INFO:adb_manager:Killed Unix ADB processes
+2025-06-03 13:12:41 ERROR:adb_manager:ADB command failed: * daemon not running; starting now at tcp:9543
+2025-06-03 13:12:41 
+2025-06-03 13:12:41 ERROR:adb_manager:Failed to start ADB server: * daemon not running; starting now at tcp:9543
+2025-06-03 13:12:41 
+2025-06-03 13:12:41 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:12:41] "GET /api/emulators/a350f662-2b6e-4e34-b297-f1eaa4e3c926/screenshot HTTP/1.1" 500 -
+2025-06-03 13:12:41 INFO:adb_manager:Executed adb kill-server
+2025-06-03 13:12:41 INFO:api_routes:Taking screenshot for emulator a350f662-2b6e-4e34-b297-f1eaa4e3c926 - ADB port: 9241, Server port: 9543
+2025-06-03 13:12:41 INFO:adb_manager:Restarting ADB server for screenshot...
+2025-06-03 13:12:41 INFO:adb_manager:Performing robust ADB server restart on port 9543
+2025-06-03 13:12:41 INFO:adb_manager:Killing all ADB processes...
+2025-06-03 13:12:41 INFO:adb_manager:Killed Unix ADB processes
+2025-06-03 13:12:41 INFO:adb_manager:Executed adb kill-server
+2025-06-03 13:12:43 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:43 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:43 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:43 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:43 INFO:adb_manager:Running ADB command: adb -P 9543 start-server
+2025-06-03 13:12:43 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:43 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:43 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:43 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:43 INFO:adb_manager:Running ADB command: adb -P 9543 start-server
+2025-06-03 13:12:45 INFO:api_routes:Taking screenshot for emulator a350f662-2b6e-4e34-b297-f1eaa4e3c926 - ADB port: 9241, Server port: 9543
+2025-06-03 13:12:45 INFO:adb_manager:Restarting ADB server for screenshot...
+2025-06-03 13:12:45 INFO:adb_manager:Performing robust ADB server restart on port 9543
+2025-06-03 13:12:45 INFO:adb_manager:Killing all ADB processes...
+2025-06-03 13:12:45 ERROR:adb_manager:ADB command failed: * daemon not running; starting now at tcp:9543
+2025-06-03 13:12:45 
+2025-06-03 13:12:45 ERROR:adb_manager:ADB command failed: 
+2025-06-03 13:12:45 ERROR:adb_manager:Failed to start ADB server: * daemon not running; starting now at tcp:9543
+2025-06-03 13:12:45 
+2025-06-03 13:12:45 ERROR:adb_manager:Failed to start ADB server: 
+2025-06-03 13:12:45 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:12:45] "GET /api/emulators/a350f662-2b6e-4e34-b297-f1eaa4e3c926/screenshot HTTP/1.1" 500 -
+2025-06-03 13:12:45 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:12:45] "GET /api/emulators/a350f662-2b6e-4e34-b297-f1eaa4e3c926/screenshot HTTP/1.1" 500 -
+2025-06-03 13:12:45 INFO:adb_manager:Killed Unix ADB processes
+2025-06-03 13:12:45 INFO:api_routes:Taking screenshot for emulator a350f662-2b6e-4e34-b297-f1eaa4e3c926 - ADB port: 9241, Server port: 9543
+2025-06-03 13:12:45 INFO:adb_manager:Restarting ADB server for screenshot...
+2025-06-03 13:12:45 INFO:adb_manager:Performing robust ADB server restart on port 9543
+2025-06-03 13:12:45 INFO:adb_manager:Killing all ADB processes...
+2025-06-03 13:12:45 INFO:adb_manager:Executed adb kill-server
+2025-06-03 13:12:45 INFO:adb_manager:Killed Unix ADB processes
+2025-06-03 13:12:45 INFO:adb_manager:Executed adb kill-server
+2025-06-03 13:12:47 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:47 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:47 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:47 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:47 INFO:adb_manager:Running ADB command: adb -P 9543 start-server
+2025-06-03 13:12:47 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:47 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:47 INFO:adb_manager:Set ADB server port to: 9543
+2025-06-03 13:12:47 INFO:adb_manager:Set Unix shell ADB server port to: 9543
+2025-06-03 13:12:47 INFO:adb_manager:Running ADB command: adb -P 9543 start-server
+2025-06-03 13:12:49 INFO:api_routes:Taking screenshot for emulator a350f662-2b6e-4e34-b297-f1eaa4e3c926 - ADB port: 9241, Server port: 9543
+2025-06-03 13:12:49 INFO:adb_manager:Restarting ADB server for screenshot...
+2025-06-03 13:12:49 INFO:adb_manager:Performing robust ADB server restart on port 9543
+2025-06-03 13:12:49 INFO:adb_manager:Killing all ADB processes...
+2025-06-03 13:12:49 ERROR:adb_manager:ADB command failed: * daemon not running; starting now at tcp:9543
+2025-06-03 13:12:49 
+2025-06-03 13:12:49 ERROR:adb_manager:Failed to start ADB server: * daemon not running; starting now at tcp:9543
+2025-06-03 13:12:49 
+2025-06-03 13:12:49 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:12:49] "GET /api/emulators/a350f662-2b6e-4e34-b297-f1eaa4e3c926/screenshot HTTP/1.1" 500 -
+2025-06-03 13:12:49 INFO:adb_manager:Killed Unix ADB processes
+2025-06-03 13:12:49 ERROR:adb_manager:ADB command failed: 
+2025-06-03 13:12:49 ERROR:adb_manager:Failed to start ADB server: 
+2025-06-03 13:12:49 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:12:49] "GET /api/emulators/a350f662-2b6e-4e34-b297-f1eaa4e3c926/screenshot HTTP/1.1" 500 -
+2025-06-03 13:12:49 INFO:adb_manager:Executed adb kill-server
+2025-06-03 13:12:49 INFO:api_routes:Taking screenshot for emulator a350f662-2b6e-4e34-b297-f1eaa4e3c926 - ADB port: 9241, Server port: 9543
+2025-06-03 13:12:49 INFO:adb_manager:Restarting ADB server for screenshot...
+2025-06-03 13:12:49 INFO:adb_manager:Performing robust ADB server restart on port 9543
+2025-06-03 13:12:49 INFO:adb_manager:Killing all ADB processes...
+2025-06-03 13:12:49 INFO:adb_manager:Killed Unix ADB processes
+2025-06-03 13:12:49 INFO:adb_manager:Executed adb kill-server
