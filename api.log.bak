@@ -1,0 +1,2271 @@
+2025-06-03 10:57:52  * Serving Flask app 'app.py'
+2025-06-03 10:57:52  * Debug mode: off
+2025-06-03 10:57:52 INFO:werkzeug:WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+2025-06-03 10:57:52  * Running on all addresses (0.0.0.0)
+2025-06-03 10:57:52  * Running on http://127.0.0.1:5001
+2025-06-03 10:57:52  * Running on http://172.18.0.4:5001
+2025-06-03 10:57:52 INFO:werkzeug:Press CTRL+C to quit
+2025-06-03 10:59:08 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 08:59:08] "GET / HTTP/1.1" 200 -
+2025-06-03 10:59:08 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 08:59:08] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-06-03 10:59:08 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 08:59:08] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 10:59:08 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 08:59:08] "GET /favicon.ico HTTP/1.1" 404 -
+2025-06-03 10:59:11 INFO:app:Docker client connected successfully
+2025-06-03 10:59:12 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:12 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:12 INFO:app:Running ADB command: adb kill-server
+2025-06-03 10:59:12 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:12 INFO:app:Running ADB command: adb -P 5633 start-server
+2025-06-03 10:59:15 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:15 INFO:app:Running ADB command: adb connect localhost:6097
+2025-06-03 10:59:15 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:15 INFO:app:Running ADB command: adb devices
+2025-06-03 10:59:17 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:17 INFO:app:Running ADB command: adb devices
+2025-06-03 10:59:19 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:19 INFO:app:Running ADB command: adb devices
+2025-06-03 10:59:21 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:21 INFO:app:Running ADB command: adb devices
+2025-06-03 10:59:23 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:23 INFO:app:Running ADB command: adb devices
+2025-06-03 10:59:25 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:25 INFO:app:Running ADB command: adb devices
+2025-06-03 10:59:27 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:27 INFO:app:Running ADB command: adb devices
+2025-06-03 10:59:29 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:29 INFO:app:Running ADB command: adb devices
+2025-06-03 10:59:31 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:31 INFO:app:Running ADB command: adb devices
+2025-06-03 10:59:33 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:33 INFO:app:Running ADB command: adb devices
+2025-06-03 10:59:35 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:35 INFO:app:Running ADB command: adb devices
+2025-06-03 10:59:37 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:37 INFO:app:Running ADB command: adb devices
+2025-06-03 10:59:38 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 08:59:38] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 10:59:39 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:39 INFO:app:Running ADB command: adb devices
+2025-06-03 10:59:41 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:41 INFO:app:Running ADB command: adb devices
+2025-06-03 10:59:43 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:43 INFO:app:Running ADB command: adb devices
+2025-06-03 10:59:45 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:45 INFO:app:Running ADB command: adb devices
+2025-06-03 10:59:47 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:47 INFO:app:Running ADB command: adb devices
+2025-06-03 10:59:49 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:49 INFO:app:Running ADB command: adb devices
+2025-06-03 10:59:51 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:51 INFO:app:Running ADB command: adb devices
+2025-06-03 10:59:53 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:53 INFO:app:Running ADB command: adb devices
+2025-06-03 10:59:55 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:55 INFO:app:Running ADB command: adb devices
+2025-06-03 10:59:57 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:57 INFO:app:Running ADB command: adb devices
+2025-06-03 10:59:58 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 08:59:58] "GET /vnc/17989b38-15a8-4434-bca2-7334fa3e69d1 HTTP/1.1" 200 -
+2025-06-03 10:59:58 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 08:59:58] "GET /static/js/novnc-local.js HTTP/1.1" 200 -
+2025-06-03 10:59:58 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 10:59:58 INFO:app:Screenshot attempt 1/3
+2025-06-03 10:59:58 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:58 INFO:app:Ensuring ADB server is running...
+2025-06-03 10:59:59 INFO:app:Set ADB server port to: 5633
+2025-06-03 10:59:59 INFO:app:Running ADB command: adb devices
+2025-06-03 11:00:00 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:00:00 INFO:app:Connect result: Connection refused
+2025-06-03 11:00:00 
+2025-06-03 11:00:01 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:00:01 INFO:app:Running ADB command: adb devices
+2025-06-03 11:00:03 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:00:03 INFO:app:Running ADB command: adb devices
+2025-06-03 11:00:03 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:00:03 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:03 
+2025-06-03 11:00:03 
+2025-06-03 11:00:03 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:05 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:00:05 INFO:app:Running ADB command: adb devices
+2025-06-03 11:00:05 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:00:05 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:05 
+2025-06-03 11:00:05 
+2025-06-03 11:00:05 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:07 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:00:07 INFO:app:Running ADB command: adb devices
+2025-06-03 11:00:07 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:00:07 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:07 
+2025-06-03 11:00:07 
+2025-06-03 11:00:07 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:08 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:00:08] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 11:00:09 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:00:09 INFO:app:Running ADB command: adb devices
+2025-06-03 11:00:09 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:00:09 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:09 
+2025-06-03 11:00:09 
+2025-06-03 11:00:09 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:10 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:00:10] "GET /api/emulators/17989b38-15a8-4434-bca2-7334fa3e69d1/live_view HTTP/1.1" 200 -
+2025-06-03 11:00:10 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:00:10 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:00:10 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:00:10 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:00:11 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:00:11 INFO:app:Running ADB command: adb devices
+2025-06-03 11:00:11 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:00:11 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:11 
+2025-06-03 11:00:11 
+2025-06-03 11:00:11 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:12 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:00:12 INFO:app:Connect result: Connection refused
+2025-06-03 11:00:12 
+2025-06-03 11:00:13 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:00:13 INFO:app:Running ADB command: adb devices
+2025-06-03 11:00:13 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:00:15 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:00:15 INFO:app:Running ADB command: adb devices
+2025-06-03 11:00:15 INFO:app:Created Android 11 emulator va5lw69j
+2025-06-03 11:00:15 INFO:app:Console: telnet localhost 6268
+2025-06-03 11:00:15 INFO:app:ADB Server Port: 5633
+2025-06-03 11:00:15 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:00:15] "POST /api/emulators HTTP/1.1" 201 -
+2025-06-03 11:00:15 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:00:15 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:15 
+2025-06-03 11:00:15 
+2025-06-03 11:00:15 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:17 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:00:17 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:17 
+2025-06-03 11:00:17 
+2025-06-03 11:00:17 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:18 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:00:18] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 11:00:18 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:00:18 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:00:18 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:00:19 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:00:19 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:19 
+2025-06-03 11:00:19 
+2025-06-03 11:00:19 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:20 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:00:20 INFO:app:Connect result: Connection refused
+2025-06-03 11:00:20 
+2025-06-03 11:00:21 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:00:21 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:21 
+2025-06-03 11:00:21 
+2025-06-03 11:00:21 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:23 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:00:23 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:23 
+2025-06-03 11:00:23 
+2025-06-03 11:00:23 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:23 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:00:23 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:23 
+2025-06-03 11:00:23 
+2025-06-03 11:00:23 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:25 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:00:25 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:25 
+2025-06-03 11:00:25 
+2025-06-03 11:00:25 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:25 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:00:27 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:00:27 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:27 
+2025-06-03 11:00:27 
+2025-06-03 11:00:27 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:29 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:00:29 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:29 
+2025-06-03 11:00:29 
+2025-06-03 11:00:29 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:30 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:00:30 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:00:30 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:00:31 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:00:31 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:31 
+2025-06-03 11:00:31 
+2025-06-03 11:00:31 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:32 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:00:32 INFO:app:Connect result: Connection refused
+2025-06-03 11:00:32 
+2025-06-03 11:00:33 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:00:33 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:00:33 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:00:33 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:00:33 WARNING:app:Device not found on attempt 2, retrying...
+2025-06-03 11:00:35 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:00:35 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:00:35 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:00:35 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:00:35 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:00:35 INFO:app:Connect result: Connection refused
+2025-06-03 11:00:35 
+2025-06-03 11:00:35 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:00:35 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:35 
+2025-06-03 11:00:35 
+2025-06-03 11:00:35 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:37 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:00:37 INFO:app:Connect result: Connection refused
+2025-06-03 11:00:37 
+2025-06-03 11:00:37 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:00:37 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:00:37 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:00:37 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:00:37 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:00:37 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:37 
+2025-06-03 11:00:37 
+2025-06-03 11:00:37 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:38 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:00:38 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:38 
+2025-06-03 11:00:38 
+2025-06-03 11:00:38 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:38 INFO:app:Screenshot attempt 3/3
+2025-06-03 11:00:38 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:00:38 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:00:39 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:00:39] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 11:00:39 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:00:39 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:00:39 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:00:39 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:00:39 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:00:39 INFO:app:Connect result: Connection refused
+2025-06-03 11:00:39 
+2025-06-03 11:00:39 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:00:39 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:39 
+2025-06-03 11:00:39 
+2025-06-03 11:00:39 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:40 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:00:40 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:40 
+2025-06-03 11:00:40 
+2025-06-03 11:00:40 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:40 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:00:40 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:40 
+2025-06-03 11:00:40 
+2025-06-03 11:00:40 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:40 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:00:40 INFO:app:Connect result: Connection refused
+2025-06-03 11:00:40 
+2025-06-03 11:00:41 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:00:41 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:00:41 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:00:41 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:00:41 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:00:41 INFO:app:Connect result: Connection refused
+2025-06-03 11:00:41 
+2025-06-03 11:00:41 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:00:41 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:41 
+2025-06-03 11:00:41 
+2025-06-03 11:00:41 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:42 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:00:42 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:42 
+2025-06-03 11:00:42 
+2025-06-03 11:00:42 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:42 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:00:42 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:42 
+2025-06-03 11:00:42 
+2025-06-03 11:00:42 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:42 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:00:42 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:42 
+2025-06-03 11:00:42 
+2025-06-03 11:00:42 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:43 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:00:43 INFO:app:Connect result: Connection refused
+2025-06-03 11:00:43 
+2025-06-03 11:00:43 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:00:43 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:43 
+2025-06-03 11:00:43 
+2025-06-03 11:00:43 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:43 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:00:43 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:43 
+2025-06-03 11:00:43 
+2025-06-03 11:00:43 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:44 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:00:44 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:44 
+2025-06-03 11:00:44 
+2025-06-03 11:00:44 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:44 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:00:44 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:00:44 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:44 
+2025-06-03 11:00:44 
+2025-06-03 11:00:44 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:44 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:44 
+2025-06-03 11:00:44 
+2025-06-03 11:00:44 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:44 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:00:44 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:44 
+2025-06-03 11:00:44 
+2025-06-03 11:00:44 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:45 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:00:45 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:45 
+2025-06-03 11:00:45 
+2025-06-03 11:00:45 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:45 WARNING:app:Device not found on attempt 2, retrying...
+2025-06-03 11:00:46 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:00:46 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:46 
+2025-06-03 11:00:46 
+2025-06-03 11:00:46 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:46 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:00:46 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:00:46 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:46 
+2025-06-03 11:00:46 
+2025-06-03 11:00:46 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:46 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:46 
+2025-06-03 11:00:46 
+2025-06-03 11:00:46 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:46 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:00:46 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:00:46 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:46 
+2025-06-03 11:00:46 
+2025-06-03 11:00:46 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:46 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:46 
+2025-06-03 11:00:46 
+2025-06-03 11:00:46 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:47 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:00:47 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:47 
+2025-06-03 11:00:47 
+2025-06-03 11:00:47 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:48 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:00:48 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:48 
+2025-06-03 11:00:48 
+2025-06-03 11:00:48 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:48 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:00:48 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:00:48 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:48 
+2025-06-03 11:00:48 
+2025-06-03 11:00:48 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:48 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:48 
+2025-06-03 11:00:48 
+2025-06-03 11:00:48 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:48 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:00:48 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:00:48 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:48 
+2025-06-03 11:00:48 
+2025-06-03 11:00:48 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:49 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:00:49 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:49 
+2025-06-03 11:00:49 
+2025-06-03 11:00:49 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:50 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:00:50 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:00:50 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:00:50 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:50 
+2025-06-03 11:00:50 
+2025-06-03 11:00:50 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:50 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:50 
+2025-06-03 11:00:50 
+2025-06-03 11:00:50 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:50 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:00:50 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:50 
+2025-06-03 11:00:50 
+2025-06-03 11:00:50 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:50 INFO:app:Screenshot attempt 3/3
+2025-06-03 11:00:50 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:00:50 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:00:51 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:00:51 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:51 
+2025-06-03 11:00:51 
+2025-06-03 11:00:51 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:52 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:00:52 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:00:52 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:52 
+2025-06-03 11:00:52 
+2025-06-03 11:00:52 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:52 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:00:52 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:52 
+2025-06-03 11:00:52 
+2025-06-03 11:00:52 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:52 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:00:52 INFO:app:Connect result: Connection refused
+2025-06-03 11:00:52 
+2025-06-03 11:00:53 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:00:53 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:00:53 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:00:53 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:00:53] "GET /api/emulators/17989b38-15a8-4434-bca2-7334fa3e69d1/screenshot HTTP/1.1" 200 -
+2025-06-03 11:00:54 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:00:54 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:00:54 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:54 
+2025-06-03 11:00:54 
+2025-06-03 11:00:54 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:55 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:00:55 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:00:55 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:00:55 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:00:55 INFO:app:Connect result: Connection refused
+2025-06-03 11:00:55 
+2025-06-03 11:00:55 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:00:55 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:55 
+2025-06-03 11:00:55 
+2025-06-03 11:00:55 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:56 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:00:57 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:00:57 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:00:57 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:00:57 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:00:57 INFO:app:Connect result: Connection refused
+2025-06-03 11:00:57 
+2025-06-03 11:00:57 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:00:57 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:57 
+2025-06-03 11:00:57 
+2025-06-03 11:00:57 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:58 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:00:58 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:58 
+2025-06-03 11:00:58 
+2025-06-03 11:00:58 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:00:59 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:00:59 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:00:59 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:00:59 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:00:59 INFO:app:Connect result: Connection refused
+2025-06-03 11:00:59 
+2025-06-03 11:00:59 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:00:59 INFO:app:Devices output: List of devices attached
+2025-06-03 11:00:59 
+2025-06-03 11:00:59 
+2025-06-03 11:00:59 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:00 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:01:00 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:00 
+2025-06-03 11:01:00 
+2025-06-03 11:01:00 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:00 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:01:00 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:00 
+2025-06-03 11:01:00 
+2025-06-03 11:01:00 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:01 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:01:01 INFO:app:Connect result: Connection refused
+2025-06-03 11:01:01 
+2025-06-03 11:01:01 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:01:01 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:01:01 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:01:01 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:01:01 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:01 
+2025-06-03 11:01:01 
+2025-06-03 11:01:01 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:02 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:01:02 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:01:02 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:02 
+2025-06-03 11:01:02 
+2025-06-03 11:01:02 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:02 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:02 
+2025-06-03 11:01:02 
+2025-06-03 11:01:02 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:02 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:01:02 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:02 
+2025-06-03 11:01:02 
+2025-06-03 11:01:02 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:03 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:01:03 INFO:app:Connect result: Connection refused
+2025-06-03 11:01:03 
+2025-06-03 11:01:03 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:01:03 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:03 
+2025-06-03 11:01:03 
+2025-06-03 11:01:03 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:04 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:01:04 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:01:04 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:01:04 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:04 
+2025-06-03 11:01:04 
+2025-06-03 11:01:04 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:04 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:04 
+2025-06-03 11:01:04 
+2025-06-03 11:01:04 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:04 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:04 
+2025-06-03 11:01:04 
+2025-06-03 11:01:04 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:04 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:01:04 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:04 
+2025-06-03 11:01:04 
+2025-06-03 11:01:04 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:05 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:01:05] "GET /api/emulators/17989b38-15a8-4434-bca2-7334fa3e69d1/screenshot HTTP/1.1" 200 -
+2025-06-03 11:01:05 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:01:05] "GET /vnc/17989b38-15a8-4434-bca2-7334fa3e69d1 HTTP/1.1" 200 -
+2025-06-03 11:01:05 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:01:05 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:01:05 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:01:05 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:01:06 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:01:06 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:01:06 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:01:06 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:01:06 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:06 
+2025-06-03 11:01:06 
+2025-06-03 11:01:06 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:06 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:06 
+2025-06-03 11:01:06 
+2025-06-03 11:01:06 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:06 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:06 
+2025-06-03 11:01:06 
+2025-06-03 11:01:06 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:06 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:06 
+2025-06-03 11:01:06 
+2025-06-03 11:01:06 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:06 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:01:06 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:06 
+2025-06-03 11:01:06 
+2025-06-03 11:01:06 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:07 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:01:07 INFO:app:Connect result: Connection refused
+2025-06-03 11:01:07 
+2025-06-03 11:01:08 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:01:08 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:01:08 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:01:08 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:01:08 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:08 
+2025-06-03 11:01:08 
+2025-06-03 11:01:08 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:08 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:08 
+2025-06-03 11:01:08 
+2025-06-03 11:01:08 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:08 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:08 
+2025-06-03 11:01:08 
+2025-06-03 11:01:08 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:08 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:08 
+2025-06-03 11:01:08 
+2025-06-03 11:01:08 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:08 WARNING:app:Device not found on attempt 2, retrying...
+2025-06-03 11:01:10 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:01:10 WARNING:app:Device not found on attempt 2, retrying...
+2025-06-03 11:01:10 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:01:10 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:01:10 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:10 
+2025-06-03 11:01:10 
+2025-06-03 11:01:10 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:10 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:10 
+2025-06-03 11:01:10 
+2025-06-03 11:01:10 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:10 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:10 
+2025-06-03 11:01:10 
+2025-06-03 11:01:10 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:10 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:01:10 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:10 
+2025-06-03 11:01:10 
+2025-06-03 11:01:10 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:12 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:01:12 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:01:12 WARNING:app:Device not found on attempt 2, retrying...
+2025-06-03 11:01:12 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:12 
+2025-06-03 11:01:12 
+2025-06-03 11:01:12 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:12 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:12 
+2025-06-03 11:01:12 
+2025-06-03 11:01:12 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:12 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:01:12 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:12 
+2025-06-03 11:01:12 
+2025-06-03 11:01:12 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:13 INFO:app:Screenshot attempt 3/3
+2025-06-03 11:01:13 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:01:13 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:01:14 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:01:14 WARNING:app:Device not found on attempt 2, retrying...
+2025-06-03 11:01:14 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:14 
+2025-06-03 11:01:14 
+2025-06-03 11:01:14 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:14 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:01:14 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:14 
+2025-06-03 11:01:14 
+2025-06-03 11:01:14 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:15 INFO:app:Screenshot attempt 3/3
+2025-06-03 11:01:15 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:01:15 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:01:15 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:01:15 INFO:app:Connect result: Connection refused
+2025-06-03 11:01:15 
+2025-06-03 11:01:16 WARNING:app:Device not found on attempt 2, retrying...
+2025-06-03 11:01:16 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:01:16 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:16 
+2025-06-03 11:01:16 
+2025-06-03 11:01:16 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:17 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:01:17 INFO:app:Screenshot attempt 3/3
+2025-06-03 11:01:17 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:01:17 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:01:17 INFO:app:Connect result: Connection refused
+2025-06-03 11:01:17 
+2025-06-03 11:01:18 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:01:18 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:18 
+2025-06-03 11:01:18 
+2025-06-03 11:01:18 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:18 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:01:18 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:18 
+2025-06-03 11:01:18 
+2025-06-03 11:01:18 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:19 INFO:app:Screenshot attempt 3/3
+2025-06-03 11:01:19 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:01:19 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:01:19 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:01:19 INFO:app:Connect result: Connection refused
+2025-06-03 11:01:19 
+2025-06-03 11:01:20 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:01:20 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:01:20 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:20 
+2025-06-03 11:01:20 
+2025-06-03 11:01:20 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:20 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:20 
+2025-06-03 11:01:20 
+2025-06-03 11:01:20 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:20 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:01:21 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:01:21 INFO:app:Screenshot attempt 3/3
+2025-06-03 11:01:21 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:01:21 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:01:21 INFO:app:Connect result: Connection refused
+2025-06-03 11:01:21 
+2025-06-03 11:01:22 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:01:22 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:01:22 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:01:22 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:22 
+2025-06-03 11:01:22 
+2025-06-03 11:01:22 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:22 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:22 
+2025-06-03 11:01:22 
+2025-06-03 11:01:22 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:22 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:22 
+2025-06-03 11:01:22 
+2025-06-03 11:01:22 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:23 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:01:23 INFO:app:Connect result: Connection refused
+2025-06-03 11:01:23 
+2025-06-03 11:01:24 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:01:24 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:01:24 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:01:24 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:01:24 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:24 
+2025-06-03 11:01:24 
+2025-06-03 11:01:24 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:24 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:24 
+2025-06-03 11:01:24 
+2025-06-03 11:01:24 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:24 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:24 
+2025-06-03 11:01:24 
+2025-06-03 11:01:24 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:24 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:24 
+2025-06-03 11:01:24 
+2025-06-03 11:01:24 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:25 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:01:25 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:01:25 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:01:26 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:01:26 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:01:26 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:01:26 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:01:26 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:01:26 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:26 
+2025-06-03 11:01:26 
+2025-06-03 11:01:26 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:26 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:26 
+2025-06-03 11:01:26 
+2025-06-03 11:01:26 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:26 
+2025-06-03 11:01:26 
+2025-06-03 11:01:26 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:26 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:26 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:26 
+2025-06-03 11:01:26 
+2025-06-03 11:01:26 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:26 
+2025-06-03 11:01:26 
+2025-06-03 11:01:26 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:26 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:27 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:01:27 INFO:app:Connect result: Connection refused
+2025-06-03 11:01:27 
+2025-06-03 11:01:28 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:01:28 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:01:28 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:01:28 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:28 
+2025-06-03 11:01:28 
+2025-06-03 11:01:28 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:01:28] "GET /api/emulators/17989b38-15a8-4434-bca2-7334fa3e69d1/screenshot HTTP/1.1" 200 -
+2025-06-03 11:01:28 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:01:28 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:28 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:28 
+2025-06-03 11:01:28 
+2025-06-03 11:01:28 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:28 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:28 
+2025-06-03 11:01:28 
+2025-06-03 11:01:28 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:28 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:28 
+2025-06-03 11:01:28 
+2025-06-03 11:01:28 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:28 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:01:28 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:01:28 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:01:28 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:01:30 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:01:30 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:01:30 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:01:30 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:01:30 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:01:30] "GET /api/emulators/17989b38-15a8-4434-bca2-7334fa3e69d1/screenshot HTTP/1.1" 200 -
+2025-06-03 11:01:30 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:30 
+2025-06-03 11:01:30 
+2025-06-03 11:01:30 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:30 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:30 
+2025-06-03 11:01:30 
+2025-06-03 11:01:30 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:30 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:30 
+2025-06-03 11:01:30 
+2025-06-03 11:01:30 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:30 INFO:app:Connect result: Connection refused
+2025-06-03 11:01:30 
+2025-06-03 11:01:30 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:01:30 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:01:30 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:01:30 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:01:30 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:01:30 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:30 
+2025-06-03 11:01:30 
+2025-06-03 11:01:30 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:32 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:01:32 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:01:32 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:01:32] "GET /api/emulators/17989b38-15a8-4434-bca2-7334fa3e69d1/screenshot HTTP/1.1" 200 -
+2025-06-03 11:01:32 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:32 
+2025-06-03 11:01:32 
+2025-06-03 11:01:32 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:32 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:32 
+2025-06-03 11:01:32 
+2025-06-03 11:01:32 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:01:32 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:32 INFO:app:Connect result: Connection refused
+2025-06-03 11:01:32 
+2025-06-03 11:01:32 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:01:32 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:01:32 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:01:32 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:01:32 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:01:32 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:32 
+2025-06-03 11:01:32 
+2025-06-03 11:01:32 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:33 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:01:33 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:33 
+2025-06-03 11:01:33 
+2025-06-03 11:01:33 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:34 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:01:34 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:01:34] "GET /api/emulators/17989b38-15a8-4434-bca2-7334fa3e69d1/screenshot HTTP/1.1" 200 -
+2025-06-03 11:01:34 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:34 
+2025-06-03 11:01:34 
+2025-06-03 11:01:34 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:34 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:01:34 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:01:34 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:01:34 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:01:34 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:01:34 INFO:app:Connect result: Connection refused
+2025-06-03 11:01:34 
+2025-06-03 11:01:34 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:01:34 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:34 
+2025-06-03 11:01:34 
+2025-06-03 11:01:34 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:35 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:01:35 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:01:35 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:35 
+2025-06-03 11:01:35 
+2025-06-03 11:01:35 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:35 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:35 
+2025-06-03 11:01:35 
+2025-06-03 11:01:35 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:36 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:01:36] "GET /api/emulators/17989b38-15a8-4434-bca2-7334fa3e69d1/screenshot HTTP/1.1" 200 -
+2025-06-03 11:01:36 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:01:36] "GET / HTTP/1.1" 200 -
+2025-06-03 11:01:36 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:01:36 INFO:app:Connect result: Connection refused
+2025-06-03 11:01:36 
+2025-06-03 11:01:36 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:01:36 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:01:36 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:01:36 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:01:36 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:01:36 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:36 
+2025-06-03 11:01:36 
+2025-06-03 11:01:36 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:37 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:01:37 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:01:37 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:37 
+2025-06-03 11:01:37 
+2025-06-03 11:01:37 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:37 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:37 
+2025-06-03 11:01:37 
+2025-06-03 11:01:37 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:37 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:01:37 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:37 
+2025-06-03 11:01:37 
+2025-06-03 11:01:37 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:38 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:01:38 INFO:app:Connect result: Connection refused
+2025-06-03 11:01:38 
+2025-06-03 11:01:38 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:01:38 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:38 
+2025-06-03 11:01:38 
+2025-06-03 11:01:38 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:39 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:01:39 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:01:39 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:01:39 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:01:39 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:39 
+2025-06-03 11:01:39 
+2025-06-03 11:01:39 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:39 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:39 
+2025-06-03 11:01:39 
+2025-06-03 11:01:39 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:39 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:39 
+2025-06-03 11:01:39 
+2025-06-03 11:01:39 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:39 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:39 
+2025-06-03 11:01:39 
+2025-06-03 11:01:39 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:40 WARNING:app:Device not found on attempt 2, retrying...
+2025-06-03 11:01:41 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:01:41 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:01:41 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:01:41 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:01:41 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:41 
+2025-06-03 11:01:41 
+2025-06-03 11:01:41 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:41 
+2025-06-03 11:01:41 
+2025-06-03 11:01:41 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:41 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:41 
+2025-06-03 11:01:41 
+2025-06-03 11:01:41 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:41 
+2025-06-03 11:01:41 
+2025-06-03 11:01:41 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:41 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:41 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:41 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:01:41 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:41 
+2025-06-03 11:01:41 
+2025-06-03 11:01:41 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:43 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:01:43 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:01:43 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:01:43 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:01:43 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:01:43 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:43 
+2025-06-03 11:01:43 
+2025-06-03 11:01:43 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:43 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:43 
+2025-06-03 11:01:43 
+2025-06-03 11:01:43 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:43 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:43 
+2025-06-03 11:01:43 
+2025-06-03 11:01:43 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:43 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:43 
+2025-06-03 11:01:43 
+2025-06-03 11:01:43 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:45 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:01:45 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:01:45 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:01:45 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:01:45 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:45 
+2025-06-03 11:01:45 
+2025-06-03 11:01:45 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:45 
+2025-06-03 11:01:45 
+2025-06-03 11:01:45 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:45 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:45 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:45 
+2025-06-03 11:01:45 
+2025-06-03 11:01:45 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:45 INFO:app:Screenshot attempt 3/3
+2025-06-03 11:01:45 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:01:45 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:01:47 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:01:47 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:01:47 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:01:47 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:47 
+2025-06-03 11:01:47 
+2025-06-03 11:01:47 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:47 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:47 
+2025-06-03 11:01:47 
+2025-06-03 11:01:47 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:47 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:01:47 INFO:app:Connect result: Connection refused
+2025-06-03 11:01:47 
+2025-06-03 11:01:48 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:01:48 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:01:48 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:01:49 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:01:49 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:01:49 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:49 
+2025-06-03 11:01:49 
+2025-06-03 11:01:49 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:50 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:01:50 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:01:50 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:01:50 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:01:50 INFO:app:Connect result: Connection refused
+2025-06-03 11:01:50 
+2025-06-03 11:01:50 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:01:50 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:50 
+2025-06-03 11:01:50 
+2025-06-03 11:01:50 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:51 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:01:52 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:01:52 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:01:52 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:01:52 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:01:52 INFO:app:Connect result: Connection refused
+2025-06-03 11:01:52 
+2025-06-03 11:01:52 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:01:52 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:52 
+2025-06-03 11:01:52 
+2025-06-03 11:01:52 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:53 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:01:53 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:53 
+2025-06-03 11:01:53 
+2025-06-03 11:01:53 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:54 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:01:54 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:01:54 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:01:54 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:01:54 INFO:app:Connect result: Connection refused
+2025-06-03 11:01:54 
+2025-06-03 11:01:54 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:01:54 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:54 
+2025-06-03 11:01:54 
+2025-06-03 11:01:54 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:55 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:01:55 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:55 
+2025-06-03 11:01:55 
+2025-06-03 11:01:55 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:55 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:01:55 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:55 
+2025-06-03 11:01:55 
+2025-06-03 11:01:55 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:56 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:01:56 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:01:56 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:01:56 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:01:56 INFO:app:Connect result: Connection refused
+2025-06-03 11:01:56 
+2025-06-03 11:01:56 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:01:56 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:56 
+2025-06-03 11:01:56 
+2025-06-03 11:01:56 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:57 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:01:57 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:57 
+2025-06-03 11:01:57 
+2025-06-03 11:01:57 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:57 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:01:57 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:01:57 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:57 
+2025-06-03 11:01:57 
+2025-06-03 11:01:57 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:57 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:57 
+2025-06-03 11:01:57 
+2025-06-03 11:01:57 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:58 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:01:58 INFO:app:Connect result: Connection refused
+2025-06-03 11:01:58 
+2025-06-03 11:01:58 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:01:58 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:58 
+2025-06-03 11:01:58 
+2025-06-03 11:01:58 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:59 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:01:59 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:01:59 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:59 
+2025-06-03 11:01:59 
+2025-06-03 11:01:59 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:59 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:59 
+2025-06-03 11:01:59 
+2025-06-03 11:01:59 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:59 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:01:59 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:01:59 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:59 
+2025-06-03 11:01:59 
+2025-06-03 11:01:59 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:01:59 INFO:app:Devices output: List of devices attached
+2025-06-03 11:01:59 
+2025-06-03 11:01:59 
+2025-06-03 11:01:59 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:00 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:02:00] "GET /api/emulators/17989b38-15a8-4434-bca2-7334fa3e69d1/screenshot HTTP/1.1" 200 -
+2025-06-03 11:02:00 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:02:00] "GET /static/css/style.css HTTP/1.1" 304 -
+2025-06-03 11:02:00 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:02:00 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:02:00 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:02:00 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:02:01 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:01 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:02:01 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:01 
+2025-06-03 11:02:01 
+2025-06-03 11:02:01 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:01 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:01 
+2025-06-03 11:02:01 
+2025-06-03 11:02:01 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:01 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:02:01 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:02:01 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:02:01 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:01 
+2025-06-03 11:02:01 
+2025-06-03 11:02:01 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:01 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:01 
+2025-06-03 11:02:01 
+2025-06-03 11:02:01 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:01 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:01 
+2025-06-03 11:02:01 
+2025-06-03 11:02:01 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:02 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:02:02 INFO:app:Connect result: Connection refused
+2025-06-03 11:02:02 
+2025-06-03 11:02:03 WARNING:app:Device not found on attempt 2, retrying...
+2025-06-03 11:02:03 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:02:03 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:03 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:02:03 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:02:03 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:03 
+2025-06-03 11:02:03 
+2025-06-03 11:02:03 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:03 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:03 
+2025-06-03 11:02:03 
+2025-06-03 11:02:03 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:03 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:03 
+2025-06-03 11:02:03 
+2025-06-03 11:02:03 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:03 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:03 
+2025-06-03 11:02:03 
+2025-06-03 11:02:03 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:05 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:02:05 WARNING:app:Device not found on attempt 2, retrying...
+2025-06-03 11:02:05 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:02:05 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:05 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:05 
+2025-06-03 11:02:05 
+2025-06-03 11:02:05 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:05 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:05 
+2025-06-03 11:02:05 
+2025-06-03 11:02:05 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:05 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:05 
+2025-06-03 11:02:05 
+2025-06-03 11:02:05 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:05 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:02:05 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:05 
+2025-06-03 11:02:05 
+2025-06-03 11:02:05 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:07 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:07 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:07 
+2025-06-03 11:02:07 
+2025-06-03 11:02:07 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:07 WARNING:app:Device not found on attempt 2, retrying...
+2025-06-03 11:02:07 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:02:07 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:07 
+2025-06-03 11:02:07 
+2025-06-03 11:02:07 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:07 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:02:07 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:08 
+2025-06-03 11:02:08 
+2025-06-03 11:02:08 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:08 INFO:app:Screenshot attempt 3/3
+2025-06-03 11:02:08 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:02:08 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:02:09 WARNING:app:Device not found on attempt 2, retrying...
+2025-06-03 11:02:09 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:09 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:09 
+2025-06-03 11:02:09 
+2025-06-03 11:02:09 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:09 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:02:09 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:09 
+2025-06-03 11:02:09 
+2025-06-03 11:02:09 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:10 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:02:10 INFO:app:Connect result: Connection refused
+2025-06-03 11:02:10 
+2025-06-03 11:02:10 INFO:app:Screenshot attempt 3/3
+2025-06-03 11:02:10 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:02:10 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:02:11 WARNING:app:Device not found on attempt 2, retrying...
+2025-06-03 11:02:11 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:02:11 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:11 
+2025-06-03 11:02:11 
+2025-06-03 11:02:11 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:12 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:02:12 INFO:app:Connect result: Connection refused
+2025-06-03 11:02:12 
+2025-06-03 11:02:12 INFO:app:Screenshot attempt 3/3
+2025-06-03 11:02:12 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:02:12 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:02:13 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:02:13 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:13 
+2025-06-03 11:02:13 
+2025-06-03 11:02:13 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:13 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:13 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:13 
+2025-06-03 11:02:13 
+2025-06-03 11:02:13 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:14 INFO:app:Screenshot attempt 3/3
+2025-06-03 11:02:14 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:02:14 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:02:14 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:02:14 INFO:app:Connect result: Connection refused
+2025-06-03 11:02:14 
+2025-06-03 11:02:15 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:02:15 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:15 
+2025-06-03 11:02:15 
+2025-06-03 11:02:15 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:15 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:02:15 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:15 
+2025-06-03 11:02:15 
+2025-06-03 11:02:15 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:15 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:02:16 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:02:16 INFO:app:Connect result: Connection refused
+2025-06-03 11:02:16 
+2025-06-03 11:02:16 INFO:app:Screenshot attempt 3/3
+2025-06-03 11:02:16 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:02:16 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:02:17 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:02:17 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:17 
+2025-06-03 11:02:17 
+2025-06-03 11:02:17 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:17 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:02:17 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:17 
+2025-06-03 11:02:17 
+2025-06-03 11:02:17 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:17 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:02:17 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:17 
+2025-06-03 11:02:17 
+2025-06-03 11:02:17 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:18 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:02:18 INFO:app:Connect result: Connection refused
+2025-06-03 11:02:18 
+2025-06-03 11:02:19 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:02:19 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:19 
+2025-06-03 11:02:19 
+2025-06-03 11:02:19 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:19 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:02:19 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:19 
+2025-06-03 11:02:19 
+2025-06-03 11:02:19 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:19 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:02:19 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:19 
+2025-06-03 11:02:19 
+2025-06-03 11:02:19 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:19 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:02:19 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:19 
+2025-06-03 11:02:19 
+2025-06-03 11:02:19 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:20 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:02:20 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:02:20 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:02:21 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:21 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:21 
+2025-06-03 11:02:21 
+2025-06-03 11:02:21 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:21 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:02:21 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:21 
+2025-06-03 11:02:21 
+2025-06-03 11:02:21 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:21 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:02:21 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:21 
+2025-06-03 11:02:21 
+2025-06-03 11:02:21 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:21 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:02:21 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:21 
+2025-06-03 11:02:21 
+2025-06-03 11:02:21 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:21 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:02:21 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:21 
+2025-06-03 11:02:21 
+2025-06-03 11:02:21 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:23 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:02:23 INFO:app:Connect result: Connection refused
+2025-06-03 11:02:23 
+2025-06-03 11:02:23 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:02:23] "GET /api/emulators/17989b38-15a8-4434-bca2-7334fa3e69d1/screenshot HTTP/1.1" 200 -
+2025-06-03 11:02:23 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:02:23] "GET /api/emulators/17989b38-15a8-4434-bca2-7334fa3e69d1/live_view HTTP/1.1" 200 -
+2025-06-03 11:02:23 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:23 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:23 
+2025-06-03 11:02:23 
+2025-06-03 11:02:23 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:23 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:02:23 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:02:23 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:02:23 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:02:23 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:02:23 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:02:23 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:23 
+2025-06-03 11:02:23 
+2025-06-03 11:02:23 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:23 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:23 
+2025-06-03 11:02:23 
+2025-06-03 11:02:23 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:23 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:02:23 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:02:23 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:02:23 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:02:23 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:02:23 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:02:23 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:02:23 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:02:23 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:02:23 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:02:23 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:02:23 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:02:23 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:02:23 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:23 
+2025-06-03 11:02:23 
+2025-06-03 11:02:23 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:23 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:02:23] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 11:02:23 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:02:23] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 11:02:25 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:02:25] "GET /api/emulators/17989b38-15a8-4434-bca2-7334fa3e69d1/screenshot HTTP/1.1" 200 -
+2025-06-03 11:02:25 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:02:25 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:02:25 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:25 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:25 
+2025-06-03 11:02:25 
+2025-06-03 11:02:25 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:25 INFO:app:Connect result: Connection refused
+2025-06-03 11:02:25 
+2025-06-03 11:02:25 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:25 
+2025-06-03 11:02:25 
+2025-06-03 11:02:25 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:25 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:02:25 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:02:25 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:02:25 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:02:25 INFO:app:Connect result: Connection refused
+2025-06-03 11:02:25 
+2025-06-03 11:02:25 INFO:app:Connect result: Connection refused
+2025-06-03 11:02:25 
+2025-06-03 11:02:25 INFO:app:Connect result: Connection refused
+2025-06-03 11:02:25 
+2025-06-03 11:02:25 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:25 
+2025-06-03 11:02:25 
+2025-06-03 11:02:25 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:26 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:02:26 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:26 
+2025-06-03 11:02:26 
+2025-06-03 11:02:26 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:27 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:27 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:02:27] "GET /api/emulators/17989b38-15a8-4434-bca2-7334fa3e69d1/screenshot HTTP/1.1" 200 -
+2025-06-03 11:02:27 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:27 
+2025-06-03 11:02:27 
+2025-06-03 11:02:27 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:27 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:02:27 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:27 
+2025-06-03 11:02:27 
+2025-06-03 11:02:27 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:28 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:02:28 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:28 
+2025-06-03 11:02:28 
+2025-06-03 11:02:28 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:28 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:02:28 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:28 
+2025-06-03 11:02:28 
+2025-06-03 11:02:28 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:28 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:02:28 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:02:28 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:02:28 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:28 
+2025-06-03 11:02:28 
+2025-06-03 11:02:28 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:28 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:28 
+2025-06-03 11:02:28 
+2025-06-03 11:02:28 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:28 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:28 
+2025-06-03 11:02:28 
+2025-06-03 11:02:28 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:29 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:02:29] "GET /api/emulators/17989b38-15a8-4434-bca2-7334fa3e69d1/screenshot HTTP/1.1" 200 -
+2025-06-03 11:02:29 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:29 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:29 
+2025-06-03 11:02:29 
+2025-06-03 11:02:29 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:29 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:02:29 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:02:29 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:02:29 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:02:30 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:02:30 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:30 
+2025-06-03 11:02:30 
+2025-06-03 11:02:30 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:30 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:02:30 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:30 
+2025-06-03 11:02:30 
+2025-06-03 11:02:30 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:30 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:02:30 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:02:30 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:02:30 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:30 
+2025-06-03 11:02:30 
+2025-06-03 11:02:30 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:30 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:30 
+2025-06-03 11:02:30 
+2025-06-03 11:02:30 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:30 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:30 
+2025-06-03 11:02:30 
+2025-06-03 11:02:30 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:31 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:02:31] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 11:02:31 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:02:31] "GET /api/emulators/17989b38-15a8-4434-bca2-7334fa3e69d1/screenshot HTTP/1.1" 200 -
+2025-06-03 11:02:31 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:02:31 INFO:app:Connect result: Connection refused
+2025-06-03 11:02:31 
+2025-06-03 11:02:32 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:02:32 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:32 
+2025-06-03 11:02:32 
+2025-06-03 11:02:32 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:32 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:02:32 INFO:app:Running ADB command: adb connect localhost:6097
+2025-06-03 11:02:32 INFO:app:Set default device to: localhost:6097
+2025-06-03 11:02:32 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:02:32] "POST /api/adb/connect HTTP/1.1" 200 -
+2025-06-03 11:02:32 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:02:32 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:32 
+2025-06-03 11:02:32 
+2025-06-03 11:02:32 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:32 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:02:32 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:02:32 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:02:32 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:32 
+2025-06-03 11:02:32 
+2025-06-03 11:02:32 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:32 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:32 
+2025-06-03 11:02:32 
+2025-06-03 11:02:32 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:32 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:32 
+2025-06-03 11:02:32 
+2025-06-03 11:02:32 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:34 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:34 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:34 
+2025-06-03 11:02:34 
+2025-06-03 11:02:34 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:34 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:02:34 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:02:34 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:02:34 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:02:34 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:34 
+2025-06-03 11:02:34 
+2025-06-03 11:02:34 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:34 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:34 
+2025-06-03 11:02:34 
+2025-06-03 11:02:34 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:34 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:34 
+2025-06-03 11:02:34 
+2025-06-03 11:02:34 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:34 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:34 
+2025-06-03 11:02:34 
+2025-06-03 11:02:34 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:34 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:02:34 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:34 
+2025-06-03 11:02:34 
+2025-06-03 11:02:34 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:36 WARNING:app:Device not found on attempt 2, retrying...
+2025-06-03 11:02:36 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:36 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:36 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:36 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:36 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:36 
+2025-06-03 11:02:36 
+2025-06-03 11:02:36 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:36 
+2025-06-03 11:02:36 
+2025-06-03 11:02:36 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:36 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:36 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:36 
+2025-06-03 11:02:36 
+2025-06-03 11:02:36 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:36 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:36 
+2025-06-03 11:02:36 
+2025-06-03 11:02:36 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:36 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:02:36 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:36 
+2025-06-03 11:02:36 
+2025-06-03 11:02:36 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:37 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:02:37] "GET /api/emulators/17989b38-15a8-4434-bca2-7334fa3e69d1/live_view HTTP/1.1" 200 -
+2025-06-03 11:02:38 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:02:38 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:02:38 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:02:38 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:02:38 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:02:38 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:38 
+2025-06-03 11:02:38 
+2025-06-03 11:02:38 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:39 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:02:39 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:02:39 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:02:39 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:02:40 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:02:40 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:40 
+2025-06-03 11:02:40 
+2025-06-03 11:02:40 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:41 INFO:app:Screenshot attempt 3/3
+2025-06-03 11:02:41 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:02:41 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:02:41 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:02:41] "GET /vnc/17989b38-15a8-4434-bca2-7334fa3e69d1 HTTP/1.1" 200 -
+2025-06-03 11:02:41 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:02:41] "GET /static/js/novnc-local.js HTTP/1.1" 200 -
+2025-06-03 11:02:41 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:02:41 INFO:app:Connect result: Connection refused
+2025-06-03 11:02:41 
+2025-06-03 11:02:42 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:42 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:42 
+2025-06-03 11:02:42 
+2025-06-03 11:02:42 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:43 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:02:43 INFO:app:Connect result: Connection refused
+2025-06-03 11:02:43 
+2025-06-03 11:02:43 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:02:43 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:02:43 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:02:43 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:02:43 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:02:43 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:02:43 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:02:43 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:02:43 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:02:43 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:02:43 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:02:43 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:02:44 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:02:44 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:44 
+2025-06-03 11:02:44 
+2025-06-03 11:02:44 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:44 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:02:45 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:02:45 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:02:45 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:02:45 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:02:45 INFO:app:Connect result: Connection refused
+2025-06-03 11:02:45 
+2025-06-03 11:02:45 INFO:app:Connect result: Connection refused
+2025-06-03 11:02:45 
+2025-06-03 11:02:45 INFO:app:Connect result: Connection refused
+2025-06-03 11:02:45 
+2025-06-03 11:02:45 INFO:app:Connect result: Connection refused
+2025-06-03 11:02:45 
+2025-06-03 11:02:46 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:02:46 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:46 
+2025-06-03 11:02:46 
+2025-06-03 11:02:46 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:46 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:02:46 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:46 
+2025-06-03 11:02:46 
+2025-06-03 11:02:46 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:48 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:02:48 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:48 
+2025-06-03 11:02:48 
+2025-06-03 11:02:48 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:48 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:02:48 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:02:48 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:02:48 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:02:48 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:48 
+2025-06-03 11:02:48 
+2025-06-03 11:02:48 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:48 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:48 
+2025-06-03 11:02:48 
+2025-06-03 11:02:48 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:48 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:48 
+2025-06-03 11:02:48 
+2025-06-03 11:02:48 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:48 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:48 
+2025-06-03 11:02:48 
+2025-06-03 11:02:48 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:48 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:02:48 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:48 
+2025-06-03 11:02:48 
+2025-06-03 11:02:48 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:49 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:02:49 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:02:49 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:02:50 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:02:50 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:50 
+2025-06-03 11:02:50 
+2025-06-03 11:02:50 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:50 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:02:50 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:02:50 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:02:50 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:02:50 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:50 
+2025-06-03 11:02:50 
+2025-06-03 11:02:50 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:50 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:50 
+2025-06-03 11:02:50 
+2025-06-03 11:02:50 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:50 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:50 
+2025-06-03 11:02:50 
+2025-06-03 11:02:50 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:50 
+2025-06-03 11:02:50 
+2025-06-03 11:02:50 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:50 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:50 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:02:50 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:50 
+2025-06-03 11:02:50 
+2025-06-03 11:02:50 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:51 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:02:51 INFO:app:Connect result: Connection refused
+2025-06-03 11:02:51 
+2025-06-03 11:02:52 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:02:52 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:52 
+2025-06-03 11:02:52 
+2025-06-03 11:02:52 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:52 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:02:52 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:02:52 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:02:52 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:02:52 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:52 
+2025-06-03 11:02:52 
+2025-06-03 11:02:52 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:52 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:52 
+2025-06-03 11:02:52 
+2025-06-03 11:02:52 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:52 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:52 
+2025-06-03 11:02:52 
+2025-06-03 11:02:52 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:52 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:52 
+2025-06-03 11:02:52 
+2025-06-03 11:02:52 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:52 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:52 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:52 
+2025-06-03 11:02:52 
+2025-06-03 11:02:52 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:54 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:54 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:54 
+2025-06-03 11:02:54 
+2025-06-03 11:02:54 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:54 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:02:54 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:02:54 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:02:54 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:54 
+2025-06-03 11:02:54 
+2025-06-03 11:02:54 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:54 
+2025-06-03 11:02:54 
+2025-06-03 11:02:54 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:54 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:54 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:02:54 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:54 
+2025-06-03 11:02:54 
+2025-06-03 11:02:54 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:54 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:54 
+2025-06-03 11:02:54 
+2025-06-03 11:02:54 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:54 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:02:54 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:02:54 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:54 
+2025-06-03 11:02:54 
+2025-06-03 11:02:54 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:56 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:02:56] "GET /api/emulators/17989b38-15a8-4434-bca2-7334fa3e69d1/screenshot HTTP/1.1" 200 -
+2025-06-03 11:02:56 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:56 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:56 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:56 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:02:56 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:56 
+2025-06-03 11:02:56 
+2025-06-03 11:02:56 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:56 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:56 
+2025-06-03 11:02:56 
+2025-06-03 11:02:56 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:56 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:56 
+2025-06-03 11:02:56 
+2025-06-03 11:02:56 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:56 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:56 
+2025-06-03 11:02:56 
+2025-06-03 11:02:56 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:56 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:02:56 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:56 
+2025-06-03 11:02:56 
+2025-06-03 11:02:56 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:58 WARNING:app:Device not found on attempt 2, retrying...
+2025-06-03 11:02:58 WARNING:app:Device not found on attempt 2, retrying...
+2025-06-03 11:02:58 WARNING:app:Device not found on attempt 2, retrying...
+2025-06-03 11:02:58 WARNING:app:Device not found on attempt 2, retrying...
+2025-06-03 11:02:58 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:02:58 INFO:app:Devices output: List of devices attached
+2025-06-03 11:02:58 
+2025-06-03 11:02:58 
+2025-06-03 11:02:58 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:02:59 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:02:59 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:02:59 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:03:00 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:03:00 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:03:00 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:03:00 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:03:00 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:03:00 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:00 
+2025-06-03 11:03:00 
+2025-06-03 11:03:00 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:01 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:03:01] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 11:03:01 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:03:01 INFO:app:Connect result: Connection refused
+2025-06-03 11:03:01 
+2025-06-03 11:03:02 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:03:02 INFO:app:Connect result: Connection refused
+2025-06-03 11:03:02 
+2025-06-03 11:03:02 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:03:02 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:02 
+2025-06-03 11:03:02 
+2025-06-03 11:03:02 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:03 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:03:03 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:03:03 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:03:03 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:03:03 INFO:app:Screenshot attempt 3/3
+2025-06-03 11:03:03 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:03:03 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:03:03 INFO:app:Screenshot attempt 3/3
+2025-06-03 11:03:03 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:03:03 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:03:03 INFO:app:Screenshot attempt 3/3
+2025-06-03 11:03:03 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:03:03 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:03:03 INFO:app:Screenshot attempt 3/3
+2025-06-03 11:03:03 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:03:03 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:03:04 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:03:04 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:04 
+2025-06-03 11:03:04 
+2025-06-03 11:03:04 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:04 WARNING:app:Device not found on attempt 2, retrying...
+2025-06-03 11:03:05 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:03:05 INFO:app:Connect result: Connection refused
+2025-06-03 11:03:05 
+2025-06-03 11:03:05 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:03:05 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:03:05 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:03:05 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:03:05 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:03:05 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:05 
+2025-06-03 11:03:05 
+2025-06-03 11:03:05 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:05 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:03:05 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:03:05 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:03:05 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:03:05 INFO:app:Connect result: Connection refused
+2025-06-03 11:03:05 
+2025-06-03 11:03:05 INFO:app:Connect result: Connection refused
+2025-06-03 11:03:05 
+2025-06-03 11:03:05 INFO:app:Connect result: Connection refused
+2025-06-03 11:03:05 
+2025-06-03 11:03:05 INFO:app:Connect result: Connection refused
+2025-06-03 11:03:05 
+2025-06-03 11:03:06 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:03:06 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:06 
+2025-06-03 11:03:06 
+2025-06-03 11:03:06 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:07 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:03:07 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:03:07 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:03:07 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:03:07 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:03:07 INFO:app:Connect result: Connection refused
+2025-06-03 11:03:07 
+2025-06-03 11:03:07 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:03:07 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:07 
+2025-06-03 11:03:07 
+2025-06-03 11:03:07 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:08 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:03:08 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:08 
+2025-06-03 11:03:08 
+2025-06-03 11:03:08 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:08 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:03:08 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:03:08 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:03:08 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:03:08 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:08 
+2025-06-03 11:03:08 
+2025-06-03 11:03:08 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:08 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:08 
+2025-06-03 11:03:08 
+2025-06-03 11:03:08 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:08 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:08 
+2025-06-03 11:03:08 
+2025-06-03 11:03:08 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:08 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:08 
+2025-06-03 11:03:08 
+2025-06-03 11:03:08 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:08 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:03:08 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:08 
+2025-06-03 11:03:08 
+2025-06-03 11:03:08 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:09 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:03:09 INFO:app:Taking screenshot for emulator 17989b38-15a8-4434-bca2-7334fa3e69d1 - ADB port: 6097, Server port: 5633
+2025-06-03 11:03:09 INFO:app:Connect result: Connection refused
+2025-06-03 11:03:09 
+2025-06-03 11:03:09 INFO:app:Screenshot attempt 1/3
+2025-06-03 11:03:09 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:03:09 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:03:09 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:03:09 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:09 
+2025-06-03 11:03:09 
+2025-06-03 11:03:09 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:09 INFO:app:Screenshot attempt 3/3
+2025-06-03 11:03:09 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:03:09 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:03:10 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:03:10 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:10 
+2025-06-03 11:03:10 
+2025-06-03 11:03:10 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:10 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:03:10 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:10 
+2025-06-03 11:03:10 
+2025-06-03 11:03:10 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:10 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:03:10 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:03:10 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:03:10 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:03:10 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:10 
+2025-06-03 11:03:10 
+2025-06-03 11:03:10 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:10 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:10 
+2025-06-03 11:03:10 
+2025-06-03 11:03:10 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:10 
+2025-06-03 11:03:10 
+2025-06-03 11:03:10 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:10 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:10 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:10 
+2025-06-03 11:03:10 
+2025-06-03 11:03:10 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:10 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:03:10 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:10 
+2025-06-03 11:03:10 
+2025-06-03 11:03:10 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:11 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:03:11 INFO:app:Connect result: Connection refused
+2025-06-03 11:03:11 
+2025-06-03 11:03:11 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:03:11 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:11 
+2025-06-03 11:03:11 
+2025-06-03 11:03:11 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:11 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:03:11 INFO:app:Connect result: Connection refused
+2025-06-03 11:03:11 
+2025-06-03 11:03:12 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:03:12 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:12 
+2025-06-03 11:03:12 
+2025-06-03 11:03:12 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:12 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:03:12 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:12 
+2025-06-03 11:03:12 
+2025-06-03 11:03:12 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:12 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:03:12 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:12 
+2025-06-03 11:03:12 
+2025-06-03 11:03:12 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:12 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:03:12 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:03:12 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:03:12 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:03:12 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:12 
+2025-06-03 11:03:12 
+2025-06-03 11:03:12 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:12 
+2025-06-03 11:03:12 
+2025-06-03 11:03:12 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:12 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:12 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:12 
+2025-06-03 11:03:12 
+2025-06-03 11:03:12 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:12 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:12 
+2025-06-03 11:03:12 
+2025-06-03 11:03:12 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:12 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:03:12 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:12 
+2025-06-03 11:03:12 
+2025-06-03 11:03:12 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:13 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:03:13 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:13 
+2025-06-03 11:03:13 
+2025-06-03 11:03:13 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:14 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:03:14 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:14 
+2025-06-03 11:03:14 
+2025-06-03 11:03:14 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:14 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:03:14 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:14 
+2025-06-03 11:03:14 
+2025-06-03 11:03:14 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:14 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:03:14 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:14 
+2025-06-03 11:03:14 
+2025-06-03 11:03:14 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:14 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:03:14 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:14 
+2025-06-03 11:03:14 
+2025-06-03 11:03:14 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:14 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:03:14 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:03:14 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:03:14 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:03:14 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:14 
+2025-06-03 11:03:14 
+2025-06-03 11:03:14 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:14 
+2025-06-03 11:03:14 
+2025-06-03 11:03:14 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:14 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:14 
+2025-06-03 11:03:14 
+2025-06-03 11:03:14 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:14 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:14 
+2025-06-03 11:03:14 
+2025-06-03 11:03:14 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:14 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:14 WARNING:app:Device not found on attempt 2, retrying...
+2025-06-03 11:03:14 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:03:14 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:14 
+2025-06-03 11:03:14 
+2025-06-03 11:03:14 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:15 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:03:16 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:03:16 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:16 
+2025-06-03 11:03:16 
+2025-06-03 11:03:16 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:16 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:03:16 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:16 
+2025-06-03 11:03:16 
+2025-06-03 11:03:16 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:16 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:03:16 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:16 
+2025-06-03 11:03:16 
+2025-06-03 11:03:16 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:16 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:03:16 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:16 
+2025-06-03 11:03:16 
+2025-06-03 11:03:16 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:16 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:03:16 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:03:16 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:03:16 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:03:16 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:16 
+2025-06-03 11:03:16 
+2025-06-03 11:03:16 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:16 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:16 
+2025-06-03 11:03:16 
+2025-06-03 11:03:16 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:16 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:16 
+2025-06-03 11:03:16 
+2025-06-03 11:03:16 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:16 
+2025-06-03 11:03:16 
+2025-06-03 11:03:16 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:16 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:16 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:03:16 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:16 
+2025-06-03 11:03:16 
+2025-06-03 11:03:16 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:18 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:03:18 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:18 
+2025-06-03 11:03:18 
+2025-06-03 11:03:18 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:18 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:03:18 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:18 
+2025-06-03 11:03:18 
+2025-06-03 11:03:18 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:18 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:03:18 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:03:18 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:18 
+2025-06-03 11:03:18 
+2025-06-03 11:03:18 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:18 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:03:18] "GET /api/emulators/17989b38-15a8-4434-bca2-7334fa3e69d1/screenshot HTTP/1.1" 200 -
+2025-06-03 11:03:18 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:03:18] "GET /api/emulators/17989b38-15a8-4434-bca2-7334fa3e69d1/screenshot HTTP/1.1" 200 -
+2025-06-03 11:03:18 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:03:18] "GET /api/emulators/17989b38-15a8-4434-bca2-7334fa3e69d1/screenshot HTTP/1.1" 200 -
+2025-06-03 11:03:18 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:03:18] "GET /api/emulators/17989b38-15a8-4434-bca2-7334fa3e69d1/screenshot HTTP/1.1" 200 -
+2025-06-03 11:03:18 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:03:18 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:18 
+2025-06-03 11:03:18 
+2025-06-03 11:03:18 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:19 INFO:app:Screenshot attempt 3/3
+2025-06-03 11:03:19 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:03:19 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:03:20 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:03:20 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:20 
+2025-06-03 11:03:20 
+2025-06-03 11:03:20 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:20 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:03:20 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:20 
+2025-06-03 11:03:20 
+2025-06-03 11:03:20 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:20 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:03:20 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:03:20 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:03:20 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:03:20 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:03:20 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:20 
+2025-06-03 11:03:20 
+2025-06-03 11:03:20 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:21 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:03:21 INFO:app:Connect result: Connection refused
+2025-06-03 11:03:21 
+2025-06-03 11:03:22 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:03:22 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:03:22 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:22 
+2025-06-03 11:03:22 
+2025-06-03 11:03:22 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:22 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:03:22 INFO:app:Connect result: Connection refused
+2025-06-03 11:03:22 
+2025-06-03 11:03:22 INFO:app:Checking devices (attempt 5/5)
+2025-06-03 11:03:22 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:22 
+2025-06-03 11:03:22 
+2025-06-03 11:03:22 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:23 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:03:23 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:03:23 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:03:24 WARNING:app:Device not found on attempt 1, retrying...
+2025-06-03 11:03:24 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:03:24 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:24 
+2025-06-03 11:03:24 
+2025-06-03 11:03:24 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:24 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:03:24] "GET /api/emulators/17989b38-15a8-4434-bca2-7334fa3e69d1/screenshot HTTP/1.1" 200 -
+2025-06-03 11:03:25 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:03:25 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:03:25 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:03:25 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:03:25 INFO:app:Connect result: Connection refused
+2025-06-03 11:03:25 
+2025-06-03 11:03:25 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:03:25 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:25 
+2025-06-03 11:03:25 
+2025-06-03 11:03:25 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:26 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:03:26 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:26 
+2025-06-03 11:03:26 
+2025-06-03 11:03:26 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:27 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:03:27 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:03:27 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:03:27 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:03:27 INFO:app:Connect result: Connection refused
+2025-06-03 11:03:27 
+2025-06-03 11:03:27 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:03:27 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:27 
+2025-06-03 11:03:27 
+2025-06-03 11:03:27 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:28 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:03:28 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:28 
+2025-06-03 11:03:28 
+2025-06-03 11:03:28 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:28 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:03:28 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:28 
+2025-06-03 11:03:28 
+2025-06-03 11:03:28 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:29 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:03:29 INFO:app:Screenshot attempt 2/3
+2025-06-03 11:03:29 INFO:app:Set ADB server port to: 5633
+2025-06-03 11:03:29 INFO:app:Ensuring ADB server is running...
+2025-06-03 11:03:29 INFO:app:Connect result: Connection refused
+2025-06-03 11:03:29 
+2025-06-03 11:03:29 INFO:app:Checking devices (attempt 3/5)
+2025-06-03 11:03:29 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:29 
+2025-06-03 11:03:29 
+2025-06-03 11:03:29 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:30 INFO:app:Checking devices (attempt 1/5)
+2025-06-03 11:03:30 INFO:app:Checking devices (attempt 2/5)
+2025-06-03 11:03:30 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:30 
+2025-06-03 11:03:30 
+2025-06-03 11:03:30 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:30 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:30 
+2025-06-03 11:03:30 
+2025-06-03 11:03:30 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:30 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:03:30 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:30 
+2025-06-03 11:03:30 
+2025-06-03 11:03:30 INFO:app:Device not ready yet, waiting... (status: unknown)
+2025-06-03 11:03:31 INFO:app:Connecting to device localhost:6097
+2025-06-03 11:03:31 INFO:app:Connect result: Connection refused
+2025-06-03 11:03:31 
+2025-06-03 11:03:31 INFO:app:Checking devices (attempt 4/5)
+2025-06-03 11:03:31 INFO:app:Devices output: List of devices attached
+2025-06-03 11:03:31 
+2025-06-03 11:03:31 
+2025-06-03 11:03:31 INFO:app:Device not ready yet, waiting... (status: unknown)

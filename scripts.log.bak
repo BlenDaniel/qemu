@@ -1,0 +1,26 @@
+
+[N] Nicht ausführen  [M] Einmal ausführen  [H] Anhalten  [?] Hilfe (Standard ist "N"): M
+In D:\Project\QEMU\scripts\adb_switcher.ps1:162 Zeichen:57
++     $emulatorPort = Read-Host "Enter emulator port (e.g., 5394)"
++                                                         ~
+Argument in der Parameterliste fehlt.
+In D:\Project\QEMU\scripts\adb_switcher.ps1:305 Zeichen:18
++                 } else {
++                  ~
+In der "Try"-Anweisung fehlt der zugehörige "Catch"- oder "Finally"-Block.
+In D:\Project\QEMU\scripts\adb_switcher.ps1:311 Zeichen:9
++         } else {
++         ~
+Unerwartetes Token "}" in Ausdruck oder Anweisung.
+In D:\Project\QEMU\scripts\adb_switcher.ps1:314 Zeichen:5
++     }
++     ~
+Unerwartetes Token "}" in Ausdruck oder Anweisung.
+In D:\Project\QEMU\scripts\adb_switcher.ps1:321 Zeichen:1
++ }
++ ~
+Unerwartetes Token "}" in Ausdruck oder Anweisung.
+    + CategoryInfo          : ParserError: (:) [], ParseException
+    + FullyQualifiedErrorId : MissingArgument
+
+PS D:\Project\QEMU\scripts>
