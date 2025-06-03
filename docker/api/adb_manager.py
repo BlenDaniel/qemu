@@ -55,7 +55,7 @@ def run_adb_command(command, args=None, adb_server_port=None, timeout=30):
 def kill_all_adb_processes():
     """Attempt to kill every stray adb process that might still be running."""
     try:
-        logger.info("Killing all ADB processes...")
+        logger.info("Killing all local ADB processes...")
         if platform.system() == "Windows":
             # Kill ADB processes on Windows
             subprocess.run(["taskkill", "/F", "/IM", "adb.exe"], capture_output=True, timeout=10)
@@ -74,45 +74,83 @@ def kill_all_adb_processes():
     except Exception as exc:
         logger.warning(f"Error while killing stray adb processes: {exc}")
 
-def robust_adb_server_restart(adb_server_port):
-    """Robustly restart ADB server with proper cleanup"""
+def connect_to_emulator_adb_server(container_name, container_adb_port=5037):
+    """Connect directly to the emulator container's ADB server"""
     try:
-        logger.info(f"Performing robust ADB server restart on port {adb_server_port}")
+        logger.info(f"Connecting to emulator ADB server: {container_name}:{container_adb_port}")
         
-        # Step 1: Kill all existing ADB processes
+        # First, kill any local ADB server
         kill_all_adb_processes()
-        
-        # Step 2: Wait for processes to die
         time.sleep(2)
         
-        # Step 3: Set environment
-        set_adb_environment(adb_server_port=adb_server_port)
+        # Set environment to use the emulator's ADB server
+        emulator_adb_host = container_name
+        emulator_adb_port = container_adb_port
         
-        # Step 4: Start new ADB server
-        start_result = run_adb_command("start-server", ["-P", str(adb_server_port), "start-server"], adb_server_port=adb_server_port, timeout=15)
+        # Set ADB server host environment
+        os.environ['ADB_SERVER_SOCKET'] = f"tcp:{emulator_adb_host}:{emulator_adb_port}"
+        logger.info(f"Set ADB server socket to: tcp:{emulator_adb_host}:{emulator_adb_port}")
         
-        if start_result.get("success"):
-            logger.info(f"ADB server started successfully on port {adb_server_port}")
-            # Wait for server to be ready
-            time.sleep(3)
-            return True
+        # Try to connect using -H flag (host) and -P flag (port)
+        cmd = ["adb", "-H", emulator_adb_host, "-P", str(emulator_adb_port), "devices"]
+        logger.info(f"Testing connection with: {' '.join(cmd)}")
+        
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=10)
+        
+        if result.returncode == 0:
+            logger.info(f"Successfully connected to emulator ADB server")
+            logger.info(f"Devices found: {result.stdout}")
+            return {
+                "success": True, 
+                "adb_host": emulator_adb_host,
+                "adb_port": emulator_adb_port,
+                "devices_output": result.stdout
+            }
         else:
-            logger.error(f"Failed to start ADB server: {start_result.get('error')}")
-            return False
+            logger.error(f"Failed to connect to emulator ADB server: {result.stderr}")
+            return {"success": False, "error": result.stderr}
             
     except Exception as e:
-        logger.error(f"Error during ADB server restart: {e}")
-        return False
+        logger.error(f"Error connecting to emulator ADB server: {e}")
+        return {"success": False, "error": str(e)}
+
+def robust_adb_server_restart(adb_server_port):
+    """This function is now deprecated - we connect directly to emulator's ADB server"""
+    logger.warning("robust_adb_server_restart is deprecated - using direct emulator connection instead")
+    return True
 
 def detect_device_with_retry(adb_server_port, device_port, max_retries=10, retry_delay=3, container_host=None, container_name=None):
-    """Detect device with multiple retries and better error handling"""
+    """Detect device by connecting directly to emulator's ADB server"""
     
-    # For dynamically created containers, use container name for networking
     if container_name and not container_host:
-        # Extract container name for Docker networking
-        # Container names like "emu_deviceid_sessionid" should be accessible directly
-        target_serial = f"{container_name}:5555"  # Always use internal port 5555
-        logger.info(f"Using Docker container networking: {container_name}:5555")
+        logger.info(f"Using direct emulator ADB server connection: {container_name}")
+        
+        # Connect directly to the emulator's ADB server
+        connection_result = connect_to_emulator_adb_server(container_name, 5037)
+        
+        if connection_result["success"]:
+            # Check if any device is listed
+            devices_output = connection_result["devices_output"]
+            lines = devices_output.strip().split('\n')
+            
+            if len(lines) > 1:  # Skip header
+                for line in lines[1:]:
+                    if line.strip():
+                        parts = line.strip().split('\t')
+                        if len(parts) >= 1:
+                            serial = parts[0]
+                            status = parts[1] if len(parts) > 1 else "unknown"
+                            
+                            if serial.startswith("emulator-"):
+                                logger.info(f"Found emulator device: {serial} with status: {status}")
+                                return status
+            
+            logger.warning("No emulator devices found in ADB server")
+            return "not_found"
+        else:
+            logger.error(f"Failed to connect to emulator ADB server: {connection_result.get('error')}")
+            return "not_found"
+    
     elif container_host:
         # For predefined containers from docker-compose
         target_serial = f"{container_host}:{device_port}"
@@ -122,6 +160,7 @@ def detect_device_with_retry(adb_server_port, device_port, max_retries=10, retry
         target_serial = f"localhost:{device_port}"
         logger.info(f"Using localhost networking: localhost:{device_port}")
     
+    # Original retry logic for predefined containers
     for attempt in range(max_retries):
         try:
             logger.info(f"Device detection attempt {attempt + 1}/{max_retries} for {target_serial}")
@@ -181,7 +220,7 @@ def detect_device_with_retry(adb_server_port, device_port, max_retries=10, retry
             if attempt < max_retries - 1:
                 time.sleep(retry_delay)
     
-    logger.error(f"Failed to detect device {target_serial} after {max_retries} attempts")
+    logger.error(f"Failed to detect device after {max_retries} attempts")
     return "not_found"
 
 def setup_adb_for_existing_container(session_id, config):
@@ -252,54 +291,100 @@ def generate_adb_commands(mapped_ports):
     }
 
 def take_screenshot(adb_server_port, adb_port, container_name=None):
-    """Take a screenshot from an emulator via ADB"""
+    """Take a screenshot from an emulator via ADB using direct emulator connection"""
     try:
-        # Step 1: Restart ADB server robustly
-        logger.info("Restarting ADB server for screenshot...")
-        if not robust_adb_server_restart(adb_server_port):
-            return {"success": False, "error": "Failed to restart ADB server"}
-        
-        # Step 2: Detect device with retries
-        logger.info("Detecting device...")
-        device_status = detect_device_with_retry(
-            adb_server_port, 
-            adb_port, 
-            max_retries=3, 
-            retry_delay=3,
-            container_name=container_name
-        )
-        
-        if device_status == "not_found":
-            return {"success": False, "error": f"ADB device not found after multiple attempts. Emulator may still be booting."}
-        elif device_status != "device":
-            return {"success": False, "error": f"Device is {device_status}. Please wait for emulator to fully boot."}
-        
-        # Step 3: Take screenshot
-        logger.info("Device ready, taking screenshot...")
-        
-        # Use container networking if available
         if container_name:
-            target_serial = f"{container_name}:5555"
+            logger.info(f"Taking screenshot using direct emulator connection: {container_name}")
+            
+            # Connect directly to emulator ADB server
+            connection_result = connect_to_emulator_adb_server(container_name, 5037)
+            
+            if not connection_result["success"]:
+                return {"success": False, "error": f"Failed to connect to emulator ADB server: {connection_result.get('error')}"}
+            
+            # Find the emulator device
+            devices_output = connection_result["devices_output"]
+            device_serial = None
+            
+            lines = devices_output.strip().split('\n')
+            if len(lines) > 1:  # Skip header
+                for line in lines[1:]:
+                    if line.strip():
+                        parts = line.strip().split('\t')
+                        if len(parts) >= 2:
+                            serial = parts[0]
+                            status = parts[1]
+                            
+                            if serial.startswith("emulator-") and status == "device":
+                                device_serial = serial
+                                break
+            
+            if not device_serial:
+                return {"success": False, "error": "No active emulator device found"}
+            
+            # Take screenshot using direct emulator ADB connection
+            cmd = [
+                "adb", "-H", container_name, "-P", "5037",
+                "-s", device_serial, 
+                "exec-out", "screencap", "-p"
+            ]
+            
+            logger.info(f"Running screenshot command: {' '.join(cmd)}")
+            result = subprocess.run(cmd, capture_output=True, check=True, timeout=30)
+            
+            if result.returncode == 0 and result.stdout:
+                # Return screenshot as base64
+                import base64
+                screenshot_b64 = base64.b64encode(result.stdout).decode()
+                logger.info("Screenshot captured successfully using direct emulator connection")
+                return {"success": True, "screenshot": f"data:image/png;base64,{screenshot_b64}"}
+            else:
+                return {"success": False, "error": "Failed to capture screenshot - no data returned"}
+        
         else:
+            # Fallback to original method for predefined containers
+            logger.info("Using fallback screenshot method...")
+            # Step 1: Restart ADB server robustly
+            logger.info("Restarting ADB server for screenshot...")
+            if not robust_adb_server_restart(adb_server_port):
+                return {"success": False, "error": "Failed to restart ADB server"}
+            
+            # Step 2: Detect device with retries
+            logger.info("Detecting device...")
+            device_status = detect_device_with_retry(
+                adb_server_port, 
+                adb_port, 
+                max_retries=3, 
+                retry_delay=3,
+                container_name=container_name
+            )
+            
+            if device_status == "not_found":
+                return {"success": False, "error": f"ADB device not found after multiple attempts. Emulator may still be booting."}
+            elif device_status != "device":
+                return {"success": False, "error": f"Device is {device_status}. Please wait for emulator to fully boot."}
+            
+            # Step 3: Take screenshot
+            logger.info("Device ready, taking screenshot...")
             target_serial = f"localhost:{adb_port}"
-        
-        cmd = [
-            "adb", "-P", str(adb_server_port), 
-            "-s", target_serial, 
-            "exec-out", "screencap", "-p"
-        ]
-        
-        logger.info(f"Running screenshot command: {' '.join(cmd)}")
-        result = subprocess.run(cmd, capture_output=True, check=True, timeout=30)
-        
-        if result.returncode == 0 and result.stdout:
-            # Return screenshot as base64
-            import base64
-            screenshot_b64 = base64.b64encode(result.stdout).decode()
-            logger.info("Screenshot captured successfully")
-            return {"success": True, "screenshot": f"data:image/png;base64,{screenshot_b64}"}
-        else:
-            return {"success": False, "error": "Failed to capture screenshot - no data returned"}
+            
+            cmd = [
+                "adb", "-P", str(adb_server_port), 
+                "-s", target_serial, 
+                "exec-out", "screencap", "-p"
+            ]
+            
+            logger.info(f"Running screenshot command: {' '.join(cmd)}")
+            result = subprocess.run(cmd, capture_output=True, check=True, timeout=30)
+            
+            if result.returncode == 0 and result.stdout:
+                # Return screenshot as base64
+                import base64
+                screenshot_b64 = base64.b64encode(result.stdout).decode()
+                logger.info("Screenshot captured successfully")
+                return {"success": True, "screenshot": f"data:image/png;base64,{screenshot_b64}"}
+            else:
+                return {"success": False, "error": "Failed to capture screenshot - no data returned"}
                     
     except subprocess.TimeoutExpired:
         logger.error("Screenshot command timed out")
