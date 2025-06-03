@@ -65,24 +65,38 @@ EMULATOR_IMAGES = {
 PREDEFINED_CONTAINERS = {
     "emulator": {
         "container_name_pattern": "qemu-emulator-1",  # Fixed: actual container name
+        "container_host": "emulator",  # Docker service name for networking
         "android_version": "11",
         "device_id": "android11_main",
         "ports": {
             "console": "5554",
             "adb": "5555", 
             "adb_server": "5037",
-            "vnc": "5901"
+            "vnc": "5901"  # Host port for VNC
+        },
+        "internal_ports": {
+            "console": "5554",
+            "adb": "5555",
+            "adb_server": "5037", 
+            "vnc": "5900"  # Internal container port for VNC
         }
     },
     "emulator14": {
         "container_name_pattern": "qemu-emulator14-1",  # Fixed: actual container name
+        "container_host": "emulator14",  # Docker service name for networking
         "android_version": "14",
         "device_id": "android14_main",
         "ports": {
             "console": "6654",
             "adb": "6655",
             "adb_server": "6037", 
-            "vnc": "5902"
+            "vnc": "5902"  # Host port for VNC
+        },
+        "internal_ports": {
+            "console": "6654",
+            "adb": "5555",  # Internal container port
+            "adb_server": "5037",
+            "vnc": "5901"  # Internal container port for VNC
         }
     }
 }
@@ -148,18 +162,27 @@ def discover_existing_containers():
 def setup_adb_for_existing_container(session_id, config):
     """Set up ADB connection for an existing container"""
     try:
-        adb_server_port = config['ports']['adb_server']
-        adb_device_port = config['ports']['adb']
+        # For predefined containers from docker-compose, we need to connect to the host-mapped ports
+        # since the ADB server is running inside the emulator container
+        adb_server_port = config['ports']['adb_server']  # Use host-mapped port (5037 or 6037)
+        adb_device_port = config['ports']['adb']  # Use host-mapped port (5555 or 6655)
         
         logger.info(f"Setting up ADB for {session_id} - server port: {adb_server_port}, device port: {adb_device_port}")
         
-        # Use robust ADB server restart
+        # First, try to restart our ADB server to ensure clean state
+        logger.info("Restarting local ADB server for clean connection")
         if not robust_adb_server_restart(adb_server_port):
-            logger.error(f"Failed to restart ADB server for {session_id}")
-            return False
+            logger.warning(f"Failed to restart ADB server for {session_id}, trying direct connection")
         
-        # Use robust device detection (reduced retries for startup)
-        device_status = detect_device_with_retry(adb_server_port, adb_device_port, max_retries=3, retry_delay=2)
+        # Try to connect to the emulator running inside the container
+        # The emulator container exposes its ADB device port to the host
+        device_status = detect_device_with_retry(
+            adb_server_port=adb_server_port, 
+            device_port=adb_device_port, 
+            max_retries=5, 
+            retry_delay=3,
+            container_host=None  # Use localhost since we're connecting to host-mapped ports
+        )
         
         if device_status in ["device", "offline"]:
             logger.info(f"Successfully connected to device for {session_id} with status: {device_status}")
@@ -279,9 +302,15 @@ def robust_adb_server_restart(adb_server_port):
         logger.error(f"Error during ADB server restart: {e}")
         return False
 
-def detect_device_with_retry(adb_server_port, device_port, max_retries=10, retry_delay=3):
+def detect_device_with_retry(adb_server_port, device_port, max_retries=10, retry_delay=3, container_host=None):
     """Detect device with multiple retries and better error handling"""
-    target_serial = f"localhost:{device_port}"
+    
+    # Determine the target host - use container hostname for Docker networking
+    if container_host:
+        target_serial = f"{container_host}:{device_port}"
+        logger.info(f"Using Docker network host: {container_host}")
+    else:
+        target_serial = f"localhost:{device_port}"
     
     for attempt in range(max_retries):
         try:

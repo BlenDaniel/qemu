@@ -19,8 +19,8 @@ services:
       - "5554:5554"  # Emulator console
       - "5555:5555"  # ADB device port
       - "5037:5037"  # ADB server port
-    # command: ["/usr/local/bin/start-emulator.sh"]
-    command: ["sleep", "infinity"]  # Debug mode - commented out
+    command: ["/usr/local/bin/start-emulator.sh"]
+    # command: ["sleep", "infinity"]  # Debug mode - disabled
   emulator14:
     platform: linux/amd64
     build:
@@ -41,8 +41,8 @@ services:
       - "6654:6654"  # Emulator console
       - "6655:5555"  # ADB device port (mapped from internal 5555)
       - "6037:5037"  # ADB server port (mapped from internal 5037)
-    # command: ["/usr/local/bin/start-emulator.sh"]
-    command: ["sleep", "infinity"]  # Debug mode - commented out
+    command: ["/usr/local/bin/start-emulator.sh"]
+    # command: ["sleep", "infinity"]  # Debug mode - disabled
   api:
     build:
       context: ./docker/api
