@@ -199,6 +199,9 @@
                 <div class="status-indicator" id="statusIndicator"></div>
                 <span id="statusText">Starting...</span>
             </div>
+            <button class="btn btn-primary" onclick="checkStatus()">🔍 Status</button>
+            <button class="btn btn-primary" onclick="runDiagnostics()">🩺 Diagnose</button>
+            <button class="btn btn-success" onclick="reconnectAdb()">🔌 Reconnect</button>
             <button class="btn btn-primary" onclick="takeScreenshot()">📸 Capture</button>
             <button class="btn btn-success" onclick="toggleAutoRefresh()">🔄 <span
                     id="refreshToggle">Pause</span></button>
@@ -304,8 +307,189 @@
                     <p>Unable to capture emulator screen.</p>
                     <p><strong>Error:</strong> ${error.message}</p>
                     <button class="btn btn-primary" onclick="refreshScreen()">🔄 Try Again</button>
+                    <button class="btn btn-success" onclick="reconnectAdb()">🔌 Reconnect ADB</button>
                 `;
                 showElement('errorMessage');
+            }
+        }
+
+        async function checkStatus() {
+            try {
+                updateStatus('loading', 'Checking status...');
+
+                const response = await fetch(`/api/emulators/${emulatorId}/status`);
+                const data = await response.json();
+
+                if (data.success) {
+                    const adb = data.adb;
+                    let statusMessage = `Container: ${data.container_status}`;
+
+                    if (adb.device_found) {
+                        statusMessage += `, ADB: ${adb.device_status}`;
+                        if (adb.boot_completed) {
+                            statusMessage += `, Boot: Complete`;
+                            updateStatus('connected', statusMessage);
+                        } else {
+                            statusMessage += `, Boot: In Progress`;
+                            updateStatus('loading', statusMessage);
+                        }
+                    } else {
+                        statusMessage += `, ADB: Not Connected`;
+                        updateStatus('error', statusMessage);
+                    }
+
+                    // Show detailed status in console
+                    console.log('Emulator Status:', data);
+
+                    // Show status popup
+                    alert(`Emulator Status:
+Container: ${data.container_status}
+ADB Server Port: ${adb.server_port}
+Device Port: ${adb.device_port}
+Device Found: ${adb.device_found ? 'Yes' : 'No'}
+Device Status: ${adb.device_status}
+Boot Completed: ${adb.boot_completed ? 'Yes' : 'No'}
+Android Version: ${adb.android_version}`);
+
+                } else {
+                    updateStatus('error', 'Status check failed');
+                    alert('Failed to get status: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Status check error:', error);
+                updateStatus('error', 'Status check failed');
+                alert('Status check error: ' + error.message);
+            }
+        }
+
+        async function reconnectAdb() {
+            try {
+                updateStatus('loading', 'Reconnecting ADB...');
+
+                const response = await fetch(`/api/emulators/${emulatorId}/reconnect`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    updateStatus('connected', 'ADB reconnected');
+                    alert(`ADB Reconnection Result:
+Final Device Status: ${data.final_device_status}
+Connect Output: ${data.connect_output || 'None'}
+
+ADB will now attempt to reconnect. Please wait a moment and try taking a screenshot.`);
+
+                    // Wait a bit then try to refresh screen
+                    setTimeout(() => {
+                        refreshScreen();
+                    }, 2000);
+                } else {
+                    updateStatus('error', 'Reconnection failed');
+                    alert('Failed to reconnect: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Reconnection error:', error);
+                updateStatus('error', 'Reconnection failed');
+                alert('Reconnection error: ' + error.message);
+            }
+        }
+
+        async function runDiagnostics() {
+            try {
+                updateStatus('loading', 'Running diagnostics...');
+
+                const response = await fetch(`/api/emulators/${emulatorId}/diagnose`);
+                const data = await response.json();
+
+                if (data.error) {
+                    alert('Diagnostic error: ' + data.error);
+                    return;
+                }
+
+                const tests = data.tests;
+                let diagnosticReport = `Diagnostic Report for ${data.session_info.device_id}:\n\n`;
+
+                // Container status
+                if (tests.container_status) {
+                    diagnosticReport += `Container Status: ${tests.container_status.status}\n`;
+                    diagnosticReport += `Running: ${tests.container_status.running ? 'Yes' : 'No'}\n\n`;
+                }
+
+                // Port connectivity
+                if (tests.port_connectivity) {
+                    diagnosticReport += `Port Connectivity:\n`;
+                    diagnosticReport += `  ADB Port ${tests.port_connectivity.adb_port.port}: ${tests.port_connectivity.adb_port.listening ? 'Listening' : 'Not listening'}\n`;
+                    diagnosticReport += `  ADB Server Port ${tests.port_connectivity.adb_server_port.port}: ${tests.port_connectivity.adb_server_port.listening ? 'Listening' : 'Not listening'}\n\n`;
+                }
+
+                // ADB server
+                if (tests.adb_server) {
+                    diagnosticReport += `ADB Server: ${tests.adb_server.start_command_success ? 'Started successfully' : 'Failed to start'}\n`;
+                    if (tests.adb_server.start_error) {
+                        diagnosticReport += `  Error: ${tests.adb_server.start_error}\n`;
+                    }
+                    diagnosticReport += '\n';
+                }
+
+                // Devices
+                if (tests.devices) {
+                    diagnosticReport += `Device Detection:\n`;
+                    if (tests.devices.devices && tests.devices.devices.length > 0) {
+                        tests.devices.devices.forEach(device => {
+                            diagnosticReport += `  ${device.serial}: ${device.status}\n`;
+                        });
+                    } else {
+                        diagnosticReport += `  No devices found\n`;
+                    }
+                    diagnosticReport += '\n';
+                }
+
+                // Connection
+                if (tests.connection) {
+                    diagnosticReport += `Connection Test: ${tests.connection.command_success ? 'Success' : 'Failed'}\n`;
+                    if (tests.connection.output) {
+                        diagnosticReport += `  Output: ${tests.connection.output}\n`;
+                    }
+                    if (tests.connection.error) {
+                        diagnosticReport += `  Error: ${tests.connection.error}\n`;
+                    }
+                    diagnosticReport += '\n';
+                }
+
+                // Shell command
+                if (tests.shell_command) {
+                    diagnosticReport += `Shell Command Test: ${tests.shell_command.command_success ? 'Success' : 'Failed'}\n`;
+                    if (tests.shell_command.error) {
+                        diagnosticReport += `  Error: ${tests.shell_command.error}\n`;
+                    }
+                    diagnosticReport += '\n';
+                }
+
+                // Boot status
+                if (tests.boot_status) {
+                    diagnosticReport += `Boot Status: ${tests.boot_status.boot_completed ? 'Completed' : 'In progress or failed'}\n`;
+                    if (tests.boot_status.output) {
+                        diagnosticReport += `  Boot value: ${tests.boot_status.output}\n`;
+                    }
+                }
+
+                // Show detailed results
+                console.log('Full diagnostic data:', data);
+                alert(diagnosticReport);
+
+                // Update status based on diagnostic results
+                if (tests.boot_status && tests.boot_status.boot_completed) {
+                    updateStatus('connected', 'Diagnostic: Boot complete');
+                } else if (tests.devices && tests.devices.devices && tests.devices.devices.length > 0) {
+                    updateStatus('loading', 'Diagnostic: Device found, booting...');
+                } else {
+                    updateStatus('error', 'Diagnostic: Device not found');
+                }
+
+            } catch (error) {
+                console.error('Diagnostic error:', error);
+                updateStatus('error', 'Diagnostic failed');
+                alert('Diagnostic error: ' + error.message);
             }
         }
 

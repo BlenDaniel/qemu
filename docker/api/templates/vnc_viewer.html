@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ device_id }} - Android Emulator Screen</title>
 
-    <!-- noVNC CSS -->
-    <link rel="stylesheet" href="https://novnc.com/noVNC/app/styles/base.css" />
-
+    <!-- Local noVNC CSS fallback -->
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -158,6 +156,13 @@
             padding: 20px;
         }
 
+        .vnc-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+        }
+
         .toolbar {
             background: #34495e;
             padding: 10px 20px;
@@ -195,6 +200,7 @@
                 <span id="statusText">Connecting...</span>
             </div>
             <button class="btn btn-primary" onclick="takeScreenshot()">📸 Screenshot</button>
+            <button class="btn btn-primary" onclick="switchToLiveView()">📺 Live View</button>
             <button class="btn btn-success" onclick="reconnect()">🔄 Reconnect</button>
             <button class="btn btn-danger" onclick="window.close()">❌ Close</button>
         </div>
@@ -205,14 +211,17 @@
             <div class="loading-spinner"></div>
             <h3>Connecting to {{ device_id }}...</h3>
             <p>VNC Port: {{ vnc_port }}</p>
-            <p>Establishing secure connection to emulator screen...</p>
+            <p>Establishing connection to emulator screen...</p>
         </div>
 
         <canvas id="vnc-canvas" style="display: none;"></canvas>
 
+        <iframe id="vnc-iframe" class="vnc-iframe" style="display: none;" src="about:blank" title="VNC Viewer">
+        </iframe>
+
         <div class="error-message" id="errorMessage" style="display: none;">
             <h3>❌ Connection Failed</h3>
-            <p>Unable to connect to the emulator screen.</p>
+            <p>Unable to connect to the emulator screen via VNC.</p>
             <div style="margin: 20px 0;">
                 <h4>Alternative Options:</h4>
                 <a href="/api/emulators/{{ emulator_id }}/live_view" class="btn btn-success" target="_blank">
@@ -220,75 +229,56 @@
                 </a>
                 <button class="btn btn-primary" onclick="takeScreenshot()">📸 Single Screenshot</button>
             </div>
+            <p><strong>VNC Port:</strong> {{ vnc_port }}</p>
+            <p><strong>Direct VNC:</strong> <a href="vnc://localhost:{{ vnc_port }}" target="_blank">vnc://localhost:{{
+                    vnc_port }}</a></p>
             <button class="btn btn-primary" onclick="reconnect()">🔄 Try Again</button>
         </div>
     </div>
 
     <div class="toolbar">
         <label>
-            <input type="checkbox" id="scaleViewport" checked onchange="updateViewport()">
-            Scale to fit
-        </label>
-        <label>
-            Quality:
-            <select id="qualitySetting" onchange="updateQuality()">
-                <option value="9">High</option>
-                <option value="6" selected>Medium</option>
-                <option value="3">Low</option>
+            <select id="connectionMethod" onchange="updateConnectionMethod()">
+                <option value="screenshot">Screenshot Mode</option>
+                <option value="live">Live Screenshot Mode</option>
+                <option value="vnc">VNC Mode (Advanced)</option>
             </select>
         </label>
         <label>
-            <input type="checkbox" id="showDotCursor" onchange="updateCursor()">
-            Show cursor
+            <input type="checkbox" id="autoRefresh" checked onchange="updateAutoRefresh()">
+            Auto-refresh
+        </label>
+        <label>
+            Refresh Rate:
+            <select id="refreshRate" onchange="updateRefreshRate()">
+                <option value="1000">1 second</option>
+                <option value="2000" selected>2 seconds</option>
+                <option value="5000">5 seconds</option>
+                <option value="10000">10 seconds</option>
+            </select>
         </label>
         <span style="margin-left: auto; font-size: 0.9em; color: #7f8c8d;">
-            Press Ctrl+Alt+Shift to show noVNC controls
+            Connection: <span id="connectionStatus">Initializing...</span>
         </span>
     </div>
 
-    <!-- noVNC JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/novnc@1.4.0/core/rfb.js"></script>
-
-    <!-- Fallback noVNC sources -->
-    <script>
-        // Check if noVNC loaded, if not try fallback
-        if (typeof RFB === 'undefined') {
-            console.warn('Primary noVNC source failed, trying fallback...');
-
-            // Try alternative CDN
-            const fallbackScript = document.createElement('script');
-            fallbackScript.src = 'https://unpkg.com/novnc@1.4.0/core/rfb.js';
-            fallbackScript.onerror = function () {
-                console.error('All noVNC sources failed');
-                // Show error message
-                document.getElementById('errorMessage').innerHTML = `
-                    <h3>❌ VNC Library Error</h3>
-                    <p>Unable to load VNC viewer library. This may be due to network restrictions.</p>
-                    <div style="margin: 20px 0;">
-                        <h4>Alternative Options:</h4>
-                        <a href="/api/emulators/{{ emulator_id }}/live_view" class="btn btn-success" target="_blank">
-                            📺 Live View (Screenshots)
-                        </a>
-                        <button class="btn btn-primary" onclick="takeScreenshot()">📸 Single Screenshot</button>
-                    </div>
-                    <p><strong>VNC Port:</strong> {{ vnc_port }}</p>
-                    <p><strong>Direct VNC:</strong> vnc://localhost:{{ vnc_port }}</p>
-                `;
-                document.getElementById('errorMessage').style.display = 'block';
-                document.getElementById('loadingMessage').style.display = 'none';
-            };
-            document.head.appendChild(fallbackScript);
-        }
-    </script>
+    <!-- Load local noVNC implementation -->
+    <script src="/static/js/novnc-local.js"></script>
 
     <script>
         let rfb;
+        let refreshInterval;
+        let autoRefresh = true;
+        let refreshRate = 2000;
+        let connectionMethod = 'screenshot';
+
         const vncPort = {{ vnc_port | tojson }};
         const emulatorId = {{ emulator_id | tojson }};
 
         function updateStatus(status, message) {
             const indicator = document.getElementById('statusIndicator');
             const text = document.getElementById('statusText');
+            const connectionStatus = document.getElementById('connectionStatus');
 
             indicator.className = 'status-indicator';
             if (status === 'connected') {
@@ -296,6 +286,7 @@
             }
 
             text.textContent = message;
+            connectionStatus.textContent = status;
         }
 
         function showElement(elementId) {
@@ -306,149 +297,140 @@
             document.getElementById(elementId).style.display = 'none';
         }
 
-        function connectVNC() {
-            const target = document.getElementById('vnc-canvas');
+        function updateConnectionMethod() {
+            const method = document.getElementById('connectionMethod').value;
+            connectionMethod = method;
 
-            // Check if noVNC RFB is available
-            if (typeof RFB === 'undefined') {
-                console.error('RFB is not defined - noVNC library not loaded');
-                updateStatus('error', 'VNC library not available');
-                const errorDiv = document.getElementById('errorMessage');
-                errorDiv.innerHTML = `
-                    <h3>❌ VNC Library Error</h3>
-                    <p>The VNC viewer library (noVNC) failed to load. This may be due to network restrictions or CDN issues.</p>
-                    <div style="margin: 20px 0;">
-                        <h4>Alternative Options:</h4>
-                        <a href="/api/emulators/${emulatorId}/live_view" class="btn btn-success" target="_blank">
-                            📺 Live View (Screenshots)
-                        </a>
-                        <button class="btn btn-primary" onclick="takeScreenshot()">📸 Single Screenshot</button>
-                    </div>
-                    <p><strong>VNC Port:</strong> ${vncPort}</p>
-                    <p><strong>Direct VNC:</strong> vnc://localhost:${vncPort}</p>
-                `;
-                showElement('errorMessage');
-                hideElement('loadingMessage');
-                return;
+            stopRefreshInterval();
+            hideElement('vnc-canvas');
+            hideElement('vnc-iframe');
+            hideElement('errorMessage');
+            showElement('loadingMessage');
+
+            switch (method) {
+                case 'screenshot':
+                    initScreenshotMode();
+                    break;
+                case 'live':
+                    initLiveMode();
+                    break;
+                case 'vnc':
+                    initVNCMode();
+                    break;
             }
+        }
 
+        function initScreenshotMode() {
+            updateStatus('connecting', 'Taking screenshot...');
+            takeScreenshot(true);
+        }
+
+        function initLiveMode() {
+            updateStatus('connecting', 'Starting live view...');
+            startRefreshInterval();
+        }
+
+        function initVNCMode() {
+            updateStatus('connecting', 'Connecting to VNC...');
+            connectVNC();
+        }
+
+        function startRefreshInterval() {
+            if (autoRefresh && (connectionMethod === 'live' || connectionMethod === 'screenshot')) {
+                refreshInterval = setInterval(() => {
+                    takeScreenshot(true);
+                }, refreshRate);
+            }
+        }
+
+        function stopRefreshInterval() {
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+                refreshInterval = null;
+            }
+        }
+
+        function updateAutoRefresh() {
+            autoRefresh = document.getElementById('autoRefresh').checked;
+            if (autoRefresh) {
+                startRefreshInterval();
+            } else {
+                stopRefreshInterval();
+            }
+        }
+
+        function updateRefreshRate() {
+            refreshRate = parseInt(document.getElementById('refreshRate').value);
+            if (refreshInterval) {
+                stopRefreshInterval();
+                startRefreshInterval();
+            }
+        }
+
+        function connectVNC() {
             // First check if VNC is available for this emulator
             fetch(`/api/emulators/${emulatorId}/vnc`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        let connectionUrl;
-
-                        if (data.ws_url) {
-                            // Use WebSocket proxy if available
-                            connectionUrl = data.ws_url;
-                            console.log(`Connecting to VNC via WebSocket proxy: ${connectionUrl}`);
-                        } else {
-                            // Try direct connection to VNC port
-                            const vncHost = window.location.hostname;
-                            const vncPort = data.vnc_port;
-                            connectionUrl = `ws://${vncHost}:${vncPort}`;
-                            console.log(`Attempting direct VNC connection: ${connectionUrl}`);
-                        }
-
-                        try {
-                            // Create RFB object
-                            rfb = new RFB(target, connectionUrl, {
-                                credentials: { password: '' },
-                                repeaterID: '',
-                                shared: true
-                            });
-
-                            // Set event handlers
-                            rfb.addEventListener("connect", function () {
-                                updateStatus('connected', 'Connected');
-                                hideElement('loadingMessage');
-                                hideElement('errorMessage');
-                                showElement('vnc-canvas');
-                            });
-
-                            rfb.addEventListener("disconnect", function (e) {
-                                updateStatus('disconnected', 'Disconnected');
-                                hideElement('vnc-canvas');
-
-                                if (e.detail.clean) {
-                                    showElement('loadingMessage');
-                                } else {
-                                    showElement('errorMessage');
-
-                                    // Show specific error info
-                                    const errorDiv = document.getElementById('errorMessage');
-                                    if (data.vnc_url) {
-                                        errorDiv.innerHTML = `
-                                            <h3>❌ Connection Failed</h3>
-                                            <p>Unable to connect to the emulator screen via WebSocket.</p>
-                                            <p><strong>VNC Port:</strong> ${data.vnc_port}</p>
-                                            <p><strong>Alternative:</strong> <a href="${data.vnc_url}" target="_blank">Open in VNC viewer</a></p>
-                                            <button class="btn btn-primary" onclick="reconnect()">🔄 Try Again</button>
-                                        `;
-                                    }
-                                }
-                            });
-
-                            rfb.addEventListener("credentialsrequired", function () {
-                                updateStatus('auth', 'Authentication required');
-                                // For simplicity, assume no password needed for local VNC
-                                rfb.sendCredentials({});
-                            });
-
-                            rfb.addEventListener("securityfailure", function () {
-                                updateStatus('error', 'Security failure');
-                                showElement('errorMessage');
-                                hideElement('loadingMessage');
-                            });
-
-                            // Set initial viewport scaling
-                            updateViewport();
-                            updateQuality();
-                            updateCursor();
-
-                        } catch (error) {
-                            console.error('VNC connection error:', error);
-                            updateStatus('error', 'Connection failed');
-                            const errorDiv = document.getElementById('errorMessage');
-                            errorDiv.innerHTML = `
-                                <h3>❌ Connection Failed</h3>
-                                <p>Unable to connect to the emulator screen.</p>
-                                <p><strong>Error:</strong> ${error.message}</p>
-                                <p><strong>VNC Port:</strong> ${data.vnc_port}</p>
-                                ${data.vnc_url ? `<p><strong>Alternative:</strong> <a href="${data.vnc_url}" target="_blank">Open in VNC viewer</a></p>` : ''}
-                                <button class="btn btn-primary" onclick="reconnect()">🔄 Try Again</button>
-                            `;
-                            showElement('errorMessage');
-                            hideElement('loadingMessage');
-                        }
-                    } else {
-                        console.error('VNC not available:', data.error);
-                        updateStatus('error', 'VNC not available');
+                        // Show VNC options since direct WebSocket connection isn't supported
+                        hideElement('loadingMessage');
                         const errorDiv = document.getElementById('errorMessage');
                         errorDiv.innerHTML = `
-                            <h3>❌ VNC Not Available</h3>
-                            <p>${data.error}</p>
-                            ${data.direct_vnc_url ? `<p><strong>Direct VNC:</strong> <a href="${data.direct_vnc_url}">Open in VNC client</a></p>` : ''}
-                            <button class="btn btn-primary" onclick="reconnect()">🔄 Try Again</button>
+                            <h3>🔗 VNC Connection Available</h3>
+                            <p>VNC server is running on port ${data.vnc_port}</p>
+                            <div style="margin: 20px 0;">
+                                <h4>Connection Options:</h4>
+                                <p><strong>Native VNC Client:</strong></p>
+                                <a href="vnc://localhost:${data.vnc_port}" class="btn btn-primary" target="_blank">
+                                    🖥️ Open in VNC Viewer
+                                </a>
+                                <p style="margin-top: 15px;"><strong>Web-based Alternatives:</strong></p>
+                                <button class="btn btn-success" onclick="switchToLiveView()">📺 Live Screenshot View</button>
+                                <button class="btn btn-primary" onclick="takeScreenshot()">📸 Single Screenshot</button>
+                            </div>
+                            <details style="margin-top: 15px; text-align: left;">
+                                <summary>VNC Client Instructions</summary>
+                                <p>To connect with a native VNC client:</p>
+                                <ul style="text-align: left;">
+                                    <li><strong>Address:</strong> localhost:${data.vnc_port}</li>
+                                    <li><strong>Password:</strong> None (no authentication)</li>
+                                    <li><strong>Recommended clients:</strong> TigerVNC, RealVNC, TightVNC</li>
+                                </ul>
+                            </details>
                         `;
                         showElement('errorMessage');
-                        hideElement('loadingMessage');
+                        updateStatus('available', 'VNC Server Available');
+                    } else {
+                        showVNCError(data.error);
                     }
                 })
                 .catch(error => {
                     console.error('Error getting VNC info:', error);
-                    updateStatus('error', 'Failed to get VNC info');
-                    const errorDiv = document.getElementById('errorMessage');
-                    errorDiv.innerHTML = `
-                        <h3>❌ Connection Error</h3>
-                        <p>Failed to get VNC connection information.</p>
-                        <p><strong>Error:</strong> ${error.message}</p>
-                        <button class="btn btn-primary" onclick="reconnect()">🔄 Try Again</button>
-                    `;
-                    showElement('errorMessage');
-                    hideElement('loadingMessage');
+                    showVNCError(`Failed to get VNC connection information: ${error.message}`);
                 });
+        }
+
+        function showVNCError(errorMsg) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.innerHTML = `
+                <h3>❌ VNC Connection Error</h3>
+                <p>${errorMsg}</p>
+                <div style="margin: 20px 0;">
+                    <h4>Alternative Options:</h4>
+                    <button class="btn btn-success" onclick="switchToLiveView()">📺 Live View (Screenshots)</button>
+                    <button class="btn btn-primary" onclick="takeScreenshot()">📸 Single Screenshot</button>
+                </div>
+                <button class="btn btn-primary" onclick="reconnect()">🔄 Try Again</button>
+            `;
+            showElement('errorMessage');
+            hideElement('loadingMessage');
+            updateStatus('error', 'VNC Error');
+        }
+
+        function switchToLiveView() {
+            document.getElementById('connectionMethod').value = 'live';
+            updateConnectionMethod();
         }
 
         function reconnect() {
@@ -456,70 +438,86 @@
                 rfb.disconnect();
             }
 
+            stopRefreshInterval();
             hideElement('vnc-canvas');
+            hideElement('vnc-iframe');
             hideElement('errorMessage');
             showElement('loadingMessage');
             updateStatus('connecting', 'Reconnecting...');
 
-            setTimeout(connectVNC, 1000);
+            setTimeout(() => {
+                updateConnectionMethod();
+            }, 1000);
         }
 
-        function updateViewport() {
-            if (rfb) {
-                const scale = document.getElementById('scaleViewport').checked;
-                rfb.scaleViewport = scale;
-                rfb.resizeSession = scale;
-            }
-        }
-
-        function updateQuality() {
-            if (rfb) {
-                const quality = parseInt(document.getElementById('qualitySetting').value);
-                rfb.qualityLevel = quality;
-            }
-        }
-
-        function updateCursor() {
-            if (rfb) {
-                const showCursor = document.getElementById('showDotCursor').checked;
-                rfb.showDotCursor = showCursor;
-            }
-        }
-
-        async function takeScreenshot() {
+        async function takeScreenshot(embed = false) {
             try {
+                updateStatus('capturing', 'Taking screenshot...');
                 const response = await fetch(`/api/emulators/${emulatorId}/screenshot`);
                 const data = await response.json();
 
                 if (data.success) {
-                    // Create a new window/tab with the screenshot
-                    const win = window.open();
-                    win.document.write(`
-                        <html>
-                            <head><title>Screenshot - ${emulatorId}</title></head>
-                            <body style="margin:0; background:#000; display:flex; justify-content:center; align-items:center; min-height:100vh;">
-                                <img src="${data.screenshot}" style="max-width:100%; max-height:100%; border:2px solid #ccc;">
+                    if (embed) {
+                        // Show screenshot in iframe
+                        const iframe = document.getElementById('vnc-iframe');
+                        iframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(`
+                            <!DOCTYPE html>
+                            <html>
+                            <head>
+                                <title>Emulator Screenshot</title>
+                                <style>
+                                    body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+                                    img { max-width: 100%; max-height: 100%; object-fit: contain; }
+                                </style>
+                            </head>
+                            <body>
+                                <img src="${data.screenshot}" alt="Emulator Screenshot">
                             </body>
-                        </html>
-                    `);
+                            </html>
+                        `);
+                        hideElement('loadingMessage');
+                        hideElement('errorMessage');
+                        showElement('vnc-iframe');
+                        updateStatus('connected', 'Screenshot Mode');
+                    } else {
+                        // Open in new window
+                        const win = window.open();
+                        win.document.write(`
+                            <html>
+                                <head><title>Screenshot - ${emulatorId}</title></head>
+                                <body style="margin:0; background:#000; display:flex; justify-content:center; align-items:center; min-height:100vh;">
+                                    <img src="${data.screenshot}" style="max-width:100%; max-height:100%; border:2px solid #ccc;">
+                                </body>
+                            </html>
+                        `);
+                    }
                 } else {
-                    alert('Failed to take screenshot: ' + data.error);
+                    if (embed) {
+                        showVNCError('Failed to take screenshot: ' + data.error);
+                    } else {
+                        alert('Failed to take screenshot: ' + data.error);
+                    }
                 }
             } catch (error) {
-                alert('Screenshot error: ' + error.message);
+                if (embed) {
+                    showVNCError('Screenshot error: ' + error.message);
+                } else {
+                    alert('Screenshot error: ' + error.message);
+                }
             }
         }
 
-        // Initialize connection when page loads
+        // Initialize with screenshot mode
         document.addEventListener('DOMContentLoaded', function () {
-            updateStatus('connecting', 'Initializing...');
-
-            // Wait a moment for the page to settle, then connect
-            setTimeout(connectVNC, 500);
+            updateStatus('initializing', 'Initializing...');
+            setTimeout(() => {
+                updateConnectionMethod();
+            }, 500);
         });
 
         // Cleanup on page unload
         window.addEventListener('beforeunload', function () {
+            stopRefreshInterval();
             if (rfb) {
                 rfb.disconnect();
             }

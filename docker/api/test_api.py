@@ -257,11 +257,32 @@ class TestUnifiedEmulatorAPI(unittest.TestCase):
             }
         }
         
-        # Mock successful screenshot with binary data
-        mock_result = Mock()
-        mock_result.returncode = 0
-        mock_result.stdout = b'fake_png_data'
-        mock_subprocess.return_value = mock_result
+        # Mock multiple subprocess calls that the enhanced screenshot endpoint makes
+        def mock_subprocess_side_effect(*args, **kwargs):
+            cmd = args[0]
+            mock_result = Mock()
+            mock_result.returncode = 0
+            
+            if 'connect' in cmd:
+                # ADB connect command
+                mock_result.stdout = 'connected to localhost:5556'
+                mock_result.stderr = b''
+            elif 'devices' in cmd:
+                # ADB devices command
+                mock_result.stdout = 'List of devices attached\nlocalhost:5556\tdevice\n'
+                mock_result.stderr = b''
+            elif 'screencap' in cmd:
+                # Screenshot command
+                mock_result.stdout = b'fake_png_data'
+                mock_result.stderr = b''
+            else:
+                # Default case
+                mock_result.stdout = ''
+                mock_result.stderr = b''
+            
+            return mock_result
+        
+        mock_subprocess.side_effect = mock_subprocess_side_effect
         
         response = self.client.get('/api/emulators/test-screenshot/screenshot')
         self.assertEqual(response.status_code, 200)

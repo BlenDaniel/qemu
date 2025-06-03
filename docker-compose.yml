@@ -1,6 +1,6 @@
 services:
   emulator:
-    # platform: linux/amd64
+    platform: linux/amd64
     build:
       context: ./docker/emulator
     image: qemu-emulator
@@ -14,6 +14,11 @@ services:
       - VNC_PORT=5900
     volumes:
       - ./avd-data:/root/.android/avd
+    ports:
+      - "5901:5900"
+      - "5554:5554"
+      - "5555:5555"
+    # command: ["/usr/local/bin/start-emulator.sh"]
     command: ["sleep", "infinity"]
   emulator14:
     platform: linux/amd64
@@ -30,6 +35,11 @@ services:
       - VNC_PORT=5900
     volumes:
       - ./avd-data:/root/.android/avd
+    ports:
+      - "5902:5900"
+      - "6654:6654"
+      - "6655:5555"
+    # command: ["/usr/local/bin/start-emulator.sh"]
     command: ["sleep", "infinity"]
   api:
     build:
