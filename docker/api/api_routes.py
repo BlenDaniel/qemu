@@ -133,8 +133,16 @@ def register_api_routes(app, sessions):
             final_status = "server_failed"
             devices_result = {"success": False, "error": "ADB server failed to start"}
         else:
-            # Use robust device detection
-            final_status = detect_device_with_retry(adb_server_port, adb_device_port, max_retries=3, retry_delay=2)
+            # Use robust device detection with container networking
+            container_name = container.name
+            logger.info(f"Detecting device using container name: {container_name}")
+            final_status = detect_device_with_retry(
+                adb_server_port, 
+                adb_device_port, 
+                max_retries=3, 
+                retry_delay=2,
+                container_name=container_name  # Pass container name for Docker networking
+            )
             
             # Get current devices list
             devices_result = run_adb_command("devices", ["-P", str(adb_server_port), "devices"], adb_server_port=adb_server_port)
@@ -386,7 +394,11 @@ def register_api_routes(app, sessions):
         
         logger.info(f"Taking screenshot for emulator {emulator_id} - ADB port: {adb_port}, Server port: {adb_server_port}")
         
-        result = take_screenshot(adb_server_port, adb_port)
+        # Get container name for Docker networking (for dynamic containers)
+        container = session['container']
+        container_name = container.name if not session.get('is_predefined', False) else None
+        
+        result = take_screenshot(adb_server_port, adb_port, container_name)
         
         if result["success"]:
             return jsonify(result)
@@ -409,9 +421,16 @@ def register_api_routes(app, sessions):
             container.reload()
             container_status = container.status
             
-            # Use robust device detection
+            # Use robust device detection with container networking
             logger.info(f"Checking device status for {emulator_id}")
-            device_status = detect_device_with_retry(adb_server_port, adb_port, max_retries=2, retry_delay=1)
+            container_name = container.name if not session.get('is_predefined', False) else None
+            device_status = detect_device_with_retry(
+                adb_server_port, 
+                adb_port, 
+                max_retries=2, 
+                retry_delay=1,
+                container_name=container_name
+            )
             
             device_serial = f"localhost:{adb_port}"
             device_found = device_status != "not_found"
@@ -422,10 +441,16 @@ def register_api_routes(app, sessions):
             
             if device_found and device_status == "device":
                 try:
+                    # Use container networking for ADB commands if it's a dynamic container
+                    if container_name:
+                        target_device = f"{container_name}:5555"
+                    else:
+                        target_device = device_serial
+                    
                     # Check if boot completed
                     boot_cmd = [
                         "adb", "-P", str(adb_server_port), 
-                        "-s", device_serial, 
+                        "-s", target_device, 
                         "shell", "getprop", "sys.boot_completed"
                     ]
                     boot_result = subprocess.run(boot_cmd, capture_output=True, text=True, timeout=5)
@@ -435,7 +460,7 @@ def register_api_routes(app, sessions):
                     # Get Android version
                     version_cmd = [
                         "adb", "-P", str(adb_server_port), 
-                        "-s", device_serial, 
+                        "-s", target_device, 
                         "shell", "getprop", "ro.build.version.release"
                     ]
                     version_result = subprocess.run(version_cmd, capture_output=True, text=True, timeout=5)
@@ -457,7 +482,8 @@ def register_api_routes(app, sessions):
                     "device_found": device_found,
                     "device_status": device_status,
                     "boot_completed": boot_completed,
-                    "android_version": android_version
+                    "android_version": android_version,
+                    "container_name": container_name
                 },
                 "ports": session['ports']
             })
@@ -483,8 +509,16 @@ def register_api_routes(app, sessions):
             if not robust_adb_server_restart(adb_server_port):
                 return jsonify({"success": False, "error": "Failed to restart ADB server"})
             
-            # Use robust device detection
-            device_status = detect_device_with_retry(adb_server_port, adb_port, max_retries=5, retry_delay=2)
+            # Use robust device detection with container networking
+            container = session['container']
+            container_name = container.name if not session.get('is_predefined', False) else None
+            device_status = detect_device_with_retry(
+                adb_server_port, 
+                adb_port, 
+                max_retries=5, 
+                retry_delay=2,
+                container_name=container_name
+            )
             
             # Get final devices list for reporting
             devices_result = run_adb_command("devices", ["-P", str(adb_server_port), "devices"], adb_server_port=adb_server_port)
@@ -496,12 +530,77 @@ def register_api_routes(app, sessions):
                 "device_port": adb_port,
                 "final_device_status": device_status,
                 "devices_output": devices_result.get("output", ""),
-                "connection_successful": device_status in ["device", "offline"]
+                "connection_successful": device_status in ["device", "offline"],
+                "container_name": container_name
             })
             
         except Exception as e:
             logger.error(f"Error reconnecting emulator: {str(e)}")
             return jsonify({"success": False, "error": str(e)})
+
+    # ============================================================================
+    # DEBUG AND TESTING ROUTES
+    # ============================================================================
+
+    @app.route('/api/debug/test-networking', methods=['GET'])
+    def test_networking():
+        """Test container networking and connectivity"""
+        results = {}
+        
+        for session_id, session in sessions.items():
+            container = session['container']
+            container_name = container.name
+            is_predefined = session.get('is_predefined', False)
+            
+            test_result = {
+                "container_name": container_name,
+                "is_predefined": is_predefined,
+                "tests": {}
+            }
+            
+            if not is_predefined:
+                # Test port connectivity using container networking
+                import socket
+                
+                # Test ADB port (5555 internal)
+                try:
+                    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    sock.settimeout(3)
+                    result = sock.connect_ex((container_name, 5555))
+                    sock.close()
+                    test_result["tests"]["adb_port_5555"] = result == 0
+                except Exception as e:
+                    test_result["tests"]["adb_port_5555"] = f"Error: {str(e)}"
+                
+                # Test VNC port (5900 internal)
+                try:
+                    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    sock.settimeout(3)
+                    result = sock.connect_ex((container_name, 5900))
+                    sock.close()
+                    test_result["tests"]["vnc_port_5900"] = result == 0
+                except Exception as e:
+                    test_result["tests"]["vnc_port_5900"] = f"Error: {str(e)}"
+                
+                # Test ADB connect
+                try:
+                    adb_server_port = session['ports']['adb_server']
+                    connect_result = run_adb_command(
+                        "connect", 
+                        ["-P", str(adb_server_port), "connect", f"{container_name}:5555"],
+                        adb_server_port=adb_server_port
+                    )
+                    test_result["tests"]["adb_connect"] = connect_result
+                except Exception as e:
+                    test_result["tests"]["adb_connect"] = f"Error: {str(e)}"
+            
+            results[session_id] = test_result
+        
+        return jsonify({
+            "success": True,
+            "message": "Networking tests completed",
+            "results": results
+        })
 
     # ============================================================================
     # LEGACY ENDPOINTS (for backwards compatibility)

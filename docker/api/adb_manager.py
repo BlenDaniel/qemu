@@ -104,15 +104,23 @@ def robust_adb_server_restart(adb_server_port):
         logger.error(f"Error during ADB server restart: {e}")
         return False
 
-def detect_device_with_retry(adb_server_port, device_port, max_retries=10, retry_delay=3, container_host=None):
+def detect_device_with_retry(adb_server_port, device_port, max_retries=10, retry_delay=3, container_host=None, container_name=None):
     """Detect device with multiple retries and better error handling"""
     
-    # Determine the target host - use container hostname for Docker networking
-    if container_host:
+    # For dynamically created containers, use container name for networking
+    if container_name and not container_host:
+        # Extract container name for Docker networking
+        # Container names like "emu_deviceid_sessionid" should be accessible directly
+        target_serial = f"{container_name}:5555"  # Always use internal port 5555
+        logger.info(f"Using Docker container networking: {container_name}:5555")
+    elif container_host:
+        # For predefined containers from docker-compose
         target_serial = f"{container_host}:{device_port}"
-        logger.info(f"Using Docker network host: {container_host}")
+        logger.info(f"Using Docker service networking: {container_host}:{device_port}")
     else:
+        # Fallback to localhost (host networking)
         target_serial = f"localhost:{device_port}"
+        logger.info(f"Using localhost networking: localhost:{device_port}")
     
     for attempt in range(max_retries):
         try:
@@ -152,8 +160,11 @@ def detect_device_with_retry(adb_server_port, device_port, max_retries=10, retry
                                 serial = parts[0]
                                 status = parts[1] if len(parts) > 1 else "unknown"
                                 
-                                if serial == target_serial:
-                                    logger.info(f"Found device {target_serial} with status: {status}")
+                                # Check for exact match or emulator serial format
+                                if (serial == target_serial or 
+                                    (container_name and serial.startswith("emulator-")) or
+                                    (target_serial.endswith(":5555") and serial.startswith("emulator-"))):
+                                    logger.info(f"Found device {serial} with status: {status}")
                                     return status
                 
                 logger.warning(f"Device {target_serial} not found in devices list")
@@ -240,7 +251,7 @@ def generate_adb_commands(mapped_ports):
         'kill_and_restart_server': f"adb kill-server && adb -P {mapped_ports['adb_server']} start-server"
     }
 
-def take_screenshot(adb_server_port, adb_port):
+def take_screenshot(adb_server_port, adb_port, container_name=None):
     """Take a screenshot from an emulator via ADB"""
     try:
         # Step 1: Restart ADB server robustly
@@ -250,16 +261,27 @@ def take_screenshot(adb_server_port, adb_port):
         
         # Step 2: Detect device with retries
         logger.info("Detecting device...")
-        device_status = detect_device_with_retry(adb_server_port, adb_port, max_retries=3, retry_delay=3)
+        device_status = detect_device_with_retry(
+            adb_server_port, 
+            adb_port, 
+            max_retries=3, 
+            retry_delay=3,
+            container_name=container_name
+        )
         
         if device_status == "not_found":
-            return {"success": False, "error": f"ADB device localhost:{adb_port} not found after multiple attempts. Emulator may still be booting."}
+            return {"success": False, "error": f"ADB device not found after multiple attempts. Emulator may still be booting."}
         elif device_status != "device":
             return {"success": False, "error": f"Device is {device_status}. Please wait for emulator to fully boot."}
         
         # Step 3: Take screenshot
         logger.info("Device ready, taking screenshot...")
-        target_serial = f"localhost:{adb_port}"
+        
+        # Use container networking if available
+        if container_name:
+            target_serial = f"{container_name}:5555"
+        else:
+            target_serial = f"localhost:{adb_port}"
         
         cmd = [
             "adb", "-P", str(adb_server_port), 
@@ -288,8 +310,8 @@ def take_screenshot(adb_server_port, adb_port):
         logger.error(f"Screenshot command failed: {error_msg}")
         
         # Provide more helpful error messages
-        if "device 'localhost:" in error_msg and "not found" in error_msg:
-            return {"success": False, "error": f"ADB device localhost:{adb_port} not found. Emulator may still be starting up."}
+        if "device" in error_msg and "not found" in error_msg:
+            return {"success": False, "error": f"ADB device not found. Emulator may still be starting up."}
         elif "device offline" in error_msg:
             return {"success": False, "error": "Device is offline. Please wait for emulator to fully boot."}
         else:
