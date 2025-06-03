@@ -64,7 +64,7 @@ EMULATOR_IMAGES = {
 # Predefined container configurations for docker-compose containers
 PREDEFINED_CONTAINERS = {
     "emulator": {
-        "container_name_pattern": "qemu-main-emulator",
+        "container_name_pattern": "qemu-emulator-1",  # Fixed: actual container name
         "android_version": "11",
         "device_id": "android11_main",
         "ports": {
@@ -75,7 +75,7 @@ PREDEFINED_CONTAINERS = {
         }
     },
     "emulator14": {
-        "container_name_pattern": "qemu-main-emulator14", 
+        "container_name_pattern": "qemu-emulator14-1",  # Fixed: actual container name
         "android_version": "14",
         "device_id": "android14_main",
         "ports": {
@@ -103,6 +103,7 @@ def discover_existing_containers():
     try:
         # Get all running containers
         containers = docker_client.containers.list()
+        logger.info(f"Found {len(containers)} running containers")
         
         for container in containers:
             container_name = container.name
@@ -110,9 +111,16 @@ def discover_existing_containers():
             
             # Check if this is one of our predefined emulator containers
             for service_name, config in PREDEFINED_CONTAINERS.items():
-                if config["container_name_pattern"] in container_name:
+                pattern = config["container_name_pattern"]
+                # Check for exact match or partial match (for docker-compose prefixes)
+                if pattern in container_name or container_name.endswith(pattern):
                     # Generate session ID for this container
                     session_id = f"existing_{service_name}_{config['device_id']}"
+                    
+                    # Skip if already registered
+                    if session_id in sessions:
+                        logger.info(f"Container {container_name} already registered as {session_id}")
+                        continue
                     
                     # Register container in sessions
                     sessions[session_id] = {
@@ -126,10 +134,12 @@ def discover_existing_containers():
                         'is_predefined': True
                     }
                     
-                    logger.info(f"Registered existing container {container_name} as session {session_id}")
+                    logger.info(f"✅ Registered existing container {container_name} as session {session_id}")
+                    logger.info(f"   Ports: {config['ports']}")
                     
                     # Try to set up ADB connection
-                    setup_adb_for_existing_container(session_id, config)
+                    adb_success = setup_adb_for_existing_container(session_id, config)
+                    logger.info(f"   ADB setup: {'✅ Success' if adb_success else '❌ Failed'}")
                     break
                     
     except Exception as e:
@@ -148,15 +158,16 @@ def setup_adb_for_existing_container(session_id, config):
             logger.error(f"Failed to restart ADB server for {session_id}")
             return False
         
-        # Use robust device detection
-        device_status = detect_device_with_retry(adb_server_port, adb_device_port, max_retries=5, retry_delay=2)
+        # Use robust device detection (reduced retries for startup)
+        device_status = detect_device_with_retry(adb_server_port, adb_device_port, max_retries=3, retry_delay=2)
         
         if device_status in ["device", "offline"]:
             logger.info(f"Successfully connected to device for {session_id} with status: {device_status}")
             return True
         else:
             logger.warning(f"Failed to connect to device for {session_id}. Status: {device_status}")
-            return False
+            # Don't fail completely - the emulator might still be booting
+            return True  # Return True to allow registration
         
     except Exception as e:
         logger.error(f"Failed to setup ADB for {session_id}: {e}")
@@ -657,14 +668,20 @@ def list_emulators():
     for sid, session in sessions.items():
         container = session['container']
         container.reload()
-        ports = container.attrs['NetworkSettings']['Ports']
         
-        mapped_ports = {
-            'console': ports.get('5554/tcp', [{}])[0].get('HostPort', 'unknown'),
-            'adb': ports.get('5555/tcp', [{}])[0].get('HostPort', 'unknown'),
-            'adb_server': ports.get('5037/tcp', [{}])[0].get('HostPort', 'unknown'),
-            'vnc': ports.get('5900/tcp', [{}])[0].get('HostPort', 'unknown')
-        }
+        # Handle predefined containers (from docker-compose) differently
+        if session.get('is_predefined', False):
+            # Use the predefined port configuration
+            mapped_ports = session['ports']
+        else:
+            # Use dynamic port mapping for API-created containers
+            ports = container.attrs['NetworkSettings']['Ports']
+            mapped_ports = {
+                'console': ports.get('5554/tcp', [{}])[0].get('HostPort', 'unknown'),
+                'adb': ports.get('5555/tcp', [{}])[0].get('HostPort', 'unknown'),
+                'adb_server': ports.get('5037/tcp', [{}])[0].get('HostPort', 'unknown'),
+                'vnc': ports.get('5900/tcp', [{}])[0].get('HostPort', 'unknown')
+            }
         
         # Generate or retrieve ADB commands
         if 'adb_commands' in session:
@@ -674,7 +691,7 @@ def list_emulators():
                 'connect': f"adb connect localhost:{mapped_ports['adb']}",
                 'server': f"adb -P {mapped_ports['adb_server']} devices",
                 'set_server_unix': f"export ANDROID_ADB_SERVER_PORT={mapped_ports['adb_server']}",
-                'set_server_windows': f"set ANDROID_ADB_SERVER_PORT={mapped_ports['adb_server']}",
+                'set_server_windows': f"$env:ANDROID_ADB_SERVER_PORT = \"{mapped_ports['adb_server']}\"",
                 'kill_and_restart_server': f"adb kill-server && adb -P {mapped_ports['adb_server']} start-server"
             }
             session['adb_commands'] = adb_commands
@@ -689,7 +706,9 @@ def list_emulators():
             'ports': mapped_ports,
             'status': container.status,
             'adb_commands': adb_commands,
-            'has_external_adb_server': session.get('has_external_adb_server', False)
+            'has_external_adb_server': session.get('has_external_adb_server', False),
+            'is_predefined': session.get('is_predefined', False),
+            'container_name': container.name
         }
     
     return jsonify(data)

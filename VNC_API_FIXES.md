@@ -36,6 +36,16 @@ command: ["/usr/local/bin/start-emulator.sh"]
 - Better VNC proxy setup for WebSocket connections
 - Enhanced VNC status checking and error handling
 
+### 5. **ADB Connection Reliability (NEW)**
+**Issue**: ADB connections were unreliable, especially on Windows machines, with poor error handling and retry logic.
+
+**Fix**: Implemented robust ADB connection system:
+- **Cross-platform environment variable handling**: Proper PowerShell support for Windows (`$env:ANDROID_ADB_SERVER_PORT`)
+- **Robust server restart**: `robust_adb_server_restart()` with proper cleanup
+- **Smart device detection**: `detect_device_with_retry()` with configurable retries
+- **Better error handling**: Detailed logging and timeout management
+- **Process cleanup**: Improved killing of stray ADB processes
+
 ## Changes Made
 
 ### 1. Modified `docker-compose.yml`
@@ -58,20 +68,17 @@ services:
     command: ["/usr/local/bin/start-emulator.sh"]
 ```
 
-### 2. Enhanced `docker/api/app.py`
-- Added `PREDEFINED_CONTAINERS` configuration
-- Added `discover_existing_containers()` function
-- Added `setup_adb_for_existing_container()` function
-- Added `/api/containers/discover` endpoint
-- Improved error handling and logging
+### 2. Enhanced `docker/api/app.py` (NEW IMPROVEMENTS)
+- **NEW**: `robust_adb_server_restart()` - Complete ADB server restart with cleanup
+- **NEW**: `detect_device_with_retry()` - Intelligent device detection with retries
+- **IMPROVED**: `set_adb_environment()` - Windows PowerShell support
+- **IMPROVED**: `run_adb_command()` - Better timeout and error handling
+- **IMPROVED**: `kill_all_adb_processes()` - Cross-platform process cleanup
+- **UPDATED**: All endpoints now use robust ADB functions
 
-### 3. Created `test_fixes.py`
-Comprehensive test script to validate all fixes:
-- API health checks
-- Container discovery testing
-- Emulator status validation
-- VNC connectivity testing
-- Screenshot functionality testing
+### 3. New Test Scripts
+- **Enhanced**: `test_fixes.py` - Comprehensive validation
+- **NEW**: `test_adb_windows.py` - Windows-specific ADB testing
 
 ## How to Use
 
@@ -96,7 +103,16 @@ curl -X POST http://localhost:5001/api/containers/discover
 curl http://localhost:5001/api/emulators
 ```
 
-### 4. Test VNC Access
+### 4. Test ADB Connections (NEW)
+```bash
+# Run comprehensive ADB tests
+python test_adb_windows.py
+
+# Test basic functionality
+python test_fixes.py
+```
+
+### 5. Test VNC Access
 ```bash
 # Check VNC status for an emulator
 curl http://localhost:5001/api/emulators/{emulator_id}/vnc
@@ -105,9 +121,10 @@ curl http://localhost:5001/api/emulators/{emulator_id}/vnc
 http://localhost:5001/vnc/{emulator_id}
 ```
 
-### 5. Run Comprehensive Tests
+### 6. Force Reconnection if Needed
 ```bash
-python test_fixes.py
+# Reconnect to an emulator with robust ADB restart
+curl -X POST http://localhost:5001/api/emulators/{emulator_id}/reconnect
 ```
 
 ## Expected Results
@@ -119,8 +136,22 @@ After applying these fixes, you should see:
    - Android 11 emulator: VNC on 5901, ADB on 5555, ADB server on 5037
    - Android 14 emulator: VNC on 5902, ADB on 6655, ADB server on 6037
 3. **Working VNC**: Web-based VNC viewer accessible via browser
-4. **ADB Connectivity**: Proper ADB connections for screenshots and device control
+4. **Robust ADB Connectivity**: Reliable connections with automatic retries
 5. **Screenshot Functionality**: API can capture screenshots from emulators
+6. **Windows Compatibility**: Proper PowerShell environment variable handling
+7. **Better Error Messages**: Clear indication of connection issues and status
+
+## Platform-Specific Notes
+
+### Windows Users
+- **PowerShell Integration**: The API now properly sets `$env:ANDROID_ADB_SERVER_PORT`
+- **Process Management**: Enhanced Windows process cleanup with `taskkill`
+- **Environment Variables**: Automatic shell environment configuration
+
+### Unix/Linux/macOS Users  
+- **Shell Integration**: Proper `export` command usage
+- **Process Management**: Enhanced `pkill` usage for ADB cleanup
+- **Environment Variables**: Standard bash environment setup
 
 ## Troubleshooting
 
@@ -134,15 +165,23 @@ After applying these fixes, you should see:
 2. Manually trigger discovery: `POST /api/containers/discover`
 3. Check container names match the patterns in `PREDEFINED_CONTAINERS`
 
+### If ADB fails (IMPROVED):
+1. **Run ADB test script**: `python test_adb_windows.py`
+2. **Check port accessibility**: Verify ADB ports are mapped correctly
+3. **Force reconnection**: `POST /api/emulators/{id}/reconnect`
+4. **Check device boot status**: Wait for `boot_completed` property
+5. **Review logs**: Check API logs for detailed error messages
+
 ### If VNC doesn't work:
 1. Check if VNC ports are accessible: `telnet localhost 5901`
 2. Look at container logs for VNC startup messages
 3. Ensure X11 and window manager are properly started in containers
 
-### If ADB fails:
-1. Check ADB server ports are mapped correctly
-2. Wait for emulator to fully boot (check boot_completed property)
-3. Try reconnecting: `POST /api/emulators/{id}/reconnect`
+### Windows-Specific Issues (NEW):
+1. **PowerShell Execution Policy**: Ensure PowerShell can execute commands
+2. **ADB PATH**: Verify ADB is in Windows PATH
+3. **Port Conflicts**: Check for port conflicts with Windows services
+4. **Firewall**: Ensure Windows Firewall allows Docker port access
 
 ## Port Reference
 
@@ -159,12 +198,20 @@ After applying these fixes, you should see:
 | api | 5001 | 5001 | Flask API |
 | api | 6080-6180 | 6080-6180 | VNC WebSocket Proxies |
 
+## New API Endpoints
+
+- `POST /api/containers/discover` - Manually discover containers
+- `POST /api/emulators/{id}/reconnect` - Force ADB reconnection with robust restart
+- `GET /api/emulators/{id}/status` - Enhanced status with device detection
+- `GET /api/emulators/{id}/screenshot` - Improved screenshot with robust ADB
+
 ## Next Steps
 
-1. Restart your containers with the fixed configuration
-2. Run the test script to validate everything works
-3. Access the web interface at http://localhost:5001
-4. Use VNC viewers at http://localhost:5001/vnc/{emulator_id}
-5. Take screenshots via the API endpoints
+1. **Restart containers**: `docker-compose down && docker-compose up -d`
+2. **Run comprehensive tests**: `python test_adb_windows.py`
+3. **Validate all functionality**: `python test_fixes.py`
+4. **Access web interface**: http://localhost:5001
+5. **Use VNC viewers**: http://localhost:5001/vnc/{emulator_id}
+6. **Test screenshots**: via API endpoints
 
-The fixes should resolve all the connection issues between the API and emulator containers, enabling proper VNC access and screenshot functionality. 
+The enhanced fixes provide **robust, cross-platform ADB connectivity** with **intelligent retry mechanisms** and **detailed error reporting**, specifically addressing the Windows compatibility issues and unreliable device detection problems seen in the original logs. 
