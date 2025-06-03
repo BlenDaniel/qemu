@@ -1,206 +1,194 @@
-emu_daycyphj_5bc64fd9
-fb4252afd321
-qemu-emulator:latest
-7423:5037⁠
-6552:5554⁠
-5736:5555⁠
-5928:5900⁠
-STATUS
-Running (46 seconds ago)
-
-
-
-2025-06-03 12:26:30 Setting up VNC server for GUI access...
-2025-06-03 12:26:30 Starting Xvfb virtual display...
-2025-06-03 12:26:33 Starting Fluxbox window manager...
-2025-06-03 12:26:35 Starting VNC server on port 5900...
-2025-06-03 12:26:35 VNC server started on port 5900
-2025-06-03 12:26:35 VNC PIDs: Xvfb=9, Fluxbox=13, VNC=25
-2025-06-03 12:26:35 Available system images:
-2025-06-03 12:26:35 total 3301732
-2025-06-03 12:26:35 drwxr-xr-x 3 root root       4096 Jun  3 09:23 .
-2025-06-03 12:26:35 drwxr-xr-x 3 root root       4096 Jun  3 09:23 ..
-2025-06-03 12:26:35 -rw-r--r-- 1 root root    2971963 Jun  3 09:23 NOTICE.txt
-2025-06-03 12:26:35 -rw-r--r-- 1 root root        356 Jun  3 09:23 VerifiedBootParams.textproto
-2025-06-03 12:26:35 -rw-r--r-- 1 root root        453 Jun  3 09:23 advancedFeatures.ini
-2025-06-03 12:26:35 -rw-r--r-- 1 root root       2212 Jun  3 09:23 build.prop
-2025-06-03 12:26:35 drwxr-xr-x 4 root root       4096 Jun  3 09:23 data
-2025-06-03 12:26:35 -rw-r--r-- 1 root root   18874368 Jun  3 09:23 encryptionkey.img
-2025-06-03 12:26:35 -rw-r--r-- 1 root root   16640144 Jun  3 09:23 kernel-ranchu-64
-2025-06-03 12:26:35 -rw-r--r-- 1 root root      18703 Jun  3 09:23 package.xml
-2025-06-03 12:26:35 -rw-r--r-- 1 root root    2715633 Jun  3 09:23 ramdisk.img
-2025-06-03 12:26:35 -rw-r--r-- 1 root root        288 Jun  3 09:23 source.properties
-2025-06-03 12:26:35 -rw-r--r-- 1 root root 3232759808 Jun  3 09:23 system.img
-2025-06-03 12:26:35 -rw-r--r-- 1 root root    1048576 Jun  3 09:23 userdata.img
-2025-06-03 12:26:35 -rw-r--r-- 1 root root  105906176 Jun  3 09:23 vendor.img
-2025-06-03 12:26:35 total 12
-2025-06-03 12:26:35 drwxr-xr-x 3 root root 4096 Jun  3 09:23 .
-2025-06-03 12:26:35 drwxr-xr-x 3 root root 4096 Jun  3 09:19 ..
-2025-06-03 12:26:35 drwxr-xr-x 3 root root 4096 Jun  3 09:23 x86
-2025-06-03 12:26:35 /opt/android-sdk/system-images/android-30
-2025-06-03 12:26:35 Using device ID: daycyphj
-2025-06-03 12:26:35 Setting emulator port to: 5554 (will appear as emulator-5554)
-2025-06-03 12:26:35 Creating AVD named 'daycyphj' with x86 architecture...
-2025-06-03 12:26:35 Loading local repository...                                                     
+2025-06-03 13:00:26 Setting up VNC server for GUI access...
+2025-06-03 13:00:26 Starting Xvfb virtual display...
+2025-06-03 13:00:29 Starting Fluxbox window manager...
+2025-06-03 13:00:31 Starting VNC server on port 5900...
+2025-06-03 13:00:31 VNC server started on port 5900
+2025-06-03 13:00:31 VNC PIDs: Xvfb=9, Fluxbox=13, VNC=25
+2025-06-03 13:00:31 Available system images:
+2025-06-03 13:00:31 total 3301732
+2025-06-03 13:00:31 drwxr-xr-x 3 root root       4096 Jun  3 09:23 .
+2025-06-03 13:00:31 drwxr-xr-x 3 root root       4096 Jun  3 09:23 ..
+2025-06-03 13:00:31 -rw-r--r-- 1 root root    2971963 Jun  3 09:23 NOTICE.txt
+2025-06-03 13:00:31 -rw-r--r-- 1 root root        356 Jun  3 09:23 VerifiedBootParams.textproto
+2025-06-03 13:00:31 -rw-r--r-- 1 root root        453 Jun  3 09:23 advancedFeatures.ini
+2025-06-03 13:00:31 -rw-r--r-- 1 root root       2212 Jun  3 09:23 build.prop
+2025-06-03 13:00:31 drwxr-xr-x 4 root root       4096 Jun  3 09:23 data
+2025-06-03 13:00:31 -rw-r--r-- 1 root root   18874368 Jun  3 09:23 encryptionkey.img
+2025-06-03 13:00:31 -rw-r--r-- 1 root root   16640144 Jun  3 09:23 kernel-ranchu-64
+2025-06-03 13:00:31 -rw-r--r-- 1 root root      18703 Jun  3 09:23 package.xml
+2025-06-03 13:00:31 -rw-r--r-- 1 root root    2715633 Jun  3 09:23 ramdisk.img
+2025-06-03 13:00:31 -rw-r--r-- 1 root root        288 Jun  3 09:23 source.properties
+2025-06-03 13:00:31 -rw-r--r-- 1 root root 3232759808 Jun  3 09:23 system.img
+2025-06-03 13:00:31 -rw-r--r-- 1 root root    1048576 Jun  3 09:23 userdata.img
+2025-06-03 13:00:31 -rw-r--r-- 1 root root  105906176 Jun  3 09:23 vendor.img
+2025-06-03 13:00:31 total 12
+2025-06-03 13:00:31 drwxr-xr-x 3 root root 4096 Jun  3 09:23 .
+2025-06-03 13:00:31 drwxr-xr-x 3 root root 4096 Jun  3 09:19 ..
+2025-06-03 13:00:31 drwxr-xr-x 3 root root 4096 Jun  3 09:23 x86
+2025-06-03 13:00:31 /opt/android-sdk/system-images/android-30
+2025-06-03 13:00:31 Using device ID: qnl7lnxm
+2025-06-03 13:00:31 Setting emulator port to: 5554 (will appear as emulator-5554)
+2025-06-03 13:00:31 Creating AVD named 'qnl7lnxm' with x86 architecture...
+2025-06-03 13:00:32 Loading local repository...                                                     
 [=========                              ] 25% Loading local repository...       
 [=========                              ] 25% Fetch remote repository...        
 [=======================================] 100% Fetch remote repository...       
-2025-06-03 12:26:35 Auto-selecting single ABI x86
-2025-06-03 12:26:35 Do you wish to create a custom hardware profile? [no] Configuring emulator with optimized settings...
-2025-06-03 12:26:35 Launching Android emulator AVD 'daycyphj' on port 5554...
-2025-06-03 12:26:35 Launching emulator with GUI support via VNC...
-2025-06-03 12:26:35 Waiting for emulator to boot...
-2025-06-03 12:26:35 Starting ADB server...
-2025-06-03 12:26:35 INFO         | Android emulator version 35.5.10.0 (build_id 13402964) (CL:N/A)
-2025-06-03 12:26:35 INFO         | Graphics backend: gfxstream
-2025-06-03 12:26:35 INFO         | Found systemPath /opt/android-sdk/system-images/android-30/google_apis/x86/
-2025-06-03 12:26:35 INFO         | Found systemPath /opt/android-sdk/system-images/android-30/google_apis/x86/
-2025-06-03 12:26:35 WARNING      | Please update the emulator to one that supports the feature(s): Vulkan
-2025-06-03 12:26:35 INFO         | Checking system compatibility:
-2025-06-03 12:26:35 INFO         |   Checking: hasSufficientDiskSpace
-2025-06-03 12:26:35 INFO         |      Ok: Disk space requirements to run avd: `daycyphj` are met
-2025-06-03 12:26:35 INFO         |   Checking: hasSufficientHwGpu
-2025-06-03 12:26:35 INFO         |      Ok: Hardware GPU requirements to run avd: `daycyphj` are passed
-2025-06-03 12:26:35 INFO         |   Checking: hasSufficientSystem
-2025-06-03 12:26:35 INFO         |      Ok: System requirements to run avd: `daycyphj` are met
-2025-06-03 12:26:35 WARNING      | File System is not ext4, disable QuickbootFileBacked feature
-2025-06-03 12:26:35 WARNING      | FeatureControl is requesting a non existing feature.
-2025-06-03 12:26:35 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_btn_xr_environment_living_room_day_clicked() (:0, )
-2025-06-03 12:26:35 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_btn_xr_environment_living_room_night_clicked() (:0, )
-2025-06-03 12:26:35 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_new_posture_requested(int) (:0, )
-2025-06-03 12:26:35 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_dismiss_posture_selection_dialog() (:0, )
-2025-06-03 12:26:35 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_new_resizable_requested(PresetEmulatorSizeType) (:0, )
-2025-06-03 12:26:35 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_dismiss_resizable_dialog() (:0, )
-2025-06-03 12:26:35 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_xr_environment_mode_changed(int) (:0, )
-2025-06-03 12:26:35 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_dismiss_xr_environment_mode_dialog() (:0, )
-2025-06-03 12:26:35 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_xr_input_mode_changed(int) (:0, )
-2025-06-03 12:26:35 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_dismiss_xr_input_mode_dialog() (:0, )
-2025-06-03 12:26:35 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_sleep_timer_done() (:0, )
-2025-06-03 12:26:35 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_unfold_timer_done() (:0, )
-2025-06-03 12:26:35 INFO         | Storing crashdata in: /tmp/android-unknown/emu-crash-35.5.10.db, detection is enabled for process: 97
-2025-06-03 12:26:35 INFO         | Guest Driver: Auto (ext controls)
-2025-06-03 12:26:35 library_mode swiftshader_indirect gpu mode swiftshader_indirect
-2025-06-03 12:26:35 INFO         | Initializing hardware OpenGLES emulation support
-2025-06-03 12:26:35 INFO         | Not raising nofile soft limit from 1048576.
-2025-06-03 12:26:35 INFO         | HealthMonitor disabled.
-2025-06-03 12:26:35 INFO         | initIcdPaths: ICD set to 'swiftshader', using Swiftshader ICD
-2025-06-03 12:26:35 INFO         | Setting ICD filenames for the loader = /opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/vk_swiftshader_icd.json:/opt/android-sdk/emulator/lib64/vulkan/vk_swiftshader_icd.json
-2025-06-03 12:26:35 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so]
-2025-06-03 12:26:35 
-2025-06-03 12:26:35 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so]: not found in map, open for the first time
-2025-06-03 12:26:35 
-2025-06-03 12:26:35 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so] (posix): begin
-2025-06-03 12:26:35 
-2025-06-03 12:26:35 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so] (posix,linux): call dlopen on [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so]
-2025-06-03 12:26:35 
-2025-06-03 12:26:35 INFO         | Added library: /opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so
-2025-06-03 12:26:35 INFO         | Selecting Vulkan device: SwiftShader Device (Subzero), Version: 1.3.0
-2025-06-03 12:26:36 INFO         | SharedLibrary::open for [libGLESv2.so]: not found in map, open for the first time
-2025-06-03 12:26:36 
-2025-06-03 12:26:36 INFO         | SharedLibrary::open for [libGLESv2.so] (posix): begin
-2025-06-03 12:26:36 
-2025-06-03 12:26:36 INFO         | SharedLibrary::open for [libGLESv2.so] (posix,linux): call dlopen on [libGLESv2.so]
-2025-06-03 12:26:36 
-2025-06-03 12:26:36 INFO         | SharedLibrary::open for [libEGL.so]: not found in map, open for the first time
-2025-06-03 12:26:36 
-2025-06-03 12:26:36 INFO         | SharedLibrary::open for [libEGL.so] (posix): begin
-2025-06-03 12:26:36 
-2025-06-03 12:26:36 INFO         | SharedLibrary::open for [libEGL.so] (posix,linux): call dlopen on [libEGL.so]
-2025-06-03 12:26:36 
-2025-06-03 12:26:36 INFO         | SharedLibrary::open for [libX11]
-2025-06-03 12:26:36 
-2025-06-03 12:26:36 INFO         | SharedLibrary::open for [libX11]: not found in map, open for the first time
-2025-06-03 12:26:36 
-2025-06-03 12:26:36 INFO         | SharedLibrary::open for [libX11] (posix): begin
-2025-06-03 12:26:36 
-2025-06-03 12:26:36 INFO         | SharedLibrary::open for [libX11] (posix,linux): call dlopen on [libX11.so]
-2025-06-03 12:26:36 
-2025-06-03 12:26:36 INFO         | Initializing VkEmulation features:
-2025-06-03 12:26:36 INFO         |     glInteropSupported: false
-2025-06-03 12:26:36 INFO         |     useDeferredCommands: true
-2025-06-03 12:26:36 INFO         |     createResourceWithRequirements: true
-2025-06-03 12:26:36 INFO         |     useVulkanComposition: false
-2025-06-03 12:26:36 INFO         |     useVulkanNativeSwapchain: false
-2025-06-03 12:26:36 INFO         |     enable guestRenderDoc: false
-2025-06-03 12:26:36 INFO         |     ASTC LDR emulation mode: 2
-2025-06-03 12:26:36 INFO         |     enable ETC2 emulation: true
-2025-06-03 12:26:36 INFO         |     enable Ycbcr emulation: false
-2025-06-03 12:26:36 INFO         |     guestVulkanOnly: false
-2025-06-03 12:26:36 INFO         |     useDedicatedAllocations: false
-2025-06-03 12:26:36 INFO         | Graphics Adapter Vendor Google (Google Inc.)
-2025-06-03 12:26:36 INFO         | Graphics Adapter Android Emulator OpenGL ES Translator (Google SwiftShader)
-2025-06-03 12:26:36 INFO         | Graphics API Version OpenGL ES 3.0 (OpenGL ES 3.0 SwiftShader 4.0.0.1)
-2025-06-03 12:26:36 INFO         | Graphics API Extensions GL_OES_EGL_sync GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_depth24 GL_OES_depth32 GL_OES_element_index_uint GL_OES_texture_float GL_OES_texture_float_linear GL_OES_compressed_paletted_texture GL_OES_compressed_ETC1_RGB8_texture GL_OES_depth_texture GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_packed_depth_stencil GL_OES_vertex_half_float GL_OES_standard_derivatives GL_OES_texture_npot GL_OES_rgb8_rgba8 GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_texture_format_BGRA8888 GL_APPLE_texture_format_BGRA8888 
-2025-06-03 12:26:36 INFO         | Graphics Device Extensions N/A
-2025-06-03 12:26:36 INFO         | Userspace boot properties:
-2025-06-03 12:26:36 INFO         |   android.bootanim=0
-2025-06-03 12:26:36 INFO         |   android.qemud=1
-2025-06-03 12:26:36 INFO         |   androidboot.boot_devices=pci0000:00/0000:00:03.0 pci0000:00/0000:00:06.0
-2025-06-03 12:26:36 INFO         |   androidboot.hardware=ranchu
-2025-06-03 12:26:36 INFO         |   androidboot.hardware.vulkan=ranchu
-2025-06-03 12:26:36 INFO         |   androidboot.serialno=EMULATOR35X5X10X0
-2025-06-03 12:26:36 INFO         |   androidboot.vbmeta.digest=22632f66be5ef8f2181b7f14ab33fac3a6d82c7c65d6172a59d3484281605e20
-2025-06-03 12:26:36 INFO         |   androidboot.vbmeta.hash_alg=sha256
-2025-06-03 12:26:36 INFO         |   androidboot.vbmeta.size=6144
-2025-06-03 12:26:36 INFO         |   qemu=1
-2025-06-03 12:26:36 INFO         |   qemu.avd_name=daycyphj
-2025-06-03 12:26:36 INFO         |   qemu.camera_hq_edge_processing=0
-2025-06-03 12:26:36 INFO         |   qemu.camera_protocol_ver=1
-2025-06-03 12:26:36 INFO         |   qemu.dalvik.vm.heapsize=512m
-2025-06-03 12:26:36 INFO         |   qemu.encrypt=1
-2025-06-03 12:26:36 INFO         |   qemu.gles=1
-2025-06-03 12:26:36 INFO         |   qemu.gltransport=pipe
-2025-06-03 12:26:36 INFO         |   qemu.gltransport.drawFlushInterval=800
-2025-06-03 12:26:36 INFO         |   qemu.hwcodec.avcdec=2
-2025-06-03 12:26:36 INFO         |   qemu.hwcodec.hevcdec=2
-2025-06-03 12:26:36 INFO         |   qemu.hwcodec.vpxdec=2
-2025-06-03 12:26:36 INFO         |   qemu.opengles.version=196608
-2025-06-03 12:26:36 INFO         |   qemu.settings.system.screen_off_timeout=2147483647
-2025-06-03 12:26:36 INFO         |   qemu.uirenderer=skiagl
-2025-06-03 12:26:36 INFO         |   qemu.virtiowifi=1
-2025-06-03 12:26:36 INFO         |   qemu.vsync=60
-2025-06-03 12:26:36 INFO         | Monitoring duration of emulator setup.
-2025-06-03 12:26:36 INFO         | Setting display: 0 configuration to: 320x640, dpi: 160x160 
-2025-06-03 12:26:36 INFO         | setDisplayActiveConfig 0
-2025-06-03 12:26:36 INFO         | Checking system compatibility:
-2025-06-03 12:26:36 INFO         |   Checking: hasSufficientDiskSpace
-2025-06-03 12:26:36 INFO         |      Ok: Disk space requirements to run avd: `daycyphj` are met
-2025-06-03 12:26:36 INFO         |   Checking: hasSufficientHwGpu
-2025-06-03 12:26:36 INFO         |      Ok: Hardware GPU requirements to run avd: `daycyphj` are passed
-2025-06-03 12:26:36 INFO         |   Checking: hasSufficientSystem
-2025-06-03 12:26:36 INFO         |      Ok: System requirements to run avd: `daycyphj` are met
-2025-06-03 12:26:38 WARNING      | adb command '/opt/android-sdk/platform-tools/adb -s emulator-5554 shell am start-foreground-service -e meter on com.android.emulator.radio.config/.MeterService ' failed: 'adb: device offline'
-2025-06-03 12:26:39 ##############################################################################
-2025-06-03 12:26:39 ##                        WARNING - ACTION REQUIRED                         ##
-2025-06-03 12:26:39 ##  Consider using the '-metrics-collection' flag to help improve the       ##
-2025-06-03 12:26:39 ##  emulator by sending anonymized usage data. Or use the '-no-metrics'     ##
-2025-06-03 12:26:39 ##  flag to bypass this warning and turn off the metrics collection.        ##
-2025-06-03 12:26:39 ##  In a future release this warning will turn into a one-time blocking     ##
-2025-06-03 12:26:39 ##  prompt to ask for explicit user input regarding metrics collection.     ##
-2025-06-03 12:26:39 ##                                                                          ##
-2025-06-03 12:26:39 ##  Please see '-help-metrics-collection' for more details. You can use     ##
-2025-06-03 12:26:39 ##  '-metrics-to-file' or '-metrics-to-console' flags to see what type of   ##
-2025-06-03 12:26:39 ##  data is being collected by emulator as part of usage statistics.        ##
-2025-06-03 12:26:39 ##############################################################################
-2025-06-03 12:26:39 USER_INFO    | Emulator is performing a full startup. This may take upto two minutes, or more.
-2025-06-03 12:26:39 WARNING      | Failed to process .ini file /root/.android/emu-update-last-check.ini for reading.
-2025-06-03 12:26:39 WARNING      | UpdateCheck: Failure: Error
-2025-06-03 12:26:39 WARNING      | UpdateCheck: failed to get the latest version, skipping check (current version '35.5.10-13402964')
-2025-06-03 12:26:52 Still waiting for emulator to boot... (0/120)
-2025-06-03 12:26:57 Still waiting for emulator to boot... (5/120)
-2025-06-03 12:27:02 Still waiting for emulator to boot... (10/120)
-2025-06-03 12:27:08 Emulator booted successfully.
-2025-06-03 12:27:08 Listing devices:
-2025-06-03 12:27:08 List of devices attached
-2025-06-03 12:27:08 emulator-5554device
-2025-06-03 12:27:08 
-2025-06-03 12:27:08 Emulator is now available via ADB as 'emulator-5554'
-2025-06-03 12:27:08 You can connect to it from your host using: adb connect localhost:5555
-2025-06-03 12:27:08 Note: ADB connection port is always emulator port + 1
-2025-06-03 12:27:08 Set ANDROID_SERIAL=emulator-5554 for easier targeting in scripts
-2025-06-03 12:27:08 INFO         | Boot completed in 32988 ms
-2025-06-03 12:27:08 INFO         | Increasing screen off timeout, logcat buffer size to 2M.
-2025-06-03 12:26:35 I0603 10:26:35.991201      97 opengles.cpp:285] android_startOpenglesRenderer: gpu info
-2025-06-03 12:26:35 I0603 10:26:35.991245      97 opengles.cpp:286] 
-2025-06-03 12:26:36 WARNING: cannnot unmap ptr 0x7fc021ce3000 as it is in the protected range from 0x7fc021ce3000 to 0x7fc0a1ee3000
-2025-06-03 12:26:36 WARNING: cannnot unmap ptr 0x7fc0a1e01000 as it is in the protected range from 0x7fc021ce3000 to 0x7fc0a1ee3000
+2025-06-03 13:00:32 Auto-selecting single ABI x86
+2025-06-03 13:00:32 Do you wish to create a custom hardware profile? [no] Configuring emulator with optimized settings...
+2025-06-03 13:00:32 Launching Android emulator AVD 'qnl7lnxm' on port 5554...
+2025-06-03 13:00:32 Launching emulator with GUI support via VNC...
+2025-06-03 13:00:32 Waiting for emulator to boot...
+2025-06-03 13:00:32 Starting ADB server...
+2025-06-03 13:00:32 INFO         | Android emulator version 35.5.10.0 (build_id 13402964) (CL:N/A)
+2025-06-03 13:00:32 INFO         | Graphics backend: gfxstream
+2025-06-03 13:00:32 INFO         | Found systemPath /opt/android-sdk/system-images/android-30/google_apis/x86/
+2025-06-03 13:00:32 INFO         | Found systemPath /opt/android-sdk/system-images/android-30/google_apis/x86/
+2025-06-03 13:00:32 WARNING      | Please update the emulator to one that supports the feature(s): Vulkan
+2025-06-03 13:00:32 INFO         | Checking system compatibility:
+2025-06-03 13:00:32 INFO         |   Checking: hasSufficientDiskSpace
+2025-06-03 13:00:32 INFO         |      Ok: Disk space requirements to run avd: `qnl7lnxm` are met
+2025-06-03 13:00:32 INFO         |   Checking: hasSufficientHwGpu
+2025-06-03 13:00:32 INFO         |      Ok: Hardware GPU requirements to run avd: `qnl7lnxm` are passed
+2025-06-03 13:00:32 INFO         |   Checking: hasSufficientSystem
+2025-06-03 13:00:32 INFO         |      Ok: System requirements to run avd: `qnl7lnxm` are met
+2025-06-03 13:00:32 WARNING      | File System is not ext4, disable QuickbootFileBacked feature
+2025-06-03 13:00:32 WARNING      | FeatureControl is requesting a non existing feature.
+2025-06-03 13:00:32 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_btn_xr_environment_living_room_day_clicked() (:0, )
+2025-06-03 13:00:32 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_btn_xr_environment_living_room_night_clicked() (:0, )
+2025-06-03 13:00:32 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_new_posture_requested(int) (:0, )
+2025-06-03 13:00:32 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_dismiss_posture_selection_dialog() (:0, )
+2025-06-03 13:00:32 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_new_resizable_requested(PresetEmulatorSizeType) (:0, )
+2025-06-03 13:00:32 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_dismiss_resizable_dialog() (:0, )
+2025-06-03 13:00:32 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_xr_environment_mode_changed(int) (:0, )
+2025-06-03 13:00:32 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_dismiss_xr_environment_mode_dialog() (:0, )
+2025-06-03 13:00:32 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_xr_input_mode_changed(int) (:0, )
+2025-06-03 13:00:32 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_dismiss_xr_input_mode_dialog() (:0, )
+2025-06-03 13:00:32 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_sleep_timer_done() (:0, )
+2025-06-03 13:00:32 INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_unfold_timer_done() (:0, )
+2025-06-03 13:00:32 INFO         | Storing crashdata in: /tmp/android-unknown/emu-crash-35.5.10.db, detection is enabled for process: 97
+2025-06-03 13:00:32 INFO         | Guest Driver: Auto (ext controls)
+2025-06-03 13:00:32 library_mode swiftshader_indirect gpu mode swiftshader_indirect
+2025-06-03 13:00:32 INFO         | Initializing hardware OpenGLES emulation support
+2025-06-03 13:00:32 INFO         | Not raising nofile soft limit from 1048576.
+2025-06-03 13:00:32 INFO         | HealthMonitor disabled.
+2025-06-03 13:00:32 INFO         | initIcdPaths: ICD set to 'swiftshader', using Swiftshader ICD
+2025-06-03 13:00:32 INFO         | Setting ICD filenames for the loader = /opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/vk_swiftshader_icd.json:/opt/android-sdk/emulator/lib64/vulkan/vk_swiftshader_icd.json
+2025-06-03 13:00:32 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so]
+2025-06-03 13:00:32 
+2025-06-03 13:00:32 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so]: not found in map, open for the first time
+2025-06-03 13:00:32 
+2025-06-03 13:00:32 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so] (posix): begin
+2025-06-03 13:00:32 
+2025-06-03 13:00:32 INFO         | SharedLibrary::open for [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so] (posix,linux): call dlopen on [/opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so]
+2025-06-03 13:00:32 
+2025-06-03 13:00:32 INFO         | Added library: /opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so
+2025-06-03 13:00:32 INFO         | Selecting Vulkan device: SwiftShader Device (Subzero), Version: 1.3.0
+2025-06-03 13:00:32 INFO         | SharedLibrary::open for [libGLESv2.so]: not found in map, open for the first time
+2025-06-03 13:00:32 
+2025-06-03 13:00:32 INFO         | SharedLibrary::open for [libGLESv2.so] (posix): begin
+2025-06-03 13:00:32 
+2025-06-03 13:00:32 INFO         | SharedLibrary::open for [libGLESv2.so] (posix,linux): call dlopen on [libGLESv2.so]
+2025-06-03 13:00:32 
+2025-06-03 13:00:32 INFO         | SharedLibrary::open for [libEGL.so]: not found in map, open for the first time
+2025-06-03 13:00:32 
+2025-06-03 13:00:32 INFO         | SharedLibrary::open for [libEGL.so] (posix): begin
+2025-06-03 13:00:32 
+2025-06-03 13:00:32 INFO         | SharedLibrary::open for [libEGL.so] (posix,linux): call dlopen on [libEGL.so]
+2025-06-03 13:00:32 
+2025-06-03 13:00:32 INFO         | SharedLibrary::open for [libX11]
+2025-06-03 13:00:32 
+2025-06-03 13:00:32 INFO         | SharedLibrary::open for [libX11]: not found in map, open for the first time
+2025-06-03 13:00:32 
+2025-06-03 13:00:32 INFO         | SharedLibrary::open for [libX11] (posix): begin
+2025-06-03 13:00:32 
+2025-06-03 13:00:32 INFO         | SharedLibrary::open for [libX11] (posix,linux): call dlopen on [libX11.so]
+2025-06-03 13:00:32 
+2025-06-03 13:00:32 INFO         | Initializing VkEmulation features:
+2025-06-03 13:00:32 INFO         |     glInteropSupported: false
+2025-06-03 13:00:32 INFO         |     useDeferredCommands: true
+2025-06-03 13:00:32 INFO         |     createResourceWithRequirements: true
+2025-06-03 13:00:32 INFO         |     useVulkanComposition: false
+2025-06-03 13:00:32 INFO         |     useVulkanNativeSwapchain: false
+2025-06-03 13:00:32 INFO         |     enable guestRenderDoc: false
+2025-06-03 13:00:32 INFO         |     ASTC LDR emulation mode: 2
+2025-06-03 13:00:32 INFO         |     enable ETC2 emulation: true
+2025-06-03 13:00:32 INFO         |     enable Ycbcr emulation: false
+2025-06-03 13:00:32 INFO         |     guestVulkanOnly: false
+2025-06-03 13:00:32 INFO         |     useDedicatedAllocations: false
+2025-06-03 13:00:32 INFO         | Graphics Adapter Vendor Google (Google Inc.)
+2025-06-03 13:00:32 INFO         | Graphics Adapter Android Emulator OpenGL ES Translator (Google SwiftShader)
+2025-06-03 13:00:32 INFO         | Graphics API Version OpenGL ES 3.0 (OpenGL ES 3.0 SwiftShader 4.0.0.1)
+2025-06-03 13:00:32 INFO         | Graphics API Extensions GL_OES_EGL_sync GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_depth24 GL_OES_depth32 GL_OES_element_index_uint GL_OES_texture_float GL_OES_texture_float_linear GL_OES_compressed_paletted_texture GL_OES_compressed_ETC1_RGB8_texture GL_OES_depth_texture GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_packed_depth_stencil GL_OES_vertex_half_float GL_OES_standard_derivatives GL_OES_texture_npot GL_OES_rgb8_rgba8 GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_texture_format_BGRA8888 GL_APPLE_texture_format_BGRA8888 
+2025-06-03 13:00:32 INFO         | Graphics Device Extensions N/A
+2025-06-03 13:00:32 INFO         | Userspace boot properties:
+2025-06-03 13:00:32 INFO         |   android.bootanim=0
+2025-06-03 13:00:32 INFO         |   android.qemud=1
+2025-06-03 13:00:32 INFO         |   androidboot.boot_devices=pci0000:00/0000:00:03.0 pci0000:00/0000:00:06.0
+2025-06-03 13:00:32 INFO         |   androidboot.hardware=ranchu
+2025-06-03 13:00:32 INFO         |   androidboot.hardware.vulkan=ranchu
+2025-06-03 13:00:32 INFO         |   androidboot.serialno=EMULATOR35X5X10X0
+2025-06-03 13:00:32 INFO         |   androidboot.vbmeta.digest=22632f66be5ef8f2181b7f14ab33fac3a6d82c7c65d6172a59d3484281605e20
+2025-06-03 13:00:32 INFO         |   androidboot.vbmeta.hash_alg=sha256
+2025-06-03 13:00:32 INFO         |   androidboot.vbmeta.size=6144
+2025-06-03 13:00:32 INFO         |   qemu=1
+2025-06-03 13:00:32 INFO         |   qemu.avd_name=qnl7lnxm
+2025-06-03 13:00:32 INFO         |   qemu.camera_hq_edge_processing=0
+2025-06-03 13:00:32 INFO         |   qemu.camera_protocol_ver=1
+2025-06-03 13:00:32 INFO         |   qemu.dalvik.vm.heapsize=512m
+2025-06-03 13:00:32 INFO         |   qemu.encrypt=1
+2025-06-03 13:00:32 INFO         |   qemu.gles=1
+2025-06-03 13:00:32 INFO         |   qemu.gltransport=pipe
+2025-06-03 13:00:32 INFO         |   qemu.gltransport.drawFlushInterval=800
+2025-06-03 13:00:32 INFO         |   qemu.hwcodec.avcdec=2
+2025-06-03 13:00:32 INFO         |   qemu.hwcodec.hevcdec=2
+2025-06-03 13:00:32 INFO         |   qemu.hwcodec.vpxdec=2
+2025-06-03 13:00:32 INFO         |   qemu.opengles.version=196608
+2025-06-03 13:00:32 INFO         |   qemu.settings.system.screen_off_timeout=2147483647
+2025-06-03 13:00:32 INFO         |   qemu.uirenderer=skiagl
+2025-06-03 13:00:32 INFO         |   qemu.virtiowifi=1
+2025-06-03 13:00:32 INFO         |   qemu.vsync=60
+2025-06-03 13:00:32 INFO         | Monitoring duration of emulator setup.
+2025-06-03 13:00:32 INFO         | Setting display: 0 configuration to: 320x640, dpi: 160x160 
+2025-06-03 13:00:32 INFO         | setDisplayActiveConfig 0
+2025-06-03 13:00:32 INFO         | Checking system compatibility:
+2025-06-03 13:00:32 INFO         |   Checking: hasSufficientDiskSpace
+2025-06-03 13:00:32 INFO         |      Ok: Disk space requirements to run avd: `qnl7lnxm` are met
+2025-06-03 13:00:32 INFO         |   Checking: hasSufficientHwGpu
+2025-06-03 13:00:32 INFO         |      Ok: Hardware GPU requirements to run avd: `qnl7lnxm` are passed
+2025-06-03 13:00:32 INFO         |   Checking: hasSufficientSystem
+2025-06-03 13:00:32 INFO         |      Ok: System requirements to run avd: `qnl7lnxm` are met
+2025-06-03 13:00:35 WARNING      | adb command '/opt/android-sdk/platform-tools/adb -s emulator-5554 shell am start-foreground-service -e meter on com.android.emulator.radio.config/.MeterService ' failed: 'adb: device offline'
+2025-06-03 13:00:36 ##############################################################################
+2025-06-03 13:00:36 ##                        WARNING - ACTION REQUIRED                         ##
+2025-06-03 13:00:36 ##  Consider using the '-metrics-collection' flag to help improve the       ##
+2025-06-03 13:00:36 ##  emulator by sending anonymized usage data. Or use the '-no-metrics'     ##
+2025-06-03 13:00:36 ##  flag to bypass this warning and turn off the metrics collection.        ##
+2025-06-03 13:00:36 ##  In a future release this warning will turn into a one-time blocking     ##
+2025-06-03 13:00:36 ##  prompt to ask for explicit user input regarding metrics collection.     ##
+2025-06-03 13:00:36 ##                                                                          ##
+2025-06-03 13:00:36 ##  Please see '-help-metrics-collection' for more details. You can use     ##
+2025-06-03 13:00:36 ##  '-metrics-to-file' or '-metrics-to-console' flags to see what type of   ##
+2025-06-03 13:00:36 ##  data is being collected by emulator as part of usage statistics.        ##
+2025-06-03 13:00:36 ##############################################################################
+2025-06-03 13:00:36 USER_INFO    | Emulator is performing a full startup. This may take upto two minutes, or more.
+2025-06-03 13:00:36 WARNING      | Failed to process .ini file /root/.android/emu-update-last-check.ini for reading.
+2025-06-03 13:00:36 WARNING      | UpdateCheck: Failure: Error
+2025-06-03 13:00:36 WARNING      | UpdateCheck: failed to get the latest version, skipping check (current version '35.5.10-13402964')
+2025-06-03 13:00:49 Still waiting for emulator to boot... (0/120)
+2025-06-03 13:00:54 Still waiting for emulator to boot... (5/120)
+2025-06-03 13:00:59 Still waiting for emulator to boot... (10/120)
+2025-06-03 13:01:04 Emulator booted successfully.
+2025-06-03 13:01:04 Listing devices:
+2025-06-03 13:01:05 List of devices attached
+2025-06-03 13:01:05 emulator-5554device
+2025-06-03 13:01:05 
+2025-06-03 13:01:05 Emulator is now available via ADB as 'emulator-5554'
+2025-06-03 13:01:05 You can connect to it from your host using: adb connect localhost:5555
+2025-06-03 13:01:05 Note: ADB connection port is always emulator port + 1
+2025-06-03 13:01:05 Set ANDROID_SERIAL=emulator-5554 for easier targeting in scripts
+2025-06-03 13:01:05 INFO         | Boot completed in 33169 ms
+2025-06-03 13:01:05 INFO         | Increasing screen off timeout, logcat buffer size to 2M.
+2025-06-03 13:00:32 I0603 11:00:32.627578      97 opengles.cpp:285] android_startOpenglesRenderer: gpu info
+2025-06-03 13:00:32 I0603 11:00:32.627621      97 opengles.cpp:286] 
+2025-06-03 13:00:32 WARNING: cannnot unmap ptr 0x7fd7cd41d000 as it is in the protected range from 0x7fd7cd41d000 to 0x7fd84d61d000
+2025-06-03 13:00:32 WARNING: cannnot unmap ptr 0x7fd84d601000 as it is in the protected range from 0x7fd7cd41d000 to 0x7fd84d61d000
