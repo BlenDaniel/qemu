@@ -14,6 +14,7 @@ from flask import Flask, jsonify, request, abort, render_template
 
 # External dependencies
 import docker
+from websockify import WebSocketProxy
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -62,6 +63,9 @@ EMULATOR_IMAGES = {
 
 # In-memory mapping of emulator sessions: id -> container
 sessions = {}
+
+# Global WebSocket proxy servers
+vnc_proxies = {}
 
 def generate_device_id():
     """Generate a unique device ID for the emulator"""
@@ -127,6 +131,64 @@ def wait_for_device(adb_server_port: str, device_port: str, timeout: int = 60, i
                     return status
         time.sleep(interval)
     return "absent"
+
+def start_vnc_proxy(emulator_id, vnc_port, proxy_port):
+    """Start a WebSocket proxy for VNC connections"""
+    try:
+        # Kill any existing proxy on this port
+        stop_vnc_proxy(emulator_id)
+        
+        print(f"Starting VNC proxy for {emulator_id}: VNC port {vnc_port} -> WebSocket port {proxy_port}")
+        
+        # Start websockify proxy in a separate thread
+        def run_proxy():
+            try:
+                proxy = WebSocketProxy(
+                    listen_host='0.0.0.0',
+                    listen_port=proxy_port,
+                    target_host='localhost',
+                    target_port=vnc_port,
+                    verbose=True
+                )
+                vnc_proxies[emulator_id] = proxy
+                proxy.start_server()
+            except Exception as e:
+                print(f"VNC proxy error for {emulator_id}: {e}")
+                
+        proxy_thread = threading.Thread(target=run_proxy, daemon=True)
+        proxy_thread.start()
+        
+        # Give the proxy a moment to start
+        time.sleep(1)
+        return True
+        
+    except Exception as e:
+        print(f"Failed to start VNC proxy for {emulator_id}: {e}")
+        return False
+
+def stop_vnc_proxy(emulator_id):
+    """Stop VNC proxy for an emulator"""
+    if emulator_id in vnc_proxies:
+        try:
+            proxy = vnc_proxies[emulator_id]
+            proxy.terminate()
+            del vnc_proxies[emulator_id]
+            print(f"Stopped VNC proxy for {emulator_id}")
+        except Exception as e:
+            print(f"Error stopping VNC proxy for {emulator_id}: {e}")
+
+def get_available_proxy_port():
+    """Get an available port for WebSocket proxy"""
+    import socket
+    for port in range(6080, 6180):  # WebSocket proxy port range
+        try:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.bind(('localhost', port))
+            sock.close()
+            return port
+        except:
+            continue
+    return None
 
 # ============================================================================
 # WEB INTERFACE ROUTES
@@ -582,34 +644,39 @@ def vnc_proxy(emulator_id):
         sock.close()
         
         if result == 0:
-            # VNC server is running
-            return jsonify({
-                "success": True,
-                "vnc_port": vnc_port,
-                "vnc_host": "localhost",
-                "vnc_url": f"vnc://localhost:{vnc_port}",
-                "connection_info": {
+            # VNC server is running, start WebSocket proxy
+            proxy_port = get_available_proxy_port()
+            if proxy_port and start_vnc_proxy(emulator_id, int(vnc_port), proxy_port):
+                session['proxy_port'] = proxy_port
+                return jsonify({
+                    "success": True,
+                    "vnc_port": vnc_port,
+                    "proxy_port": proxy_port,
+                    "ws_url": f"ws://localhost:{proxy_port}",
                     "direct_vnc": f"vnc://localhost:{vnc_port}",
-                    "status": "running",
-                    "instructions": "Use a VNC client to connect. No password required."
-                }
-            })
+                    "status": "VNC server running"
+                })
+            else:
+                return jsonify({
+                    "success": False, 
+                    "error": "Failed to start WebSocket proxy",
+                    "vnc_port": vnc_port,
+                    "direct_vnc": f"vnc://localhost:{vnc_port}"
+                }), 500
         else:
             return jsonify({
                 "success": False, 
-                "error": f"VNC server not responding on port {vnc_port}",
+                "error": "VNC server not responding",
                 "vnc_port": vnc_port,
-                "connection_info": {
-                    "status": "not_running",
-                    "suggestion": "Try restarting the emulator or check VNC server logs"
-                }
-            })
+                "direct_vnc": f"vnc://localhost:{vnc_port}"
+            }), 503
+            
     except Exception as e:
         return jsonify({
-            "success": False,
-            "error": f"Failed to check VNC server status: {str(e)}",
+            "success": False, 
+            "error": f"VNC connection check failed: {str(e)}",
             "vnc_port": vnc_port
-        })
+        }), 500
 
 @app.route('/api/emulators/<emulator_id>/vnc/status')
 def vnc_status(emulator_id):

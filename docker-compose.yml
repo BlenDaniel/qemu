@@ -32,11 +32,11 @@ services:
       - ANDROID_EXTRA_OPTS=-gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -no-snapshot-save
       - DEVICE_PORT=6654
       - ENABLE_VNC=true
-      - VNC_PORT=5900
+      - VNC_PORT=5901
     volumes:
       - ./avd-data:/root/.android/avd
     ports:
-      - "5902:5900"
+      - "5902:5901"
       - "6654:6654"
       - "6655:5555"
     # command: ["/usr/local/bin/start-emulator.sh"]
@@ -47,6 +47,7 @@ services:
     image: emulator-api
     ports:
       - "5001:5001"
+      - "6080-6180:6080-6180"
     depends_on:
       - emulator
       - emulator14
@@ -54,4 +55,5 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     privileged: true
     environment:
-      - FLASK_ENV=production
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1

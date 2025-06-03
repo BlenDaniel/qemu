@@ -272,21 +272,16 @@
         let refreshRate = 2000;
         let connectionMethod = 'screenshot';
 
-        const vncPort = {{ vnc_port | tojson }};
-        const emulatorId = {{ emulator_id | tojson }};
+        // Server-provided configuration
+        const vncPort = {{ vnc_port | tojson | safe }};
+        const emulatorId = {{ emulator_id | tojson | safe }};
 
         function updateStatus(status, message) {
             const indicator = document.getElementById('statusIndicator');
-            const text = document.getElementById('statusText');
-            const connectionStatus = document.getElementById('connectionStatus');
+            const statusText = document.getElementById('statusText');
 
-            indicator.className = 'status-indicator';
-            if (status === 'connected') {
-                indicator.classList.add('connected');
-            }
-
-            text.textContent = message;
-            connectionStatus.textContent = status;
+            indicator.className = `status-indicator ${status}`;
+            statusText.textContent = message;
         }
 
         function showElement(elementId) {
@@ -368,64 +363,64 @@
         }
 
         function connectVNC() {
-            // First check if VNC is available for this emulator
+            updateStatus('connecting', 'Connecting to VNC...');
+
+            // Get VNC connection info from API
             fetch(`/api/emulators/${emulatorId}/vnc`)
                 .then(response => response.json())
                 .then(data => {
-                    if (data.success) {
-                        // Show VNC options since direct WebSocket connection isn't supported
-                        hideElement('loadingMessage');
-                        const errorDiv = document.getElementById('errorMessage');
-                        errorDiv.innerHTML = `
-                            <h3>🔗 VNC Connection Available</h3>
-                            <p>VNC server is running on port ${data.vnc_port}</p>
-                            <div style="margin: 20px 0;">
-                                <h4>Connection Options:</h4>
-                                <p><strong>Native VNC Client:</strong></p>
-                                <a href="vnc://localhost:${data.vnc_port}" class="btn btn-primary" target="_blank">
-                                    🖥️ Open in VNC Viewer
-                                </a>
-                                <p style="margin-top: 15px;"><strong>Web-based Alternatives:</strong></p>
-                                <button class="btn btn-success" onclick="switchToLiveView()">📺 Live Screenshot View</button>
-                                <button class="btn btn-primary" onclick="takeScreenshot()">📸 Single Screenshot</button>
-                            </div>
-                            <details style="margin-top: 15px; text-align: left;">
-                                <summary>VNC Client Instructions</summary>
-                                <p>To connect with a native VNC client:</p>
-                                <ul style="text-align: left;">
-                                    <li><strong>Address:</strong> localhost:${data.vnc_port}</li>
-                                    <li><strong>Password:</strong> None (no authentication)</li>
-                                    <li><strong>Recommended clients:</strong> TigerVNC, RealVNC, TightVNC</li>
-                                </ul>
-                            </details>
-                        `;
-                        showElement('errorMessage');
-                        updateStatus('available', 'VNC Server Available');
+                    if (data.success && data.ws_url) {
+                        // Use WebSocket connection
+                        const wsUrl = data.ws_url;
+                        console.log('Connecting to VNC via WebSocket:', wsUrl);
+
+                        try {
+                            const canvas = document.getElementById('noVNC_canvas');
+                            const rfb = new RFB(canvas, wsUrl, {
+                                credentials: { password: '' }
+                            });
+
+                            rfb.addEventListener('connect', () => {
+                                updateStatus('connected', 'VNC Connected');
+                                connectionMethod = 'vnc';
+                                document.getElementById('vncContainer').style.display = 'block';
+                                document.getElementById('screenshotContainer').style.display = 'none';
+                            });
+
+                            rfb.addEventListener('disconnect', () => {
+                                updateStatus('error', 'VNC Disconnected');
+                                fallbackToScreenshot();
+                            });
+
+                            rfb.addEventListener('securityfailure', () => {
+                                updateStatus('error', 'VNC Security Failure');
+                                fallbackToScreenshot();
+                            });
+
+                        } catch (error) {
+                            console.error('VNC connection error:', error);
+                            updateStatus('error', 'VNC Connection Failed');
+                            fallbackToScreenshot();
+                        }
                     } else {
-                        showVNCError(data.error);
+                        console.warn('VNC not available:', data.error);
+                        updateStatus('warning', 'VNC not available, using screenshots');
+                        fallbackToScreenshot();
                     }
                 })
                 .catch(error => {
-                    console.error('Error getting VNC info:', error);
-                    showVNCError(`Failed to get VNC connection information: ${error.message}`);
+                    console.error('VNC API error:', error);
+                    updateStatus('error', 'VNC API Error');
+                    fallbackToScreenshot();
                 });
         }
 
-        function showVNCError(errorMsg) {
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.innerHTML = `
-                <h3>❌ VNC Connection Error</h3>
-                <p>${errorMsg}</p>
-                <div style="margin: 20px 0;">
-                    <h4>Alternative Options:</h4>
-                    <button class="btn btn-success" onclick="switchToLiveView()">📺 Live View (Screenshots)</button>
-                    <button class="btn btn-primary" onclick="takeScreenshot()">📸 Single Screenshot</button>
-                </div>
-                <button class="btn btn-primary" onclick="reconnect()">🔄 Try Again</button>
-            `;
-            showElement('errorMessage');
-            hideElement('loadingMessage');
-            updateStatus('error', 'VNC Error');
+        function fallbackToScreenshot() {
+            console.log('Falling back to screenshot mode');
+            connectionMethod = 'screenshot';
+            document.getElementById('vncContainer').style.display = 'none';
+            document.getElementById('screenshotContainer').style.display = 'block';
+            startScreenshotMode();
         }
 
         function switchToLiveView() {
