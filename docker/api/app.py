@@ -61,11 +61,108 @@ EMULATOR_IMAGES = {
     "14": "qemu-emulator-android14"  # Android 14 image
 }
 
+# Predefined container configurations for docker-compose containers
+PREDEFINED_CONTAINERS = {
+    "emulator": {
+        "container_name_pattern": "qemu-main-emulator",
+        "android_version": "11",
+        "device_id": "android11_main",
+        "ports": {
+            "console": "5554",
+            "adb": "5555", 
+            "adb_server": "5037",
+            "vnc": "5901"
+        }
+    },
+    "emulator14": {
+        "container_name_pattern": "qemu-main-emulator14", 
+        "android_version": "14",
+        "device_id": "android14_main",
+        "ports": {
+            "console": "6654",
+            "adb": "6655",
+            "adb_server": "6037", 
+            "vnc": "5902"
+        }
+    }
+}
+
 # In-memory mapping of emulator sessions: id -> container
 sessions = {}
 
 # Global WebSocket proxy servers
 vnc_proxies = {}
+
+def discover_existing_containers():
+    """Discover and register existing emulator containers on startup"""
+    docker_client = get_docker_client()
+    if not docker_client:
+        logger.warning("Cannot discover containers - Docker client not available")
+        return
+    
+    try:
+        # Get all running containers
+        containers = docker_client.containers.list()
+        
+        for container in containers:
+            container_name = container.name
+            logger.info(f"Checking container: {container_name}")
+            
+            # Check if this is one of our predefined emulator containers
+            for service_name, config in PREDEFINED_CONTAINERS.items():
+                if config["container_name_pattern"] in container_name:
+                    # Generate session ID for this container
+                    session_id = f"existing_{service_name}_{config['device_id']}"
+                    
+                    # Register container in sessions
+                    sessions[session_id] = {
+                        'container': container,
+                        'device_port': config['ports']['console'],
+                        'ports': config['ports'],
+                        'device_id': config['device_id'],
+                        'android_version': config['android_version'],
+                        'has_external_adb_server': True,
+                        'vnc_port': config['ports']['vnc'],
+                        'is_predefined': True
+                    }
+                    
+                    logger.info(f"Registered existing container {container_name} as session {session_id}")
+                    
+                    # Try to set up ADB connection
+                    setup_adb_for_existing_container(session_id, config)
+                    break
+                    
+    except Exception as e:
+        logger.error(f"Error discovering existing containers: {e}")
+
+def setup_adb_for_existing_container(session_id, config):
+    """Set up ADB connection for an existing container"""
+    try:
+        adb_server_port = config['ports']['adb_server']
+        adb_device_port = config['ports']['adb']
+        
+        logger.info(f"Setting up ADB for {session_id} - server port: {adb_server_port}, device port: {adb_device_port}")
+        
+        # Set environment for current process
+        set_adb_environment(adb_server_port=adb_server_port)
+        
+        # Start ADB server
+        run_adb_command("start-server", ["-P", str(adb_server_port), "start-server"], adb_server_port=adb_server_port)
+        
+        # Connect to the device
+        connect_result = run_adb_command(
+            "connect",
+            ["connect", f"localhost:{adb_device_port}"],
+            adb_server_port=adb_server_port,
+        )
+        
+        logger.info(f"ADB connect result for {session_id}: {connect_result}")
+        
+    except Exception as e:
+        logger.error(f"Failed to setup ADB for {session_id}: {e}")
+
+# Discover existing containers on module load
+discover_existing_containers()
 
 def generate_device_id():
     """Generate a unique device ID for the emulator"""
@@ -223,6 +320,23 @@ def health_check():
 def index():
     """Render the main dashboard"""
     return render_template('index.html')
+
+@app.route('/api/containers/discover', methods=['POST'])
+def discover_containers():
+    """Manually trigger discovery of existing containers"""
+    try:
+        discover_existing_containers()
+        return jsonify({
+            "success": True,
+            "message": "Container discovery completed",
+            "discovered_sessions": list(sessions.keys())
+        })
+    except Exception as e:
+        logger.error(f"Error in container discovery: {e}")
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
 
 # ============================================================================
 # EMULATOR MANAGEMENT API ROUTES

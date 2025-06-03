@@ -15,11 +15,12 @@ services:
     volumes:
       - ./avd-data:/root/.android/avd
     ports:
-      - "5901:5900"
-      - "5554:5554"
-      - "5555:5555"
-    # command: ["/usr/local/bin/start-emulator.sh"]
-    command: ["sleep", "infinity"]
+      - "5901:5900"  # VNC access
+      - "5554:5554"  # Emulator console
+      - "5555:5555"  # ADB device port
+      - "5037:5037"  # ADB server port
+    command: ["/usr/local/bin/start-emulator.sh"]
+    # command: ["sleep", "infinity"]  # Debug mode - commented out
   emulator14:
     platform: linux/amd64
     build:
@@ -36,11 +37,12 @@ services:
     volumes:
       - ./avd-data:/root/.android/avd
     ports:
-      - "5902:5901"
-      - "6654:6654"
-      - "6655:5555"
-    # command: ["/usr/local/bin/start-emulator.sh"]
-    command: ["sleep", "infinity"]
+      - "5902:5901"  # VNC access  
+      - "6654:6654"  # Emulator console
+      - "6655:5555"  # ADB device port (mapped from internal 5555)
+      - "6037:5037"  # ADB server port (mapped from internal 5037)
+    command: ["/usr/local/bin/start-emulator.sh"]
+    # command: ["sleep", "infinity"]  # Debug mode - commented out
   api:
     build:
       context: ./docker/api
