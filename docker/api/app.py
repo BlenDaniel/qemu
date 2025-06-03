@@ -280,7 +280,7 @@ def create_emulator():
         'ANDROID_EMULATOR_WAIT_TIME': '120',
         'ANDROID_EMULATED_DEVICE': android_version,
         'ANDROID_EXTRA_OPTS': f'-gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -no-snapshot-save -avd {device_id}',
-        'DEVICE_PORT': str(console_port),
+        'DEVICE_PORT': '5554',  # Use container's internal port, not random port
         'DEVICE_ID': device_id,
         'ENABLE_VNC': 'true',  # Enable VNC server
         'VNC_PORT': '5900'     # Internal VNC port
