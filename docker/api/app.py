@@ -143,23 +143,24 @@ def setup_adb_for_existing_container(session_id, config):
         
         logger.info(f"Setting up ADB for {session_id} - server port: {adb_server_port}, device port: {adb_device_port}")
         
-        # Set environment for current process
-        set_adb_environment(adb_server_port=adb_server_port)
+        # Use robust ADB server restart
+        if not robust_adb_server_restart(adb_server_port):
+            logger.error(f"Failed to restart ADB server for {session_id}")
+            return False
         
-        # Start ADB server
-        run_adb_command("start-server", ["-P", str(adb_server_port), "start-server"], adb_server_port=adb_server_port)
+        # Use robust device detection
+        device_status = detect_device_with_retry(adb_server_port, adb_device_port, max_retries=5, retry_delay=2)
         
-        # Connect to the device
-        connect_result = run_adb_command(
-            "connect",
-            ["connect", f"localhost:{adb_device_port}"],
-            adb_server_port=adb_server_port,
-        )
-        
-        logger.info(f"ADB connect result for {session_id}: {connect_result}")
+        if device_status in ["device", "offline"]:
+            logger.info(f"Successfully connected to device for {session_id} with status: {device_status}")
+            return True
+        else:
+            logger.warning(f"Failed to connect to device for {session_id}. Status: {device_status}")
+            return False
         
     except Exception as e:
         logger.error(f"Failed to setup ADB for {session_id}: {e}")
+        return False
 
 # Discover existing containers on module load
 discover_existing_containers()
@@ -175,12 +176,27 @@ def set_adb_environment(adb_server_port=None, device_port=None):
     if adb_server_port:
         os.environ['ANDROID_ADB_SERVER_PORT'] = str(adb_server_port)
         logger.info(f"Set ADB server port to: {adb_server_port}")
+        
+        # Also set for current shell session based on platform
+        try:
+            if platform.system() == "Windows":
+                # Set PowerShell environment variable
+                ps_cmd = f'$env:ANDROID_ADB_SERVER_PORT = "{adb_server_port}"'
+                subprocess.run(['powershell', '-Command', ps_cmd], capture_output=True, timeout=5)
+                logger.info(f"Set Windows PowerShell ADB server port to: {adb_server_port}")
+            else:
+                # Set bash environment variable
+                bash_cmd = f'export ANDROID_ADB_SERVER_PORT={adb_server_port}'
+                subprocess.run(['bash', '-c', bash_cmd], capture_output=True, timeout=5)
+                logger.info(f"Set Unix shell ADB server port to: {adb_server_port}")
+        except Exception as e:
+            logger.warning(f"Failed to set shell environment variable: {e}")
     
     if device_port:
         os.environ['ANDROID_SERIAL'] = f"localhost:{device_port}"
         logger.info(f"Set default device to: localhost:{device_port}")
 
-def run_adb_command(command, args=None, adb_server_port=None):
+def run_adb_command(command, args=None, adb_server_port=None, timeout=30):
     """Run an ADB command and return the output"""
     if adb_server_port:
         set_adb_environment(adb_server_port=adb_server_port)
@@ -191,23 +207,129 @@ def run_adb_command(command, args=None, adb_server_port=None):
     
     try:
         logger.info(f"Running ADB command: {' '.join(full_command)}")
-        result = subprocess.run(full_command, capture_output=True, text=True, check=True)
-        return {"success": True, "output": result.stdout}
+        result = subprocess.run(full_command, capture_output=True, text=True, check=True, timeout=timeout)
+        return {"success": True, "output": result.stdout, "stderr": result.stderr}
     except subprocess.CalledProcessError as e:
         logger.error(f"ADB command failed: {e.stderr}")
-        return {"success": False, "error": e.stderr}
+        return {"success": False, "error": e.stderr, "stdout": e.stdout if e.stdout else ""}
+    except subprocess.TimeoutExpired as e:
+        logger.error(f"ADB command timed out after {timeout}s")
+        return {"success": False, "error": f"Command timed out after {timeout}s"}
 
 def kill_all_adb_processes():
     """Attempt to kill every stray adb process that might still be running."""
     try:
+        logger.info("Killing all ADB processes...")
         if platform.system() == "Windows":
-            subprocess.run(["taskkill", "/F", "/IM", "adb.exe"], capture_output=True)
+            # Kill ADB processes on Windows
+            subprocess.run(["taskkill", "/F", "/IM", "adb.exe"], capture_output=True, timeout=10)
+            logger.info("Killed Windows ADB processes")
         else:
-            subprocess.run(["pkill", "-f", "adb"], capture_output=True)
+            # Kill ADB processes on Unix-like systems
+            subprocess.run(["pkill", "-f", "adb"], capture_output=True, timeout=10)
+            logger.info("Killed Unix ADB processes")
+        
+        # Also try generic approach
+        subprocess.run(["adb", "kill-server"], capture_output=True, timeout=10)
+        logger.info("Executed adb kill-server")
+        
     except FileNotFoundError:
-        pass
+        logger.warning("ADB binary not found in PATH")
     except Exception as exc:
         logger.warning(f"Error while killing stray adb processes: {exc}")
+
+def robust_adb_server_restart(adb_server_port):
+    """Robustly restart ADB server with proper cleanup"""
+    try:
+        logger.info(f"Performing robust ADB server restart on port {adb_server_port}")
+        
+        # Step 1: Kill all existing ADB processes
+        kill_all_adb_processes()
+        
+        # Step 2: Wait for processes to die
+        time.sleep(2)
+        
+        # Step 3: Set environment
+        set_adb_environment(adb_server_port=adb_server_port)
+        
+        # Step 4: Start new ADB server
+        start_result = run_adb_command("start-server", ["-P", str(adb_server_port), "start-server"], adb_server_port=adb_server_port, timeout=15)
+        
+        if start_result.get("success"):
+            logger.info(f"ADB server started successfully on port {adb_server_port}")
+            # Wait for server to be ready
+            time.sleep(3)
+            return True
+        else:
+            logger.error(f"Failed to start ADB server: {start_result.get('error')}")
+            return False
+            
+    except Exception as e:
+        logger.error(f"Error during ADB server restart: {e}")
+        return False
+
+def detect_device_with_retry(adb_server_port, device_port, max_retries=10, retry_delay=3):
+    """Detect device with multiple retries and better error handling"""
+    target_serial = f"localhost:{device_port}"
+    
+    for attempt in range(max_retries):
+        try:
+            logger.info(f"Device detection attempt {attempt + 1}/{max_retries} for {target_serial}")
+            
+            # First, try to connect to the device
+            connect_result = run_adb_command(
+                "connect", 
+                ["-P", str(adb_server_port), "connect", target_serial], 
+                adb_server_port=adb_server_port,
+                timeout=15
+            )
+            
+            logger.info(f"Connect attempt result: {connect_result}")
+            
+            # Wait for connection to stabilize
+            time.sleep(2)
+            
+            # Now check if device appears in devices list
+            devices_result = run_adb_command(
+                "devices", 
+                ["-P", str(adb_server_port), "devices"], 
+                adb_server_port=adb_server_port,
+                timeout=10
+            )
+            
+            if devices_result.get("success"):
+                logger.info(f"Devices output: {devices_result['output']}")
+                
+                # Parse devices output
+                lines = devices_result["output"].strip().split('\n')
+                if len(lines) > 1:  # Skip header
+                    for line in lines[1:]:
+                        if line.strip():
+                            parts = line.strip().split('\t')
+                            if len(parts) >= 1:
+                                serial = parts[0]
+                                status = parts[1] if len(parts) > 1 else "unknown"
+                                
+                                if serial == target_serial:
+                                    logger.info(f"Found device {target_serial} with status: {status}")
+                                    return status
+                
+                logger.warning(f"Device {target_serial} not found in devices list")
+            else:
+                logger.warning(f"Failed to get devices list: {devices_result.get('error')}")
+            
+            # If we didn't find the device, wait and retry
+            if attempt < max_retries - 1:
+                logger.info(f"Retrying device detection in {retry_delay} seconds...")
+                time.sleep(retry_delay)
+            
+        except Exception as e:
+            logger.error(f"Error during device detection attempt {attempt + 1}: {e}")
+            if attempt < max_retries - 1:
+                time.sleep(retry_delay)
+    
+    logger.error(f"Failed to detect device {target_serial} after {max_retries} attempts")
+    return "not_found"
 
 def wait_for_device(adb_server_port: str, device_port: str, timeout: int = 60, interval: int = 2):
     """Poll `adb devices` until the given localhost:<port> appears or timeout."""
@@ -463,33 +585,25 @@ def create_emulator():
     adb_server_port = mapped_ports['adb_server']
     adb_device_port = mapped_ports['adb']
     
-    # Set environment for current process
-    set_adb_environment(adb_server_port=adb_server_port)
-    
-    # Kill existing ADB server and start fresh
-    run_adb_command("kill-server", ["kill-server"], adb_server_port=adb_server_port)
-    kill_all_adb_processes()
-    
-    # Start new ADB server
-    run_adb_command("start-server", ["-P", str(adb_server_port), "start-server"], adb_server_port=adb_server_port)
-    
-    # Connect to the device
-    connect_result = run_adb_command(
-        "connect",
-        ["connect", f"localhost:{adb_device_port}"],
-        adb_server_port=adb_server_port,
-    )
-    
-    # Wait for device to appear
-    final_status = wait_for_device(adb_server_port, adb_device_port)
-    
-    # Get current devices list
-    devices_result = run_adb_command("devices", ["devices"], adb_server_port=adb_server_port)
+    # Use robust ADB server restart
+    logger.info("Setting up ADB connection for new emulator...")
+    if not robust_adb_server_restart(adb_server_port):
+        logger.warning("Failed to restart ADB server, but container is running")
+        # Don't fail the creation, just log the issue
+        final_status = "server_failed"
+        devices_result = {"success": False, "error": "ADB server failed to start"}
+    else:
+        # Use robust device detection
+        final_status = detect_device_with_retry(adb_server_port, adb_device_port, max_retries=3, retry_delay=2)
+        
+        # Get current devices list
+        devices_result = run_adb_command("devices", ["-P", str(adb_server_port), "devices"], adb_server_port=adb_server_port)
     
     # Log creation info
     logger.info(f"Created Android {android_version} emulator {device_id}")
     logger.info(f"Console: telnet localhost {mapped_ports['console']}")
     logger.info(f"ADB Server Port: {mapped_ports['adb_server']}")
+    logger.info(f"Device status: {final_status}")
     
     response_data = {
         'id': session_id,
@@ -500,11 +614,11 @@ def create_emulator():
         'adb_commands': adb_commands,
         'has_external_adb_server': map_external_adb_server,
         'adb_setup': {
-            'kill_server': True,
+            'server_restart': True,
             'server_port': adb_server_port,
-            'connect_output': connect_result,
             'devices_output': devices_result,
             'final_device_status': final_status,
+            'connection_successful': final_status in ["device", "offline"]
         }
     }
     
@@ -846,145 +960,62 @@ def get_screenshot(emulator_id):
     
     logger.info(f"Taking screenshot for emulator {emulator_id} - ADB port: {adb_port}, Server port: {adb_server_port}")
     
-    # Try multiple times with increasing wait intervals
-    max_retries = 3
-    
-    for attempt in range(max_retries):
-        try:
-            logger.info(f"Screenshot attempt {attempt + 1}/{max_retries}")
-            
-            # Set environment for this ADB server
-            set_adb_environment(adb_server_port=adb_server_port)
-            
-            # First, ensure ADB server is running
-            logger.info("Ensuring ADB server is running...")
-            server_start_cmd = ["adb", "-P", str(adb_server_port), "start-server"]
-            subprocess.run(server_start_cmd, capture_output=True, timeout=10)
-            
-            # Wait for server to be ready
-            time.sleep(2)
-            
-            # Try to connect to the device
-            logger.info(f"Connecting to device localhost:{adb_port}")
-            connect_cmd = [
-                "adb", "-P", str(adb_server_port), 
-                "connect", f"localhost:{adb_port}"
-            ]
-            connect_result = subprocess.run(connect_cmd, capture_output=True, text=True, timeout=15)
-            logger.info(f"Connect result: {connect_result.stdout}")
-            
-            # Wait for connection to stabilize
-            time.sleep(3)
-            
-            # Check devices multiple times
-            device_found = False
-            device_status = "unknown"
-            
-            for check_attempt in range(5):  # Try 5 times with short delays
-                logger.info(f"Checking devices (attempt {check_attempt + 1}/5)")
-                devices_cmd = ["adb", "-P", str(adb_server_port), "devices"]
-                devices_result = subprocess.run(devices_cmd, capture_output=True, text=True, timeout=10)
-                
-                logger.info(f"Devices output: {devices_result.stdout}")
-                
-                device_serial = f"localhost:{adb_port}"
-                lines = devices_result.stdout.strip().split('\n')[1:]  # Skip header
-                
-                for line in lines:
-                    if line.strip():
-                        parts = line.strip().split('\t')
-                        if len(parts) >= 1 and parts[0] == device_serial:
-                            device_found = True
-                            device_status = parts[1] if len(parts) > 1 else "unknown"
-                            logger.info(f"Found device {device_serial} with status: {device_status}")
-                            break
-                
-                if device_found and device_status == "device":
-                    break
+    try:
+        # Step 1: Restart ADB server robustly
+        logger.info("Restarting ADB server for screenshot...")
+        if not robust_adb_server_restart(adb_server_port):
+            return jsonify({"success": False, "error": "Failed to restart ADB server"})
+        
+        # Step 2: Detect device with retries
+        logger.info("Detecting device...")
+        device_status = detect_device_with_retry(adb_server_port, adb_port, max_retries=3, retry_delay=3)
+        
+        if device_status == "not_found":
+            return jsonify({"success": False, "error": f"ADB device localhost:{adb_port} not found after multiple attempts. Emulator may still be booting."})
+        elif device_status != "device":
+            return jsonify({"success": False, "error": f"Device is {device_status}. Please wait for emulator to fully boot."})
+        
+        # Step 3: Take screenshot
+        logger.info("Device ready, taking screenshot...")
+        target_serial = f"localhost:{adb_port}"
+        
+        cmd = [
+            "adb", "-P", str(adb_server_port), 
+            "-s", target_serial, 
+            "exec-out", "screencap", "-p"
+        ]
+        
+        logger.info(f"Running screenshot command: {' '.join(cmd)}")
+        result = subprocess.run(cmd, capture_output=True, check=True, timeout=30)
+        
+        if result.returncode == 0 and result.stdout:
+            # Return screenshot as base64
+            import base64
+            screenshot_b64 = base64.b64encode(result.stdout).decode()
+            logger.info("Screenshot captured successfully")
+            return jsonify({"success": True, "screenshot": f"data:image/png;base64,{screenshot_b64}"})
+        else:
+            return jsonify({"success": False, "error": "Failed to capture screenshot - no data returned"})
                     
-                logger.info(f"Device not ready yet, waiting... (status: {device_status})")
-                time.sleep(2)
-            
-            if not device_found:
-                if attempt < max_retries - 1:
-                    logger.warning(f"Device not found on attempt {attempt + 1}, retrying...")
-                    time.sleep(5)  # Wait before retry
-                    continue
-                else:
-                    return jsonify({"success": False, "error": f"ADB device localhost:{adb_port} not found after {max_retries} attempts. Emulator may still be booting."})
-            
-            if device_status != "device":
-                if attempt < max_retries - 1:
-                    logger.warning(f"Device status is '{device_status}', retrying...")
-                    time.sleep(5)
-                    continue
-                else:
-                    return jsonify({"success": False, "error": f"Device is {device_status}. Please wait for emulator to fully boot."})
-            
-            # Try to take screenshot
-            logger.info("Device ready, taking screenshot...")
-            cmd = [
-                "adb", "-P", str(adb_server_port), 
-                "-s", f"localhost:{adb_port}", 
-                "exec-out", "screencap", "-p"
-            ]
-            
-            logger.info(f"Running screenshot command: {' '.join(cmd)}")
-            result = subprocess.run(cmd, capture_output=True, check=True, timeout=30)
-            
-            if result.returncode == 0 and result.stdout:
-                # Return screenshot as base64
-                import base64
-                screenshot_b64 = base64.b64encode(result.stdout).decode()
-                logger.info("Screenshot captured successfully")
-                return jsonify({"success": True, "screenshot": f"data:image/png;base64,{screenshot_b64}"})
-            else:
-                if attempt < max_retries - 1:
-                    logger.warning("Screenshot command returned no data, retrying...")
-                    time.sleep(3)
-                    continue
-                else:
-                    return jsonify({"success": False, "error": "Failed to capture screenshot - no data returned"})
-                    
-        except subprocess.TimeoutExpired:
-            if attempt < max_retries - 1:
-                logger.warning(f"Screenshot command timed out on attempt {attempt + 1}, retrying...")
-                time.sleep(5)
-                continue
-            else:
-                logger.error("Screenshot command timed out after all retries")
-                return jsonify({"success": False, "error": "Screenshot command timed out. Emulator may still be booting."})
+    except subprocess.TimeoutExpired:
+        logger.error("Screenshot command timed out")
+        return jsonify({"success": False, "error": "Screenshot command timed out. Emulator may still be booting."})
                 
-        except subprocess.CalledProcessError as e:
-            error_msg = e.stderr.decode() if e.stderr else str(e)
-            logger.error(f"Screenshot command failed on attempt {attempt + 1}: {error_msg}")
-            
-            if attempt < max_retries - 1:
-                # For certain errors, wait and retry
-                if "device" in error_msg and ("not found" in error_msg or "offline" in error_msg):
-                    logger.warning("Device not ready, retrying...")
-                    time.sleep(5)
-                    continue
+    except subprocess.CalledProcessError as e:
+        error_msg = e.stderr.decode() if e.stderr else str(e)
+        logger.error(f"Screenshot command failed: {error_msg}")
+        
+        # Provide more helpful error messages
+        if "device 'localhost:" in error_msg and "not found" in error_msg:
+            return jsonify({"success": False, "error": f"ADB device localhost:{adb_port} not found. Emulator may still be starting up."})
+        elif "device offline" in error_msg:
+            return jsonify({"success": False, "error": "Device is offline. Please wait for emulator to fully boot."})
+        else:
+            return jsonify({"success": False, "error": f"ADB command failed: {error_msg}"})
                 
-            # Provide more helpful error messages for final attempt
-            if "device 'localhost:" in error_msg and "not found" in error_msg:
-                return jsonify({"success": False, "error": f"ADB device localhost:{adb_port} not found after {max_retries} attempts. Emulator may still be starting up."})
-            elif "device offline" in error_msg:
-                return jsonify({"success": False, "error": "Device is offline. Please wait for emulator to fully boot."})
-            else:
-                return jsonify({"success": False, "error": f"ADB command failed: {error_msg}"})
-                
-        except Exception as e:
-            if attempt < max_retries - 1:
-                logger.warning(f"Screenshot error on attempt {attempt + 1}: {str(e)}, retrying...")
-                time.sleep(3)
-                continue
-            else:
-                logger.error(f"Screenshot error after all retries: {str(e)}")
-                return jsonify({"success": False, "error": str(e)})
-    
-    # Should not reach here, but just in case
-    return jsonify({"success": False, "error": "Screenshot failed after all retry attempts"})
+    except Exception as e:
+        logger.error(f"Screenshot error: {str(e)}")
+        return jsonify({"success": False, "error": str(e)})
 
 @app.route('/api/emulators/<emulator_id>/status')
 def get_emulator_status(emulator_id):
@@ -1002,26 +1033,12 @@ def get_emulator_status(emulator_id):
         container.reload()
         container_status = container.status
         
-        # Check ADB connectivity
-        set_adb_environment(adb_server_port=adb_server_port)
-        
-        # Get devices list
-        devices_cmd = ["adb", "-P", str(adb_server_port), "devices"]
-        devices_result = subprocess.run(devices_cmd, capture_output=True, text=True, timeout=5)
+        # Use robust device detection
+        logger.info(f"Checking device status for {emulator_id}")
+        device_status = detect_device_with_retry(adb_server_port, adb_port, max_retries=2, retry_delay=1)
         
         device_serial = f"localhost:{adb_port}"
-        device_found = False
-        device_status = "unknown"
-        
-        if devices_result.returncode == 0:
-            lines = devices_result.stdout.strip().split('\n')[1:]  # Skip header
-            for line in lines:
-                if line.strip():
-                    parts = line.strip().split('\t')
-                    if len(parts) >= 2 and parts[0] == device_serial:
-                        device_found = True
-                        device_status = parts[1]
-                        break
+        device_found = device_status != "not_found"
         
         # Try to get emulator properties if connected
         boot_completed = False
@@ -1084,46 +1101,28 @@ def reconnect_emulator(emulator_id):
     adb_server_port = session['ports']['adb_server']
     
     try:
-        # Set environment for this ADB server
-        set_adb_environment(adb_server_port=adb_server_port)
+        logger.info(f"Reconnecting emulator {emulator_id}")
         
-        # Kill and restart ADB server
-        logger.info(f"Restarting ADB server for emulator {emulator_id}")
-        subprocess.run(["adb", "kill-server"], capture_output=True, timeout=5)
+        # Use robust ADB server restart
+        if not robust_adb_server_restart(adb_server_port):
+            return jsonify({"success": False, "error": "Failed to restart ADB server"})
         
-        # Start ADB server with specific port
-        start_cmd = ["adb", "-P", str(adb_server_port), "start-server"]
-        start_result = subprocess.run(start_cmd, capture_output=True, text=True, timeout=10)
+        # Use robust device detection
+        device_status = detect_device_with_retry(adb_server_port, adb_port, max_retries=5, retry_delay=2)
         
-        if start_result.returncode != 0:
-            return jsonify({"success": False, "error": f"Failed to start ADB server: {start_result.stderr}"})
-        
-        # Wait for server to start
-        time.sleep(2)
-        
-        # Connect to the device
-        connect_cmd = ["adb", "-P", str(adb_server_port), "connect", f"localhost:{adb_port}"]
-        connect_result = subprocess.run(connect_cmd, capture_output=True, text=True, timeout=10)
-        
-        # Wait for device to appear
-        final_status = wait_for_device(adb_server_port, adb_port, timeout=30)
-        
-        # Get final devices list
-        devices_cmd = ["adb", "-P", str(adb_server_port), "devices"]
-        devices_result = subprocess.run(devices_cmd, capture_output=True, text=True, timeout=5)
+        # Get final devices list for reporting
+        devices_result = run_adb_command("devices", ["-P", str(adb_server_port), "devices"], adb_server_port=adb_server_port)
         
         return jsonify({
             "success": True,
-            "message": "ADB reconnection attempted",
+            "message": "ADB reconnection completed",
             "adb_server_port": adb_server_port,
             "device_port": adb_port,
-            "connect_output": connect_result.stdout,
-            "final_device_status": final_status,
-            "devices_output": devices_result.stdout
+            "final_device_status": device_status,
+            "devices_output": devices_result.get("output", ""),
+            "connection_successful": device_status in ["device", "offline"]
         })
         
-    except subprocess.TimeoutExpired:
-        return jsonify({"success": False, "error": "ADB reconnection timed out"})
     except Exception as e:
         logger.error(f"Error reconnecting emulator: {str(e)}")
         return jsonify({"success": False, "error": str(e)})
