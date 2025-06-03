@@ -6,7 +6,7 @@ ENV FLASK_APP=app.py
 ENV PYTHONUNBUFFERED=1
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install Python and system dependencies
+# Install Python, system dependencies, and VNC client tools
 RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
@@ -23,6 +23,13 @@ RUN apt-get update && apt-get install -y \
     liblcms2-dev \
     libwebp-dev \
     libtiff5-dev \
+    tigervnc-viewer \
+    tigervnc-common \
+    netcat-openbsd \
+    telnet \
+    curl \
+    iputils-ping \
+    net-tools \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && update-ca-certificates
@@ -45,7 +52,15 @@ RUN python3 -m pip install --upgrade pip
 RUN python3 -m pip install --no-cache-dir -r requirements.txt
 
 COPY app.py .
+COPY docker_manager.py .
+COPY adb_manager.py .
+COPY vnc_manager.py .
+COPY api_routes.py .
+COPY test_connectivity.py .
 COPY templates/ templates/
 COPY static/ static/
+
+# Make test script executable
+RUN chmod +x test_connectivity.py
 
 CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0", "--port=5001"]
