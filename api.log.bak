@@ -1,156 +1,148 @@
-2025-06-03 11:49:14  * Serving Flask app 'app.py'
-2025-06-03 11:49:14  * Debug mode: on
-2025-06-03 11:49:14 INFO:werkzeug:WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
-2025-06-03 11:49:14  * Running on all addresses (0.0.0.0)
-2025-06-03 11:49:14  * Running on http://127.0.0.1:5001
-2025-06-03 11:49:14  * Running on http://172.18.0.4:5001
-2025-06-03 11:49:14 INFO:werkzeug:Press CTRL+C to quit
-2025-06-03 11:49:14 INFO:werkzeug: * Restarting with stat
-2025-06-03 11:49:14 WARNING:werkzeug: * Debugger is active!
-2025-06-03 11:49:14 INFO:werkzeug: * Debugger PIN: 120-893-911
-2025-06-03 11:49:26 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:49:26] "GET / HTTP/1.1" 200 -
-2025-06-03 11:49:26 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:49:26] "GET /static/css/style.css HTTP/1.1" 304 -
-2025-06-03 11:49:26 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:49:26] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 11:49:28 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:49:28] "GET /api/emulators/3814e3fc-37f3-4282-820b-ddbb7b3e5aff/screenshot HTTP/1.1" 404 -
-2025-06-03 11:49:30 INFO:app:Docker client connected successfully
-2025-06-03 11:49:31 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:49:31 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:49:31 INFO:app:Running ADB command: adb kill-server
-2025-06-03 11:49:31 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:49:31 INFO:app:Running ADB command: adb -P 8770 start-server
-2025-06-03 11:49:34 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:49:34 INFO:app:Running ADB command: adb connect localhost:7305
-2025-06-03 11:49:34 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:49:34 INFO:app:Running ADB command: adb devices
-2025-06-03 11:49:36 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:49:36 INFO:app:Running ADB command: adb devices
-2025-06-03 11:49:38 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:49:38 INFO:app:Running ADB command: adb devices
-2025-06-03 11:49:40 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:49:40 INFO:app:Running ADB command: adb devices
-2025-06-03 11:49:42 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:49:42 INFO:app:Running ADB command: adb devices
-2025-06-03 11:49:44 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:49:44 INFO:app:Running ADB command: adb devices
-2025-06-03 11:49:46 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:49:46 INFO:app:Running ADB command: adb devices
-2025-06-03 11:49:48 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:49:48 INFO:app:Running ADB command: adb devices
-2025-06-03 11:49:50 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:49:50 INFO:app:Running ADB command: adb devices
-2025-06-03 11:49:52 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:49:52 INFO:app:Running ADB command: adb devices
-2025-06-03 11:49:54 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:49:54 INFO:app:Running ADB command: adb devices
-2025-06-03 11:49:56 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:49:56 INFO:app:Running ADB command: adb devices
-2025-06-03 11:49:56 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:49:56] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 11:49:58 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:49:58 INFO:app:Running ADB command: adb devices
-2025-06-03 11:50:00 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:50:00 INFO:app:Running ADB command: adb devices
-2025-06-03 11:50:02 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:50:02 INFO:app:Running ADB command: adb devices
-2025-06-03 11:50:04 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:50:04 INFO:app:Running ADB command: adb devices
-2025-06-03 11:50:06 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:50:06 INFO:app:Running ADB command: adb devices
-2025-06-03 11:50:08 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:50:08 INFO:app:Running ADB command: adb devices
-2025-06-03 11:50:10 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:50:10] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 11:50:10 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:50:10 INFO:app:Running ADB command: adb devices
-2025-06-03 11:50:12 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:50:12 INFO:app:Running ADB command: adb devices
-2025-06-03 11:50:14 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:50:14 INFO:app:Running ADB command: adb devices
-2025-06-03 11:50:16 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:50:16 INFO:app:Running ADB command: adb devices
-2025-06-03 11:50:17 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:50:17] "GET /vnc/2bdbee5e-d314-4a83-8107-d49181be0358 HTTP/1.1" 200 -
-2025-06-03 11:50:17 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:50:17] "GET /static/js/novnc-local.js HTTP/1.1" 304 -
-2025-06-03 11:50:17 INFO:app:Taking screenshot for emulator 2bdbee5e-d314-4a83-8107-d49181be0358 - ADB port: 7305, Server port: 8770
-2025-06-03 11:50:17 INFO:app:Screenshot attempt 1/3
-2025-06-03 11:50:17 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:50:17 INFO:app:Ensuring ADB server is running...
-2025-06-03 11:50:18 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:50:18 INFO:app:Running ADB command: adb devices
-2025-06-03 11:50:19 INFO:app:Connecting to device localhost:7305
-2025-06-03 11:50:19 INFO:app:Connect result: Connection refused
-2025-06-03 11:50:19 
-2025-06-03 11:50:20 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:50:20 INFO:app:Running ADB command: adb devices
-2025-06-03 11:50:22 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:50:22 INFO:app:Running ADB command: adb devices
-2025-06-03 11:50:22 INFO:app:Checking devices (attempt 1/5)
-2025-06-03 11:50:22 INFO:app:Devices output: List of devices attached
-2025-06-03 11:50:22 
-2025-06-03 11:50:22 
-2025-06-03 11:50:22 INFO:app:Device not ready yet, waiting... (status: unknown)
-2025-06-03 11:50:24 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:50:24 INFO:app:Running ADB command: adb devices
-2025-06-03 11:50:24 INFO:app:Checking devices (attempt 2/5)
-2025-06-03 11:50:24 INFO:app:Devices output: List of devices attached
-2025-06-03 11:50:24 
-2025-06-03 11:50:24 
-2025-06-03 11:50:24 INFO:app:Device not ready yet, waiting... (status: unknown)
-2025-06-03 11:50:26 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:50:26 INFO:app:Running ADB command: adb devices
-2025-06-03 11:50:26 INFO:app:Checking devices (attempt 3/5)
-2025-06-03 11:50:26 INFO:app:Devices output: List of devices attached
-2025-06-03 11:50:26 
-2025-06-03 11:50:26 
-2025-06-03 11:50:26 INFO:app:Device not ready yet, waiting... (status: unknown)
-2025-06-03 11:50:27 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:50:27] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 11:50:28 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:50:28 INFO:app:Running ADB command: adb devices
-2025-06-03 11:50:28 INFO:app:Checking devices (attempt 4/5)
-2025-06-03 11:50:28 INFO:app:Devices output: List of devices attached
-2025-06-03 11:50:28 
-2025-06-03 11:50:28 
-2025-06-03 11:50:28 INFO:app:Device not ready yet, waiting... (status: unknown)
-2025-06-03 11:50:30 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:50:30] "GET /api/emulators/2bdbee5e-d314-4a83-8107-d49181be0358/live_view HTTP/1.1" 200 -
-2025-06-03 11:50:30 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:50:30 INFO:app:Running ADB command: adb devices
-2025-06-03 11:50:30 INFO:app:Checking devices (attempt 5/5)
-2025-06-03 11:50:30 INFO:app:Devices output: List of devices attached
-2025-06-03 11:50:30 
-2025-06-03 11:50:30 
-2025-06-03 11:50:30 INFO:app:Device not ready yet, waiting... (status: unknown)
-2025-06-03 11:50:30 INFO:app:Taking screenshot for emulator 2bdbee5e-d314-4a83-8107-d49181be0358 - ADB port: 7305, Server port: 8770
-2025-06-03 11:50:30 INFO:app:Screenshot attempt 1/3
-2025-06-03 11:50:30 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:50:30 INFO:app:Ensuring ADB server is running...
-2025-06-03 11:50:32 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:50:32 INFO:app:Running ADB command: adb devices
-2025-06-03 11:50:32 WARNING:app:Device not found on attempt 1, retrying...
-2025-06-03 11:50:32 INFO:app:Connecting to device localhost:7305
-2025-06-03 11:50:32 INFO:app:Connect result: Connection refused
-2025-06-03 11:50:32 
-2025-06-03 11:50:34 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:50:34 INFO:app:Running ADB command: adb devices
-2025-06-03 11:50:34 INFO:app:Created Android 11 emulator 1yqiq3ek
-2025-06-03 11:50:34 INFO:app:Console: telnet localhost 8794
-2025-06-03 11:50:34 INFO:app:ADB Server Port: 8770
-2025-06-03 11:50:34 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:50:34] "POST /api/emulators HTTP/1.1" 201 -
-2025-06-03 11:50:35 INFO:app:Checking devices (attempt 1/5)
-2025-06-03 11:50:35 INFO:app:Devices output: List of devices attached
-2025-06-03 11:50:35 
-2025-06-03 11:50:35 
-2025-06-03 11:50:35 INFO:app:Device not ready yet, waiting... (status: unknown)
-2025-06-03 11:50:37 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 09:50:37] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 11:50:37 INFO:app:Screenshot attempt 2/3
-2025-06-03 11:50:37 INFO:app:Set ADB server port to: 8770
-2025-06-03 11:50:37 INFO:app:Ensuring ADB server is running...
-2025-06-03 11:50:37 INFO:app:Checking devices (attempt 2/5)
-2025-06-03 11:50:37 INFO:app:Devices output: List of devices attached
-2025-06-03 11:50:37 
-2025-06-03 11:50:37 
-2025-06-03 11:50:37 INFO:app:Device not ready yet, waiting... (status: unknown)
-2025-06-03 11:50:39 INFO:app:Connecting to device localhost:7305
-2025-06-03 11:50:39 INFO:app:Connect result: Connection refused
-2025-06-03 11:50:39 
-2025-06-03 11:50:39 INFO:app:Checking devices (attempt 3/5)
-2025-06-03 11:50:39 INFO:app:Devices output: List of devices attached
-2025-06-03 11:50:39 
-2025-06-03 11:50:39 
-2025-06-03 11:50:39 INFO:app:Device not ready yet, waiting... (status: unknown)
+NAMES                   PORTS                                                                                                                STATUS
+emu_0lk0pzw8_c1e51978   0.0.0.0:5289->5037/tcp, 0.0.0.0:6887->5554/tcp, 0.0.0.0:5856->5555/tcp, 0.0.0.0:5947->5900/tcp                       Up About a minute
+qemu-api-1              0.0.0.0:5001->5001/tcp, 0.0.0.0:6080-6180->6080-6180/tcp                                                             Up 2 minutes
+qemu-emulator14-1       5554/tcp, 5900/tcp, 0.0.0.0:6654->6654/tcp, 0.0.0.0:6037->5037/tcp, 0.0.0.0:6655->5555/tcp, 0.0.0.0:5902->5901/tcp   Up 2 minutes
+qemu-emulator-1         0.0.0.0:5037->5037/tcp, 0.0.0.0:5554-5555->5554-5555/tcp, 0.0.0.0:5901->5900/tcp                                     Up 2 minutes
+
+INFO:app:Docker client connected successfully
+2025-06-03 12:12:53 INFO:app:Checking container: qemu-api-1
+2025-06-03 12:12:53 INFO:app:Checking container: qemu-emulator14-1
+2025-06-03 12:12:53 INFO:app:Checking container: qemu-emulator-1
+2025-06-03 12:12:53 INFO:app:Checking container: emu_pf5js07q_7689ed85
+2025-06-03 12:12:53 INFO:werkzeug:WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+2025-06-03 12:12:53  * Running on all addresses (0.0.0.0)
+2025-06-03 12:12:53  * Running on http://127.0.0.1:5001
+2025-06-03 12:12:53  * Running on http://172.18.0.4:5001
+2025-06-03 12:12:53 INFO:werkzeug:Press CTRL+C to quit
+2025-06-03 12:12:53 INFO:werkzeug: * Restarting with stat
+2025-06-03 12:12:53 INFO:app:Docker client connected successfully
+2025-06-03 12:12:53 INFO:app:Checking container: qemu-api-1
+2025-06-03 12:12:53 INFO:app:Checking container: qemu-emulator14-1
+2025-06-03 12:12:53 INFO:app:Checking container: qemu-emulator-1
+2025-06-03 12:12:53 INFO:app:Checking container: emu_pf5js07q_7689ed85
+2025-06-03 12:12:53 WARNING:werkzeug: * Debugger is active!
+2025-06-03 12:12:53 INFO:werkzeug: * Debugger PIN: 437-882-203
+2025-06-03 12:13:10 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 10:13:10] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 12:13:10 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 10:13:10] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 12:13:19 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 10:13:19] "GET / HTTP/1.1" 200 -
+2025-06-03 12:13:19 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 10:13:19] "GET /static/css/style.css HTTP/1.1" 304 -
+2025-06-03 12:13:19 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 10:13:19] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 12:13:36 INFO:app:Setting up ADB connection for new emulator...
+2025-06-03 12:13:36 INFO:app:Performing robust ADB server restart on port 5289
+2025-06-03 12:13:36 INFO:app:Killing all ADB processes...
+2025-06-03 12:13:36 INFO:app:Killed Unix ADB processes
+2025-06-03 12:13:36 INFO:app:Executed adb kill-server
+2025-06-03 12:13:38 INFO:app:Set ADB server port to: 5289
+2025-06-03 12:13:38 INFO:app:Set Unix shell ADB server port to: 5289
+2025-06-03 12:13:38 INFO:app:Set ADB server port to: 5289
+2025-06-03 12:13:38 INFO:app:Set Unix shell ADB server port to: 5289
+2025-06-03 12:13:38 INFO:app:Running ADB command: adb -P 5289 start-server
+2025-06-03 12:13:41 INFO:app:ADB server started successfully on port 5289
+2025-06-03 12:13:44 INFO:app:Device detection attempt 1/3 for localhost:5856
+2025-06-03 12:13:44 INFO:app:Set ADB server port to: 5289
+2025-06-03 12:13:44 INFO:app:Set Unix shell ADB server port to: 5289
+2025-06-03 12:13:44 INFO:app:Running ADB command: adb -P 5289 connect localhost:5856
+2025-06-03 12:13:44 INFO:app:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
+2025-06-03 12:13:46 INFO:app:Set ADB server port to: 5289
+2025-06-03 12:13:46 INFO:app:Set Unix shell ADB server port to: 5289
+2025-06-03 12:13:46 INFO:app:Running ADB command: adb -P 5289 devices
+2025-06-03 12:13:46 INFO:app:Devices output: List of devices attached
+2025-06-03 12:13:46 
+2025-06-03 12:13:46 
+2025-06-03 12:13:46 WARNING:app:Device localhost:5856 not found in devices list
+2025-06-03 12:13:46 INFO:app:Retrying device detection in 2 seconds...
+2025-06-03 12:13:48 INFO:app:Device detection attempt 2/3 for localhost:5856
+2025-06-03 12:13:48 INFO:app:Set ADB server port to: 5289
+2025-06-03 12:13:48 INFO:app:Set Unix shell ADB server port to: 5289
+2025-06-03 12:13:48 INFO:app:Running ADB command: adb -P 5289 connect localhost:5856
+2025-06-03 12:13:48 INFO:app:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
+2025-06-03 12:13:50 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 10:13:50] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 12:13:50 INFO:app:Set ADB server port to: 5289
+2025-06-03 12:13:50 INFO:app:Set Unix shell ADB server port to: 5289
+2025-06-03 12:13:50 INFO:app:Running ADB command: adb -P 5289 devices
+2025-06-03 12:13:50 INFO:app:Devices output: List of devices attached
+2025-06-03 12:13:50 
+2025-06-03 12:13:50 
+2025-06-03 12:13:50 WARNING:app:Device localhost:5856 not found in devices list
+2025-06-03 12:13:50 INFO:app:Retrying device detection in 2 seconds...
+2025-06-03 12:13:52 INFO:app:Device detection attempt 3/3 for localhost:5856
+2025-06-03 12:13:52 INFO:app:Set ADB server port to: 5289
+2025-06-03 12:13:52 INFO:app:Set Unix shell ADB server port to: 5289
+2025-06-03 12:13:52 INFO:app:Running ADB command: adb -P 5289 connect localhost:5856
+2025-06-03 12:13:52 INFO:app:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
+2025-06-03 12:13:54 INFO:app:Set ADB server port to: 5289
+2025-06-03 12:13:54 INFO:app:Set Unix shell ADB server port to: 5289
+2025-06-03 12:13:54 INFO:app:Running ADB command: adb -P 5289 devices
+2025-06-03 12:13:54 INFO:app:Devices output: List of devices attached
+2025-06-03 12:13:54 
+2025-06-03 12:13:54 
+2025-06-03 12:13:54 WARNING:app:Device localhost:5856 not found in devices list
+2025-06-03 12:13:54 ERROR:app:Failed to detect device localhost:5856 after 3 attempts
+2025-06-03 12:13:54 INFO:app:Set ADB server port to: 5289
+2025-06-03 12:13:54 INFO:app:Set Unix shell ADB server port to: 5289
+2025-06-03 12:13:54 INFO:app:Running ADB command: adb -P 5289 devices
+2025-06-03 12:13:54 INFO:app:Created Android 11 emulator 0lk0pzw8
+2025-06-03 12:13:54 INFO:app:Console: telnet localhost 6887
+2025-06-03 12:13:54 INFO:app:ADB Server Port: 5289
+2025-06-03 12:13:54 INFO:app:Device status: not_found
+2025-06-03 12:13:54 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 10:13:54] "POST /api/emulators HTTP/1.1" 201 -
+2025-06-03 12:13:57 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 10:13:57] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 12:14:01 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 10:14:01] "GET /vnc/c1e51978-6682-447b-9589-f782a85efa7d HTTP/1.1" 200 -
+2025-06-03 12:14:01 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 10:14:01] "GET /static/js/novnc-local.js HTTP/1.1" 304 -
+2025-06-03 12:14:02 INFO:app:Taking screenshot for emulator c1e51978-6682-447b-9589-f782a85efa7d - ADB port: 5856, Server port: 5289
+2025-06-03 12:14:02 INFO:app:Restarting ADB server for screenshot...
+2025-06-03 12:14:02 INFO:app:Performing robust ADB server restart on port 5289
+2025-06-03 12:14:02 INFO:app:Killing all ADB processes...
+2025-06-03 12:14:02 INFO:app:Killed Unix ADB processes
+2025-06-03 12:14:02 INFO:app:Executed adb kill-server
+2025-06-03 12:14:04 INFO:app:Set ADB server port to: 5289
+2025-06-03 12:14:04 INFO:app:Set Unix shell ADB server port to: 5289
+2025-06-03 12:14:04 INFO:app:Set ADB server port to: 5289
+2025-06-03 12:14:04 INFO:app:Set Unix shell ADB server port to: 5289
+2025-06-03 12:14:04 INFO:app:Running ADB command: adb -P 5289 start-server
+2025-06-03 12:14:07 INFO:app:ADB server started successfully on port 5289
+2025-06-03 12:12:53  * Serving Flask app 'app.py'
+2025-06-03 12:12:53  * Debug mode: on
+2025-06-03 12:14:10 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 10:14:10] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 12:14:10 INFO:app:Detecting device...
+2025-06-03 12:14:10 INFO:app:Device detection attempt 1/3 for localhost:5856
+2025-06-03 12:14:10 INFO:app:Set ADB server port to: 5289
+2025-06-03 12:14:10 INFO:app:Set Unix shell ADB server port to: 5289
+2025-06-03 12:14:10 INFO:app:Running ADB command: adb -P 5289 connect localhost:5856
+2025-06-03 12:14:10 INFO:app:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
+2025-06-03 12:14:12 INFO:app:Set ADB server port to: 5289
+2025-06-03 12:14:12 INFO:app:Set Unix shell ADB server port to: 5289
+2025-06-03 12:14:12 INFO:app:Running ADB command: adb -P 5289 devices
+2025-06-03 12:14:12 INFO:app:Devices output: List of devices attached
+2025-06-03 12:14:12 
+2025-06-03 12:14:12 
+2025-06-03 12:14:12 WARNING:app:Device localhost:5856 not found in devices list
+2025-06-03 12:14:12 INFO:app:Retrying device detection in 3 seconds...
+2025-06-03 12:14:15 INFO:app:Device detection attempt 2/3 for localhost:5856
+2025-06-03 12:14:15 INFO:app:Set ADB server port to: 5289
+2025-06-03 12:14:15 INFO:app:Set Unix shell ADB server port to: 5289
+2025-06-03 12:14:15 INFO:app:Running ADB command: adb -P 5289 connect localhost:5856
+2025-06-03 12:14:15 INFO:app:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
+2025-06-03 12:14:17 INFO:app:Set ADB server port to: 5289
+2025-06-03 12:14:17 INFO:app:Set Unix shell ADB server port to: 5289
+2025-06-03 12:14:17 INFO:app:Running ADB command: adb -P 5289 devices
+2025-06-03 12:14:17 INFO:app:Devices output: List of devices attached
+2025-06-03 12:14:17 
+2025-06-03 12:14:17 
+2025-06-03 12:14:17 WARNING:app:Device localhost:5856 not found in devices list
+2025-06-03 12:14:17 INFO:app:Retrying device detection in 3 seconds...
+2025-06-03 12:14:20 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 10:14:20] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-03 12:14:20 INFO:app:Device detection attempt 3/3 for localhost:5856
+2025-06-03 12:14:20 INFO:app:Set ADB server port to: 5289
+2025-06-03 12:14:20 INFO:app:Set Unix shell ADB server port to: 5289
+2025-06-03 12:14:20 INFO:app:Running ADB command: adb -P 5289 connect localhost:5856
+2025-06-03 12:14:20 INFO:app:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
+2025-06-03 12:14:22 INFO:app:Set ADB server port to: 5289
+2025-06-03 12:14:22 INFO:app:Set Unix shell ADB server port to: 5289
+2025-06-03 12:14:22 INFO:app:Running ADB command: adb -P 5289 devices
+2025-06-03 12:14:22 INFO:app:Devices output: List of devices attached
+2025-06-03 12:14:22 
+2025-06-03 12:14:22 
+2025-06-03 12:14:22 WARNING:app:Device localhost:5856 not found in devices list
+2025-06-03 12:14:22 ERROR:app:Failed to detect device localhost:5856 after 3 attempts
+2025-06-03 12:14:22 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 10:14:22] "GET /api/emulators/c1e51978-6682-447b-9589-f782a85efa7d/screenshot HTTP/1.1" 200 -
