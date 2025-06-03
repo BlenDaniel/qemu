@@ -1,16 +1,28 @@
-FROM python:3.13-slim
+FROM ubuntu:22.04
 
 WORKDIR /app
 
 ENV FLASK_APP=app.py
 ENV PYTHONUNBUFFERED=1
+ENV DEBIAN_FRONTEND=noninteractive
 
-# Install system dependencies
+# Install Python and system dependencies
 RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-venv \
     wget \
     unzip \
     openjdk-17-jre-headless \
     ca-certificates \
+    gcc \
+    build-essential \
+    zlib1g-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    liblcms2-dev \
+    libwebp-dev \
+    libtiff5-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && update-ca-certificates
@@ -27,10 +39,13 @@ RUN mkdir -p ${ANDROID_SDK_ROOT} && \
     chmod +x platform-tools/adb
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+
+RUN python3 -m pip install --upgrade pip
+
+RUN python3 -m pip install --no-cache-dir -r requirements.txt
 
 COPY app.py .
 COPY templates/ templates/
 COPY static/ static/
 
-CMD ["flask", "run", "--host=0.0.0.0", "--port=5001"]
+CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0", "--port=5001"]
