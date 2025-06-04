@@ -466,8 +466,11 @@ def register_api_routes(app, sessions):
             
             if websockify_running:
                 # Get detailed process info if running - use simple ps command
-                ps_result = container.exec_run("ps | grep websockify")
-                test_results["tests"]["websockify_processes"] = ps_result.output.decode().strip()
+                ps_result = container.exec_run("ps")
+                full_ps_output = ps_result.output.decode().strip()
+                # Filter for websockify lines
+                websockify_lines = [line for line in full_ps_output.split('\n') if 'websockify' in line]
+                test_results["tests"]["websockify_processes"] = '\n'.join(websockify_lines) if websockify_lines else "Websockify running but not visible in ps output"
             else:
                 test_results["tests"]["websockify_processes"] = "No websockify processes found"
             
@@ -478,8 +481,11 @@ def register_api_routes(app, sessions):
             
             if vnc_running:
                 # Get detailed process info if running - use simple ps command
-                vnc_ps_result = container.exec_run("ps | grep x11vnc")
-                test_results["tests"]["vnc_processes"] = vnc_ps_result.output.decode().strip()
+                ps_result = container.exec_run("ps")
+                full_ps_output = ps_result.output.decode().strip()
+                # Filter for x11vnc lines
+                vnc_lines = [line for line in full_ps_output.split('\n') if 'x11vnc' in line]
+                test_results["tests"]["vnc_processes"] = '\n'.join(vnc_lines) if vnc_lines else "VNC running but not visible in ps output"
             else:
                 test_results["tests"]["vnc_processes"] = "No x11vnc processes found"
                 
@@ -627,7 +633,7 @@ def register_api_routes(app, sessions):
             fluxbox_check = container.exec_run("pgrep fluxbox")
             if fluxbox_check.exit_code != 0:
                 logger.info("Starting Fluxbox...")
-                container.exec_run("DISPLAY=:1 fluxbox", detach=True)
+                container.exec_run("fluxbox", detach=True, environment=["DISPLAY=:1"])
                 time.sleep(2)
                 results["fluxbox_started"] = True
             else:
@@ -635,8 +641,8 @@ def register_api_routes(app, sessions):
             
             # Start VNC server
             logger.info("Starting VNC server...")
-            vnc_cmd = "DISPLAY=:1 x11vnc -display :1 -forever -nopw -listen localhost -xkb -rfbport 5900 -shared -permitfiletransfer -tightfilexfer -quiet"
-            vnc_result = container.exec_run(vnc_cmd, detach=True)
+            vnc_cmd = "x11vnc -display :1 -forever -nopw -listen localhost -xkb -rfbport 5900 -shared -permitfiletransfer -tightfilexfer -quiet"
+            vnc_result = container.exec_run(vnc_cmd, detach=True, environment=["DISPLAY=:1"])
             results["vnc_started"] = vnc_result.exit_code == 0
             time.sleep(3)
             
@@ -667,12 +673,16 @@ def register_api_routes(app, sessions):
             
             # Get process details if running
             if results["vnc_running"]:
-                vnc_ps = container.exec_run("ps | grep x11vnc")
-                results["vnc_process_details"] = vnc_ps.output.decode().strip()
+                ps_result = container.exec_run("ps")
+                full_ps_output = ps_result.output.decode().strip()
+                vnc_lines = [line for line in full_ps_output.split('\n') if 'x11vnc' in line]
+                results["vnc_process_details"] = '\n'.join(vnc_lines) if vnc_lines else "VNC running but not visible in ps"
             
             if results["websockify_running"]:
-                ws_ps = container.exec_run("ps | grep websockify") 
-                results["websockify_process_details"] = ws_ps.output.decode().strip()
+                ps_result = container.exec_run("ps")
+                full_ps_output = ps_result.output.decode().strip()
+                ws_lines = [line for line in full_ps_output.split('\n') if 'websockify' in line]
+                results["websockify_process_details"] = '\n'.join(ws_lines) if ws_lines else "Websockify running but not visible in ps"
             
             # Additional debugging: check if noVNC directory exists
             novnc_check = container.exec_run("ls -la /opt/noVNC/")
