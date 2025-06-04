@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ device_id }} - Android Emulator Screen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/novnc.css') }}">
+</head>
+
+<body>
+    <div class="header">
+        <h1>📱 {{ device_id }} - Android Emulator</h1>
+        <div class="controls">
+            <div class="status">
+                <div class="status-indicator" id="statusIndicator"></div>
+                <span id="statusText">Initializing...</span>
+            </div>
+            <button class="btn btn-primary" onclick="toggleFullscreen()">🔍 Fullscreen</button>
+            <button class="btn btn-success" onclick="reconnectVNC()">🔄 Reconnect</button>
+            <a href="/" class="btn btn-danger">❌ Close</a>
+        </div>
+    </div>
+
+    <div class="vnc-container" id="vncContainer">
+        <div class="loading-message" id="loadingMessage">
+            <div class="loading-spinner"></div>
+            <p>Connecting to Android emulator...</p>
+            <p>Starting noVNC session...</p>
+        </div>
+
+        <div class="connection-info" id="connectionInfo" style="display: none;">
+            <strong>Connection Info:</strong><br>
+            Emulator: {{ device_id }}<br>
+            WebSocket Port: {{ ws_port }}<br>
+            VNC Port: {{ vnc_port }}
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/novnc.js') }}"></script>
+    <script>
+        // Initialize the noVNC viewer when page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            initNoVNCViewer('{{ emulator_id }}', parseInt('{{ ws_port }}'));
+        });
+    </script>
+</body>
+
+</html>

@@ -23,13 +23,15 @@ PREDEFINED_CONTAINERS = {
             "console": "5554",
             "adb": "5555", 
             "adb_server": "5037",
-            "vnc": "5901"  # Host port for VNC
+            "vnc": "5901",  # Host port for VNC
+            "websockify": "6081"  # Host port for websockify
         },
         "internal_ports": {
             "console": "5554",
             "adb": "5555",
             "adb_server": "5037", 
-            "vnc": "5900"  # Internal container port for VNC
+            "vnc": "5900",  # Internal container port for VNC
+            "websockify": "6080"  # Internal container port for websockify
         }
     },
     "emulator14": {
@@ -41,13 +43,15 @@ PREDEFINED_CONTAINERS = {
             "console": "6654",
             "adb": "6655",
             "adb_server": "6037", 
-            "vnc": "5902"  # Host port for VNC
+            "vnc": "5902",  # Host port for VNC
+            "websockify": "6082"  # Host port for websockify
         },
         "internal_ports": {
             "console": "6654",
             "adb": "5555",  # Internal container port
             "adb_server": "5037",
-            "vnc": "5901"  # Internal container port for VNC
+            "vnc": "5901",  # Internal container port for VNC
+            "websockify": "6080"  # Internal container port for websockify
         }
     }
 }
@@ -130,6 +134,7 @@ def discover_existing_containers(sessions):
                         'android_version': config['android_version'],
                         'has_external_adb_server': True,
                         'vnc_port': config['ports']['vnc'],
+                        'websockify_port': config['ports']['websockify'],
                         'is_predefined': True
                     }
                     
@@ -189,7 +194,8 @@ def generate_random_ports():
         'console_port': random.randint(5000, 9999),
         'adb_port': random.randint(5000, 9999), 
         'internal_adb_server_port': random.randint(5000, 9999),
-        'vnc_port': random.randint(5900, 6000)
+        'vnc_port': random.randint(5900, 6000),
+        'websockify_port': random.randint(6080, 6200)
     }
 
 def get_container_port_mappings(container):
@@ -200,7 +206,8 @@ def get_container_port_mappings(container):
         'console': ports.get('5554/tcp', [{}])[0].get('HostPort', 'unknown'),
         'adb': ports.get('5555/tcp', [{}])[0].get('HostPort', 'unknown'),
         'adb_server': ports.get('5037/tcp', [{}])[0].get('HostPort', 'unknown'),
-        'vnc': ports.get('5900/tcp', [{}])[0].get('HostPort', 'unknown')
+        'vnc': ports.get('5900/tcp', [{}])[0].get('HostPort', 'unknown'),
+        'websockify': ports.get('6080/tcp', [{}])[0].get('HostPort', 'unknown')
     }
 
 def wait_for_container_ports(container, timeout=60):

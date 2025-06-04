@@ -6,6 +6,7 @@ from flask import Flask, jsonify, render_template
 # Import our custom modules
 from docker_manager import discover_existing_containers, get_docker_client
 from vnc_manager import cleanup_vnc_proxies
+from websocket_manager import cleanup_all_proxies
 from api_routes import register_api_routes
 
 # Configure logging
@@ -63,6 +64,7 @@ def index():
 
 # Cleanup on exit
 atexit.register(cleanup_vnc_proxies)
+atexit.register(cleanup_all_proxies)
 
 if __name__ == '__main__':
     logger.info("Starting Android Emulator Management API...")

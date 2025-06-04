@@ -30,6 +30,8 @@ RUN apt-get update && apt-get install -y \
     curl \
     iputils-ping \
     net-tools \
+    websockify \
+    git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && update-ca-certificates
@@ -55,9 +57,16 @@ COPY app.py .
 COPY docker_manager.py .
 COPY adb_manager.py .
 COPY vnc_manager.py .
+COPY websocket_manager.py .
 COPY api_routes.py .
 COPY templates/ templates/
 COPY static/ static/
 
+# Download and setup noVNC
+RUN cd /opt && \
+    git clone https://github.com/novnc/noVNC.git && \
+    cd noVNC && \
+    git checkout v1.4.0 && \
+    ln -s vnc.html index.html
 
 CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0", "--port=5001"]

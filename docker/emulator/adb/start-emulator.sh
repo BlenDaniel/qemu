@@ -58,7 +58,19 @@ EOF
     VNC_PID=$!
     
     echo "VNC server started on port $VNC_PORT"
-    echo "VNC PIDs: Xvfb=$XVFB_PID, Fluxbox=$FLUXBOX_PID, VNC=$VNC_PID"
+    
+    # Start websockify for noVNC access if enabled
+    if [ "${ENABLE_WEBSOCKIFY}" = "true" ]; then
+        WEBSOCKIFY_PORT=${WEBSOCKIFY_PORT:-6080}
+        echo "Starting websockify on port $WEBSOCKIFY_PORT..."
+        websockify --web=/opt/noVNC --target-config=/dev/null $WEBSOCKIFY_PORT localhost:$VNC_PORT >/dev/null 2>&1 &
+        WEBSOCKIFY_PID=$!
+        echo "Websockify started on port $WEBSOCKIFY_PORT"
+        echo "noVNC accessible at http://localhost:$WEBSOCKIFY_PORT/vnc.html"
+        echo "VNC PIDs: Xvfb=$XVFB_PID, Fluxbox=$FLUXBOX_PID, VNC=$VNC_PID, Websockify=$WEBSOCKIFY_PID"
+    else
+        echo "VNC PIDs: Xvfb=$XVFB_PID, Fluxbox=$FLUXBOX_PID, VNC=$VNC_PID"
+    fi
     
     # Set environment variables for emulator to use the display
     export DISPLAY=:1

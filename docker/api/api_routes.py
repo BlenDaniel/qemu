@@ -16,6 +16,9 @@ from adb_manager import (
 from vnc_manager import (
     get_vnc_connection_info, get_vnc_status
 )
+from websocket_manager import (
+    start_websockify, stop_websockify, get_websockify_info, get_available_ws_port
+)
 
 logger = logging.getLogger(__name__)
 
@@ -73,7 +76,8 @@ def register_api_routes(app, sessions):
             '5554/tcp': console_port,
             '5555/tcp': adb_port,
             '5037/tcp': ports['internal_adb_server_port'],
-            '5900/tcp': ports['vnc_port']  # VNC server port
+            '5900/tcp': ports['vnc_port'],  # VNC server port
+            '6080/tcp': ports['websockify_port']  # Websockify port for noVNC
         }
         
         # If external ADB server was requested, override with specified port
@@ -88,7 +92,9 @@ def register_api_routes(app, sessions):
             'DEVICE_PORT': '5554',  # Use container's internal port, not random port
             'DEVICE_ID': device_id,
             'ENABLE_VNC': 'true',  # Enable VNC server
-            'VNC_PORT': '5900'     # Internal VNC port
+            'VNC_PORT': '5900',    # Internal VNC port
+            'ENABLE_WEBSOCKIFY': 'true',  # Enable websockify for noVNC
+            'WEBSOCKIFY_PORT': '6080'     # Internal websockify port
         }
         
         try:
@@ -118,6 +124,7 @@ def register_api_routes(app, sessions):
             'adb_commands': adb_commands,
             'has_external_adb_server': map_external_adb_server,
             'vnc_port': mapped_ports['vnc'],  # Store VNC port for GUI access
+            'websockify_port': mapped_ports['websockify'],  # Store websockify port for noVNC
             'is_predefined': False  # Mark as dynamically created
         }
         
@@ -338,49 +345,227 @@ def register_api_routes(app, sessions):
         return jsonify(result)
 
     # ============================================================================
-    # VNC AND SCREEN ACCESS ROUTES
+    # noVNC AND SCREEN ACCESS ROUTES
     # ============================================================================
-
-    @app.route('/vnc/<emulator_id>')
-    def vnc_viewer(emulator_id):
-        """Serve VNC viewer for emulator screen"""
-        if emulator_id not in sessions:
-            return "Emulator not found", 404
-        
-        session = sessions[emulator_id]
-        vnc_port = session.get('vnc_port')
-        
-        if not vnc_port:
-            return "VNC not available for this emulator", 404
-        
-        # Return noVNC viewer HTML
-        return render_template('vnc_viewer.html', 
-                             emulator_id=emulator_id,
-                             vnc_port=vnc_port,
-                             device_id=session['device_id'])
-
-    @app.route('/api/emulators/<emulator_id>/vnc')
-    def vnc_proxy(emulator_id):
-        """HTTP endpoint to get VNC connection info"""
-        return jsonify(get_vnc_connection_info(emulator_id, sessions))
-
-    @app.route('/api/emulators/<emulator_id>/vnc/status')
-    def vnc_status(emulator_id):
-        """Get detailed VNC status for an emulator"""
-        return jsonify(get_vnc_status(emulator_id, sessions))
 
     @app.route('/api/emulators/<emulator_id>/live_view')
     def live_view(emulator_id):
-        """Provide a live view page with periodic screenshots"""
+        """Direct access to noVNC interface via container's websockify port"""
         if emulator_id not in sessions:
             return "Emulator not found", 404
         
         session = sessions[emulator_id]
         device_id = session.get('device_id', 'unknown')
+        vnc_port = session.get('vnc_port')
+        websockify_port = session.get('websockify_port')
         
-        return render_template('live_view.html', 
+        if not vnc_port or not websockify_port:
+            return "VNC/WebSocket not available for this emulator", 404
+        
+        # Render noVNC interface using the container's websockify port
+        return render_template('novnc_viewer.html', 
                              emulator_id=emulator_id,
-                             device_id=device_id)
+                             device_id=device_id,
+                             ws_port=websockify_port,
+                             vnc_port=vnc_port)
+
+    @app.route('/api/emulators/<emulator_id>/vnc/start', methods=['POST'])
+    def start_vnc_proxy(emulator_id):
+        """Start websockify proxy for noVNC access"""
+        if emulator_id not in sessions:
+            return jsonify({"error": "Emulator not found"}), 404
+        
+        session = sessions[emulator_id]
+        vnc_port = session.get('vnc_port')
+        
+        if not vnc_port:
+            return jsonify({"error": "VNC not available for this emulator"}), 404
+        
+        # Get container for VNC connection
+        container = session['container']
+        container_name = container.name
+        
+        try:
+            # Check if proxy is already running
+            proxy_info = get_websockify_info(emulator_id)
+            
+            if proxy_info:
+                return jsonify({
+                    "success": True,
+                    "message": "WebSocket proxy already running",
+                    "ws_port": proxy_info['ws_port'],
+                    "novnc_url": f"/api/emulators/{emulator_id}/live_view"
+                })
+            
+            # Start new proxy
+            ws_port = get_available_ws_port()
+            result = start_websockify(emulator_id, container_name, vnc_port, ws_port)
+            
+            if result['success']:
+                return jsonify({
+                    "success": True,
+                    "message": result['message'],
+                    "ws_port": result['ws_port'],
+                    "novnc_url": f"/api/emulators/{emulator_id}/live_view"
+                })
+            else:
+                return jsonify({
+                    "success": False,
+                    "error": result['message']
+                }), 500
+                
+        except Exception as e:
+            logger.error(f"Error starting VNC proxy for {emulator_id}: {str(e)}")
+            return jsonify({
+                "success": False,
+                "error": str(e)
+            }), 500
+
+    @app.route('/api/emulators/<emulator_id>/vnc/stop', methods=['POST'])
+    def stop_vnc_proxy(emulator_id):
+        """Stop websockify proxy for an emulator"""
+        if emulator_id not in sessions:
+            return jsonify({"error": "Emulator not found"}), 404
+        
+        try:
+            result = stop_websockify(emulator_id)
+            return jsonify(result)
+            
+        except Exception as e:
+            logger.error(f"Error stopping VNC proxy for {emulator_id}: {str(e)}")
+            return jsonify({
+                "success": False,
+                "error": str(e)
+            }), 500
+
+    @app.route('/api/emulators/<emulator_id>/vnc/status')
+    def vnc_proxy_status(emulator_id):
+        """Get websockify proxy status for an emulator"""
+        if emulator_id not in sessions:
+            return jsonify({"error": "Emulator not found"}), 404
+        
+        try:
+            proxy_info = get_websockify_info(emulator_id)
+            session = sessions[emulator_id]
+            
+            if proxy_info:
+                return jsonify({
+                    "success": True,
+                    "running": True,
+                    "ws_port": proxy_info['ws_port'],
+                    "vnc_port": proxy_info['vnc_port'],
+                    "vnc_host": proxy_info['vnc_host'],
+                    "pid": proxy_info['pid'],
+                    "novnc_url": f"/api/emulators/{emulator_id}/live_view"
+                })
+            else:
+                return jsonify({
+                    "success": True,
+                    "running": False,
+                    "vnc_port": session.get('vnc_port'),
+                    "message": "WebSocket proxy not running"
+                })
+                
+        except Exception as e:
+            logger.error(f"Error checking VNC proxy status for {emulator_id}: {str(e)}")
+            return jsonify({
+                "success": False,
+                "error": str(e)
+            }), 500
+
+    # ============================================================================
+    # DEBUG AND TESTING ROUTES
+    # ============================================================================
+
+    @app.route('/api/debug/test-networking', methods=['GET'])
+    def test_networking():
+        """Test container networking and connectivity"""
+        results = {}
+        
+        for session_id, session in sessions.items():
+            container = session['container']
+            container_name = container.name
+            is_predefined = session.get('is_predefined', False)
+            
+            test_result = {
+                "container_name": container_name,
+                "is_predefined": is_predefined,
+                "tests": {}
+            }
+            
+            if not is_predefined:
+                # Test port connectivity using container networking
+                import socket
+                
+                # Test ADB port (5555 internal)
+                try:
+                    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    sock.settimeout(3)
+                    result = sock.connect_ex((container_name, 5555))
+                    sock.close()
+                    test_result["tests"]["adb_port_5555"] = result == 0
+                except Exception as e:
+                    test_result["tests"]["adb_port_5555"] = f"Error: {str(e)}"
+                
+                # Test VNC port (5900 internal)
+                try:
+                    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    sock.settimeout(3)
+                    result = sock.connect_ex((container_name, 5900))
+                    sock.close()
+                    test_result["tests"]["vnc_port_5900"] = result == 0
+                except Exception as e:
+                    test_result["tests"]["vnc_port_5900"] = f"Error: {str(e)}"
+                
+                # Test ADB connect
+                try:
+                    adb_server_port = session['ports']['adb_server']
+                    connect_result = run_adb_command(
+                        "connect", 
+                        ["-P", str(adb_server_port), "connect", f"{container_name}:5555"],
+                        adb_server_port=adb_server_port
+                    )
+                    test_result["tests"]["adb_connect"] = connect_result
+                except Exception as e:
+                    test_result["tests"]["adb_connect"] = f"Error: {str(e)}"
+            
+            results[session_id] = test_result
+        
+        return jsonify({
+            "success": True,
+            "message": "Networking tests completed",
+            "results": results
+        })
+
+    # ============================================================================
+    # LEGACY ENDPOINTS (for backwards compatibility)
+    # ============================================================================
+
+    @app.route('/emulators', methods=['POST'])
+    def create_emulator_legacy():
+        """Legacy endpoint for creating emulators"""
+        return create_emulator()
+
+    @app.route('/emulators/<session_id>', methods=['DELETE'])
+    def delete_emulator_legacy(session_id):
+        """Legacy endpoint for deleting emulators"""
+        return delete_emulator(session_id)
+
+    @app.route('/emulators', methods=['GET'])
+    def list_emulators_legacy():
+        """Legacy endpoint for listing emulators"""
+        return list_emulators()
+
+    # Legacy VNC routes (deprecated - but kept for compatibility)
+    @app.route('/vnc/<emulator_id>')
+    def vnc_viewer(emulator_id):
+        """Legacy VNC viewer - redirects to live view"""
+        return live_view(emulator_id)
+
+    @app.route('/api/emulators/<emulator_id>/vnc')
+    def vnc_proxy(emulator_id):
+        """Legacy VNC proxy info - redirects to status"""
+        return vnc_proxy_status(emulator_id)
 
     @app.route('/api/emulators/<emulator_id>/screenshot')
     def get_screenshot(emulator_id):
@@ -536,87 +721,4 @@ def register_api_routes(app, sessions):
             
         except Exception as e:
             logger.error(f"Error reconnecting emulator: {str(e)}")
-            return jsonify({"success": False, "error": str(e)})
-
-    # ============================================================================
-    # DEBUG AND TESTING ROUTES
-    # ============================================================================
-
-    @app.route('/api/debug/test-networking', methods=['GET'])
-    def test_networking():
-        """Test container networking and connectivity"""
-        results = {}
-        
-        for session_id, session in sessions.items():
-            container = session['container']
-            container_name = container.name
-            is_predefined = session.get('is_predefined', False)
-            
-            test_result = {
-                "container_name": container_name,
-                "is_predefined": is_predefined,
-                "tests": {}
-            }
-            
-            if not is_predefined:
-                # Test port connectivity using container networking
-                import socket
-                
-                # Test ADB port (5555 internal)
-                try:
-                    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                    sock.settimeout(3)
-                    result = sock.connect_ex((container_name, 5555))
-                    sock.close()
-                    test_result["tests"]["adb_port_5555"] = result == 0
-                except Exception as e:
-                    test_result["tests"]["adb_port_5555"] = f"Error: {str(e)}"
-                
-                # Test VNC port (5900 internal)
-                try:
-                    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                    sock.settimeout(3)
-                    result = sock.connect_ex((container_name, 5900))
-                    sock.close()
-                    test_result["tests"]["vnc_port_5900"] = result == 0
-                except Exception as e:
-                    test_result["tests"]["vnc_port_5900"] = f"Error: {str(e)}"
-                
-                # Test ADB connect
-                try:
-                    adb_server_port = session['ports']['adb_server']
-                    connect_result = run_adb_command(
-                        "connect", 
-                        ["-P", str(adb_server_port), "connect", f"{container_name}:5555"],
-                        adb_server_port=adb_server_port
-                    )
-                    test_result["tests"]["adb_connect"] = connect_result
-                except Exception as e:
-                    test_result["tests"]["adb_connect"] = f"Error: {str(e)}"
-            
-            results[session_id] = test_result
-        
-        return jsonify({
-            "success": True,
-            "message": "Networking tests completed",
-            "results": results
-        })
-
-    # ============================================================================
-    # LEGACY ENDPOINTS (for backwards compatibility)
-    # ============================================================================
-
-    @app.route('/emulators', methods=['POST'])
-    def create_emulator_legacy():
-        """Legacy endpoint for creating emulators"""
-        return create_emulator()
-
-    @app.route('/emulators/<session_id>', methods=['DELETE'])
-    def delete_emulator_legacy(session_id):
-        """Legacy endpoint for deleting emulators"""
-        return delete_emulator(session_id)
-
-    @app.route('/emulators', methods=['GET'])
-    def list_emulators_legacy():
-        """Legacy endpoint for listing emulators"""
-        return list_emulators() 
+            return jsonify({"success": False, "error": str(e)}) 

@@ -12,10 +12,13 @@ services:
       - DEVICE_PORT=5554
       - ENABLE_VNC=true
       - VNC_PORT=5900
+      - ENABLE_WEBSOCKIFY=true
+      - WEBSOCKIFY_PORT=6080
     volumes:
       - ./avd-data:/root/.android/avd
     ports:
       - "5901:5900"  # VNC access
+      - "6081:6080"  # Websockify/noVNC access
       - "5554:5554"  # Emulator console
       - "5555:5555"  # ADB device port
       - "5037:5037"  # ADB server port
@@ -36,10 +39,13 @@ services:
       - DEVICE_PORT=6654
       - ENABLE_VNC=true
       - VNC_PORT=5901
+      - ENABLE_WEBSOCKIFY=true
+      - WEBSOCKIFY_PORT=6080
     volumes:
       - ./avd-data:/root/.android/avd
     ports:
       - "5902:5901"  # VNC access  
+      - "6082:6080"  # Websockify/noVNC access
       - "6654:6654"  # Emulator console
       - "6655:5555"  # ADB device port (mapped from internal 5555)
       - "6037:5037"  # ADB server port (mapped from internal 5037)

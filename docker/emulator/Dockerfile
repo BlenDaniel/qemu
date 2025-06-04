@@ -20,6 +20,8 @@ RUN apt-get update && \
     libvulkan-dev vulkan-tools vulkan-validationlayers \
     # VNC and X11 support for GUI forwarding
     x11vnc xvfb fluxbox dbus-x11 xfonts-base xfonts-scalable \
+    # WebSocket proxy for noVNC
+    websockify python3 python3-pip git \
     && rm -rf /var/lib/apt/lists/*
 
 # Set SDK paths and environment variables
@@ -95,9 +97,15 @@ RUN dos2unix /usr/local/bin/start-emulator.sh && \
 RUN cp /usr/local/bin/start-emulator.sh /start-emulator.sh && \
     chmod +x /start-emulator.sh
 
+# Download and setup noVNC
+RUN cd /opt && \
+    git clone https://github.com/novnc/noVNC.git && \
+    cd noVNC && \
+    git checkout v1.4.0 && \
+    ln -s vnc.html index.html
 
-    # Expose ports: console, ADB, ADB-server, VNC
-EXPOSE 5554 5555 5037 5900
+# Expose ports: console, ADB, ADB-server, VNC, websockify
+EXPOSE 5554 5555 5037 5900 6080
 
 WORKDIR ${ANDROID_SDK_ROOT}
 CMD ["/usr/local/bin/start-emulator.sh"]
