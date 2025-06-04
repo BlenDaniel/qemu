@@ -29,9 +29,14 @@ def clean_docker_environment():
     for var in docker_env_vars:
         if var in os.environ:
             original_value = os.environ[var]
-            # Check for malformed schemes
-            if 'http+docker' in original_value or original_value.strip() == '':
+            # Check for malformed schemes - expanded to catch more issues
+            if any(scheme in original_value for scheme in ['http+docker', 'https+docker', 'tcp+docker']) or original_value.strip() == '':
                 logger.warning(f"Clearing malformed Docker environment variable {var}={original_value}")
+                del os.environ[var]
+                cleared_vars.append(var)
+            # Also clear if it contains invalid characters or patterns
+            elif '://' in original_value and not any(original_value.startswith(scheme) for scheme in ['unix://', 'tcp://', 'http://', 'https://']):
+                logger.warning(f"Clearing potentially malformed Docker environment variable {var}={original_value}")
                 del os.environ[var]
                 cleared_vars.append(var)
     
@@ -99,6 +104,9 @@ client = None
 def get_docker_client():
     global client
     if client is None:
+        # Clean environment variables again before attempting connection
+        clean_docker_environment()
+        
         # Since we're running in a container with Docker socket mounted, try socket first
         try:
             # Try explicit Unix socket connection first (since we have it mounted)
@@ -108,7 +116,11 @@ def get_docker_client():
         except Exception as e:
             logger.warning(f"Mounted socket connection failed: {e}")
             try:
-                # Try the default method as fallback
+                # Clear environment and try from_env with explicit cleanup
+                for var in ['DOCKER_HOST', 'DOCKER_TLS_VERIFY', 'DOCKER_CERT_PATH']:
+                    if var in os.environ:
+                        del os.environ[var]
+                
                 client = docker.from_env()
                 client.ping()
                 logger.info("Docker client connected successfully via environment")
@@ -121,8 +133,16 @@ def get_docker_client():
                     logger.info("Docker client connected via TCP")
                 except Exception as e3:
                     logger.error(f"All Docker connection methods failed: {e3}")
-                    # Set client to None so we can provide better error messages
-                    client = None
+                    # Try one more fallback - direct socket with no environment interference
+                    try:
+                        # Completely reset client state
+                        client = docker.DockerClient(base_url='unix:///var/run/docker.sock')
+                        client.ping()
+                        logger.info("Docker client connected via direct socket path")
+                    except Exception as e4:
+                        logger.error(f"Final fallback connection failed: {e4}")
+                        # Set client to None so we can provide better error messages
+                        client = None
     return client
 
 def discover_existing_containers(sessions):
@@ -254,4 +274,4 @@ def wait_for_container_ports(container, timeout=60):
         if ports and ports.get('5555/tcp'):
             return True
         time.sleep(1)
-    return False 
+    return False

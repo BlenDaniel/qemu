@@ -52,12 +52,12 @@ RUN apt-get install -y \
     gnupg \
     lsb-release
 
-# Install Docker CLI manually (avoiding get.docker.com script that might set problematic env vars)
-RUN mkdir -p /etc/apt/keyrings && \
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null && \
-    apt-get update && \
-    apt-get install -y docker-ce-cli
+# Install Docker CLI from static binary
+RUN curl -fsSL -k -o /tmp/docker.tgz "https://download.docker.com/linux/static/stable/x86_64/docker-24.0.7.tgz" && \
+    tar -xzf /tmp/docker.tgz -C /tmp && \
+    mv /tmp/docker/docker /usr/local/bin/ && \
+    rm -rf /tmp/docker /tmp/docker.tgz && \
+    chmod +x /usr/local/bin/docker
 
 # Ensure no Docker daemon configurations interfere with Python client
 RUN rm -f /etc/docker/daemon.json 2>/dev/null || true
