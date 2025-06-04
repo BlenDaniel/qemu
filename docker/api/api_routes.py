@@ -458,16 +458,30 @@ def register_api_routes(app, sessions):
         # Test 4: Check if websockify process is running in container
         try:
             container = session['container']
-            exec_result = container.exec_run("ps -ef | grep websockify | grep -v grep")
-            websockify_running = b"websockify" in exec_result.output
+            
+            # Use pgrep which is more reliable than ps with grep
+            websockify_result = container.exec_run("pgrep -f websockify")
+            websockify_running = websockify_result.exit_code == 0
             test_results["tests"]["websockify_process_running"] = websockify_running
-            test_results["tests"]["websockify_processes"] = exec_result.output.decode().strip()
+            
+            if websockify_running:
+                # Get detailed process info if running
+                ps_result = container.exec_run("ps aux | grep websockify | grep -v grep")
+                test_results["tests"]["websockify_processes"] = ps_result.output.decode().strip()
+            else:
+                test_results["tests"]["websockify_processes"] = "No websockify processes found"
             
             # Test 5: Check VNC server process
-            vnc_result = container.exec_run("ps -ef | grep x11vnc | grep -v grep")
-            vnc_running = b"x11vnc" in vnc_result.output
+            vnc_result = container.exec_run("pgrep -f x11vnc")
+            vnc_running = vnc_result.exit_code == 0
             test_results["tests"]["vnc_process_running"] = vnc_running
-            test_results["tests"]["vnc_processes"] = vnc_result.output.decode().strip()
+            
+            if vnc_running:
+                # Get detailed process info if running
+                vnc_ps_result = container.exec_run("ps aux | grep x11vnc | grep -v grep")
+                test_results["tests"]["vnc_processes"] = vnc_ps_result.output.decode().strip()
+            else:
+                test_results["tests"]["vnc_processes"] = "No x11vnc processes found"
             
         except Exception as e:
             test_results["tests"]["websockify_process_running"] = f"Error: {str(e)}"
@@ -628,11 +642,20 @@ def register_api_routes(app, sessions):
             time.sleep(3)
             
             # Verify services are running
-            vnc_check = container.exec_run("ps -ef | grep x11vnc | grep -v grep")
-            websockify_check = container.exec_run("ps -ef | grep websockify | grep -v grep")
+            vnc_check = container.exec_run("pgrep -f x11vnc")
+            websockify_check = container.exec_run("pgrep -f websockify")
             
-            results["vnc_running"] = b"x11vnc" in vnc_check.output
-            results["websockify_running"] = b"websockify" in websockify_check.output
+            results["vnc_running"] = vnc_check.exit_code == 0
+            results["websockify_running"] = websockify_check.exit_code == 0
+            
+            # Get process details if running
+            if results["vnc_running"]:
+                vnc_ps = container.exec_run("ps aux | grep x11vnc | grep -v grep")
+                results["vnc_process_details"] = vnc_ps.output.decode().strip()
+            
+            if results["websockify_running"]:
+                ws_ps = container.exec_run("ps aux | grep websockify | grep -v grep") 
+                results["websockify_process_details"] = ws_ps.output.decode().strip()
             
             return jsonify({
                 "success": True,
