@@ -1,57 +1,53 @@
-[1:35:47 PM] ℹ️ Starting emulator creation process...
-
-[1:35:47 PM] ℹ️ Selected Android 11 with ADB server mapping: true
-
-[1:35:47 PM] ℹ️ Sending request to API...
-
-[1:35:48 PM] ❌ Failed to create emulator:
-
-Internal Server Error
-
-Docker API error: 500 Server Error for http+docker://localhost/v1.47/containers/49cb48353199deb93f5d400b06292c15cc6bd43526f04efdb0c0347a2190dc35/start: Internal Server Error ("driver failed programming external connectivity on endpoint emu_ryy3d3qs_a33eadb1 (0c39f1b90bad43d1d347159fa13d2ff73fa3e22c20492c97d93dffe77af99ecd): Bind for 0.0.0.0:6118 failed: port is already allocated")
-
-2025-06-04 13:35:37 INFO:docker_manager:=== Docker Environment Variables Debug ===
-2025-06-04 13:35:37 INFO:docker_manager:DOCKER_HOST = NOT_SET
-2025-06-04 13:35:37 INFO:docker_manager:DOCKER_TLS_VERIFY = NOT_SET
-2025-06-04 13:35:37 INFO:docker_manager:DOCKER_CERT_PATH = NOT_SET
-2025-06-04 13:35:37 INFO:docker_manager:DOCKER_API_VERSION = NOT_SET
-2025-06-04 13:35:37 INFO:docker_manager:No problematic Docker environment variables found to clear
-2025-06-04 13:35:37 INFO:docker_manager:Docker client connected via mounted Unix socket
-2025-06-04 13:35:37 INFO:docker_manager:Found 3 running containers
-2025-06-04 13:35:37 INFO:docker_manager:Checking container: qemu-api-1
-2025-06-04 13:35:37 INFO:docker_manager:Checking container: qemu-emulator14-1
-2025-06-04 13:35:37 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator14-1 (sleeping)
-2025-06-04 13:35:37 INFO:docker_manager:Checking container: qemu-emulator-1
-2025-06-04 13:35:37 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator-1 (sleeping)
-2025-06-04 13:35:37 INFO:werkzeug:WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
-2025-06-04 13:35:37  * Running on all addresses (0.0.0.0)
-2025-06-04 13:35:37  * Running on http://127.0.0.1:5001
-2025-06-04 13:35:37  * Running on http://172.18.0.4:5001
-2025-06-04 13:35:37 INFO:werkzeug:Press CTRL+C to quit
-2025-06-04 13:35:37 INFO:werkzeug: * Restarting with stat
-2025-06-04 13:35:38 INFO:docker_manager:=== Docker Environment Variables Debug ===
-2025-06-04 13:35:38 INFO:docker_manager:DOCKER_HOST = NOT_SET
-2025-06-04 13:35:38 INFO:docker_manager:DOCKER_TLS_VERIFY = NOT_SET
-2025-06-04 13:35:38 INFO:docker_manager:DOCKER_CERT_PATH = NOT_SET
-2025-06-04 13:35:38 INFO:docker_manager:DOCKER_API_VERSION = NOT_SET
-2025-06-04 13:35:38 INFO:docker_manager:No problematic Docker environment variables found to clear
-2025-06-04 13:35:38 INFO:docker_manager:Docker client connected via mounted Unix socket
-2025-06-04 13:35:38 INFO:docker_manager:Found 3 running containers
-2025-06-04 13:35:38 INFO:docker_manager:Checking container: qemu-api-1
-2025-06-04 13:35:37  * Serving Flask app 'app.py'
-2025-06-04 13:35:37  * Debug mode: on
-2025-06-04 13:35:38 INFO:docker_manager:Checking container: qemu-emulator14-1
-2025-06-04 13:35:38 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator14-1 (sleeping)
-2025-06-04 13:35:38 INFO:docker_manager:Checking container: qemu-emulator-1
-2025-06-04 13:35:38 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator-1 (sleeping)
-2025-06-04 13:35:38 WARNING:werkzeug: * Debugger is active!
-2025-06-04 13:35:38 INFO:werkzeug: * Debugger PIN: 500-579-606
-2025-06-04 13:35:41 ERROR:docker_manager:Docker API error: 500 Server Error for http+docker://localhost/v1.47/containers/a6e1590073b346f5e36099eb388f9c0848c9406fafb074472324dc78e25ef687/start: Internal Server Error ("driver failed programming external connectivity on endpoint emu_8882lf90_ac5824ac (d18af1aaecf1468405ce1bc1d7ecd487d95cd147cf756b89d91a50a79e30d4de): Bind for 0.0.0.0:6154 failed: port is already allocated")
-2025-06-04 13:35:41 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 11:35:41] "POST /api/emulators HTTP/1.1" 500 -
-2025-06-04 13:35:48 ERROR:docker_manager:Docker API error: 500 Server Error for http+docker://localhost/v1.47/containers/49cb48353199deb93f5d400b06292c15cc6bd43526f04efdb0c0347a2190dc35/start: Internal Server Error ("driver failed programming external connectivity on endpoint emu_ryy3d3qs_a33eadb1 (0c39f1b90bad43d1d347159fa13d2ff73fa3e22c20492c97d93dffe77af99ecd): Bind for 0.0.0.0:6118 failed: port is already allocated")
-2025-06-04 13:35:48 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 11:35:48] "POST /api/emulators HTTP/1.1" 500 -
-2025-06-04 13:35:53 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 11:35:53] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 13:36:23 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 11:36:23] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 13:36:53 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 11:36:53] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 13:37:23 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 11:37:23] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 13:38:17 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 11:38:17] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 13:48:49 INFO:docker_manager:=== Docker Environment Variables Debug ===
+2025-06-04 13:48:49 INFO:docker_manager:DOCKER_HOST = NOT_SET
+2025-06-04 13:48:49 INFO:docker_manager:DOCKER_TLS_VERIFY = NOT_SET
+2025-06-04 13:48:49 INFO:docker_manager:DOCKER_CERT_PATH = NOT_SET
+2025-06-04 13:48:49 INFO:docker_manager:DOCKER_API_VERSION = NOT_SET
+2025-06-04 13:48:49 INFO:docker_manager:No problematic Docker environment variables found to clear
+2025-06-04 13:48:49 INFO:docker_manager:Docker client connected via mounted Unix socket
+2025-06-04 13:48:49 INFO:docker_manager:Found 3 running containers
+2025-06-04 13:48:49 INFO:docker_manager:Checking container: qemu-api-1
+2025-06-04 13:48:49 INFO:docker_manager:Checking container: qemu-emulator14-1
+2025-06-04 13:48:49 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator14-1 (sleeping)
+2025-06-04 13:48:49 INFO:docker_manager:Checking container: qemu-emulator-1
+2025-06-04 13:48:49 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator-1 (sleeping)
+2025-06-04 13:48:49 Traceback (most recent call last):
+2025-06-04 13:48:49   File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+2025-06-04 13:48:49     return _run_code(code, main_globals, None,
+2025-06-04 13:48:49   File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+2025-06-04 13:48:49     exec(code, run_globals)
+2025-06-04 13:48:49   File "/usr/local/lib/python3.10/dist-packages/flask/__main__.py", line 3, in <module>
+2025-06-04 13:48:49     main()
+2025-06-04 13:48:49   File "/usr/local/lib/python3.10/dist-packages/flask/cli.py", line 1063, in main
+2025-06-04 13:48:49     cli.main()
+2025-06-04 13:48:49   File "/usr/local/lib/python3.10/dist-packages/click/core.py", line 1363, in main
+2025-06-04 13:48:49     rv = self.invoke(ctx)
+2025-06-04 13:48:49   File "/usr/local/lib/python3.10/dist-packages/click/core.py", line 1830, in invoke
+2025-06-04 13:48:49     return _process_result(sub_ctx.command.invoke(sub_ctx))
+2025-06-04 13:48:49   File "/usr/local/lib/python3.10/dist-packages/click/core.py", line 1226, in invoke
+2025-06-04 13:48:49     return ctx.invoke(self.callback, **ctx.params)
+2025-06-04 13:48:49   File "/usr/local/lib/python3.10/dist-packages/click/core.py", line 794, in invoke
+2025-06-04 13:48:49     return callback(*args, **kwargs)
+2025-06-04 13:48:49   File "/usr/local/lib/python3.10/dist-packages/click/decorators.py", line 93, in new_func
+2025-06-04 13:48:49     return ctx.invoke(f, obj, *args, **kwargs)
+2025-06-04 13:48:49   File "/usr/local/lib/python3.10/dist-packages/click/core.py", line 794, in invoke
+2025-06-04 13:48:49     return callback(*args, **kwargs)
+2025-06-04 13:48:49   File "/usr/local/lib/python3.10/dist-packages/flask/cli.py", line 911, in run_command
+2025-06-04 13:48:49     raise e from None
+2025-06-04 13:48:49   File "/usr/local/lib/python3.10/dist-packages/flask/cli.py", line 897, in run_command
+2025-06-04 13:48:49     app = info.load_app()
+2025-06-04 13:48:49   File "/usr/local/lib/python3.10/dist-packages/flask/cli.py", line 308, in load_app
+2025-06-04 13:48:49     app = locate_app(import_name, name)
+2025-06-04 13:48:49   File "/usr/local/lib/python3.10/dist-packages/flask/cli.py", line 218, in locate_app
+2025-06-04 13:48:49     __import__(module_name)
+2025-06-04 13:48:49   File "/app/app.py", line 32, in <module>
+2025-06-04 13:48:49     def health_check():
+2025-06-04 13:48:49   File "/usr/local/lib/python3.10/dist-packages/flask/scaffold.py", line 436, in decorator
+2025-06-04 13:48:49     self.add_url_rule(rule, endpoint, f, **options)
+2025-06-04 13:48:49   File "/usr/local/lib/python3.10/dist-packages/flask/scaffold.py", line 51, in wrapper_func
+2025-06-04 13:48:49     return f(self, *args, **kwargs)
+2025-06-04 13:48:49   File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1059, in add_url_rule
+2025-06-04 13:48:49     raise AssertionError(
+2025-06-04 13:48:49 AssertionError: View function mapping is overwriting an existing endpoint function: health_check
+2025-06-04 13:48:49 INFO:websocket_manager:Cleaning up 0 websockify processes
+2025-06-04 13:48:49 INFO:websocket_manager:All websockify processes cleaned up
