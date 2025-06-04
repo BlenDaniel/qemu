@@ -35,8 +35,9 @@ function initNoVNCViewer(emulatorId, wsPort) {
         vncIframe.className = 'vnc-iframe';
         vncIframe.id = 'vncFrame';
 
-        // Construct noVNC URL - websockify serves noVNC on the same port
-        const novncUrl = `http://localhost:${wsPort}/vnc.html?host=localhost&port=${wsPort}&autoconnect=true&resize=scale&quality=6`;
+        // Construct noVNC URL - use the host-accessible websockify port
+        // The container's websockify is already running and mapped to the host
+        const novncUrl = `http://${window.location.hostname}:${wsPort}/vnc.html?host=${window.location.hostname}&port=${wsPort}&autoconnect=true&resize=scale&quality=6`;
 
         vncIframe.onload = function () {
             loadingMessage.style.display = 'none';

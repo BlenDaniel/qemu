@@ -121,6 +121,46 @@ netstat -an | findstr :6118
    docker port <container_name>
    ```
 
+### Live View/noVNC Connection Issues
+
+**Problem**: Emulator starts but live view shows connection errors or "localhost didn't send any data"
+
+**Root Causes**:
+1. Websockify service not accessible from browser
+2. Port mapping issues between container and host
+3. Browser trying to connect to wrong hostname/port
+
+**Solutions**:
+1. **Test the websockify connection**:
+   ```bash
+   # Replace <emulator_id> with your actual emulator ID
+   curl http://localhost:5001/api/emulators/<emulator_id>/vnc/test
+   ```
+
+2. **Check if websockify port is accessible**:
+   ```bash
+   # Replace 6292 with your actual websockify port
+   curl http://localhost:6292/vnc.html
+   ```
+
+3. **Verify container port mappings**:
+   ```bash
+   docker ps
+   # Look for port mappings like "6292:6080" for websockify
+   ```
+
+4. **Check container logs**:
+   ```bash
+   docker logs <container_name>
+   # Look for VNC and websockify startup messages
+   ```
+
+5. **Browser issues**:
+   - Try a different browser
+   - Check browser console for errors (F12 → Console)
+   - Disable browser extensions that might block connections
+   - Try accessing directly: `http://localhost:<websockify_port>/vnc.html`
+
 ### Performance and Resource Issues
 
 **Problem**: System becomes slow or unresponsive with multiple emulators
@@ -250,8 +290,11 @@ docker-compose logs -f api
 ### Health Checks
 Implement health checks to detect issues early:
 ```bash
-# Check API health
-curl http://localhost:5001/api/emulators
+# Check API health (basic)
+curl http://localhost:5001/health
+
+# Check detailed system health
+curl http://localhost:5001/api/health
 
 # Check container health
 docker ps --filter "name=emu_"

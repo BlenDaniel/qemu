@@ -371,7 +371,7 @@ def register_api_routes(app, sessions):
 
     @app.route('/api/emulators/<emulator_id>/live_view')
     def live_view(emulator_id):
-        """Direct access to noVNC interface via container's websockify port"""
+        """Direct access to noVNC interface via container's built-in websockify port"""
         if emulator_id not in sessions:
             return "Emulator not found", 404
         
@@ -383,12 +383,67 @@ def register_api_routes(app, sessions):
         if not vnc_port or not websockify_port:
             return "VNC/WebSocket not available for this emulator", 404
         
-        # Render noVNC interface using the container's websockify port
+        # The emulator container has built-in websockify running on the websockify_port
+        # This port is already mapped from container:6080 to host:websockify_port
+        logger.info(f"Live view requested for {emulator_id} - using built-in websockify on port {websockify_port}")
+        
+        # Render noVNC interface using the container's built-in websockify port
         return render_template('novnc_viewer.html', 
                              emulator_id=emulator_id,
                              device_id=device_id,
-                             ws_port=websockify_port,
+                             ws_port=websockify_port,  # Use the host-mapped port directly
                              vnc_port=vnc_port)
+
+    @app.route('/api/emulators/<emulator_id>/vnc/test')
+    def test_vnc_connection(emulator_id):
+        """Test if the VNC/websockify connection is accessible"""
+        if emulator_id not in sessions:
+            return jsonify({"error": "Emulator not found"}), 404
+        
+        session = sessions[emulator_id]
+        websockify_port = session.get('websockify_port')
+        vnc_port = session.get('vnc_port')
+        
+        if not websockify_port:
+            return jsonify({"error": "Websockify port not found"}), 404
+        
+        import requests
+        import socket
+        
+        test_results = {
+            "emulator_id": emulator_id,
+            "websockify_port": websockify_port,
+            "vnc_port": vnc_port,
+            "tests": {}
+        }
+        
+        # Test 1: Check if websockify port is accessible
+        try:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(3)
+            result = sock.connect_ex(('localhost', int(websockify_port)))
+            sock.close()
+            test_results["tests"]["port_accessible"] = result == 0
+        except Exception as e:
+            test_results["tests"]["port_accessible"] = f"Error: {str(e)}"
+        
+        # Test 2: Check if noVNC is served on the websockify port
+        try:
+            response = requests.get(f"http://localhost:{websockify_port}/vnc.html", timeout=5)
+            test_results["tests"]["novnc_available"] = response.status_code == 200
+            test_results["tests"]["novnc_response_size"] = len(response.content)
+        except Exception as e:
+            test_results["tests"]["novnc_available"] = f"Error: {str(e)}"
+        
+        # Test 3: Container status
+        try:
+            container = session['container']
+            container.reload()
+            test_results["tests"]["container_status"] = container.status
+        except Exception as e:
+            test_results["tests"]["container_status"] = f"Error: {str(e)}"
+        
+        return jsonify(test_results)
 
     @app.route('/api/emulators/<emulator_id>/vnc/start', methods=['POST'])
     def start_vnc_proxy(emulator_id):
