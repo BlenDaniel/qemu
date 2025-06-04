@@ -1,20 +1,28 @@
 FROM ubuntu:22.04
-
 WORKDIR /app
 
 ENV FLASK_APP=app.py
 ENV PYTHONUNBUFFERED=1
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install Python, system dependencies, Docker client, and VNC client tools
-RUN apt-get update && apt-get install -y \
+# Update package lists first
+RUN apt-get update
+
+# Install ca-certificates FIRST, then update certificates
+RUN apt-get install -y ca-certificates && update-ca-certificates
+
+# Install basic packages
+RUN apt-get install -y \
     python3 \
     python3-pip \
     python3-venv \
     wget \
     unzip \
-    openjdk-17-jre-headless \
-    ca-certificates \
+    curl \
+    git
+
+# Install build tools
+RUN apt-get install -y \
     gcc \
     build-essential \
     zlib1g-dev \
@@ -22,26 +30,33 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     liblcms2-dev \
     libwebp-dev \
-    libtiff5-dev \
-    tigervnc-viewer \
-    tigervnc-common \
+    libtiff5-dev
+
+# Install network tools
+RUN apt-get install -y \
     netcat-openbsd \
     telnet \
-    curl \
     iputils-ping \
-    net-tools \
-    websockify \
-    git \
+    net-tools
+
+# Install Java and VNC tools
+RUN apt-get install -y \
+    openjdk-17-jre-headless \
+    tigervnc-viewer \
+    tigervnc-common \
+    websockify
+
+# Install Docker repository setup tools
+RUN apt-get install -y \
     apt-transport-https \
     gnupg \
-    lsb-release \
-    && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg \
-    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null \
-    && apt-get update \
-    && apt-get install -y docker-ce-cli \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && update-ca-certificates
+    lsb-release
+
+# Add Docker repository and install Docker CLI (with SSL fix)
+RUN curl -fsSL https://get.docker.com | sh
+
+# Clean up
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install Android SDK Platform Tools (includes ADB)
 ENV ANDROID_SDK_ROOT=/opt/android-sdk
