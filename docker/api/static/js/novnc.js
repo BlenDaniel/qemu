@@ -148,19 +148,53 @@ function initNoVNCViewer(emulatorId, wsPort) {
         updateStatus('connecting', 'Initializing connection...');
         updateDebugInfo('Starting connection process');
         
-        // Test if websockify is accessible first
-        testWebsockifyConnection().then(accessible => {
-            if (accessible) {
-                updateDebugInfo('Websockify accessible, trying direct connection');
+        // First, test the connection and automatically restart services if needed
+        fetch(`/api/emulators/${emulatorId}/vnc/test`)
+            .then(response => response.json())
+            .then(testData => {
+                updateDebugInfo(`Test results: VNC=${testData.tests.vnc_process_running}, WebSocket=${testData.tests.websockify_process_running}`);
+                
+                // If services are not running, restart them automatically
+                if (!testData.tests.vnc_process_running || !testData.tests.websockify_process_running) {
+                    updateStatus('connecting', 'Services not running, restarting...');
+                    updateDebugInfo('VNC/WebSocket services not running, attempting restart');
+                    
+                    return fetch(`/api/emulators/${emulatorId}/vnc/restart`, {
+                        method: 'POST'
+                    })
+                    .then(response => response.json())
+                    .then(restartData => {
+                        if (restartData.success) {
+                            updateDebugInfo('Services restarted successfully, waiting before connecting');
+                            // Wait for services to fully start
+                            return new Promise(resolve => setTimeout(resolve, 5000));
+                        } else {
+                            throw new Error(`Service restart failed: ${restartData.error}`);
+                        }
+                    });
+                } else {
+                    updateDebugInfo('Services are running, proceeding with connection');
+                    return Promise.resolve();
+                }
+            })
+            .then(() => {
+                // Now test if websockify is accessible
+                return testWebsockifyConnection();
+            })
+            .then(accessible => {
+                if (accessible) {
+                    updateDebugInfo('Websockify accessible, trying direct connection');
+                    connectDirect();
+                } else {
+                    updateDebugInfo('Websockify not accessible, trying proxy');
+                    connectViaProxy();
+                }
+            })
+            .catch(error => {
+                updateDebugInfo(`Connection setup failed: ${error.message}`);
+                updateStatus('connecting', 'Setup failed, trying direct connection anyway...');
                 connectDirect();
-            } else {
-                updateDebugInfo('Websockify not accessible, trying proxy');
-                connectViaProxy();
-            }
-        }).catch(() => {
-            updateDebugInfo('Connection test failed, trying direct anyway');
-            connectDirect();
-        });
+            });
     }
 
     function handleConnectionError() {

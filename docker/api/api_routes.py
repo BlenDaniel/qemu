@@ -458,12 +458,20 @@ def register_api_routes(app, sessions):
         # Test 4: Check if websockify process is running in container
         try:
             container = session['container']
-            exec_result = container.exec_run("ps aux | grep websockify")
-            websockify_running = b"websockify" in exec_result.output and b"grep" not in exec_result.output.split(b'\n')[0]
+            exec_result = container.exec_run("ps -ef | grep websockify | grep -v grep")
+            websockify_running = b"websockify" in exec_result.output
             test_results["tests"]["websockify_process_running"] = websockify_running
             test_results["tests"]["websockify_processes"] = exec_result.output.decode().strip()
+            
+            # Test 5: Check VNC server process
+            vnc_result = container.exec_run("ps -ef | grep x11vnc | grep -v grep")
+            vnc_running = b"x11vnc" in vnc_result.output
+            test_results["tests"]["vnc_process_running"] = vnc_running
+            test_results["tests"]["vnc_processes"] = vnc_result.output.decode().strip()
+            
         except Exception as e:
             test_results["tests"]["websockify_process_running"] = f"Error: {str(e)}"
+            test_results["tests"]["vnc_process_running"] = f"Error: {str(e)}"
         
         return jsonify(test_results)
 
@@ -566,6 +574,76 @@ def register_api_routes(app, sessions):
                 
         except Exception as e:
             logger.error(f"Error checking VNC proxy status for {emulator_id}: {str(e)}")
+            return jsonify({
+                "success": False,
+                "error": str(e)
+            }), 500
+
+    @app.route('/api/emulators/<emulator_id>/vnc/restart', methods=['POST'])
+    def restart_vnc_services(emulator_id):
+        """Restart VNC and websockify services in the container"""
+        if emulator_id not in sessions:
+            return jsonify({"error": "Emulator not found"}), 404
+        
+        session = sessions[emulator_id]
+        container = session['container']
+        
+        try:
+            results = {}
+            
+            # Kill existing VNC and websockify processes
+            logger.info(f"Restarting VNC services for {emulator_id}")
+            
+            # Kill existing processes
+            container.exec_run("pkill -f x11vnc || true")
+            container.exec_run("pkill -f websockify || true")
+            time.sleep(2)
+            
+            # Start Xvfb if not running
+            xvfb_check = container.exec_run("pgrep Xvfb")
+            if xvfb_check.exit_code != 0:
+                logger.info("Starting Xvfb...")
+                container.exec_run("Xvfb :1 -screen 0 1024x768x24 -ac +extension GLX +render -noreset", detach=True)
+                time.sleep(2)
+            
+            # Start window manager if not running
+            fluxbox_check = container.exec_run("pgrep fluxbox")
+            if fluxbox_check.exit_code != 0:
+                logger.info("Starting Fluxbox...")
+                container.exec_run("DISPLAY=:1 fluxbox", detach=True)
+                time.sleep(2)
+            
+            # Start VNC server
+            logger.info("Starting VNC server...")
+            vnc_cmd = "DISPLAY=:1 x11vnc -display :1 -forever -nopw -listen localhost -xkb -rfbport 5900 -shared -permitfiletransfer -tightfilexfer -quiet"
+            vnc_result = container.exec_run(vnc_cmd, detach=True)
+            results["vnc_started"] = vnc_result.exit_code == 0
+            time.sleep(3)
+            
+            # Start websockify
+            logger.info("Starting websockify...")
+            websockify_cmd = "websockify --web=/opt/noVNC --target-config=/dev/null 6080 localhost:5900"
+            websockify_result = container.exec_run(websockify_cmd, detach=True)
+            results["websockify_started"] = websockify_result.exit_code == 0
+            time.sleep(3)
+            
+            # Verify services are running
+            vnc_check = container.exec_run("ps -ef | grep x11vnc | grep -v grep")
+            websockify_check = container.exec_run("ps -ef | grep websockify | grep -v grep")
+            
+            results["vnc_running"] = b"x11vnc" in vnc_check.output
+            results["websockify_running"] = b"websockify" in websockify_check.output
+            
+            return jsonify({
+                "success": True,
+                "message": "VNC services restart attempted",
+                "results": results,
+                "vnc_port": session.get('vnc_port'),
+                "websockify_port": session.get('websockify_port')
+            })
+            
+        except Exception as e:
+            logger.error(f"Error restarting VNC services for {emulator_id}: {str(e)}")
             return jsonify({
                 "success": False,
                 "error": str(e)

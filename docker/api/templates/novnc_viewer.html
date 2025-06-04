@@ -21,6 +21,7 @@
             <button class="btn btn-warning" onclick="wakeEmulator()">⚡ Wake Screen</button>
             <button class="btn btn-info" onclick="testConnection()">🔧 Test Connection</button>
             <button class="btn btn-secondary" onclick="openDirectNoVNC()">📺 Direct noVNC</button>
+            <button class="btn btn-warning" onclick="restartVNCServices()">🔧 Restart VNC</button>
             <a href="/" class="btn btn-danger">❌ Close</a>
         </div>
     </div>
@@ -97,6 +98,40 @@
         function openDirectNoVNC() {
             const directUrl = `http://localhost:{{ ws_port }}/vnc.html?autoconnect=true&resize=scale`;
             window.open(directUrl, '_blank');
+        }
+
+        // Restart VNC services function
+        function restartVNCServices() {
+            const statusText = document.getElementById('statusText');
+            const debugOutput = document.getElementById('debugOutput');
+            const debugPanel = document.getElementById('debugPanel');
+
+            statusText.textContent = 'Restarting VNC services...';
+            debugPanel.style.display = 'block';
+            debugOutput.textContent = 'Restarting VNC and websockify services in container...';
+
+            fetch(`/api/emulators/{{ emulator_id }}/vnc/restart`, {
+                method: 'POST'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        statusText.textContent = 'VNC services restarted, reconnecting...';
+                        debugOutput.textContent = JSON.stringify(data, null, 2);
+
+                        // Wait a bit then try to reconnect
+                        setTimeout(() => {
+                            reconnectVNC();
+                        }, 3000);
+                    } else {
+                        statusText.textContent = 'Failed to restart VNC services';
+                        debugOutput.textContent = `Error: ${data.error}`;
+                    }
+                })
+                .catch(error => {
+                    statusText.textContent = `Restart failed: ${error.message}`;
+                    debugOutput.textContent = `Error: ${error.message}`;
+                });
         }
     </script>
 </body>
