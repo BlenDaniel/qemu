@@ -18,6 +18,7 @@
             </div>
             <button class="btn btn-primary" onclick="toggleFullscreen()">🔍 Fullscreen</button>
             <button class="btn btn-success" onclick="reconnectVNC()">🔄 Reconnect</button>
+            <button class="btn btn-warning" onclick="wakeEmulator()">⚡ Wake Screen</button>
             <a href="/" class="btn btn-danger">❌ Close</a>
         </div>
     </div>
@@ -43,6 +44,9 @@
         document.addEventListener('DOMContentLoaded', function () {
             initNoVNCViewer('{{ emulator_id }}', parseInt('{{ ws_port }}'));
         });
+
+        // Make emulator ID available globally for wake function
+        window.currentEmulatorId = '{{ emulator_id }}';
     </script>
 </body>
 

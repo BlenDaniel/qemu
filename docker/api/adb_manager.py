@@ -122,45 +122,22 @@ def robust_adb_server_restart(adb_server_port):
 def detect_device_with_retry(adb_server_port, device_port, max_retries=10, retry_delay=3, container_host=None, container_name=None):
     """Detect device by connecting directly to emulator's ADB server"""
     
+    # For dynamically created containers, use localhost with mapped ports instead of container networking
+    # Container networking only works for predefined docker-compose containers
     if container_name and not container_host:
-        logger.info(f"Using direct emulator ADB server connection: {container_name}")
-        
-        # Connect directly to the emulator's ADB server
-        connection_result = connect_to_emulator_adb_server(container_name, 5037)
-        
-        if connection_result["success"]:
-            # Check if any device is listed
-            devices_output = connection_result["devices_output"]
-            lines = devices_output.strip().split('\n')
-            
-            if len(lines) > 1:  # Skip header
-                for line in lines[1:]:
-                    if line.strip():
-                        parts = line.strip().split('\t')
-                        if len(parts) >= 1:
-                            serial = parts[0]
-                            status = parts[1] if len(parts) > 1 else "unknown"
-                            
-                            if serial.startswith("emulator-"):
-                                logger.info(f"Found emulator device: {serial} with status: {status}")
-                                return status
-            
-            logger.warning("No emulator devices found in ADB server")
-            return "not_found"
-        else:
-            logger.error(f"Failed to connect to emulator ADB server: {connection_result.get('error')}")
-            return "not_found"
+        logger.info(f"Dynamic container {container_name} - using localhost with mapped ports instead of container networking")
+        # Fall through to use localhost with the mapped adb_server_port and device_port
     
-    elif container_host:
+    if container_host:
         # For predefined containers from docker-compose
         target_serial = f"{container_host}:{device_port}"
         logger.info(f"Using Docker service networking: {container_host}:{device_port}")
     else:
-        # Fallback to localhost (host networking)
+        # Use localhost (host networking) - works for both predefined and dynamic containers
         target_serial = f"localhost:{device_port}"
         logger.info(f"Using localhost networking: localhost:{device_port}")
     
-    # Original retry logic for predefined containers
+    # Retry logic for connecting to the device
     for attempt in range(max_retries):
         try:
             logger.info(f"Device detection attempt {attempt + 1}/{max_retries} for {target_serial}")
@@ -202,7 +179,7 @@ def detect_device_with_retry(adb_server_port, device_port, max_retries=10, retry
                                 # Check for exact match or emulator serial format
                                 if (serial == target_serial or 
                                     (container_name and serial.startswith("emulator-")) or
-                                    (target_serial.endswith(":5555") and serial.startswith("emulator-"))):
+                                    (target_serial.startswith("localhost:") and serial.startswith("emulator-"))):
                                     logger.info(f"Found device {serial} with status: {status}")
                                     return status
                 

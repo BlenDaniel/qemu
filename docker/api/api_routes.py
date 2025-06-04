@@ -155,25 +155,37 @@ def register_api_routes(app, sessions):
         
         # Use robust ADB server restart
         logger.info("Setting up ADB connection for new emulator...")
+        logger.info(f"Using ADB server port: {adb_server_port}, device port: {adb_device_port}")
+        
+        # Give the emulator container a moment to start its services
+        time.sleep(3)
+        
         if not robust_adb_server_restart(adb_server_port):
             logger.warning("Failed to restart ADB server, but container is running")
             # Don't fail the creation, just log the issue
             final_status = "server_failed"
             devices_result = {"success": False, "error": "ADB server failed to start"}
         else:
-            # Use robust device detection with container networking
+            # Use robust device detection with localhost networking
             container_name = container.name
-            logger.info(f"Detecting device using container name: {container_name}")
+            logger.info(f"Detecting device using localhost networking for container: {container_name}")
+            logger.info(f"Connecting to localhost:{adb_device_port} via ADB server on port {adb_server_port}")
+            
             final_status = detect_device_with_retry(
                 adb_server_port, 
                 adb_device_port, 
                 max_retries=3, 
                 retry_delay=2,
-                container_name=container_name  # Pass container name for Docker networking
+                container_name=container_name  # Pass for logging but use localhost networking
             )
             
             # Get current devices list
             devices_result = run_adb_command("devices", ["-P", str(adb_server_port), "devices"], adb_server_port=adb_server_port)
+            
+            if final_status == "not_found":
+                logger.warning(f"Device not found immediately, but emulator might still be booting")
+                logger.info(f"You can manually connect later using: adb connect localhost:{adb_device_port}")
+                final_status = "pending"  # Mark as pending instead of not_found
         
         # Log creation info
         logger.info(f"Created Android {android_version} emulator {device_id}")
@@ -876,4 +888,68 @@ def register_api_routes(app, sessions):
             
         except Exception as e:
             logger.error(f"Error reconnecting emulator: {str(e)}")
+            return jsonify({"success": False, "error": str(e)})
+
+    @app.route('/api/emulators/<emulator_id>/wake', methods=['POST'])
+    def wake_emulator(emulator_id):
+        """Wake up the emulator display and send some input to make it show content"""
+        if emulator_id not in sessions:
+            return jsonify({"error": "Emulator not found"}), 404
+        
+        session = sessions[emulator_id]
+        adb_port = session['ports']['adb']
+        adb_server_port = session['ports']['adb_server']
+        
+        try:
+            logger.info(f"Waking up emulator {emulator_id} display...")
+            
+            commands = []
+            
+            # 1. Wake up the device (turn on screen)
+            wake_cmd = ["adb", "-P", str(adb_server_port), "shell", "input", "keyevent", "KEYCODE_WAKEUP"]
+            commands.append(("wake_screen", wake_cmd))
+            
+            # 2. Unlock the device (swipe up)
+            unlock_cmd = ["adb", "-P", str(adb_server_port), "shell", "input", "swipe", "200", "800", "200", "200"]
+            commands.append(("unlock_swipe", unlock_cmd))
+            
+            # 3. Send home key to go to launcher
+            home_cmd = ["adb", "-P", str(adb_server_port), "shell", "input", "keyevent", "KEYCODE_HOME"]
+            commands.append(("home_key", home_cmd))
+            
+            # 4. Check if boot is completed
+            boot_cmd = ["adb", "-P", str(adb_server_port), "shell", "getprop", "sys.boot_completed"]
+            commands.append(("boot_check", boot_cmd))
+            
+            # 5. Get screen density for better scaling
+            density_cmd = ["adb", "-P", str(adb_server_port), "shell", "wm", "density"]
+            commands.append(("density_check", density_cmd))
+            
+            results = {}
+            
+            for name, cmd in commands:
+                try:
+                    logger.info(f"Running {name}: {' '.join(cmd)}")
+                    result = subprocess.run(cmd, capture_output=True, text=True, timeout=10)
+                    results[name] = {
+                        "returncode": result.returncode,
+                        "stdout": result.stdout.strip(),
+                        "stderr": result.stderr.strip() if result.stderr else ""
+                    }
+                    # Small delay between commands
+                    time.sleep(1)
+                except subprocess.TimeoutExpired:
+                    results[name] = {"error": "Command timed out"}
+                except Exception as e:
+                    results[name] = {"error": str(e)}
+            
+            return jsonify({
+                "success": True,
+                "message": "Emulator wake commands sent",
+                "emulator_id": emulator_id,
+                "commands_run": results
+            })
+            
+        except Exception as e:
+            logger.error(f"Error waking emulator: {str(e)}")
             return jsonify({"success": False, "error": str(e)}) 

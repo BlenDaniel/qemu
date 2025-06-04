@@ -116,11 +116,22 @@ if [ -f "/root/.android/avd/${DEVICE_ID}.avd/config.ini" ]; then
   echo "hw.gpu.enabled=yes" >> /root/.android/avd/${DEVICE_ID}.avd/config.ini
   echo "hw.gpu.mode=swiftshader_indirect" >> /root/.android/avd/${DEVICE_ID}.avd/config.ini
   
+  # Display and screen settings for better visibility
+  echo "hw.lcd.width=720" >> /root/.android/avd/${DEVICE_ID}.avd/config.ini
+  echo "hw.lcd.height=1280" >> /root/.android/avd/${DEVICE_ID}.avd/config.ini
+  echo "hw.lcd.density=320" >> /root/.android/avd/${DEVICE_ID}.avd/config.ini
+  echo "skin.name=720x1280" >> /root/.android/avd/${DEVICE_ID}.avd/config.ini
+  echo "skin.dynamic=yes" >> /root/.android/avd/${DEVICE_ID}.avd/config.ini
+  
   # RAM and performance settings
   echo "hw.ramSize=2048" >> /root/.android/avd/${DEVICE_ID}.avd/config.ini
   echo "hw.useext4=yes" >> /root/.android/avd/${DEVICE_ID}.avd/config.ini
   echo "hw.cpu.ncore=1" >> /root/.android/avd/${DEVICE_ID}.avd/config.ini
   echo "vm.heapSize=256" >> /root/.android/avd/${DEVICE_ID}.avd/config.ini
+  
+  # Boot animation and startup settings
+  echo "hw.mainKeys=yes" >> /root/.android/avd/${DEVICE_ID}.avd/config.ini
+  echo "hw.keyboard=yes" >> /root/.android/avd/${DEVICE_ID}.avd/config.ini
 fi
 
 echo "Launching Android emulator AVD '$DEVICE_ID' on port $EMULATOR_PORT..."
@@ -131,13 +142,15 @@ if [ "${ENABLE_VNC}" = "true" ]; then
     # Use the X display for GUI, but still use swiftshader for better compatibility
     emulator -avd $DEVICE_ID -no-audio -no-boot-anim \
       -gpu swiftshader_indirect -no-snapshot -noaudio \
-      -no-snapshot-save -port $EMULATOR_PORT &
+      -no-snapshot-save -port $EMULATOR_PORT \
+      -skin 720x1280 -no-metrics &
 else
     echo "Launching emulator in headless mode..."
     # Use these flags to run with swiftshader indirect rendering
     emulator -avd $DEVICE_ID -no-window -no-audio -no-boot-anim \
       -gpu swiftshader_indirect -no-snapshot -noaudio \
-      -no-snapshot-save -port $EMULATOR_PORT &
+      -no-snapshot-save -port $EMULATOR_PORT \
+      -no-metrics &
 fi
 
 EMU_PID=$!
@@ -172,6 +185,29 @@ adb devices
 echo "Emulator is now available via ADB as 'emulator-$EMULATOR_PORT'"
 echo "You can connect to it from your host using: adb connect localhost:$((EMULATOR_PORT + 1))"
 echo "Note: ADB connection port is always emulator port + 1"
+
+# Wake up the emulator screen and show home screen if VNC is enabled
+if [ "${ENABLE_VNC}" = "true" ]; then
+    echo "Waking up emulator display for VNC viewing..."
+    sleep 2
+    
+    # Wake up the screen
+    adb shell input keyevent KEYCODE_WAKEUP 2>/dev/null || echo "Wake command failed (normal if emulator still booting)"
+    sleep 1
+    
+    # Unlock the screen (swipe up gesture)
+    adb shell input swipe 200 800 200 200 2>/dev/null || echo "Unlock swipe failed (normal if emulator still booting)"
+    sleep 1
+    
+    # Go to home screen
+    adb shell input keyevent KEYCODE_HOME 2>/dev/null || echo "Home command failed (normal if emulator still booting)"
+    sleep 1
+    
+    # Turn on WiFi to reduce warnings
+    adb shell svc wifi enable 2>/dev/null || echo "WiFi enable failed (normal if emulator still booting)"
+    
+    echo "Emulator display should now be visible via VNC"
+fi
 
 # Set environment variable to make it easier to target this emulator in scripts
 export ANDROID_SERIAL="emulator-$EMULATOR_PORT"

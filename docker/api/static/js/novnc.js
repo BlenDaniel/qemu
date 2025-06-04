@@ -55,18 +55,30 @@ function initNoVNCViewer(emulatorId, wsPort) {
         // Add iframe to container
         vncContainer.appendChild(vncIframe);
 
-        // Set a timeout to check connection
+        // Wait for timeout before giving up completely
         setTimeout(() => {
-            if (statusText.textContent.includes('Connecting')) {
-                // Still connecting after timeout, might be an issue
-                if (connectionAttempts < maxRetries) {
-                    console.log('Connection timeout, retrying...');
-                    setTimeout(connectVNC, 2000);
-                } else {
-                    handleConnectionError();
-                }
+            if (connectionAttempts < maxRetries) {
+                updateStatus('retrying', `Retrying... (${connectionAttempts}/${maxRetries})`);
+                connectVNC();
+            } else {
+                updateStatus('failed', 'Connection failed. Try refreshing or waking the emulator.');
+                loadingMessage.style.display = 'block';
+                loadingMessage.innerHTML = `
+                    <div class="error-message">
+                        <h3>Connection Failed</h3>
+                        <p>Unable to connect to the Android emulator screen.</p>
+                        <p><strong>Try this:</strong></p>
+                        <ol>
+                            <li>Click the "⚡ Wake Screen" button above</li>
+                            <li>Wait a few seconds and click "🔄 Reconnect"</li>
+                            <li>Make sure the emulator container is running</li>
+                        </ol>
+                        <button onclick="wakeEmulator()" class="btn btn-warning">⚡ Wake Emulator</button>
+                        <button onclick="window.location.reload()" class="btn btn-primary">🔄 Refresh Page</button>
+                    </div>
+                `;
             }
-        }, 10000); // 10 second timeout
+        }, 2000);
     }
 
     function handleConnectionError() {
@@ -97,12 +109,12 @@ function initNoVNCViewer(emulatorId, wsPort) {
     };
 
     window.toggleFullscreen = function() {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen().catch(err => {
-                console.log('Error attempting to enable fullscreen:', err);
-            });
-        } else {
+        const vncContainer = document.getElementById('vncContainer');
+        
+        if (document.fullscreenElement) {
             document.exitFullscreen();
+        } else {
+            vncContainer.requestFullscreen();
         }
     };
 
@@ -126,6 +138,38 @@ function initNoVNCViewer(emulatorId, wsPort) {
         }
     });
 
-    // Start connection when initialized
-    setTimeout(connectVNC, 1000);
+    // Start initial connection
+    connectVNC();
+}
+
+// Add wake emulator function
+function wakeEmulator() {
+    // Get emulator ID from global variable set in the HTML template
+    const emulatorId = window.currentEmulatorId;
+    
+    if (!emulatorId) {
+        alert('Emulator ID not found');
+        return;
+    }
+    
+    fetch(`/api/emulators/${emulatorId}/wake`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log('Emulator wake commands sent:', data);
+            alert('Wake commands sent to emulator! Wait a few seconds then click Reconnect.');
+        } else {
+            console.error('Wake emulator failed:', data);
+            alert('Failed to wake emulator: ' + (data.error || 'Unknown error'));
+        }
+    })
+    .catch(error => {
+        console.error('Error waking emulator:', error);
+        alert('Error sending wake commands: ' + error.message);
+    });
 } 
