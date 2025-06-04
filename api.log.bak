@@ -1,19 +1,27 @@
-on http://172.18.0.4:5001
-2025-06-04 13:05:19 INFO:werkzeug:Press CTRL+C to quit
-2025-06-04 13:05:19 INFO:werkzeug: * Restarting with stat
-2025-06-04 13:05:19 WARNING:docker_manager:Default Docker connection failed: Error while fetching server API version: Not supported URL scheme http+docker
-2025-06-04 13:05:19 WARNING:docker_manager:Unix socket connection failed: Error while fetching server API version: Not supported URL scheme http+docker
-2025-06-04 13:05:19 ERROR:docker_manager:All Docker connection methods failed: Error while fetching server API version: HTTPConnectionPool(host='localhost', port=2376): Max retries exceeded with url: /version (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f360f03b8b0>: Failed to establish a new connection: [Errno 111] Connection refused'))
-2025-06-04 13:05:19 WARNING:docker_manager:Cannot discover containers - Docker client not available
-2025-06-04 13:05:19 WARNING:werkzeug: * Debugger is active!
-2025-06-04 13:05:19 INFO:werkzeug: * Debugger PIN: 107-972-542
-2025-06-04 13:05:35 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 11:05:35] "GET / HTTP/1.1" 200 -
-2025-06-04 13:05:35 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 11:05:35] "GET /static/js/main.js HTTP/1.1" 304 -
-2025-06-04 13:05:35 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 11:05:35] "GET /static/css/main.css HTTP/1.1" 304 -
-2025-06-04 13:05:35 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 11:05:35] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 13:05:38 WARNING:docker_manager:Default Docker connection failed: Error while fetching server API version: Not supported URL scheme http+docker
-2025-06-04 13:05:38 WARNING:docker_manager:Unix socket connection failed: Error while fetching server API version: Not supported URL scheme http+docker
-2025-06-04 13:05:38 ERROR:docker_manager:All Docker connection methods failed: Error while fetching server API version: HTTPConnectionPool(host='localhost', port=2376): Max retries exceeded with url: /version (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f360eefa6e0>: Failed to establish a new connection: [Errno 111] Connection refused'))
-2025-06-04 13:05:38 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 11:05:38] "POST /api/emulators HTTP/1.1" 500 -
-2025-06-04 13:05:19  * Serving Flask app 'app.py'
-2025-06-04 13:05:19  * Debug mode: on
+2025-06-04 13:26:27 WARNING:docker_manager:Default Docker connection failed: Error while fetching server API version: Not supported URL scheme http+docker
+2025-06-04 13:26:27 WARNING:docker_manager:Unix socket connection failed: Error while fetching server API version: Not supported URL scheme http+docker
+2025-06-04 13:26:27 ERROR:docker_manager:All Docker connection methods failed: Error while fetching server API version: HTTPConnectionPool(host='localhost', port=2376): Max retries exceeded with url: /version (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f251850a530>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2025-06-04 13:26:27 WARNING:docker_manager:Cannot discover containers - Docker client not available
+2025-06-04 13:26:27 INFO:werkzeug:WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+2025-06-04 13:26:27  * Running on all addresses (0.0.0.0)
+2025-06-04 13:26:27  * Running on http://127.0.0.1:5001
+2025-06-04 13:26:27  * Running on http://172.18.0.4:5001
+2025-06-04 13:26:27  * Serving Flask app 'app.py'
+2025-06-04 13:26:27  * Debug mode: on
+2025-06-04 13:26:27 INFO:werkzeug:Press CTRL+C to quit
+2025-06-04 13:26:27 INFO:werkzeug: * Restarting with stat
+2025-06-04 13:26:27 WARNING:docker_manager:Default Docker connection failed: Error while fetching server API version: Not supported URL scheme http+docker
+2025-06-04 13:26:27 WARNING:docker_manager:Unix socket connection failed: Error while fetching server API version: Not supported URL scheme http+docker
+2025-06-04 13:26:27 ERROR:docker_manager:All Docker connection methods failed: Error while fetching server API version: HTTPConnectionPool(host='localhost', port=2376): Max retries exceeded with url: /version (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f25d1e838b0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2025-06-04 13:26:27 WARNING:docker_manager:Cannot discover containers - Docker client not available
+2025-06-04 13:26:27 WARNING:werkzeug: * Debugger is active!
+2025-06-04 13:26:27 INFO:werkzeug: * Debugger PIN: 121-373-617
+2025-06-04 13:26:29 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 11:26:29] "GET / HTTP/1.1" 200 -
+2025-06-04 13:26:29 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 11:26:29] "GET /static/js/main.js HTTP/1.1" 304 -
+2025-06-04 13:26:29 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 11:26:29] "GET /static/css/main.css HTTP/1.1" 304 -
+2025-06-04 13:26:29 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 11:26:29] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 13:26:29 WARNING:docker_manager:Default Docker connection failed: Error while fetching server API version: Not supported URL scheme http+docker
+2025-06-04 13:26:29 WARNING:docker_manager:Unix socket connection failed: Error while fetching server API version: Not supported URL scheme http+docker
+2025-06-04 13:26:29 ERROR:docker_manager:All Docker connection methods failed: Error while fetching server API version: HTTPConnectionPool(host='localhost', port=2376): Max retries exceeded with url: /version (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f25d1d426e0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2025-06-04 13:26:29 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 11:26:29] "POST /api/emulators HTTP/1.1" 500 -
+2025-06-04 13:26:35 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 11:26:35] "GET /api/emulators HTTP/1.1" 200 -
