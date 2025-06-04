@@ -1,172 +1,29 @@
-2025-06-04 09:00:14 INFO:docker_manager:Docker client connected successfully
-2025-06-04 09:00:15 INFO:docker_manager:Found 3 running containers
-2025-06-04 09:00:15 INFO:docker_manager:Checking container: qemu-api-1
-2025-06-04 09:00:15 INFO:docker_manager:Checking container: qemu-emulator14-1
-2025-06-04 09:00:15 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator14-1 (sleeping)
-2025-06-04 09:00:15 INFO:docker_manager:Checking container: qemu-emulator-1
-2025-06-04 09:00:15 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator-1 (sleeping)
-2025-06-04 09:00:15 INFO:werkzeug:WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
-2025-06-04 09:00:15  * Running on all addresses (0.0.0.0)
-2025-06-04 09:00:15  * Running on http://127.0.0.1:5001
-2025-06-04 09:00:15  * Running on http://172.18.0.4:5001
-2025-06-04 09:00:15 INFO:werkzeug:Press CTRL+C to quit
-2025-06-04 09:00:15 INFO:werkzeug: * Restarting with stat
-2025-06-04 09:00:15 INFO:docker_manager:Docker client connected successfully
-2025-06-04 09:00:15 INFO:docker_manager:Found 3 running containers
-2025-06-04 09:00:15 INFO:docker_manager:Checking container: qemu-api-1
-2025-06-04 09:00:15 INFO:docker_manager:Checking container: qemu-emulator14-1
-2025-06-04 09:00:15 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator14-1 (sleeping)
-2025-06-04 09:00:15 INFO:docker_manager:Checking container: qemu-emulator-1
-2025-06-04 09:00:15 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator-1 (sleeping)
-2025-06-04 09:00:15 WARNING:werkzeug: * Debugger is active!
-2025-06-04 09:00:15 INFO:werkzeug: * Debugger PIN: 106-966-984
-2025-06-04 09:00:20 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:00:20] "GET / HTTP/1.1" 200 -
-2025-06-04 09:00:20 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:00:20] "GET /static/css/style.css HTTP/1.1" 304 -
-2025-06-04 09:00:20 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:00:20] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 09:00:20 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:00:20] "GET /favicon.ico HTTP/1.1" 404 -
-2025-06-04 09:00:22 INFO:api_routes:Setting up ADB connection for new emulator...
-2025-06-04 09:00:22 WARNING:adb_manager:robust_adb_server_restart is deprecated - using direct emulator connection instead
-2025-06-04 09:00:22 INFO:api_routes:Detecting device using container name: emu_qx35sjds_e3f61705
-2025-06-04 09:00:22 INFO:adb_manager:Using direct emulator ADB server connection: emu_qx35sjds_e3f61705
-2025-06-04 09:00:22 INFO:adb_manager:Connecting to emulator ADB server: emu_qx35sjds_e3f61705:5037
-2025-06-04 09:00:22 INFO:adb_manager:Killing all local ADB processes...
-2025-06-04 09:00:22 INFO:adb_manager:Killed Unix ADB processes
-2025-06-04 09:00:22 INFO:adb_manager:Executed adb kill-server
-2025-06-04 09:00:24 INFO:adb_manager:Set ADB server socket to: tcp:emu_qx35sjds_e3f61705:5037
-2025-06-04 09:00:24 INFO:adb_manager:Testing connection with: adb -H emu_qx35sjds_e3f61705 -P 5037 devices
-2025-06-04 09:00:26 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-04 07:00:26.344    46    46 W adb     : network.cpp:145 failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
-2025-06-04 09:00:26 * cannot start server on remote host
-2025-06-04 09:00:26 adb: failed to check server version: cannot connect to daemon at tcp:emu_qx35sjds_e3f61705:5037: failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
-2025-06-04 09:00:26 
-2025-06-04 09:00:26 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-04 07:00:26.344    46    46 W adb     : network.cpp:145 failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
-2025-06-04 09:00:26 * cannot start server on remote host
-2025-06-04 09:00:26 adb: failed to check server version: cannot connect to daemon at tcp:emu_qx35sjds_e3f61705:5037: failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
-2025-06-04 09:00:26 
-2025-06-04 09:00:26 INFO:adb_manager:Set ADB server port to: 9404
-2025-06-04 09:00:26 INFO:adb_manager:Set Unix shell ADB server port to: 9404
-2025-06-04 09:00:26 INFO:adb_manager:Running ADB command: adb -P 9404 devices
-2025-06-04 09:00:29 INFO:api_routes:Created Android 11 emulator qx35sjds
-2025-06-04 09:00:29 INFO:api_routes:Console: telnet localhost 9619
-2025-06-04 09:00:29 INFO:api_routes:ADB Server Port: 9404
-2025-06-04 09:00:29 INFO:api_routes:Device status: not_found
-2025-06-04 09:00:29 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:00:29] "POST /api/emulators HTTP/1.1" 201 -
-2025-06-04 09:00:32 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:00:32] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 09:00:51 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:00:51] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 09:01:21 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:01:21] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 09:01:51 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:01:51] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 09:02:21 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:02:21] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 09:02:51 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:02:51] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 09:03:21 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:03:21] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 09:03:51 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:03:51] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 09:04:52 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:04:52] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 09:05:53 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:05:53] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 09:06:55 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:06:55] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 09:07:55 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:07:55] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 09:00:15  * Serving Flask app 'app.py'
-2025-06-04 09:00:15  * Debug mode: on
-2025-06-04 09:08:56 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:08:56] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 09:09:24 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:09:24] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 09:09:47 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:09:47] "GET /vnc/e3f61705-50a7-4e96-96a2-4bb80fca79b7 HTTP/1.1" 200 -
-2025-06-04 09:09:47 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:09:47] "GET /static/js/novnc-local.js HTTP/1.1" 304 -
-2025-06-04 09:09:47 INFO:api_routes:Taking screenshot for emulator e3f61705-50a7-4e96-96a2-4bb80fca79b7 - ADB port: 5752, Server port: 9404
-2025-06-04 09:09:47 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_qx35sjds_e3f61705
-2025-06-04 09:09:47 INFO:adb_manager:Connecting to emulator ADB server: emu_qx35sjds_e3f61705:5037
-2025-06-04 09:09:47 INFO:adb_manager:Killing all local ADB processes...
-2025-06-04 09:09:47 INFO:adb_manager:Killed Unix ADB processes
-2025-06-04 09:09:49 INFO:adb_manager:Executed adb kill-server
-2025-06-04 09:09:50 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:09:50] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 09:09:51 INFO:adb_manager:Set ADB server socket to: tcp:emu_qx35sjds_e3f61705:5037
-2025-06-04 09:09:51 INFO:adb_manager:Testing connection with: adb -H emu_qx35sjds_e3f61705 -P 5037 devices
-2025-06-04 09:09:52 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-04 07:09:52.656    76    76 W adb     : network.cpp:145 failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
-2025-06-04 09:09:52 * cannot start server on remote host
-2025-06-04 09:09:52 adb: failed to check server version: cannot connect to daemon at tcp:emu_qx35sjds_e3f61705:5037: failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
-2025-06-04 09:09:52 
-2025-06-04 09:09:52 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:09:52] "GET /api/emulators/e3f61705-50a7-4e96-96a2-4bb80fca79b7/screenshot HTTP/1.1" 500 -
-
-
-VNC LIVE VIEW BUTTON RESPONSES
-
-025-06-04 09:09:49 INFO:adb_manager:Executed adb kill-server
-2025-06-04 09:09:50 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:09:50] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 09:09:51 INFO:adb_manager:Set ADB server socket to: tcp:emu_qx35sjds_e3f61705:5037
-2025-06-04 09:09:51 INFO:adb_manager:Testing connection with: adb -H emu_qx35sjds_e3f61705 -P 5037 devices
-2025-06-04 09:09:52 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-04 07:09:52.656    76    76 W adb     : network.cpp:145 failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
-2025-06-04 09:09:52 * cannot start server on remote host
-2025-06-04 09:09:52 adb: failed to check server version: cannot connect to daemon at tcp:emu_qx35sjds_e3f61705:5037: failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
-2025-06-04 09:09:52 
-2025-06-04 09:09:52 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:09:52] "GET /api/emulators/e3f61705-50a7-4e96-96a2-4bb80fca79b7/screenshot HTTP/1.1" 500 -
-2025-06-04 09:10:08 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:10:08] "GET /api/emulators/e3f61705-50a7-4e96-96a2-4bb80fca79b7/live_view HTTP/1.1" 200 -
-2025-06-04 09:10:08 INFO:api_routes:Taking screenshot for emulator e3f61705-50a7-4e96-96a2-4bb80fca79b7 - ADB port: 5752, Server port: 9404
-2025-06-04 09:10:08 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_qx35sjds_e3f61705
-2025-06-04 09:10:08 INFO:adb_manager:Connecting to emulator ADB server: emu_qx35sjds_e3f61705:5037
-2025-06-04 09:10:08 INFO:adb_manager:Killing all local ADB processes...
-2025-06-04 09:10:08 INFO:adb_manager:Killed Unix ADB processes
-2025-06-04 09:10:11 INFO:adb_manager:Executed adb kill-server
-2025-06-04 09:10:13 INFO:adb_manager:Set ADB server socket to: tcp:emu_qx35sjds_e3f61705:5037
-2025-06-04 09:10:13 INFO:adb_manager:Testing connection with: adb -H emu_qx35sjds_e3f61705 -P 5037 devices
-2025-06-04 09:10:14 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-04 07:10:14.055    81    81 W adb     : network.cpp:145 failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
-2025-06-04 09:10:14 * cannot start server on remote host
-2025-06-04 09:10:14 adb: failed to check server version: cannot connect to daemon at tcp:emu_qx35sjds_e3f61705:5037: failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
-2025-06-04 09:10:14 
-2025-06-04 09:10:14 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:10:14] "GET /api/emulators/e3f61705-50a7-4e96-96a2-4bb80fca79b7/screenshot HTTP/1.1" 500 -
-2025-06-04 09:10:14 INFO:api_routes:Taking screenshot for emulator e3f61705-50a7-4e96-96a2-4bb80fca79b7 - ADB port: 5752, Server port: 9404
-2025-06-04 09:10:14 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_qx35sjds_e3f61705
-2025-06-04 09:10:14 INFO:adb_manager:Connecting to emulator ADB server: emu_qx35sjds_e3f61705:5037
-2025-06-04 09:10:14 INFO:adb_manager:Killing all local ADB processes...
-2025-06-04 09:10:14 INFO:adb_manager:Killed Unix ADB processes
-2025-06-04 09:10:14 INFO:adb_manager:Executed adb kill-server
-2025-06-04 09:10:16 INFO:adb_manager:Set ADB server socket to: tcp:emu_qx35sjds_e3f61705:5037
-2025-06-04 09:10:16 INFO:adb_manager:Testing connection with: adb -H emu_qx35sjds_e3f61705 -P 5037 devices
-2025-06-04 09:10:18 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-04 07:10:18.953    85    85 W adb     : network.cpp:145 failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
-2025-06-04 09:10:18 * cannot start server on remote host
-2025-06-04 09:10:18 adb: failed to check server version: cannot connect to daemon at tcp:emu_qx35sjds_e3f61705:5037: failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
-2025-06-04 09:10:18 
-2025-06-04 09:10:18 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:10:18] "GET /api/emulators/e3f61705-50a7-4e96-96a2-4bb80fca79b7/screenshot HTTP/1.1" 500 -
-2025-06-04 09:10:18 INFO:api_routes:Taking screenshot for emulator e3f61705-50a7-4e96-96a2-4bb80fca79b7 - ADB port: 5752, Server port: 9404
-2025-06-04 09:10:18 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_qx35sjds_e3f61705
-2025-06-04 09:10:18 INFO:adb_manager:Connecting to emulator ADB server: emu_qx35sjds_e3f61705:5037
-2025-06-04 09:10:18 INFO:adb_manager:Killing all local ADB processes...
-2025-06-04 09:10:18 INFO:adb_manager:Killed Unix ADB processes
-2025-06-04 09:10:20 INFO:adb_manager:Executed adb kill-server
-2025-06-04 09:10:21 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:10:21] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 09:10:22 INFO:adb_manager:Set ADB server socket to: tcp:emu_qx35sjds_e3f61705:5037
-2025-06-04 09:10:22 INFO:adb_manager:Testing connection with: adb -H emu_qx35sjds_e3f61705 -P 5037 devices
-2025-06-04 09:10:25 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-04 07:10:25.018    90    90 W adb     : network.cpp:145 failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
-2025-06-04 09:10:25 * cannot start server on remote host
-2025-06-04 09:10:25 adb: failed to check server version: cannot connect to daemon at tcp:emu_qx35sjds_e3f61705:5037: failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
-2025-06-04 09:10:25 
-2025-06-04 09:10:25 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:10:25] "GET /api/emulators/e3f61705-50a7-4e96-96a2-4bb80fca79b7/screenshot HTTP/1.1" 500 -
-2025-06-04 09:10:25 INFO:api_routes:Taking screenshot for emulator e3f61705-50a7-4e96-96a2-4bb80fca79b7 - ADB port: 5752, Server port: 9404
-2025-06-04 09:10:25 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_qx35sjds_e3f61705
-2025-06-04 09:10:25 INFO:adb_manager:Connecting to emulator ADB server: emu_qx35sjds_e3f61705:5037
-2025-06-04 09:10:25 INFO:adb_manager:Killing all local ADB processes...
-2025-06-04 09:10:25 INFO:adb_manager:Killed Unix ADB processes
-2025-06-04 09:10:25 INFO:adb_manager:Executed adb kill-server
-2025-06-04 09:10:27 INFO:adb_manager:Set ADB server socket to: tcp:emu_qx35sjds_e3f61705:5037
-2025-06-04 09:10:27 INFO:adb_manager:Testing connection with: adb -H emu_qx35sjds_e3f61705 -P 5037 devices
-2025-06-04 09:10:28 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-04 07:10:28.708    94    94 W adb     : network.cpp:145 failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
-2025-06-04 09:10:28 * cannot start server on remote host
-2025-06-04 09:10:28 adb: failed to check server version: cannot connect to daemon at tcp:emu_qx35sjds_e3f61705:5037: failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
-2025-06-04 09:10:28 
-2025-06-04 09:10:28 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:10:28] "GET /api/emulators/e3f61705-50a7-4e96-96a2-4bb80fca79b7/screenshot HTTP/1.1" 500 -
-2025-06-04 09:10:28 INFO:api_routes:Taking screenshot for emulator e3f61705-50a7-4e96-96a2-4bb80fca79b7 - ADB port: 5752, Server port: 9404
-2025-06-04 09:10:28 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_qx35sjds_e3f61705
-2025-06-04 09:10:28 INFO:adb_manager:Connecting to emulator ADB server: emu_qx35sjds_e3f61705:5037
-2025-06-04 09:10:28 INFO:adb_manager:Killing all local ADB processes...
-2025-06-04 09:10:28 INFO:adb_manager:Killed Unix ADB processes
-2025-06-04 09:10:30 INFO:adb_manager:Executed adb kill-server
-2025-06-04 09:10:32 INFO:adb_manager:Set ADB server socket to: tcp:emu_qx35sjds_e3f61705:5037
-2025-06-04 09:10:32 INFO:adb_manager:Testing connection with: adb -H emu_qx35sjds_e3f61705 -P 5037 devices
-2025-06-04 09:10:34 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-04 07:10:34.783    98    98 W adb     : network.cpp:145 failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
-2025-06-04 09:10:34 * cannot start server on remote host
-2025-06-04 09:10:34 adb: failed to check server version: cannot connect to daemon at tcp:emu_qx35sjds_e3f61705:5037: failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
-2025-06-04 09:10:34 
-2025-06-04 09:10:34 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:10:34] "GET /api/emulators/e3f61705-50a7-4e96-96a2-4bb80fca79b7/screenshot HTTP/1.1" 500 -
-2025-06-04 09:10:34 INFO:api_routes:Taking screenshot for emulator e3f61705-50a7-4e96-96a2-4bb80fca79b7 - ADB port: 5752, Server port: 9404
-2025-06-04 09:10:34 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_qx35sjds_e3f61705
-2025-06-04 09:10:34 INFO:adb_manager:Connecting to emulator ADB server: emu_qx35sjds_e3f61705:5037
-2025-06-04 09:10:34 INFO:adb_manager:Killing all local ADB processes...
-2025-06-04 09:10:34 INFO:adb_manager:Killed Unix ADB processes
-2025-06-04 09:10:36 INFO:adb_manager:Executed adb kill-server
-2025-06-04 09:10:38 INFO:adb_manager:Set ADB server socket to: tcp:emu_qx35sjds_e3f61705:5037
-2025-06-04 09:10:38 INFO:adb_manager:Testing connection with: adb -H emu_qx35sjds_e3f61705 -P 5037 devices
+2025-06-04 11:03:18 WARNING:docker_manager:Cannot discover containers - Docker client not available
+2025-06-04 11:03:18 INFO:werkzeug:WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+2025-06-04 11:03:18  * Running on all addresses (0.0.0.0)
+2025-06-04 11:03:18  * Running on http://127.0.0.1:5001
+2025-06-04 11:03:18  * Running on http://172.18.0.4:5001
+2025-06-04 11:03:18 INFO:werkzeug:Press CTRL+C to quit
+2025-06-04 11:03:18 INFO:werkzeug: * Restarting with stat
+2025-06-04 11:03:18 WARNING:docker_manager:Default Docker connection failed: Error while fetching server API version: Not supported URL scheme http+docker
+2025-06-04 11:03:18 WARNING:docker_manager:Unix socket connection failed: Error while fetching server API version: Not supported URL scheme http+docker
+2025-06-04 11:03:18 ERROR:docker_manager:All Docker connection methods failed: Error while fetching server API version: HTTPConnectionPool(host='localhost', port=2376): Max retries exceeded with url: /version (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff84ef538b0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2025-06-04 11:03:18 WARNING:docker_manager:Cannot discover containers - Docker client not available
+2025-06-04 11:03:18 WARNING:werkzeug: * Debugger is active!
+2025-06-04 11:03:18 INFO:werkzeug: * Debugger PIN: 729-928-975
+2025-06-04 11:03:33 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 09:03:33] "GET / HTTP/1.1" 200 -
+2025-06-04 11:03:33 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 09:03:33] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-06-04 11:03:33 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 09:03:33] "GET /static/css/main.css HTTP/1.1" 200 -
+2025-06-04 11:03:18  * Serving Flask app 'app.py'
+2025-06-04 11:03:18  * Debug mode: on
+2025-06-04 11:03:33 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 09:03:33] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 11:03:35 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 09:03:35] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 11:03:37 WARNING:docker_manager:Default Docker connection failed: Error while fetching server API version: Not supported URL scheme http+docker
+2025-06-04 11:03:37 WARNING:docker_manager:Unix socket connection failed: Error while fetching server API version: Not supported URL scheme http+docker
+2025-06-04 11:03:37 ERROR:docker_manager:All Docker connection methods failed: Error while fetching server API version: HTTPConnectionPool(host='localhost', port=2376): Max retries exceeded with url: /version (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff84ee11ff0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2025-06-04 11:03:37 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 09:03:37] "POST /api/emulators HTTP/1.1" 500 -
+2025-06-04 11:03:39 WARNING:docker_manager:Default Docker connection failed: Error while fetching server API version: Not supported URL scheme http+docker
+2025-06-04 11:03:39 WARNING:docker_manager:Unix socket connection failed: Error while fetching server API version: Not supported URL scheme http+docker
+2025-06-04 11:03:39 ERROR:docker_manager:All Docker connection methods failed: Error while fetching server API version: HTTPConnectionPool(host='localhost', port=2376): Max retries exceeded with url: /version (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff84ee13370>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2025-06-04 11:03:39 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 09:03:39] "POST /api/emulators HTTP/1.1" 500 -
+2025-06-04 11:04:03 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 09:04:03] "GET /api/emulators HTTP/1.1" 200 -

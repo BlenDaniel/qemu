@@ -195,7 +195,7 @@ def generate_random_ports():
         'adb_port': random.randint(5000, 9999), 
         'internal_adb_server_port': random.randint(5000, 9999),
         'vnc_port': random.randint(5900, 6000),
-        'websockify_port': random.randint(6080, 6200)
+        'websockify_port': random.randint(6090, 6200)
     }
 
 def get_container_port_mappings(container):

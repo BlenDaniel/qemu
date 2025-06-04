@@ -59,7 +59,7 @@ services:
     image: emulator-api
     ports:
       - "5001:5001"
-      - "6080-6180:6080-6180"
+      - "6090-6180:6090-6180"
     depends_on:
       - emulator
       - emulator14

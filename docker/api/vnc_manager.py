@@ -56,7 +56,7 @@ def stop_vnc_proxy(emulator_id):
 
 def get_available_proxy_port():
     """Get an available port for WebSocket proxy"""
-    for port in range(6080, 6180):  # WebSocket proxy port range
+    for port in range(6090, 6180):  # WebSocket proxy port range
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.bind(('localhost', port))
