@@ -455,6 +455,16 @@ def register_api_routes(app, sessions):
         except Exception as e:
             test_results["tests"]["container_status"] = f"Error: {str(e)}"
         
+        # Test 4: Check if websockify process is running in container
+        try:
+            container = session['container']
+            exec_result = container.exec_run("ps aux | grep websockify")
+            websockify_running = b"websockify" in exec_result.output and b"grep" not in exec_result.output.split(b'\n')[0]
+            test_results["tests"]["websockify_process_running"] = websockify_running
+            test_results["tests"]["websockify_processes"] = exec_result.output.decode().strip()
+        except Exception as e:
+            test_results["tests"]["websockify_process_running"] = f"Error: {str(e)}"
+        
         return jsonify(test_results)
 
     @app.route('/api/emulators/<emulator_id>/vnc/start', methods=['POST'])
@@ -560,6 +570,39 @@ def register_api_routes(app, sessions):
                 "success": False,
                 "error": str(e)
             }), 500
+
+    @app.route('/api/emulators/<emulator_id>/vnc/proxy')
+    def vnc_proxy_page(emulator_id):
+        """Proxy noVNC page to avoid CORS issues"""
+        if emulator_id not in sessions:
+            return "Emulator not found", 404
+        
+        session = sessions[emulator_id]
+        websockify_port = session.get('websockify_port')
+        
+        if not websockify_port:
+            return "Websockify port not found", 404
+        
+        import requests
+        try:
+            # Fetch the noVNC page from the container's websockify
+            response = requests.get(f"http://localhost:{websockify_port}/vnc.html", timeout=10)
+            
+            if response.status_code == 200:
+                # Modify the content to use the correct WebSocket URL
+                content = response.text
+                
+                # Replace WebSocket connections to use the correct host and port
+                content = content.replace('ws://localhost:6080', f'ws://localhost:{websockify_port}')
+                content = content.replace('ws://127.0.0.1:6080', f'ws://localhost:{websockify_port}')
+                
+                return content, 200, {'Content-Type': 'text/html'}
+            else:
+                return f"Failed to load noVNC: HTTP {response.status_code}", 500
+                
+        except Exception as e:
+            logger.error(f"Error proxying noVNC page for {emulator_id}: {str(e)}")
+            return f"Error loading noVNC: {str(e)}", 500
 
     # ============================================================================
     # HEALTH CHECK AND DEBUGGING API ROUTES

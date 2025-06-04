@@ -5,6 +5,7 @@ function initNoVNCViewer(emulatorId, wsPort) {
     const vncContainer = document.getElementById('vncContainer');
     const loadingMessage = document.getElementById('loadingMessage');
     const connectionInfo = document.getElementById('connectionInfo');
+    const debugInfo = document.getElementById('debugInfo');
 
     let vncIframe = null;
     let connectionAttempts = 0;
@@ -20,9 +21,62 @@ function initNoVNCViewer(emulatorId, wsPort) {
         }
     }
 
-    function connectVNC() {
-        connectionAttempts++;
-        updateStatus('connecting', `Connecting... (${connectionAttempts}/${maxRetries})`);
+    function updateDebugInfo(info) {
+        if (debugInfo) {
+            debugInfo.innerHTML = `<strong>Debug:</strong> ${info}`;
+        }
+    }
+
+    // Test if websockify is accessible
+    function testWebsockifyConnection() {
+        return fetch(`http://localhost:${wsPort}/vnc.html`, {
+            method: 'HEAD',
+            mode: 'no-cors'
+        }).then(() => true).catch(() => false);
+    }
+
+    // Alternative connection method using proxy
+    function connectViaProxy() {
+        updateStatus('connecting', 'Trying proxy connection...');
+        updateDebugInfo('Using API proxy method');
+
+        // Remove existing iframe if any
+        if (vncIframe) {
+            vncIframe.remove();
+            vncIframe = null;
+        }
+
+        // Create new iframe for proxied noVNC
+        vncIframe = document.createElement('iframe');
+        vncIframe.className = 'vnc-iframe';
+        vncIframe.id = 'vncFrame';
+
+        // Use the proxy endpoint to avoid CORS issues
+        const proxyUrl = `/api/emulators/${emulatorId}/vnc/proxy`;
+
+        vncIframe.onload = function () {
+            loadingMessage.style.display = 'none';
+            connectionInfo.style.display = 'block';
+            updateStatus('connected', 'Connected via proxy');
+            updateDebugInfo('Proxy connection successful');
+        };
+
+        vncIframe.onerror = function () {
+            updateDebugInfo('Proxy connection failed');
+            handleConnectionError();
+        };
+
+        // Set the source to start loading
+        vncIframe.src = proxyUrl;
+
+        // Add iframe to container
+        vncContainer.appendChild(vncIframe);
+    }
+
+    // Direct connection method
+    function connectDirect() {
+        updateStatus('connecting', `Direct connection attempt ${connectionAttempts + 1}/${maxRetries}...`);
+        updateDebugInfo(`Trying direct connection to localhost:${wsPort}`);
 
         // Remove existing iframe if any
         if (vncIframe) {
@@ -36,17 +90,25 @@ function initNoVNCViewer(emulatorId, wsPort) {
         vncIframe.id = 'vncFrame';
 
         // Construct noVNC URL - use the host-accessible websockify port
-        // The container's websockify is already running and mapped to the host
-        const novncUrl = `http://${window.location.hostname}:${wsPort}/vnc.html?host=${window.location.hostname}&port=${wsPort}&autoconnect=true&resize=scale&quality=6`;
+        const novncUrl = `http://localhost:${wsPort}/vnc.html?host=localhost&port=${wsPort}&autoconnect=true&resize=scale&quality=6&compress=2`;
 
+        let frameLoaded = false;
         vncIframe.onload = function () {
-            loadingMessage.style.display = 'none';
-            connectionInfo.style.display = 'block';
-            updateStatus('connected', 'Connected to emulator');
+            frameLoaded = true;
+            setTimeout(() => {
+                if (frameLoaded) {
+                    loadingMessage.style.display = 'none';
+                    connectionInfo.style.display = 'block';
+                    updateStatus('connected', 'Connected directly');
+                    updateDebugInfo('Direct connection successful');
+                }
+            }, 2000); // Give noVNC time to establish WebSocket connection
         };
 
         vncIframe.onerror = function () {
-            handleConnectionError();
+            frameLoaded = false;
+            updateDebugInfo('Direct connection iframe failed');
+            setTimeout(tryAlternativeConnection, 1000);
         };
 
         // Set the source to start loading
@@ -55,45 +117,79 @@ function initNoVNCViewer(emulatorId, wsPort) {
         // Add iframe to container
         vncContainer.appendChild(vncIframe);
 
-        // Wait for timeout before giving up completely
+        // Timeout for this attempt
         setTimeout(() => {
-            if (connectionAttempts < maxRetries) {
-                updateStatus('retrying', `Retrying... (${connectionAttempts}/${maxRetries})`);
-                connectVNC();
-            } else {
-                updateStatus('failed', 'Connection failed. Try refreshing or waking the emulator.');
-                loadingMessage.style.display = 'block';
-                loadingMessage.innerHTML = `
-                    <div class="error-message">
-                        <h3>Connection Failed</h3>
-                        <p>Unable to connect to the Android emulator screen.</p>
-                        <p><strong>Try this:</strong></p>
-                        <ol>
-                            <li>Click the "⚡ Wake Screen" button above</li>
-                            <li>Wait a few seconds and click "🔄 Reconnect"</li>
-                            <li>Make sure the emulator container is running</li>
-                        </ol>
-                        <button onclick="wakeEmulator()" class="btn btn-warning">⚡ Wake Emulator</button>
-                        <button onclick="window.location.reload()" class="btn btn-primary">🔄 Refresh Page</button>
-                    </div>
-                `;
+            if (!frameLoaded) {
+                updateDebugInfo('Direct connection timeout');
+                tryAlternativeConnection();
             }
-        }, 2000);
+        }, 5000);
+    }
+
+    function tryAlternativeConnection() {
+        connectionAttempts++;
+        
+        if (connectionAttempts >= maxRetries) {
+            handleConnectionError();
+            return;
+        }
+
+        // Try proxy method after direct methods fail
+        if (connectionAttempts === 2) {
+            connectViaProxy();
+        } else {
+            // Keep trying direct connection
+            setTimeout(connectDirect, 2000);
+        }
+    }
+
+    function connectVNC() {
+        connectionAttempts = 0;
+        updateStatus('connecting', 'Initializing connection...');
+        updateDebugInfo('Starting connection process');
+        
+        // Test if websockify is accessible first
+        testWebsockifyConnection().then(accessible => {
+            if (accessible) {
+                updateDebugInfo('Websockify accessible, trying direct connection');
+                connectDirect();
+            } else {
+                updateDebugInfo('Websockify not accessible, trying proxy');
+                connectViaProxy();
+            }
+        }).catch(() => {
+            updateDebugInfo('Connection test failed, trying direct anyway');
+            connectDirect();
+        });
     }
 
     function handleConnectionError() {
         loadingMessage.innerHTML = `
             <div class="error-message">
                 <h3>❌ Connection Failed</h3>
-                <p>Unable to connect to the Android emulator screen.</p>
-                <p>Attempts: ${connectionAttempts}/${maxRetries}</p>
-                <button class="btn btn-primary" onclick="reconnectVNC()">🔄 Try Again</button>
-                <button class="btn btn-danger" onclick="window.close()">❌ Close</button>
+                <p>Unable to connect to the Android emulator screen after ${connectionAttempts} attempts.</p>
+                <p><strong>Troubleshooting steps:</strong></p>
+                <ol>
+                    <li>Click "🔧 Test Connection" to check the status</li>
+                    <li>Click "⚡ Wake Screen" to wake up the emulator</li>
+                    <li>Try "📺 Direct noVNC" for a direct connection</li>
+                    <li>Wait a few seconds and click "🔄 Reconnect"</li>
+                </ol>
+                <div style="margin-top: 15px;">
+                    <button class="btn btn-primary" onclick="reconnectVNC()">🔄 Try Again</button>
+                    <button class="btn btn-warning" onclick="wakeEmulator()">⚡ Wake Emulator</button>
+                    <button class="btn btn-info" onclick="testConnection()">🔧 Test Connection</button>
+                    <button class="btn btn-secondary" onclick="openDirectNoVNC()">📺 Direct noVNC</button>
+                </div>
+                <div style="margin-top: 10px; font-size: 12px; color: #666;">
+                    WebSocket Port: ${wsPort} | Attempts: ${connectionAttempts}/${maxRetries}
+                </div>
             </div>
         `;
         loadingMessage.style.display = 'block';
         connectionInfo.style.display = 'none';
         updateStatus('error', 'Connection failed');
+        updateDebugInfo(`All connection methods failed after ${connectionAttempts} attempts`);
     }
 
     window.reconnectVNC = function() {
@@ -105,6 +201,7 @@ function initNoVNCViewer(emulatorId, wsPort) {
         `;
         loadingMessage.style.display = 'block';
         connectionInfo.style.display = 'none';
+        updateDebugInfo('User initiated reconnection');
         connectVNC();
     };
 
@@ -134,6 +231,7 @@ function initNoVNCViewer(emulatorId, wsPort) {
     document.addEventListener('visibilitychange', function () {
         if (document.visibilityState === 'visible' && statusText.textContent.includes('failed')) {
             // Page became visible and we had a connection failure, try to reconnect
+            updateDebugInfo('Page became visible, attempting reconnection');
             setTimeout(window.reconnectVNC, 1000);
         }
     });

@@ -19,6 +19,8 @@
             <button class="btn btn-primary" onclick="toggleFullscreen()">🔍 Fullscreen</button>
             <button class="btn btn-success" onclick="reconnectVNC()">🔄 Reconnect</button>
             <button class="btn btn-warning" onclick="wakeEmulator()">⚡ Wake Screen</button>
+            <button class="btn btn-info" onclick="testConnection()">🔧 Test Connection</button>
+            <button class="btn btn-secondary" onclick="openDirectNoVNC()">📺 Direct noVNC</button>
             <a href="/" class="btn btn-danger">❌ Close</a>
         </div>
     </div>
@@ -34,7 +36,14 @@
             <strong>Connection Info:</strong><br>
             Emulator: {{ device_id }}<br>
             WebSocket Port: {{ ws_port }}<br>
-            VNC Port: {{ vnc_port }}
+            VNC Port: {{ vnc_port }}<br>
+            <div id="debugInfo" style="margin-top: 10px; font-size: 12px; color: #666;"></div>
+        </div>
+
+        <div class="debug-panel" id="debugPanel"
+            style="display: none; background: #f0f0f0; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px;">
+            <h4>Debug Information</h4>
+            <pre id="debugOutput" style="font-size: 12px; max-height: 200px; overflow-y: auto;"></pre>
         </div>
     </div>
 
@@ -47,6 +56,48 @@
 
         // Make emulator ID available globally for wake function
         window.currentEmulatorId = '{{ emulator_id }}';
+
+        // Test connection function
+        function testConnection() {
+            const debugPanel = document.getElementById('debugPanel');
+            const debugOutput = document.getElementById('debugOutput');
+
+            debugPanel.style.display = 'block';
+            debugOutput.textContent = 'Testing connection...';
+
+            fetch(`/api/emulators/{{ emulator_id }}/vnc/test`)
+                .then(response => response.json())
+                .then(data => {
+                    debugOutput.textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    debugOutput.textContent = `Error: ${error.message}`;
+                });
+        }
+
+        // Wake emulator function
+        function wakeEmulator() {
+            const statusText = document.getElementById('statusText');
+            statusText.textContent = 'Waking emulator...';
+
+            fetch(`/api/emulators/{{ emulator_id }}/wake`, {
+                method: 'POST'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    statusText.textContent = 'Emulator woken, reconnecting...';
+                    setTimeout(reconnectVNC, 2000);
+                })
+                .catch(error => {
+                    statusText.textContent = `Wake failed: ${error.message}`;
+                });
+        }
+
+        // Open direct noVNC connection
+        function openDirectNoVNC() {
+            const directUrl = `http://localhost:{{ ws_port }}/vnc.html?autoconnect=true&resize=scale`;
+            window.open(directUrl, '_blank');
+        }
     </script>
 </body>
 
