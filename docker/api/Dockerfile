@@ -52,8 +52,15 @@ RUN apt-get install -y \
     gnupg \
     lsb-release
 
-# Add Docker repository and install Docker CLI (with SSL fix)
-RUN curl -fsSL https://get.docker.com | sh
+# Install Docker CLI manually (avoiding get.docker.com script that might set problematic env vars)
+RUN mkdir -p /etc/apt/keyrings && \
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null && \
+    apt-get update && \
+    apt-get install -y docker-ce-cli
+
+# Ensure no Docker daemon configurations interfere with Python client
+RUN rm -f /etc/docker/daemon.json 2>/dev/null || true
 
 # Clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*

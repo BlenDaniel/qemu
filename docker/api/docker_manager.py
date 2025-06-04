@@ -3,8 +3,45 @@ import logging
 import uuid
 import random
 import time
+import os
 
 logger = logging.getLogger(__name__)
+
+# Clear any problematic Docker environment variables at module load time
+def clean_docker_environment():
+    """Clean up any malformed Docker environment variables"""
+    # First, log all current Docker-related environment variables for debugging
+    docker_env_vars = ['DOCKER_HOST', 'DOCKER_TLS_VERIFY', 'DOCKER_CERT_PATH', 'DOCKER_API_VERSION']
+    logger.info("=== Docker Environment Variables Debug ===")
+    for var in docker_env_vars:
+        value = os.environ.get(var, 'NOT_SET')
+        logger.info(f"{var} = {value}")
+    
+    # Also check for any environment variables containing 'docker'
+    docker_related_vars = {k: v for k, v in os.environ.items() if 'docker' in k.lower()}
+    if docker_related_vars:
+        logger.info("Other Docker-related environment variables found:")
+        for k, v in docker_related_vars.items():
+            logger.info(f"{k} = {v}")
+    
+    cleared_vars = []
+    
+    for var in docker_env_vars:
+        if var in os.environ:
+            original_value = os.environ[var]
+            # Check for malformed schemes
+            if 'http+docker' in original_value or original_value.strip() == '':
+                logger.warning(f"Clearing malformed Docker environment variable {var}={original_value}")
+                del os.environ[var]
+                cleared_vars.append(var)
+    
+    if cleared_vars:
+        logger.info(f"Cleared problematic Docker environment variables: {cleared_vars}")
+    else:
+        logger.info("No problematic Docker environment variables found to clear")
+
+# Clean environment on module import
+clean_docker_environment()
 
 # Emulator image configurations
 EMULATOR_IMAGES = {
@@ -62,24 +99,23 @@ client = None
 def get_docker_client():
     global client
     if client is None:
+        # Since we're running in a container with Docker socket mounted, try socket first
         try:
-            # Try different connection methods
-            # First try the default method
-            client = docker.from_env()
-            # Test the connection
+            # Try explicit Unix socket connection first (since we have it mounted)
+            client = docker.DockerClient(base_url='unix://var/run/docker.sock')
             client.ping()
-            logger.info("Docker client connected successfully")
+            logger.info("Docker client connected via mounted Unix socket")
         except Exception as e:
-            logger.warning(f"Default Docker connection failed: {e}")
+            logger.warning(f"Mounted socket connection failed: {e}")
             try:
-                # Try explicit Unix socket connection
-                client = docker.DockerClient(base_url='unix://var/run/docker.sock')
+                # Try the default method as fallback
+                client = docker.from_env()
                 client.ping()
-                logger.info("Docker client connected via Unix socket")
+                logger.info("Docker client connected successfully via environment")
             except Exception as e2:
-                logger.warning(f"Unix socket connection failed: {e2}")
+                logger.warning(f"Default Docker connection failed: {e2}")
                 try:
-                    # Try TCP connection
+                    # Try TCP connection as last resort
                     client = docker.DockerClient(base_url='tcp://localhost:2376')
                     client.ping()
                     logger.info("Docker client connected via TCP")
