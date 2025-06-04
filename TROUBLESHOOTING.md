@@ -17,6 +17,41 @@ Bind for 0.0.0.0:6118 failed: port is already allocated")
 1. Previous containers that didn't shut down cleanly are still holding ports
 2. Multiple containers trying to use the same port range
 3. Host system services using the same ports
+4. **Docker Compose pre-allocated port ranges** - The API container reserves ports 6090-6180
+
+### Docker Compose Port Pre-allocation Issue
+
+**Problem**: The API starts and immediately allocates ~91 ports (6090-6180) causing conflicts
+
+**Explanation**: In `docker-compose.yml`, this line reserves a large port range:
+```yaml
+ports:
+  - "6090-6180:6090-6180"
+```
+
+This prevents individual emulator containers from using any ports in that range.
+
+**Solution**: The system now uses port ranges that avoid this conflict:
+- Console ports: 5000-5999
+- ADB ports: 6000-6999
+- ADB server ports: 7000-7999  
+- VNC ports: 5900-5950
+- **Websockify ports: 6200-6300** (avoiding the 6090-6180 reserved range)
+
+**Alternative Solutions**:
+1. **Reduce docker-compose port range** (modify docker-compose.yml):
+   ```yaml
+   ports:
+     - "5001:5001"
+     - "6090-6120:6090-6120"  # Smaller range
+   ```
+
+2. **Remove port range entirely** if not needed:
+   ```yaml
+   ports:
+     - "5001:5001"
+     # Remove the 6090-6180 range
+   ```
 
 **Solutions**:
 
