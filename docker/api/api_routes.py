@@ -499,7 +499,7 @@ def register_api_routes(app, sessions):
     # ============================================================================
 
     @app.route('/api/health', methods=['GET'])
-    def health_check():
+    def system_health():
         """Health check endpoint that reports system status and port usage"""
         try:
             # Check Docker connection
