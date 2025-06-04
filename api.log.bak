@@ -1,141 +1,103 @@
-2025-06-04 14:14:10 INFO:docker_manager:=== Docker Environment Variables Debug ===
-2025-06-04 14:14:10 INFO:docker_manager:DOCKER_HOST = NOT_SET
-2025-06-04 14:14:10 INFO:docker_manager:DOCKER_TLS_VERIFY = NOT_SET
-2025-06-04 14:14:10 INFO:docker_manager:DOCKER_CERT_PATH = NOT_SET
-2025-06-04 14:14:10 INFO:docker_manager:DOCKER_API_VERSION = NOT_SET
-2025-06-04 14:14:10 INFO:docker_manager:No problematic Docker environment variables found to clear
-2025-06-04 14:14:10 INFO:docker_manager:Docker client connected via mounted Unix socket
-2025-06-04 14:14:10 INFO:docker_manager:Found 3 running containers
-2025-06-04 14:14:10 INFO:docker_manager:Checking container: qemu-api-1
-2025-06-04 14:14:10 INFO:docker_manager:Checking container: qemu-emulator14-1
-2025-06-04 14:14:10 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator14-1 (sleeping)
-2025-06-04 14:14:10 INFO:docker_manager:Checking container: qemu-emulator-1
-2025-06-04 14:14:10 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator-1 (sleeping)
-2025-06-04 14:14:10 INFO:werkzeug:WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
-2025-06-04 14:14:10  * Running on all addresses (0.0.0.0)
-2025-06-04 14:14:10  * Running on http://127.0.0.1:5001
-2025-06-04 14:14:10  * Running on http://172.18.0.4:5001
-2025-06-04 14:14:10 INFO:werkzeug:Press CTRL+C to quit
-2025-06-04 14:14:10 INFO:werkzeug: * Restarting with stat
-2025-06-04 14:14:11 INFO:docker_manager:=== Docker Environment Variables Debug ===
-2025-06-04 14:14:11 INFO:docker_manager:DOCKER_HOST = NOT_SET
-2025-06-04 14:14:11 INFO:docker_manager:DOCKER_TLS_VERIFY = NOT_SET
-2025-06-04 14:14:11 INFO:docker_manager:DOCKER_CERT_PATH = NOT_SET
-2025-06-04 14:14:10  * Serving Flask app 'app.py'
-2025-06-04 14:14:10  * Debug mode: on
-2025-06-04 14:14:11 INFO:docker_manager:DOCKER_API_VERSION = NOT_SET
-2025-06-04 14:14:11 INFO:docker_manager:No problematic Docker environment variables found to clear
-2025-06-04 14:14:11 INFO:docker_manager:Docker client connected via mounted Unix socket
-2025-06-04 14:14:11 INFO:docker_manager:Found 3 running containers
-2025-06-04 14:14:11 INFO:docker_manager:Checking container: qemu-api-1
-2025-06-04 14:14:11 INFO:docker_manager:Checking container: qemu-emulator14-1
-2025-06-04 14:14:11 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator14-1 (sleeping)
-2025-06-04 14:14:11 INFO:docker_manager:Checking container: qemu-emulator-1
-2025-06-04 14:14:11 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator-1 (sleeping)
-2025-06-04 14:14:11 WARNING:werkzeug: * Debugger is active!
-2025-06-04 14:14:11 INFO:werkzeug: * Debugger PIN: 167-858-219
-2025-06-04 14:14:17 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:14:17] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 14:14:18 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:14:18] "GET / HTTP/1.1" 200 -
-2025-06-04 14:14:18 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:14:18] "GET /static/js/main.js HTTP/1.1" 304 -
-2025-06-04 14:14:18 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:14:18] "GET /static/css/main.css HTTP/1.1" 304 -
-2025-06-04 14:14:18 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:14:18] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 14:14:23 INFO:docker_manager:Generated available ports: {'console_port': 5466, 'adb_port': 6025, 'internal_adb_server_port': 7101, 'vnc_port': 5922, 'websockify_port': 6214}
-2025-06-04 14:14:23 INFO:api_routes:Creating emulator with port bindings: {'5554/tcp': 5466, '5555/tcp': 6025, '5037/tcp': 7101, '5900/tcp': 5922, '6080/tcp': 6214}
-2025-06-04 14:14:23 INFO:docker_manager:Attempting to create container (attempt 1/3)
-2025-06-04 14:14:23 INFO:docker_manager:Successfully created container: emu_qypkvvc9_1ea8ac73
-2025-06-04 14:14:23 INFO:api_routes:Setting up ADB connection for new emulator...
-2025-06-04 14:14:23 INFO:api_routes:Using ADB server port: 7101, device port: 6025
-2025-06-04 14:14:26 WARNING:adb_manager:robust_adb_server_restart is deprecated - using direct emulator connection instead
-2025-06-04 14:14:26 INFO:api_routes:Detecting device using localhost networking for container: emu_qypkvvc9_1ea8ac73
-2025-06-04 14:14:26 INFO:api_routes:Connecting to localhost:6025 via ADB server on port 7101
-2025-06-04 14:14:26 INFO:adb_manager:Dynamic container emu_qypkvvc9_1ea8ac73 - using localhost with mapped ports instead of container networking
-2025-06-04 14:14:26 INFO:adb_manager:Using localhost networking: localhost:6025
-2025-06-04 14:14:26 INFO:adb_manager:Device detection attempt 1/3 for localhost:6025
-2025-06-04 14:14:26 INFO:adb_manager:Set ADB server port to: 7101
-2025-06-04 14:14:26 INFO:adb_manager:Set Unix shell ADB server port to: 7101
-2025-06-04 14:14:26 INFO:adb_manager:Running ADB command: adb -P 7101 connect localhost:6025
-2025-06-04 14:14:29 INFO:adb_manager:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': '* daemon not running; starting now at tcp:7101\n* daemon started successfully\n'}
-2025-06-04 14:14:31 INFO:adb_manager:Set ADB server port to: 7101
-2025-06-04 14:14:31 INFO:adb_manager:Set Unix shell ADB server port to: 7101
-2025-06-04 14:14:31 INFO:adb_manager:Running ADB command: adb -P 7101 devices
-2025-06-04 14:14:31 INFO:adb_manager:Devices output: List of devices attached
-2025-06-04 14:14:31 
-2025-06-04 14:14:31 
-2025-06-04 14:14:31 WARNING:adb_manager:Device localhost:6025 not found in devices list
-2025-06-04 14:14:31 INFO:adb_manager:Retrying device detection in 2 seconds...
-2025-06-04 14:14:33 INFO:adb_manager:Device detection attempt 2/3 for localhost:6025
-2025-06-04 14:14:33 INFO:adb_manager:Set ADB server port to: 7101
-2025-06-04 14:14:33 INFO:adb_manager:Set Unix shell ADB server port to: 7101
-2025-06-04 14:14:33 INFO:adb_manager:Running ADB command: adb -P 7101 connect localhost:6025
-2025-06-04 14:14:33 INFO:adb_manager:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
-2025-06-04 14:14:35 INFO:adb_manager:Set ADB server port to: 7101
-2025-06-04 14:14:35 INFO:adb_manager:Set Unix shell ADB server port to: 7101
-2025-06-04 14:14:35 INFO:adb_manager:Running ADB command: adb -P 7101 devices
-2025-06-04 14:14:35 INFO:adb_manager:Devices output: List of devices attached
-2025-06-04 14:14:35 
-2025-06-04 14:14:35 
-2025-06-04 14:14:35 WARNING:adb_manager:Device localhost:6025 not found in devices list
-2025-06-04 14:14:35 INFO:adb_manager:Retrying device detection in 2 seconds...
-2025-06-04 14:14:37 INFO:adb_manager:Device detection attempt 3/3 for localhost:6025
-2025-06-04 14:14:37 INFO:adb_manager:Set ADB server port to: 7101
-2025-06-04 14:14:37 INFO:adb_manager:Set Unix shell ADB server port to: 7101
-2025-06-04 14:14:37 INFO:adb_manager:Running ADB command: adb -P 7101 connect localhost:6025
-2025-06-04 14:14:37 INFO:adb_manager:Connect attempt result: {'success': True, 'output': 'Connection refused\n', 'stderr': ''}
-2025-06-04 14:14:39 INFO:adb_manager:Set ADB server port to: 7101
-2025-06-04 14:14:39 INFO:adb_manager:Set Unix shell ADB server port to: 7101
-2025-06-04 14:14:39 INFO:adb_manager:Running ADB command: adb -P 7101 devices
-2025-06-04 14:14:39 INFO:adb_manager:Devices output: List of devices attached
-2025-06-04 14:14:39 
-2025-06-04 14:14:39 
-2025-06-04 14:14:39 WARNING:adb_manager:Device localhost:6025 not found in devices list
-2025-06-04 14:14:39 ERROR:adb_manager:Failed to detect device after 3 attempts
-2025-06-04 14:14:39 INFO:adb_manager:Set ADB server port to: 7101
-2025-06-04 14:14:39 INFO:adb_manager:Set Unix shell ADB server port to: 7101
-2025-06-04 14:14:39 INFO:adb_manager:Running ADB command: adb -P 7101 devices
-2025-06-04 14:14:39 WARNING:api_routes:Device not found immediately, but emulator might still be booting
-2025-06-04 14:14:39 INFO:api_routes:You can manually connect later using: adb connect localhost:6025
-2025-06-04 14:14:39 INFO:api_routes:Created Android 11 emulator qypkvvc9
-2025-06-04 14:14:39 INFO:api_routes:Console: telnet localhost 5466
-2025-06-04 14:14:39 INFO:api_routes:ADB Server Port: 7101
-2025-06-04 14:14:39 INFO:api_routes:Device status: pending
-2025-06-04 14:14:39 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:14:39] "POST /api/emulators HTTP/1.1" 201 -
-2025-06-04 14:14:42 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:14:42] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 14:14:49 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:14:49] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 14:15:19 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:15:19] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 14:15:49 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:15:49] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 14:16:17 INFO:api_routes:Live view requested for 1ea8ac73-86c7-489f-b60c-feaeeeed470c - using built-in websockify on port 6214
-2025-06-04 14:16:17 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:16:17] "GET /api/emulators/1ea8ac73-86c7-489f-b60c-feaeeeed470c/live_view HTTP/1.1" 200 -
-2025-06-04 14:16:17 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:16:17] "GET /static/css/novnc.css HTTP/1.1" 304 -
-2025-06-04 14:16:17 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:16:17] "GET /static/js/novnc.js HTTP/1.1" 200 -
-2025-06-04 14:16:19 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:16:19] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 14:16:22 INFO:api_routes:Waking up emulator 1ea8ac73-86c7-489f-b60c-feaeeeed470c display...
-2025-06-04 14:16:22 INFO:api_routes:Running wake_screen: adb -P 7101 shell input keyevent KEYCODE_WAKEUP
-2025-06-04 14:16:23 INFO:api_routes:Running unlock_swipe: adb -P 7101 shell input swipe 200 800 200 200
-2025-06-04 14:16:24 INFO:api_routes:Running home_key: adb -P 7101 shell input keyevent KEYCODE_HOME
-2025-06-04 14:16:25 INFO:api_routes:Running boot_check: adb -P 7101 shell getprop sys.boot_completed
-2025-06-04 14:16:26 INFO:api_routes:Running density_check: adb -P 7101 shell wm density
-2025-06-04 14:16:27 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:16:27] "POST /api/emulators/1ea8ac73-86c7-489f-b60c-feaeeeed470c/wake HTTP/1.1" 200 -
-2025-06-04 14:16:37 INFO:api_routes:Live view requested for 1ea8ac73-86c7-489f-b60c-feaeeeed470c - using built-in websockify on port 6214
-2025-06-04 14:16:37 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:16:37] "GET /api/emulators/1ea8ac73-86c7-489f-b60c-feaeeeed470c/live_view HTTP/1.1" 200 -
-2025-06-04 14:16:37 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:16:37] "GET /static/css/novnc.css HTTP/1.1" 304 -
-2025-06-04 14:16:37 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:16:37] "GET /static/js/novnc.js HTTP/1.1" 304 -
-2025-06-04 14:16:49 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:16:49] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-04 14:16:51 INFO:api_routes:Waking up emulator 1ea8ac73-86c7-489f-b60c-feaeeeed470c display...
-2025-06-04 14:16:51 INFO:api_routes:Running wake_screen: adb -P 7101 shell input keyevent KEYCODE_WAKEUP
-2025-06-04 14:16:52 INFO:api_routes:Running unlock_swipe: adb -P 7101 shell input swipe 200 800 200 200
-2025-06-04 14:16:52 INFO:api_routes:Live view requested for 1ea8ac73-86c7-489f-b60c-feaeeeed470c - using built-in websockify on port 6214
-2025-06-04 14:16:52 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:16:52] "GET /api/emulators/1ea8ac73-86c7-489f-b60c-feaeeeed470c/live_view HTTP/1.1" 200 -
-2025-06-04 14:16:53 INFO:api_routes:Running home_key: adb -P 7101 shell input keyevent KEYCODE_HOME
-2025-06-04 14:16:53 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:16:53] "GET /static/css/novnc.css HTTP/1.1" 304 -
-2025-06-04 14:16:53 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:16:53] "GET /static/js/novnc.js HTTP/1.1" 304 -
-2025-06-04 14:16:54 INFO:api_routes:Running boot_check: adb -P 7101 shell getprop sys.boot_completed
-2025-06-04 14:16:55 INFO:api_routes:Running density_check: adb -P 7101 shell wm density
-2025-06-04 14:16:56 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:16:56] "POST /api/emulators/1ea8ac73-86c7-489f-b60c-feaeeeed470c/wake HTTP/1.1" 200 -
-2025-06-04 14:17:01 INFO:api_routes:Waking up emulator 1ea8ac73-86c7-489f-b60c-feaeeeed470c display...
-2025-06-04 14:17:01 INFO:api_routes:Running wake_screen: adb -P 7101 shell input keyevent KEYCODE_WAKEUP
-2025-06-04 14:17:02 INFO:api_routes:Running unlock_swipe: adb -P 7101 shell input swipe 200 800 200 200
-2025-06-04 14:17:03 INFO:api_routes:Running home_key: adb -P 7101 shell input keyevent KEYCODE_HOME
-2025-06-04 14:17:04 INFO:api_routes:Running boot_check: adb -P 7101 shell getprop sys.boot_completed
-2025-06-04 14:17:05 INFO:api_routes:Running density_check: adb -P 7101 shell wm density
-2025-06-04 14:17:06 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:17:06] "POST /api/emulators/1ea8ac73-86c7-489f-b60c-feaeeeed470c/wake HTTP/1.1" 200 -
-2025-06-04 14:17:19 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:17:19] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 14:25:32 INFO:docker_manager:=== Docker Environment Variables Debug ===
+2025-06-04 14:25:32 INFO:docker_manager:DOCKER_HOST = NOT_SET
+2025-06-04 14:25:32 INFO:docker_manager:DOCKER_TLS_VERIFY = NOT_SET
+2025-06-04 14:25:32 INFO:docker_manager:DOCKER_CERT_PATH = NOT_SET
+2025-06-04 14:25:32 INFO:docker_manager:DOCKER_API_VERSION = NOT_SET
+2025-06-04 14:25:32 INFO:docker_manager:No problematic Docker environment variables found to clear
+2025-06-04 14:25:32 INFO:docker_manager:Docker client connected via mounted Unix socket
+2025-06-04 14:25:33 INFO:docker_manager:Found 3 running containers
+2025-06-04 14:25:33 INFO:docker_manager:Checking container: qemu-api-1
+2025-06-04 14:25:33 INFO:docker_manager:Checking container: qemu-emulator14-1
+2025-06-04 14:25:33 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator14-1 (sleeping)
+2025-06-04 14:25:33 INFO:docker_manager:Checking container: qemu-emulator-1
+2025-06-04 14:25:33 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator-1 (sleeping)
+2025-06-04 14:25:33 INFO:werkzeug:WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+2025-06-04 14:25:33  * Running on all addresses (0.0.0.0)
+2025-06-04 14:25:33  * Running on http://127.0.0.1:5001
+2025-06-04 14:25:33  * Running on http://172.18.0.4:5001
+2025-06-04 14:25:33 INFO:werkzeug:Press CTRL+C to quit
+2025-06-04 14:25:33 INFO:werkzeug: * Restarting with stat
+2025-06-04 14:25:33 INFO:docker_manager:=== Docker Environment Variables Debug ===
+2025-06-04 14:25:33 INFO:docker_manager:DOCKER_HOST = NOT_SET
+2025-06-04 14:25:33  * Serving Flask app 'app.py'
+2025-06-04 14:25:33  * Debug mode: on
+2025-06-04 14:25:33 INFO:docker_manager:DOCKER_TLS_VERIFY = NOT_SET
+2025-06-04 14:25:33 INFO:docker_manager:DOCKER_CERT_PATH = NOT_SET
+2025-06-04 14:25:33 INFO:docker_manager:DOCKER_API_VERSION = NOT_SET
+2025-06-04 14:25:33 INFO:docker_manager:No problematic Docker environment variables found to clear
+2025-06-04 14:25:33 INFO:docker_manager:Docker client connected via mounted Unix socket
+2025-06-04 14:25:33 INFO:docker_manager:Found 3 running containers
+2025-06-04 14:25:33 INFO:docker_manager:Checking container: qemu-api-1
+2025-06-04 14:25:33 INFO:docker_manager:Checking container: qemu-emulator14-1
+2025-06-04 14:25:33 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator14-1 (sleeping)
+2025-06-04 14:25:33 INFO:docker_manager:Checking container: qemu-emulator-1
+2025-06-04 14:25:33 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator-1 (sleeping)
+2025-06-04 14:25:33 WARNING:werkzeug: * Debugger is active!
+2025-06-04 14:25:33 INFO:werkzeug: * Debugger PIN: 676-895-601
+2025-06-04 14:25:34 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:25:34] "GET / HTTP/1.1" 200 -
+2025-06-04 14:25:34 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:25:34] "GET /static/css/main.css HTTP/1.1" 304 -
+2025-06-04 14:25:34 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:25:34] "GET /static/js/main.js HTTP/1.1" 304 -
+2025-06-04 14:25:34 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:25:34] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 14:25:39 INFO:docker_manager:Generated available ports: {'console_port': 5322, 'adb_port': 6509, 'internal_adb_server_port': 7032, 'vnc_port': 5907, 'websockify_port': 6298}
+2025-06-04 14:25:39 INFO:api_routes:Creating emulator with port bindings: {'5554/tcp': 5322, '5555/tcp': 6509, '5037/tcp': 7032, '5900/tcp': 5907, '6080/tcp': 6298}
+2025-06-04 14:25:39 INFO:docker_manager:Attempting to create container (attempt 1/3)
+2025-06-04 14:25:40 INFO:docker_manager:Successfully created container: emu_00myenrd_09d849d9
+2025-06-04 14:25:40 INFO:api_routes:Setting up ADB connection for new emulator...
+2025-06-04 14:25:40 INFO:api_routes:Using ADB server port: 7032, device port: 6509
+2025-06-04 14:25:43 WARNING:adb_manager:robust_adb_server_restart is deprecated - using direct emulator connection instead
+2025-06-04 14:25:43 INFO:api_routes:Detecting device using localhost networking for container: emu_00myenrd_09d849d9
+2025-06-04 14:25:43 INFO:api_routes:Connecting to localhost:6509 via ADB server on port 7032
+2025-06-04 14:25:43 INFO:adb_manager:Dynamic container emu_00myenrd_09d849d9 - using localhost with mapped ports instead of container networking
+2025-06-04 14:25:43 INFO:adb_manager:Device discovery attempt 1/3 for dynamic container emu_00myenrd_09d849d9
+2025-06-04 14:25:43 INFO:adb_manager:Set ADB server port to: 7032
+2025-06-04 14:25:43 INFO:adb_manager:Set Unix shell ADB server port to: 7032
+2025-06-04 14:25:43 INFO:adb_manager:Running ADB command: adb -P 7032 devices
+2025-06-04 14:25:46 INFO:adb_manager:Devices output: List of devices attached
+2025-06-04 14:25:46 
+2025-06-04 14:25:46 
+2025-06-04 14:25:46 WARNING:adb_manager:No emulator devices found in devices list for container emu_00myenrd_09d849d9
+2025-06-04 14:25:46 INFO:adb_manager:Retrying device detection in 2 seconds...
+2025-06-04 14:25:48 INFO:adb_manager:Device discovery attempt 2/3 for dynamic container emu_00myenrd_09d849d9
+2025-06-04 14:25:48 INFO:adb_manager:Set ADB server port to: 7032
+2025-06-04 14:25:48 INFO:adb_manager:Set Unix shell ADB server port to: 7032
+2025-06-04 14:25:48 INFO:adb_manager:Running ADB command: adb -P 7032 devices
+2025-06-04 14:25:48 INFO:adb_manager:Devices output: List of devices attached
+2025-06-04 14:25:48 
+2025-06-04 14:25:48 
+2025-06-04 14:25:48 WARNING:adb_manager:No emulator devices found in devices list for container emu_00myenrd_09d849d9
+2025-06-04 14:25:48 INFO:adb_manager:Retrying device detection in 2 seconds...
+2025-06-04 14:25:50 INFO:adb_manager:Device discovery attempt 3/3 for dynamic container emu_00myenrd_09d849d9
+2025-06-04 14:25:50 INFO:adb_manager:Set ADB server port to: 7032
+2025-06-04 14:25:50 INFO:adb_manager:Set Unix shell ADB server port to: 7032
+2025-06-04 14:25:50 INFO:adb_manager:Running ADB command: adb -P 7032 devices
+2025-06-04 14:25:50 INFO:adb_manager:Devices output: List of devices attached
+2025-06-04 14:25:50 
+2025-06-04 14:25:50 
+2025-06-04 14:25:50 WARNING:adb_manager:No emulator devices found in devices list for container emu_00myenrd_09d849d9
+2025-06-04 14:25:50 ERROR:adb_manager:Failed to detect device after 3 attempts
+2025-06-04 14:25:50 INFO:adb_manager:Set ADB server port to: 7032
+2025-06-04 14:25:50 INFO:adb_manager:Set Unix shell ADB server port to: 7032
+2025-06-04 14:25:50 INFO:adb_manager:Running ADB command: adb -P 7032 devices
+2025-06-04 14:25:50 WARNING:api_routes:Device not found immediately, but emulator might still be booting
+2025-06-04 14:25:50 INFO:api_routes:You can manually connect later using: adb connect localhost:6509
+2025-06-04 14:25:50 INFO:api_routes:Created Android 11 emulator 00myenrd
+2025-06-04 14:25:50 INFO:api_routes:Console: telnet localhost 5322
+2025-06-04 14:25:50 INFO:api_routes:ADB Server Port: 7032
+2025-06-04 14:25:50 INFO:api_routes:Device status: pending
+2025-06-04 14:25:50 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:25:50] "POST /api/emulators HTTP/1.1" 201 -
+2025-06-04 14:25:52 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:25:52] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 14:26:04 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:26:04] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 14:26:31 INFO:api_routes:Live view requested for 09d849d9-72b0-4a96-900c-a0298c8ce199 - using built-in websockify on port 6298
+2025-06-04 14:26:31 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:26:31] "GET /api/emulators/09d849d9-72b0-4a96-900c-a0298c8ce199/live_view HTTP/1.1" 200 -
+2025-06-04 14:26:31 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:26:31] "GET /static/css/novnc.css HTTP/1.1" 304 -
+2025-06-04 14:26:31 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:26:31] "GET /static/js/novnc.js HTTP/1.1" 304 -
+2025-06-04 14:26:35 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:26:35] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 14:27:05 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:27:05] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 14:27:32 INFO:api_routes:Waking up emulator 09d849d9-72b0-4a96-900c-a0298c8ce199 display...
+2025-06-04 14:27:32 INFO:api_routes:Running wake_screen: adb -P 7032 shell input keyevent KEYCODE_WAKEUP
+2025-06-04 14:27:33 INFO:api_routes:Running unlock_swipe: adb -P 7032 shell input swipe 200 800 200 200
+2025-06-04 14:27:34 INFO:api_routes:Running home_key: adb -P 7032 shell input keyevent KEYCODE_HOME
+2025-06-04 14:27:35 INFO:api_routes:Running boot_check: adb -P 7032 shell getprop sys.boot_completed
+2025-06-04 14:27:35 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:27:35] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 14:27:36 INFO:api_routes:Running density_check: adb -P 7032 shell wm density
+2025-06-04 14:27:37 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 12:27:37] "POST /api/emulators/09d849d9-72b0-4a96-900c-a0298c8ce199/wake HTTP/1.1" 200 -
