@@ -6,8 +6,8 @@ from flask import jsonify, request, abort, render_template
 # Import our custom modules
 from docker_manager import (
     get_docker_client, discover_existing_containers, create_emulator_container,
-    generate_device_id, generate_random_ports, get_container_port_mappings,
-    wait_for_container_ports
+    generate_device_id, generate_available_ports, get_container_port_mappings,
+    wait_for_container_ports, cleanup_orphaned_containers, PREDEFINED_CONTAINERS
 )
 from adb_manager import (
     robust_adb_server_restart, detect_device_with_retry, run_adb_command,
@@ -49,21 +49,28 @@ def register_api_routes(app, sessions):
     @app.route('/api/emulators', methods=['POST'])
     def create_emulator():
         """Create a new emulator"""
-        session_id = str(uuid.uuid4())
-        device_id = generate_device_id()
+        data = request.json or {}
+        android_version = data.get('android_version', '11')
         
-        # Get request data
-        data = request.get_json(silent=True) or {}
-        
-        # Get Android version (default to 11)
-        android_version = str(data.get('android_version', '11'))
+        # Validate android version
         if android_version not in ['11', '14']:
             android_version = '11'  # fallback to Android 11
         
-        # Generate random host ports for all services
-        ports = generate_random_ports()
+        # Clean up any orphaned containers first to free up ports
+        cleanup_orphaned_containers()
         
-        # Get custom port mappings if provided, or use defaults
+        # Generate unique session ID and device ID
+        session_id = str(uuid.uuid4())
+        device_id = generate_device_id()
+        
+        # Generate available ports with conflict avoidance
+        try:
+            ports = generate_available_ports()
+        except Exception as e:
+            logger.error(f"Failed to generate available ports: {e}")
+            abort(500, description=f"Port allocation failed: {str(e)}")
+        
+        # Get custom port mappings if provided, or use generated defaults
         console_port = data.get('console_port', ports['console_port'])
         adb_port = data.get('adb_port', ports['adb_port'])
         
@@ -84,6 +91,9 @@ def register_api_routes(app, sessions):
         if map_external_adb_server and external_adb_server_port:
             port_bindings['5037/tcp'] = external_adb_server_port
         
+        # Log the port allocation for debugging
+        logger.info(f"Creating emulator with port bindings: {port_bindings}")
+        
         # Prepare environment variables
         environment = {
             'ANDROID_EMULATOR_WAIT_TIME': '120',
@@ -98,10 +108,19 @@ def register_api_routes(app, sessions):
         }
         
         try:
-            # Create container
+            # Create container with retry logic for port conflicts
             container = create_emulator_container(android_version, device_id, session_id, port_bindings, environment)
         except Exception as e:
-            abort(500, description=str(e))
+            error_msg = str(e)
+            logger.error(f"Failed to create emulator: {error_msg}")
+            
+            # Provide more specific error messages for common issues
+            if "port is already allocated" in error_msg:
+                abort(500, description="Port allocation conflict. Please try again - the system will automatically select different ports.")
+            elif "image" in error_msg.lower() and "not found" in error_msg.lower():
+                abort(500, description="Emulator Docker image not found. Please build the required images first.")
+            else:
+                abort(500, description=f"Emulator creation failed: {error_msg}")
 
         # Wait until emulator binds ADB port
         if not wait_for_container_ports(container):
