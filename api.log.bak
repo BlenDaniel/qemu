@@ -1,181 +1,172 @@
-2025-06-03 13:18:09 INFO:docker_manager:Docker client connected successfully
-2025-06-03 13:18:09 INFO:docker_manager:Found 3 running containers
-2025-06-03 13:18:09 INFO:docker_manager:Checking container: qemu-api-1
-2025-06-03 13:18:09 INFO:docker_manager:Checking container: qemu-emulator14-1
-2025-06-03 13:18:09 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator14-1 (sleeping)
-2025-06-03 13:18:09 INFO:docker_manager:Checking container: qemu-emulator-1
-2025-06-03 13:18:09 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator-1 (sleeping)
-2025-06-03 13:18:09 INFO:werkzeug:WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
-2025-06-03 13:18:09  * Running on all addresses (0.0.0.0)
-2025-06-03 13:18:09  * Running on http://127.0.0.1:5001
-2025-06-03 13:18:09  * Running on http://172.18.0.4:5001
-2025-06-03 13:18:09 INFO:werkzeug:Press CTRL+C to quit
-2025-06-03 13:18:09 INFO:werkzeug: * Restarting with stat
-2025-06-03 13:18:09 INFO:docker_manager:Docker client connected successfully
-2025-06-03 13:18:09 INFO:docker_manager:Found 3 running containers
-2025-06-03 13:18:09 INFO:docker_manager:Checking container: qemu-api-1
-2025-06-03 13:18:09 INFO:docker_manager:Checking container: qemu-emulator14-1
-2025-06-03 13:18:09 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator14-1 (sleeping)
-2025-06-03 13:18:09 INFO:docker_manager:Checking container: qemu-emulator-1
-2025-06-03 13:18:09 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator-1 (sleeping)
-2025-06-03 13:18:09 WARNING:werkzeug: * Debugger is active!
-2025-06-03 13:18:09 INFO:werkzeug: * Debugger PIN: 890-178-426
-2025-06-03 13:18:10 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:18:10] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 13:18:09  * Serving Flask app 'app.py'
-2025-06-03 13:18:09  * Debug mode: on
-2025-06-03 13:18:10 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:18:10] "GET /api/emulators/a350f662-2b6e-4e34-b297-f1eaa4e3c926/screenshot HTTP/1.1" 404 -
-2025-06-03 13:18:10 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:18:10] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 13:18:24 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:18:24] "GET / HTTP/1.1" 200 -
-2025-06-03 13:18:24 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:18:24] "GET /static/css/style.css HTTP/1.1" 304 -
-2025-06-03 13:18:24 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:18:24] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 13:18:28 INFO:api_routes:Setting up ADB connection for new emulator...
-2025-06-03 13:18:28 WARNING:adb_manager:robust_adb_server_restart is deprecated - using direct emulator connection instead
-2025-06-03 13:18:28 INFO:api_routes:Detecting device using container name: emu_h0gnf9j9_49f1e9c1
-2025-06-03 13:18:28 INFO:adb_manager:Using direct emulator ADB server connection: emu_h0gnf9j9_49f1e9c1
-2025-06-03 13:18:28 INFO:adb_manager:Connecting to emulator ADB server: emu_h0gnf9j9_49f1e9c1:5037
-2025-06-03 13:18:28 INFO:adb_manager:Killing all local ADB processes...
-2025-06-03 13:18:28 INFO:adb_manager:Killed Unix ADB processes
-2025-06-03 13:18:28 INFO:adb_manager:Executed adb kill-server
-2025-06-03 13:18:30 INFO:adb_manager:Set ADB server socket to: tcp:emu_h0gnf9j9_49f1e9c1:5037
-2025-06-03 13:18:30 INFO:adb_manager:Testing connection with: adb -H emu_h0gnf9j9_49f1e9c1 -P 5037 devices
-2025-06-03 13:18:32 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-03 11:18:32.267    48    48 W adb     : network.cpp:145 failed to resolve host: 'emu_h0gnf9j9_49f1e9c1': Name or service not known
-2025-06-03 13:18:32 * cannot start server on remote host
-2025-06-03 13:18:32 adb: failed to check server version: cannot connect to daemon at tcp:emu_h0gnf9j9_49f1e9c1:5037: failed to resolve host: 'emu_h0gnf9j9_49f1e9c1': Name or service not known
-2025-06-03 13:18:32 
-2025-06-03 13:18:32 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-03 11:18:32.267    48    48 W adb     : network.cpp:145 failed to resolve host: 'emu_h0gnf9j9_49f1e9c1': Name or service not known
-2025-06-03 13:18:32 * cannot start server on remote host
-2025-06-03 13:18:32 adb: failed to check server version: cannot connect to daemon at tcp:emu_h0gnf9j9_49f1e9c1:5037: failed to resolve host: 'emu_h0gnf9j9_49f1e9c1': Name or service not known
-2025-06-03 13:18:32 
-2025-06-03 13:18:32 INFO:adb_manager:Set ADB server port to: 8754
-2025-06-03 13:18:32 INFO:adb_manager:Set Unix shell ADB server port to: 8754
-2025-06-03 13:18:32 INFO:adb_manager:Running ADB command: adb -P 8754 devices
-2025-06-03 13:18:35 INFO:api_routes:Created Android 11 emulator h0gnf9j9
-2025-06-03 13:18:35 INFO:api_routes:Console: telnet localhost 6413
-2025-06-03 13:18:35 INFO:api_routes:ADB Server Port: 8754
-2025-06-03 13:18:35 INFO:api_routes:Device status: not_found
-2025-06-03 13:18:35 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:18:35] "POST /api/emulators HTTP/1.1" 201 -
-2025-06-03 13:18:37 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:18:37] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 13:18:55 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:18:55] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 13:19:10 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:19:10] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 13:19:17 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:19:17] "GET /vnc/49f1e9c1-4fd8-4a36-b341-d5715652bd45 HTTP/1.1" 200 -
-2025-06-03 13:19:17 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:19:17] "GET /static/js/novnc-local.js HTTP/1.1" 304 -
-2025-06-03 13:19:18 INFO:api_routes:Taking screenshot for emulator 49f1e9c1-4fd8-4a36-b341-d5715652bd45 - ADB port: 9200, Server port: 8754
-2025-06-03 13:19:18 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_h0gnf9j9_49f1e9c1
-2025-06-03 13:19:18 INFO:adb_manager:Connecting to emulator ADB server: emu_h0gnf9j9_49f1e9c1:5037
-2025-06-03 13:19:18 INFO:adb_manager:Killing all local ADB processes...
-2025-06-03 13:19:18 INFO:adb_manager:Killed Unix ADB processes
-2025-06-03 13:19:20 INFO:adb_manager:Executed adb kill-server
-2025-06-03 13:19:22 INFO:adb_manager:Set ADB server socket to: tcp:emu_h0gnf9j9_49f1e9c1:5037
-2025-06-03 13:19:22 INFO:adb_manager:Testing connection with: adb -H emu_h0gnf9j9_49f1e9c1 -P 5037 devices
-2025-06-03 13:19:23 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-03 11:19:23.939    66    66 W adb     : network.cpp:145 failed to resolve host: 'emu_h0gnf9j9_49f1e9c1': Name or service not known
-2025-06-03 13:19:23 * cannot start server on remote host
-2025-06-03 13:19:23 adb: failed to check server version: cannot connect to daemon at tcp:emu_h0gnf9j9_49f1e9c1:5037: failed to resolve host: 'emu_h0gnf9j9_49f1e9c1': Name or service not known
-2025-06-03 13:19:23 
-2025-06-03 13:19:23 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:19:23] "GET /api/emulators/49f1e9c1-4fd8-4a36-b341-d5715652bd45/screenshot HTTP/1.1" 500 -
-2025-06-03 13:19:25 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:19:25] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 13:19:55 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:19:55] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 13:19:57 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:19:57] "GET /vnc/49f1e9c1-4fd8-4a36-b341-d5715652bd45 HTTP/1.1" 200 -
-2025-06-03 13:19:57 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:19:57] "GET /static/js/novnc-local.js HTTP/1.1" 304 -
-2025-06-03 13:19:58 INFO:api_routes:Taking screenshot for emulator 49f1e9c1-4fd8-4a36-b341-d5715652bd45 - ADB port: 9200, Server port: 8754
-2025-06-03 13:19:58 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_h0gnf9j9_49f1e9c1
-2025-06-03 13:19:58 INFO:adb_manager:Connecting to emulator ADB server: emu_h0gnf9j9_49f1e9c1:5037
-2025-06-03 13:19:58 INFO:adb_manager:Killing all local ADB processes...
-2025-06-03 13:19:58 INFO:adb_manager:Killed Unix ADB processes
-2025-06-03 13:20:00 INFO:adb_manager:Executed adb kill-server
-2025-06-03 13:20:02 INFO:adb_manager:Set ADB server socket to: tcp:emu_h0gnf9j9_49f1e9c1:5037
-2025-06-03 13:20:02 INFO:adb_manager:Testing connection with: adb -H emu_h0gnf9j9_49f1e9c1 -P 5037 devices
-2025-06-03 13:20:03 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-03 11:20:03.865    74    74 W adb     : network.cpp:145 failed to resolve host: 'emu_h0gnf9j9_49f1e9c1': Name or service not known
-2025-06-03 13:20:03 * cannot start server on remote host
-2025-06-03 13:20:03 adb: failed to check server version: cannot connect to daemon at tcp:emu_h0gnf9j9_49f1e9c1:5037: failed to resolve host: 'emu_h0gnf9j9_49f1e9c1': Name or service not known
-2025-06-03 13:20:03 
-2025-06-03 13:20:03 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:20:03] "GET /api/emulators/49f1e9c1-4fd8-4a36-b341-d5715652bd45/screenshot HTTP/1.1" 500 -
-2025-06-03 13:20:10 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:20:10] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 13:20:24 INFO:api_routes:Taking screenshot for emulator 49f1e9c1-4fd8-4a36-b341-d5715652bd45 - ADB port: 9200, Server port: 8754
-2025-06-03 13:20:24 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_h0gnf9j9_49f1e9c1
-2025-06-03 13:20:24 INFO:adb_manager:Connecting to emulator ADB server: emu_h0gnf9j9_49f1e9c1:5037
-2025-06-03 13:20:24 INFO:adb_manager:Killing all local ADB processes...
-2025-06-03 13:20:24 INFO:adb_manager:Killed Unix ADB processes
-2025-06-03 13:20:24 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:20:24] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 13:20:25 INFO:adb_manager:Executed adb kill-server
-2025-06-03 13:20:26 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:20:26] "GET /api/emulators/49f1e9c1-4fd8-4a36-b341-d5715652bd45/live_view HTTP/1.1" 200 -
-2025-06-03 13:20:26 INFO:api_routes:Taking screenshot for emulator 49f1e9c1-4fd8-4a36-b341-d5715652bd45 - ADB port: 9200, Server port: 8754
-2025-06-03 13:20:26 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_h0gnf9j9_49f1e9c1
-2025-06-03 13:20:26 INFO:adb_manager:Connecting to emulator ADB server: emu_h0gnf9j9_49f1e9c1:5037
-2025-06-03 13:20:26 INFO:adb_manager:Killing all local ADB processes...
-2025-06-03 13:20:26 INFO:adb_manager:Killed Unix ADB processes
-2025-06-03 13:20:27 INFO:adb_manager:Set ADB server socket to: tcp:emu_h0gnf9j9_49f1e9c1:5037
-2025-06-03 13:20:27 INFO:adb_manager:Testing connection with: adb -H emu_h0gnf9j9_49f1e9c1 -P 5037 devices
-2025-06-03 13:20:28 INFO:adb_manager:Executed adb kill-server
-2025-06-03 13:20:29 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-03 11:20:29.778    84    84 W adb     : network.cpp:145 failed to resolve host: 'emu_h0gnf9j9_49f1e9c1': Name or service not known
-2025-06-03 13:20:29 * cannot start server on remote host
-2025-06-03 13:20:29 adb: failed to check server version: cannot connect to daemon at tcp:emu_h0gnf9j9_49f1e9c1:5037: failed to resolve host: 'emu_h0gnf9j9_49f1e9c1': Name or service not known
-2025-06-03 13:20:29 
-2025-06-03 13:20:29 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:20:29] "GET /api/emulators/49f1e9c1-4fd8-4a36-b341-d5715652bd45/screenshot HTTP/1.1" 500 -
-2025-06-03 13:20:30 INFO:adb_manager:Set ADB server socket to: tcp:emu_h0gnf9j9_49f1e9c1:5037
-2025-06-03 13:20:30 INFO:adb_manager:Testing connection with: adb -H emu_h0gnf9j9_49f1e9c1 -P 5037 devices
-2025-06-03 13:20:32 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-03 11:20:32.420    85    85 W adb     : network.cpp:145 failed to resolve host: 'emu_h0gnf9j9_49f1e9c1': Name or service not known
-2025-06-03 13:20:32 * cannot start server on remote host
-2025-06-03 13:20:32 adb: failed to check server version: cannot connect to daemon at tcp:emu_h0gnf9j9_49f1e9c1:5037: failed to resolve host: 'emu_h0gnf9j9_49f1e9c1': Name or service not known
-2025-06-03 13:20:32 
-2025-06-03 13:20:32 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:20:32] "GET /api/emulators/49f1e9c1-4fd8-4a36-b341-d5715652bd45/screenshot HTTP/1.1" 500 -
-2025-06-03 13:20:32 INFO:api_routes:Taking screenshot for emulator 49f1e9c1-4fd8-4a36-b341-d5715652bd45 - ADB port: 9200, Server port: 8754
-2025-06-03 13:20:32 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_h0gnf9j9_49f1e9c1
-2025-06-03 13:20:32 INFO:adb_manager:Connecting to emulator ADB server: emu_h0gnf9j9_49f1e9c1:5037
-2025-06-03 13:20:32 INFO:adb_manager:Killing all local ADB processes...
-2025-06-03 13:20:32 INFO:adb_manager:Killed Unix ADB processes
-2025-06-03 13:20:34 INFO:adb_manager:Executed adb kill-server
-2025-06-03 13:20:36 INFO:adb_manager:Set ADB server socket to: tcp:emu_h0gnf9j9_49f1e9c1:5037
-2025-06-03 13:20:36 INFO:adb_manager:Testing connection with: adb -H emu_h0gnf9j9_49f1e9c1 -P 5037 devices
-2025-06-03 13:20:38 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-03 11:20:38.163    89    89 W adb     : network.cpp:145 failed to resolve host: 'emu_h0gnf9j9_49f1e9c1': Name or service not known
-2025-06-03 13:20:38 * cannot start server on remote host
-2025-06-03 13:20:38 adb: failed to check server version: cannot connect to daemon at tcp:emu_h0gnf9j9_49f1e9c1:5037: failed to resolve host: 'emu_h0gnf9j9_49f1e9c1': Name or service not known
-2025-06-03 13:20:38 
-2025-06-03 13:20:38 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:20:38] "GET /api/emulators/49f1e9c1-4fd8-4a36-b341-d5715652bd45/screenshot HTTP/1.1" 500 -
-2025-06-03 13:20:38 INFO:api_routes:Taking screenshot for emulator 49f1e9c1-4fd8-4a36-b341-d5715652bd45 - ADB port: 9200, Server port: 8754
-2025-06-03 13:20:38 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_h0gnf9j9_49f1e9c1
-2025-06-03 13:20:38 INFO:adb_manager:Connecting to emulator ADB server: emu_h0gnf9j9_49f1e9c1:5037
-2025-06-03 13:20:38 INFO:adb_manager:Killing all local ADB processes...
-2025-06-03 13:20:38 INFO:adb_manager:Killed Unix ADB processes
-2025-06-03 13:20:40 INFO:adb_manager:Executed adb kill-server
-2025-06-03 13:20:42 INFO:adb_manager:Set ADB server socket to: tcp:emu_h0gnf9j9_49f1e9c1:5037
-2025-06-03 13:20:42 INFO:adb_manager:Testing connection with: adb -H emu_h0gnf9j9_49f1e9c1 -P 5037 devices
-2025-06-03 13:20:43 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-03 11:20:43.897    93    93 W adb     : network.cpp:145 failed to resolve host: 'emu_h0gnf9j9_49f1e9c1': Name or service not known
-2025-06-03 13:20:43 * cannot start server on remote host
-2025-06-03 13:20:43 adb: failed to check server version: cannot connect to daemon at tcp:emu_h0gnf9j9_49f1e9c1:5037: failed to resolve host: 'emu_h0gnf9j9_49f1e9c1': Name or service not known
-2025-06-03 13:20:43 
-2025-06-03 13:20:43 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:20:43] "GET /api/emulators/49f1e9c1-4fd8-4a36-b341-d5715652bd45/screenshot HTTP/1.1" 500 -
-2025-06-03 13:20:43 INFO:api_routes:Taking screenshot for emulator 49f1e9c1-4fd8-4a36-b341-d5715652bd45 - ADB port: 9200, Server port: 8754
-2025-06-03 13:20:43 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_h0gnf9j9_49f1e9c1
-2025-06-03 13:20:43 INFO:adb_manager:Connecting to emulator ADB server: emu_h0gnf9j9_49f1e9c1:5037
-2025-06-03 13:20:43 INFO:adb_manager:Killing all local ADB processes...
-2025-06-03 13:20:43 INFO:adb_manager:Killed Unix ADB processes
-2025-06-03 13:20:45 INFO:adb_manager:Executed adb kill-server
-2025-06-03 13:20:47 INFO:adb_manager:Set ADB server socket to: tcp:emu_h0gnf9j9_49f1e9c1:5037
-2025-06-03 13:20:47 INFO:adb_manager:Testing connection with: adb -H emu_h0gnf9j9_49f1e9c1 -P 5037 devices
-2025-06-03 13:20:49 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-03 11:20:49.639    97    97 W adb     : network.cpp:145 failed to resolve host: 'emu_h0gnf9j9_49f1e9c1': Name or service not known
-2025-06-03 13:20:49 * cannot start server on remote host
-2025-06-03 13:20:49 adb: failed to check server version: cannot connect to daemon at tcp:emu_h0gnf9j9_49f1e9c1:5037: failed to resolve host: 'emu_h0gnf9j9_49f1e9c1': Name or service not known
-2025-06-03 13:20:49 
-2025-06-03 13:20:49 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:20:49] "GET /api/emulators/49f1e9c1-4fd8-4a36-b341-d5715652bd45/screenshot HTTP/1.1" 500 -
-2025-06-03 13:20:49 INFO:api_routes:Taking screenshot for emulator 49f1e9c1-4fd8-4a36-b341-d5715652bd45 - ADB port: 9200, Server port: 8754
-2025-06-03 13:20:49 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_h0gnf9j9_49f1e9c1
-2025-06-03 13:20:49 INFO:adb_manager:Connecting to emulator ADB server: emu_h0gnf9j9_49f1e9c1:5037
-2025-06-03 13:20:49 INFO:adb_manager:Killing all local ADB processes...
-2025-06-03 13:20:49 INFO:adb_manager:Killed Unix ADB processes
-2025-06-03 13:20:51 INFO:adb_manager:Executed adb kill-server
-2025-06-03 13:20:53 INFO:adb_manager:Set ADB server socket to: tcp:emu_h0gnf9j9_49f1e9c1:5037
-2025-06-03 13:20:53 INFO:adb_manager:Testing connection with: adb -H emu_h0gnf9j9_49f1e9c1 -P 5037 devices
-2025-06-03 13:20:55 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:20:55] "GET /api/emulators HTTP/1.1" 200 -
-2025-06-03 13:20:55 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-03 11:20:55.396   101   101 W adb     : network.cpp:145 failed to resolve host: 'emu_h0gnf9j9_49f1e9c1': Name or service not known
-2025-06-03 13:20:55 * cannot start server on remote host
-2025-06-03 13:20:55 adb: failed to check server version: cannot connect to daemon at tcp:emu_h0gnf9j9_49f1e9c1:5037: failed to resolve host: 'emu_h0gnf9j9_49f1e9c1': Name or service not known
-2025-06-03 13:20:55 
-2025-06-03 13:20:55 INFO:werkzeug:172.18.0.1 - - [03/Jun/2025 11:20:55] "GET /api/emulators/49f1e9c1-4fd8-4a36-b341-d5715652bd45/screenshot HTTP/1.1" 500 -
-2025-06-03 13:20:55 INFO:api_routes:Taking screenshot for emulator 49f1e9c1-4fd8-4a36-b341-d5715652bd45 - ADB port: 9200, Server port: 8754
-2025-06-03 13:20:55 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_h0gnf9j9_49f1e9c1
-2025-06-03 13:20:55 INFO:adb_manager:Connecting to emulator ADB server: emu_h0gnf9j9_49f1e9c1:5037
-2025-06-03 13:20:55 INFO:adb_manager:Killing all local ADB processes...
-2025-06-03 13:20:55 INFO:adb_manager:Killed Unix ADB processes
-2025-06-03 13:20:57 INFO:adb_manager:Executed adb kill-server
-2025-06-03 13:20:59 INFO:adb_manager:Set ADB server socket to: tcp:emu_h0gnf9j9_49f1e9c1:5037
-2025-06-03 13:20:59 INFO:adb_manager:Testing connection with: adb -H emu_h0gnf9j9_49f1e9c1 -P 5037 devices
+2025-06-04 09:00:14 INFO:docker_manager:Docker client connected successfully
+2025-06-04 09:00:15 INFO:docker_manager:Found 3 running containers
+2025-06-04 09:00:15 INFO:docker_manager:Checking container: qemu-api-1
+2025-06-04 09:00:15 INFO:docker_manager:Checking container: qemu-emulator14-1
+2025-06-04 09:00:15 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator14-1 (sleeping)
+2025-06-04 09:00:15 INFO:docker_manager:Checking container: qemu-emulator-1
+2025-06-04 09:00:15 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator-1 (sleeping)
+2025-06-04 09:00:15 INFO:werkzeug:WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+2025-06-04 09:00:15  * Running on all addresses (0.0.0.0)
+2025-06-04 09:00:15  * Running on http://127.0.0.1:5001
+2025-06-04 09:00:15  * Running on http://172.18.0.4:5001
+2025-06-04 09:00:15 INFO:werkzeug:Press CTRL+C to quit
+2025-06-04 09:00:15 INFO:werkzeug: * Restarting with stat
+2025-06-04 09:00:15 INFO:docker_manager:Docker client connected successfully
+2025-06-04 09:00:15 INFO:docker_manager:Found 3 running containers
+2025-06-04 09:00:15 INFO:docker_manager:Checking container: qemu-api-1
+2025-06-04 09:00:15 INFO:docker_manager:Checking container: qemu-emulator14-1
+2025-06-04 09:00:15 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator14-1 (sleeping)
+2025-06-04 09:00:15 INFO:docker_manager:Checking container: qemu-emulator-1
+2025-06-04 09:00:15 INFO:docker_manager:Skipping dormant prototype container: qemu-emulator-1 (sleeping)
+2025-06-04 09:00:15 WARNING:werkzeug: * Debugger is active!
+2025-06-04 09:00:15 INFO:werkzeug: * Debugger PIN: 106-966-984
+2025-06-04 09:00:20 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:00:20] "GET / HTTP/1.1" 200 -
+2025-06-04 09:00:20 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:00:20] "GET /static/css/style.css HTTP/1.1" 304 -
+2025-06-04 09:00:20 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:00:20] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 09:00:20 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:00:20] "GET /favicon.ico HTTP/1.1" 404 -
+2025-06-04 09:00:22 INFO:api_routes:Setting up ADB connection for new emulator...
+2025-06-04 09:00:22 WARNING:adb_manager:robust_adb_server_restart is deprecated - using direct emulator connection instead
+2025-06-04 09:00:22 INFO:api_routes:Detecting device using container name: emu_qx35sjds_e3f61705
+2025-06-04 09:00:22 INFO:adb_manager:Using direct emulator ADB server connection: emu_qx35sjds_e3f61705
+2025-06-04 09:00:22 INFO:adb_manager:Connecting to emulator ADB server: emu_qx35sjds_e3f61705:5037
+2025-06-04 09:00:22 INFO:adb_manager:Killing all local ADB processes...
+2025-06-04 09:00:22 INFO:adb_manager:Killed Unix ADB processes
+2025-06-04 09:00:22 INFO:adb_manager:Executed adb kill-server
+2025-06-04 09:00:24 INFO:adb_manager:Set ADB server socket to: tcp:emu_qx35sjds_e3f61705:5037
+2025-06-04 09:00:24 INFO:adb_manager:Testing connection with: adb -H emu_qx35sjds_e3f61705 -P 5037 devices
+2025-06-04 09:00:26 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-04 07:00:26.344    46    46 W adb     : network.cpp:145 failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
+2025-06-04 09:00:26 * cannot start server on remote host
+2025-06-04 09:00:26 adb: failed to check server version: cannot connect to daemon at tcp:emu_qx35sjds_e3f61705:5037: failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
+2025-06-04 09:00:26 
+2025-06-04 09:00:26 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-04 07:00:26.344    46    46 W adb     : network.cpp:145 failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
+2025-06-04 09:00:26 * cannot start server on remote host
+2025-06-04 09:00:26 adb: failed to check server version: cannot connect to daemon at tcp:emu_qx35sjds_e3f61705:5037: failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
+2025-06-04 09:00:26 
+2025-06-04 09:00:26 INFO:adb_manager:Set ADB server port to: 9404
+2025-06-04 09:00:26 INFO:adb_manager:Set Unix shell ADB server port to: 9404
+2025-06-04 09:00:26 INFO:adb_manager:Running ADB command: adb -P 9404 devices
+2025-06-04 09:00:29 INFO:api_routes:Created Android 11 emulator qx35sjds
+2025-06-04 09:00:29 INFO:api_routes:Console: telnet localhost 9619
+2025-06-04 09:00:29 INFO:api_routes:ADB Server Port: 9404
+2025-06-04 09:00:29 INFO:api_routes:Device status: not_found
+2025-06-04 09:00:29 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:00:29] "POST /api/emulators HTTP/1.1" 201 -
+2025-06-04 09:00:32 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:00:32] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 09:00:51 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:00:51] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 09:01:21 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:01:21] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 09:01:51 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:01:51] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 09:02:21 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:02:21] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 09:02:51 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:02:51] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 09:03:21 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:03:21] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 09:03:51 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:03:51] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 09:04:52 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:04:52] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 09:05:53 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:05:53] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 09:06:55 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:06:55] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 09:07:55 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:07:55] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 09:00:15  * Serving Flask app 'app.py'
+2025-06-04 09:00:15  * Debug mode: on
+2025-06-04 09:08:56 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:08:56] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 09:09:24 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:09:24] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 09:09:47 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:09:47] "GET /vnc/e3f61705-50a7-4e96-96a2-4bb80fca79b7 HTTP/1.1" 200 -
+2025-06-04 09:09:47 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:09:47] "GET /static/js/novnc-local.js HTTP/1.1" 304 -
+2025-06-04 09:09:47 INFO:api_routes:Taking screenshot for emulator e3f61705-50a7-4e96-96a2-4bb80fca79b7 - ADB port: 5752, Server port: 9404
+2025-06-04 09:09:47 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_qx35sjds_e3f61705
+2025-06-04 09:09:47 INFO:adb_manager:Connecting to emulator ADB server: emu_qx35sjds_e3f61705:5037
+2025-06-04 09:09:47 INFO:adb_manager:Killing all local ADB processes...
+2025-06-04 09:09:47 INFO:adb_manager:Killed Unix ADB processes
+2025-06-04 09:09:49 INFO:adb_manager:Executed adb kill-server
+2025-06-04 09:09:50 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:09:50] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 09:09:51 INFO:adb_manager:Set ADB server socket to: tcp:emu_qx35sjds_e3f61705:5037
+2025-06-04 09:09:51 INFO:adb_manager:Testing connection with: adb -H emu_qx35sjds_e3f61705 -P 5037 devices
+2025-06-04 09:09:52 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-04 07:09:52.656    76    76 W adb     : network.cpp:145 failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
+2025-06-04 09:09:52 * cannot start server on remote host
+2025-06-04 09:09:52 adb: failed to check server version: cannot connect to daemon at tcp:emu_qx35sjds_e3f61705:5037: failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
+2025-06-04 09:09:52 
+2025-06-04 09:09:52 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:09:52] "GET /api/emulators/e3f61705-50a7-4e96-96a2-4bb80fca79b7/screenshot HTTP/1.1" 500 -
+
+
+VNC LIVE VIEW BUTTON RESPONSES
+
+025-06-04 09:09:49 INFO:adb_manager:Executed adb kill-server
+2025-06-04 09:09:50 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:09:50] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 09:09:51 INFO:adb_manager:Set ADB server socket to: tcp:emu_qx35sjds_e3f61705:5037
+2025-06-04 09:09:51 INFO:adb_manager:Testing connection with: adb -H emu_qx35sjds_e3f61705 -P 5037 devices
+2025-06-04 09:09:52 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-04 07:09:52.656    76    76 W adb     : network.cpp:145 failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
+2025-06-04 09:09:52 * cannot start server on remote host
+2025-06-04 09:09:52 adb: failed to check server version: cannot connect to daemon at tcp:emu_qx35sjds_e3f61705:5037: failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
+2025-06-04 09:09:52 
+2025-06-04 09:09:52 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:09:52] "GET /api/emulators/e3f61705-50a7-4e96-96a2-4bb80fca79b7/screenshot HTTP/1.1" 500 -
+2025-06-04 09:10:08 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:10:08] "GET /api/emulators/e3f61705-50a7-4e96-96a2-4bb80fca79b7/live_view HTTP/1.1" 200 -
+2025-06-04 09:10:08 INFO:api_routes:Taking screenshot for emulator e3f61705-50a7-4e96-96a2-4bb80fca79b7 - ADB port: 5752, Server port: 9404
+2025-06-04 09:10:08 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_qx35sjds_e3f61705
+2025-06-04 09:10:08 INFO:adb_manager:Connecting to emulator ADB server: emu_qx35sjds_e3f61705:5037
+2025-06-04 09:10:08 INFO:adb_manager:Killing all local ADB processes...
+2025-06-04 09:10:08 INFO:adb_manager:Killed Unix ADB processes
+2025-06-04 09:10:11 INFO:adb_manager:Executed adb kill-server
+2025-06-04 09:10:13 INFO:adb_manager:Set ADB server socket to: tcp:emu_qx35sjds_e3f61705:5037
+2025-06-04 09:10:13 INFO:adb_manager:Testing connection with: adb -H emu_qx35sjds_e3f61705 -P 5037 devices
+2025-06-04 09:10:14 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-04 07:10:14.055    81    81 W adb     : network.cpp:145 failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
+2025-06-04 09:10:14 * cannot start server on remote host
+2025-06-04 09:10:14 adb: failed to check server version: cannot connect to daemon at tcp:emu_qx35sjds_e3f61705:5037: failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
+2025-06-04 09:10:14 
+2025-06-04 09:10:14 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:10:14] "GET /api/emulators/e3f61705-50a7-4e96-96a2-4bb80fca79b7/screenshot HTTP/1.1" 500 -
+2025-06-04 09:10:14 INFO:api_routes:Taking screenshot for emulator e3f61705-50a7-4e96-96a2-4bb80fca79b7 - ADB port: 5752, Server port: 9404
+2025-06-04 09:10:14 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_qx35sjds_e3f61705
+2025-06-04 09:10:14 INFO:adb_manager:Connecting to emulator ADB server: emu_qx35sjds_e3f61705:5037
+2025-06-04 09:10:14 INFO:adb_manager:Killing all local ADB processes...
+2025-06-04 09:10:14 INFO:adb_manager:Killed Unix ADB processes
+2025-06-04 09:10:14 INFO:adb_manager:Executed adb kill-server
+2025-06-04 09:10:16 INFO:adb_manager:Set ADB server socket to: tcp:emu_qx35sjds_e3f61705:5037
+2025-06-04 09:10:16 INFO:adb_manager:Testing connection with: adb -H emu_qx35sjds_e3f61705 -P 5037 devices
+2025-06-04 09:10:18 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-04 07:10:18.953    85    85 W adb     : network.cpp:145 failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
+2025-06-04 09:10:18 * cannot start server on remote host
+2025-06-04 09:10:18 adb: failed to check server version: cannot connect to daemon at tcp:emu_qx35sjds_e3f61705:5037: failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
+2025-06-04 09:10:18 
+2025-06-04 09:10:18 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:10:18] "GET /api/emulators/e3f61705-50a7-4e96-96a2-4bb80fca79b7/screenshot HTTP/1.1" 500 -
+2025-06-04 09:10:18 INFO:api_routes:Taking screenshot for emulator e3f61705-50a7-4e96-96a2-4bb80fca79b7 - ADB port: 5752, Server port: 9404
+2025-06-04 09:10:18 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_qx35sjds_e3f61705
+2025-06-04 09:10:18 INFO:adb_manager:Connecting to emulator ADB server: emu_qx35sjds_e3f61705:5037
+2025-06-04 09:10:18 INFO:adb_manager:Killing all local ADB processes...
+2025-06-04 09:10:18 INFO:adb_manager:Killed Unix ADB processes
+2025-06-04 09:10:20 INFO:adb_manager:Executed adb kill-server
+2025-06-04 09:10:21 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:10:21] "GET /api/emulators HTTP/1.1" 200 -
+2025-06-04 09:10:22 INFO:adb_manager:Set ADB server socket to: tcp:emu_qx35sjds_e3f61705:5037
+2025-06-04 09:10:22 INFO:adb_manager:Testing connection with: adb -H emu_qx35sjds_e3f61705 -P 5037 devices
+2025-06-04 09:10:25 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-04 07:10:25.018    90    90 W adb     : network.cpp:145 failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
+2025-06-04 09:10:25 * cannot start server on remote host
+2025-06-04 09:10:25 adb: failed to check server version: cannot connect to daemon at tcp:emu_qx35sjds_e3f61705:5037: failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
+2025-06-04 09:10:25 
+2025-06-04 09:10:25 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:10:25] "GET /api/emulators/e3f61705-50a7-4e96-96a2-4bb80fca79b7/screenshot HTTP/1.1" 500 -
+2025-06-04 09:10:25 INFO:api_routes:Taking screenshot for emulator e3f61705-50a7-4e96-96a2-4bb80fca79b7 - ADB port: 5752, Server port: 9404
+2025-06-04 09:10:25 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_qx35sjds_e3f61705
+2025-06-04 09:10:25 INFO:adb_manager:Connecting to emulator ADB server: emu_qx35sjds_e3f61705:5037
+2025-06-04 09:10:25 INFO:adb_manager:Killing all local ADB processes...
+2025-06-04 09:10:25 INFO:adb_manager:Killed Unix ADB processes
+2025-06-04 09:10:25 INFO:adb_manager:Executed adb kill-server
+2025-06-04 09:10:27 INFO:adb_manager:Set ADB server socket to: tcp:emu_qx35sjds_e3f61705:5037
+2025-06-04 09:10:27 INFO:adb_manager:Testing connection with: adb -H emu_qx35sjds_e3f61705 -P 5037 devices
+2025-06-04 09:10:28 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-04 07:10:28.708    94    94 W adb     : network.cpp:145 failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
+2025-06-04 09:10:28 * cannot start server on remote host
+2025-06-04 09:10:28 adb: failed to check server version: cannot connect to daemon at tcp:emu_qx35sjds_e3f61705:5037: failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
+2025-06-04 09:10:28 
+2025-06-04 09:10:28 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:10:28] "GET /api/emulators/e3f61705-50a7-4e96-96a2-4bb80fca79b7/screenshot HTTP/1.1" 500 -
+2025-06-04 09:10:28 INFO:api_routes:Taking screenshot for emulator e3f61705-50a7-4e96-96a2-4bb80fca79b7 - ADB port: 5752, Server port: 9404
+2025-06-04 09:10:28 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_qx35sjds_e3f61705
+2025-06-04 09:10:28 INFO:adb_manager:Connecting to emulator ADB server: emu_qx35sjds_e3f61705:5037
+2025-06-04 09:10:28 INFO:adb_manager:Killing all local ADB processes...
+2025-06-04 09:10:28 INFO:adb_manager:Killed Unix ADB processes
+2025-06-04 09:10:30 INFO:adb_manager:Executed adb kill-server
+2025-06-04 09:10:32 INFO:adb_manager:Set ADB server socket to: tcp:emu_qx35sjds_e3f61705:5037
+2025-06-04 09:10:32 INFO:adb_manager:Testing connection with: adb -H emu_qx35sjds_e3f61705 -P 5037 devices
+2025-06-04 09:10:34 ERROR:adb_manager:Failed to connect to emulator ADB server: 06-04 07:10:34.783    98    98 W adb     : network.cpp:145 failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
+2025-06-04 09:10:34 * cannot start server on remote host
+2025-06-04 09:10:34 adb: failed to check server version: cannot connect to daemon at tcp:emu_qx35sjds_e3f61705:5037: failed to resolve host: 'emu_qx35sjds_e3f61705': Name or service not known
+2025-06-04 09:10:34 
+2025-06-04 09:10:34 INFO:werkzeug:172.18.0.1 - - [04/Jun/2025 07:10:34] "GET /api/emulators/e3f61705-50a7-4e96-96a2-4bb80fca79b7/screenshot HTTP/1.1" 500 -
+2025-06-04 09:10:34 INFO:api_routes:Taking screenshot for emulator e3f61705-50a7-4e96-96a2-4bb80fca79b7 - ADB port: 5752, Server port: 9404
+2025-06-04 09:10:34 INFO:adb_manager:Taking screenshot using direct emulator connection: emu_qx35sjds_e3f61705
+2025-06-04 09:10:34 INFO:adb_manager:Connecting to emulator ADB server: emu_qx35sjds_e3f61705:5037
+2025-06-04 09:10:34 INFO:adb_manager:Killing all local ADB processes...
+2025-06-04 09:10:34 INFO:adb_manager:Killed Unix ADB processes
+2025-06-04 09:10:36 INFO:adb_manager:Executed adb kill-server
+2025-06-04 09:10:38 INFO:adb_manager:Set ADB server socket to: tcp:emu_qx35sjds_e3f61705:5037
+2025-06-04 09:10:38 INFO:adb_manager:Testing connection with: adb -H emu_qx35sjds_e3f61705 -P 5037 devices

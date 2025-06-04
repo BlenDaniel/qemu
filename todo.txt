@@ -1,0 +1,68 @@
+**What is noVNC?**
+
+noVNC is an open-source, browser-based VNC (Virtual Network Computing) client that allows you to access and control a remote desktop or application running on a VNC server directly from a web browser using HTML5 and JavaScript. Unlike traditional VNC clients, noVNC requires no installation of dedicated software on the client side—just a modern web browser. It works by connecting to a VNC server through a WebSocket proxy, enabling real-time, interactive remote desktop sessions via the browser[1][2][5].
+
+To function, noVNC requires three components:
+- A VNC server running on the remote machine (e.g., TigerVNC).
+- A WebSocket proxy (commonly Websockify) that translates WebSocket traffic from the browser into VNC protocol traffic that the VNC server understands.
+- A web server serving the noVNC client files to the browser[1][2].
+
+**How to use noVNC to see the emulator screen instead of a traditional VNC client**
+
+1. **Ensure your emulator container runs a VNC server**  
+   Your Android emulator inside the container already runs a VNC server (commonly on port 5900).
+
+2. **Install and set up Websockify and noVNC**  
+   - Download or clone the noVNC project from its GitHub repository.  
+   - Install Python and the Websockify package (which acts as the WebSocket proxy).  
+   - Start the Websockify proxy to forward WebSocket connections from a chosen port (e.g., 6080) to the VNC server port (e.g., 5900 inside the container).
+
+3. **Expose the noVNC port (e.g., 6080) from the container to your host**  
+   When running the container, map the noVNC port to the host:
+   ```
+   docker run -p 6080:6080 -p 5900:5900 
+   ```
+
+4. **Access the emulator GUI via browser**  
+   Open a modern web browser and navigate to:
+   ```
+   http://:6080
+   ```
+   You will be presented with the noVNC web client interface, which connects through Websockify to the VNC server running the emulator screen.
+
+5. **Authenticate and interact**  
+   Enter the VNC password if prompted, and you can now view and interact with the emulator GUI entirely through your browser without needing a separate VNC client[3][4].
+
+**Advantages of using noVNC over a traditional VNC client:**
+
+- No need to install any VNC client software on your local machine.
+- Works on any device with a modern browser (desktop, mobile, tablet).
+- Easy to share access via a URL.
+- Lightweight and platform-independent.
+
+**Summary**
+
+noVNC is a browser-based VNC client that, combined with Websockify as a WebSocket proxy, allows you to access your emulator's VNC server remotely through a web browser. To use it, you set up the noVNC client and Websockify proxy, expose the necessary ports, and then connect via a browser URL. This approach eliminates the need for dedicated VNC client software and provides convenient, cross-platform access to the emulator screen running inside your container[1][2][3][4][5].
+
+[1] https://www.cendio.com/blog/why-thinlinc-instead-of-novnc-for-linux-remote-computing-through-the-browser/
+[2] https://datawookie.dev/blog/2021/08/websockify-novnc-behind-an-nginx-proxy/
+[3] https://www.siberoloji.com/set-vnc-client-novnc-almalinux/
+[4] https://iandroids.github.io/docker-android/
+[5] https://openqrm-enterprise.com/plug-in-overview/novnc/
+[6] https://pypi.org/project/novnc/
+[7] https://novnc.com
+[8] https://github.com/novnc/noVNC
+[9] https://novnc.com/noVNC/
+[10] https://groups.google.com/g/novnc/c/chLU2_6Q0zA
+[11] https://community.boschrexroth.com/ctrlx-automation-how-tos-qmglrz33/post/how-to-create-novnc-snap-XmQna8MoUcZtzEa
+[12] https://bleekseeks.com/blog/novnc-and-browser-in-the-browser-phishing-attack-pocexplained
+[13] https://github.com/imegeek/noVNC
+[14] https://stackoverflow.com/questions/12847271/connecting-to-android-emulator-through-vnc
+[15] https://github.com/budtmo/docker-android/issues/120
+[16] https://www.reddit.com/r/androiddev/comments/8ku236/how_can_i_display_the_android_emulater_in_a/
+[17] https://di-marco.net/blog/it/2020-02-15-tips-x11_in_an_embedded_system_novnc/
+[18] https://www.kali.org/docs/general-use/novnc-kali-in-browser/
+[19] https://forum.proxmox.com/threads/how-to-set-up-novnc-on-a-web-application.123701/
+
+
+

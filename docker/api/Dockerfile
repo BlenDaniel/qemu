@@ -56,11 +56,8 @@ COPY docker_manager.py .
 COPY adb_manager.py .
 COPY vnc_manager.py .
 COPY api_routes.py .
-COPY test_connectivity.py .
 COPY templates/ templates/
 COPY static/ static/
 
-# Make test script executable
-RUN chmod +x test_connectivity.py
 
 CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0", "--port=5001"]
