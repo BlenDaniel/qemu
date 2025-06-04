@@ -126,34 +126,43 @@ def detect_device_with_retry(adb_server_port, device_port, max_retries=10, retry
     # Container networking only works for predefined docker-compose containers
     if container_name and not container_host:
         logger.info(f"Dynamic container {container_name} - using localhost with mapped ports instead of container networking")
-        # Fall through to use localhost with the mapped adb_server_port and device_port
-    
-    if container_host:
+        # For dynamic containers, we need to connect to the container's internal ADB server 
+        # and look for the emulator device by its internal name (emulator-XXXX)
+        target_serial = None  # We'll discover this from the devices list
+        use_internal_discovery = True
+    elif container_host:
         # For predefined containers from docker-compose
         target_serial = f"{container_host}:{device_port}"
         logger.info(f"Using Docker service networking: {container_host}:{device_port}")
+        use_internal_discovery = False
     else:
         # Use localhost (host networking) - works for both predefined and dynamic containers
         target_serial = f"localhost:{device_port}"
         logger.info(f"Using localhost networking: localhost:{device_port}")
+        use_internal_discovery = False
     
     # Retry logic for connecting to the device
     for attempt in range(max_retries):
         try:
-            logger.info(f"Device detection attempt {attempt + 1}/{max_retries} for {target_serial}")
+            if use_internal_discovery:
+                logger.info(f"Device discovery attempt {attempt + 1}/{max_retries} for dynamic container {container_name}")
+            else:
+                logger.info(f"Device detection attempt {attempt + 1}/{max_retries} for {target_serial}")
             
-            # First, try to connect to the device
-            connect_result = run_adb_command(
-                "connect", 
-                ["-P", str(adb_server_port), "connect", target_serial], 
-                adb_server_port=adb_server_port,
-                timeout=15
-            )
-            
-            logger.info(f"Connect attempt result: {connect_result}")
-            
-            # Wait for connection to stabilize
-            time.sleep(2)
+            # For dynamic containers, we don't need to connect - just check what devices are available
+            if not use_internal_discovery:
+                # First, try to connect to the device
+                connect_result = run_adb_command(
+                    "connect", 
+                    ["-P", str(adb_server_port), "connect", target_serial], 
+                    adb_server_port=adb_server_port,
+                    timeout=15
+                )
+                
+                logger.info(f"Connect attempt result: {connect_result}")
+                
+                # Wait for connection to stabilize
+                time.sleep(2)
             
             # Now check if device appears in devices list
             devices_result = run_adb_command(
@@ -177,13 +186,23 @@ def detect_device_with_retry(adb_server_port, device_port, max_retries=10, retry
                                 status = parts[1] if len(parts) > 1 else "unknown"
                                 
                                 # Check for exact match or emulator serial format
-                                if (serial == target_serial or 
-                                    (container_name and serial.startswith("emulator-")) or
-                                    (target_serial.startswith("localhost:") and serial.startswith("emulator-"))):
-                                    logger.info(f"Found device {serial} with status: {status}")
-                                    return status
+                                if use_internal_discovery:
+                                    # For dynamic containers, look for any emulator-XXXX device
+                                    if serial.startswith("emulator-") and status in ["device", "offline"]:
+                                        logger.info(f"Found emulator device {serial} with status: {status}")
+                                        return status
+                                else:
+                                    # For predefined containers, look for exact match
+                                    if (serial == target_serial or 
+                                        (container_name and serial.startswith("emulator-")) or
+                                        (target_serial.startswith("localhost:") and serial.startswith("emulator-"))):
+                                        logger.info(f"Found device {serial} with status: {status}")
+                                        return status
                 
-                logger.warning(f"Device {target_serial} not found in devices list")
+                if use_internal_discovery:
+                    logger.warning(f"No emulator devices found in devices list for container {container_name}")
+                else:
+                    logger.warning(f"Device {target_serial} not found in devices list")
             else:
                 logger.warning(f"Failed to get devices list: {devices_result.get('error')}")
             
@@ -271,19 +290,17 @@ def take_screenshot(adb_server_port, adb_port, container_name=None):
     """Take a screenshot from an emulator via ADB using direct emulator connection"""
     try:
         if container_name:
-            logger.info(f"Taking screenshot using direct emulator connection: {container_name}")
+            logger.info(f"Taking screenshot from dynamic container: {container_name}")
             
-            # Connect directly to emulator ADB server
-            connection_result = connect_to_emulator_adb_server(container_name, 5037)
+            # For dynamic containers, get the list of devices and find the emulator
+            devices_result = run_adb_command("devices", ["-P", str(adb_server_port), "devices"], adb_server_port=adb_server_port)
             
-            if not connection_result["success"]:
-                return {"success": False, "error": f"Failed to connect to emulator ADB server: {connection_result.get('error')}"}
+            if not devices_result.get("success"):
+                return {"success": False, "error": f"Failed to get devices list: {devices_result.get('error')}"}
             
             # Find the emulator device
-            devices_output = connection_result["devices_output"]
             device_serial = None
-            
-            lines = devices_output.strip().split('\n')
+            lines = devices_result["output"].strip().split('\n')
             if len(lines) > 1:  # Skip header
                 for line in lines[1:]:
                     if line.strip():
@@ -294,14 +311,15 @@ def take_screenshot(adb_server_port, adb_port, container_name=None):
                             
                             if serial.startswith("emulator-") and status == "device":
                                 device_serial = serial
+                                logger.info(f"Found active emulator device: {serial}")
                                 break
             
             if not device_serial:
-                return {"success": False, "error": "No active emulator device found"}
+                return {"success": False, "error": "No active emulator device found. Emulator may still be booting."}
             
-            # Take screenshot using direct emulator ADB connection
+            # Take screenshot using the emulator device serial
             cmd = [
-                "adb", "-H", container_name, "-P", "5037",
+                "adb", "-P", str(adb_server_port), 
                 "-s", device_serial, 
                 "exec-out", "screencap", "-p"
             ]
@@ -313,7 +331,7 @@ def take_screenshot(adb_server_port, adb_port, container_name=None):
                 # Return screenshot as base64
                 import base64
                 screenshot_b64 = base64.b64encode(result.stdout).decode()
-                logger.info("Screenshot captured successfully using direct emulator connection")
+                logger.info("Screenshot captured successfully from dynamic container")
                 return {"success": True, "screenshot": f"data:image/png;base64,{screenshot_b64}"}
             else:
                 return {"success": False, "error": "Failed to capture screenshot - no data returned"}
