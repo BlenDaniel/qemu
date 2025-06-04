@@ -3,6 +3,7 @@ import logging
 import uuid
 import random
 import time
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -63,30 +64,66 @@ def get_docker_client():
     global client
     if client is None:
         try:
-            # Try different connection methods
-            # First try the default method
+            # Clear any problematic Docker environment variables that might cause "http+docker" scheme errors
+            original_docker_host = os.environ.get('DOCKER_HOST', None)
+            if original_docker_host and 'http+docker' in original_docker_host:
+                logger.warning(f"Clearing malformed DOCKER_HOST: {original_docker_host}")
+                del os.environ['DOCKER_HOST']
+            
+            # First try the default method (from environment)
             client = docker.from_env()
             # Test the connection
             client.ping()
-            logger.info("Docker client connected successfully")
+            logger.info("Docker client connected successfully via environment")
+            return client
         except Exception as e:
             logger.warning(f"Default Docker connection failed: {e}")
+            
+            # Clear any Docker-related env vars that might be interfering
+            docker_env_vars = ['DOCKER_HOST', 'DOCKER_TLS_VERIFY', 'DOCKER_CERT_PATH']
+            cleared_vars = []
+            for var in docker_env_vars:
+                if var in os.environ:
+                    cleared_vars.append(f"{var}={os.environ[var]}")
+                    del os.environ[var]
+            
+            if cleared_vars:
+                logger.info(f"Cleared Docker environment variables: {cleared_vars}")
+            
             try:
                 # Try explicit Unix socket connection
                 client = docker.DockerClient(base_url='unix://var/run/docker.sock')
                 client.ping()
                 logger.info("Docker client connected via Unix socket")
+                return client
             except Exception as e2:
                 logger.warning(f"Unix socket connection failed: {e2}")
                 try:
-                    # Try TCP connection
-                    client = docker.DockerClient(base_url='tcp://localhost:2376')
+                    # Try Docker Desktop default socket on macOS/Windows
+                    client = docker.DockerClient(base_url='unix:///var/run/docker.sock')
                     client.ping()
-                    logger.info("Docker client connected via TCP")
+                    logger.info("Docker client connected via Docker Desktop socket")
+                    return client
                 except Exception as e3:
-                    logger.error(f"All Docker connection methods failed: {e3}")
-                    # Set client to None so we can provide better error messages
-                    client = None
+                    logger.warning(f"Docker Desktop socket failed: {e3}")
+                    try:
+                        # Try TCP connection (for Docker daemon with TCP enabled)
+                        client = docker.DockerClient(base_url='tcp://localhost:2375')  # Note: 2375, not 2376
+                        client.ping()
+                        logger.info("Docker client connected via TCP (localhost:2375)")
+                        return client
+                    except Exception as e4:
+                        logger.warning(f"TCP connection (2375) failed: {e4}")
+                        try:
+                            # Try secure TCP connection
+                            client = docker.DockerClient(base_url='tcp://localhost:2376')
+                            client.ping()
+                            logger.info("Docker client connected via secure TCP (localhost:2376)")
+                            return client
+                        except Exception as e5:
+                            logger.error(f"All Docker connection methods failed. Last error: {e5}")
+                            # Set client to None so we can provide better error messages
+                            client = None
     return client
 
 def discover_existing_containers(sessions):
@@ -157,9 +194,17 @@ def create_emulator_container(android_version, device_id, session_id, port_bindi
     """Create a new emulator container"""
     docker_client = get_docker_client()
     if docker_client is None:
-        raise Exception("Docker daemon is not accessible. Please check if Docker is running and the API container has proper permissions.")
+        error_msg = "Docker daemon is not accessible. Please check if Docker is running and the API container has proper permissions."
+        logger.error(error_msg)
+        raise Exception(error_msg)
     
     emulator_image = EMULATOR_IMAGES.get(android_version, EMULATOR_IMAGES["11"])
+    container_name = f"emu_{device_id}_{session_id[:8]}"
+    
+    logger.info(f"Creating emulator container: {container_name}")
+    logger.info(f"Image: {emulator_image}")
+    logger.info(f"Port bindings: {port_bindings}")
+    logger.info(f"Environment: {environment}")
     
     try:
         # Run container with specified port bindings
@@ -168,17 +213,21 @@ def create_emulator_container(android_version, device_id, session_id, port_bindi
             detach=True,
             privileged=True,
             environment=environment,
-            name=f"emu_{device_id}_{session_id[:8]}",
-            ports=port_bindings
+            name=container_name,
+            ports=port_bindings,
+            remove=False  # Don't auto-remove container
         )
+        logger.info(f"✅ Successfully created container: {container_name} (ID: {container.id[:12]})")
         return container
     except docker.errors.ImageNotFound:
-        raise Exception(f"Emulator image {emulator_image} not found. Build the image first.")
+        error_msg = f"Emulator image {emulator_image} not found. Build the image first."
+        logger.error(error_msg)
+        raise Exception(error_msg)
     except docker.errors.APIError as e:
         logger.error(f"Docker API error: {e}")
         raise Exception(f"Docker API error: {str(e)}")
     except Exception as e:
-        logger.error(f"Failed to create emulator: {e}")
+        logger.error(f"Failed to create emulator container {container_name}: {e}")
         raise Exception(f"Failed to create emulator: {str(e)}")
 
 def generate_device_id():
@@ -200,22 +249,62 @@ def generate_random_ports():
 
 def get_container_port_mappings(container):
     """Get port mappings from a container"""
-    container.reload()
-    ports = container.attrs['NetworkSettings']['Ports']
-    return {
-        'console': ports.get('5554/tcp', [{}])[0].get('HostPort', 'unknown'),
-        'adb': ports.get('5555/tcp', [{}])[0].get('HostPort', 'unknown'),
-        'adb_server': ports.get('5037/tcp', [{}])[0].get('HostPort', 'unknown'),
-        'vnc': ports.get('5900/tcp', [{}])[0].get('HostPort', 'unknown'),
-        'websockify': ports.get('6080/tcp', [{}])[0].get('HostPort', 'unknown')
-    }
+    try:
+        container.reload()
+        ports = container.attrs['NetworkSettings']['Ports']
+        return {
+            'console': ports.get('5554/tcp', [{}])[0].get('HostPort', 'unknown'),
+            'adb': ports.get('5555/tcp', [{}])[0].get('HostPort', 'unknown'),
+            'adb_server': ports.get('5037/tcp', [{}])[0].get('HostPort', 'unknown'),
+            'vnc': ports.get('5900/tcp', [{}])[0].get('HostPort', 'unknown'),
+            'websockify': ports.get('6080/tcp', [{}])[0].get('HostPort', 'unknown')
+        }
+    except Exception as e:
+        logger.error(f"Error getting container port mappings: {e}")
+        return {
+            'console': 'unknown',
+            'adb': 'unknown',
+            'adb_server': 'unknown',
+            'vnc': 'unknown',
+            'websockify': 'unknown'
+        }
 
 def wait_for_container_ports(container, timeout=60):
     """Wait for container to bind its ports"""
-    for _ in range(timeout):
-        container.reload()
-        ports = container.attrs['NetworkSettings']['Ports']
-        if ports and ports.get('5555/tcp'):
-            return True
+    logger.info(f"Waiting for container {container.name} to bind ports...")
+    for i in range(timeout):
+        try:
+            container.reload()
+            ports = container.attrs['NetworkSettings']['Ports']
+            if ports and ports.get('5555/tcp'):
+                logger.info(f"Container {container.name} ports are ready after {i+1} seconds")
+                return True
+        except Exception as e:
+            logger.warning(f"Error checking container ports (attempt {i+1}): {e}")
         time.sleep(1)
-    return False 
+    
+    logger.warning(f"Container {container.name} ports not ready after {timeout} seconds")
+    return False
+
+def check_docker_connectivity():
+    """Check if Docker is accessible and return status info"""
+    docker_client = get_docker_client()
+    if not docker_client:
+        return {
+            'connected': False,
+            'error': 'Docker client could not be initialized'
+        }
+    
+    try:
+        info = docker_client.info()
+        return {
+            'connected': True,
+            'version': docker_client.version(),
+            'containers_running': info.get('ContainersRunning', 0),
+            'images': len(docker_client.images.list())
+        }
+    except Exception as e:
+        return {
+            'connected': False,
+            'error': str(e)
+        } 
