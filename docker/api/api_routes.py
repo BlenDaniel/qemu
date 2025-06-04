@@ -465,8 +465,8 @@ def register_api_routes(app, sessions):
             test_results["tests"]["websockify_process_running"] = websockify_running
             
             if websockify_running:
-                # Get detailed process info if running
-                ps_result = container.exec_run("ps aux | grep websockify | grep -v grep")
+                # Get detailed process info if running - use simple ps command
+                ps_result = container.exec_run("ps | grep websockify")
                 test_results["tests"]["websockify_processes"] = ps_result.output.decode().strip()
             else:
                 test_results["tests"]["websockify_processes"] = "No websockify processes found"
@@ -477,12 +477,12 @@ def register_api_routes(app, sessions):
             test_results["tests"]["vnc_process_running"] = vnc_running
             
             if vnc_running:
-                # Get detailed process info if running
-                vnc_ps_result = container.exec_run("ps aux | grep x11vnc | grep -v grep")
+                # Get detailed process info if running - use simple ps command
+                vnc_ps_result = container.exec_run("ps | grep x11vnc")
                 test_results["tests"]["vnc_processes"] = vnc_ps_result.output.decode().strip()
             else:
                 test_results["tests"]["vnc_processes"] = "No x11vnc processes found"
-            
+                
         except Exception as e:
             test_results["tests"]["websockify_process_running"] = f"Error: {str(e)}"
             test_results["tests"]["vnc_process_running"] = f"Error: {str(e)}"
@@ -619,6 +619,9 @@ def register_api_routes(app, sessions):
                 logger.info("Starting Xvfb...")
                 container.exec_run("Xvfb :1 -screen 0 1024x768x24 -ac +extension GLX +render -noreset", detach=True)
                 time.sleep(2)
+                results["xvfb_started"] = True
+            else:
+                results["xvfb_started"] = False
             
             # Start window manager if not running
             fluxbox_check = container.exec_run("pgrep fluxbox")
@@ -626,6 +629,9 @@ def register_api_routes(app, sessions):
                 logger.info("Starting Fluxbox...")
                 container.exec_run("DISPLAY=:1 fluxbox", detach=True)
                 time.sleep(2)
+                results["fluxbox_started"] = True
+            else:
+                results["fluxbox_started"] = False
             
             # Start VNC server
             logger.info("Starting VNC server...")
@@ -634,11 +640,22 @@ def register_api_routes(app, sessions):
             results["vnc_started"] = vnc_result.exit_code == 0
             time.sleep(3)
             
-            # Start websockify
+            # Start websockify with more robust command
             logger.info("Starting websockify...")
-            websockify_cmd = "websockify --web=/opt/noVNC --target-config=/dev/null 6080 localhost:5900"
+            # First try to create the websockify command with full path
+            websockify_cmd = "websockify --web=/opt/noVNC 6080 localhost:5900"
             websockify_result = container.exec_run(websockify_cmd, detach=True)
             results["websockify_started"] = websockify_result.exit_code == 0
+            results["websockify_exit_code"] = websockify_result.exit_code
+            
+            # If first attempt failed, try alternative command
+            if websockify_result.exit_code != 0:
+                logger.info("Trying alternative websockify command...")
+                alt_websockify_cmd = "/usr/bin/websockify --web=/opt/noVNC 6080 localhost:5900"
+                alt_result = container.exec_run(alt_websockify_cmd, detach=True)
+                results["alt_websockify_started"] = alt_result.exit_code == 0
+                results["alt_websockify_exit_code"] = alt_result.exit_code
+            
             time.sleep(3)
             
             # Verify services are running
@@ -650,12 +667,24 @@ def register_api_routes(app, sessions):
             
             # Get process details if running
             if results["vnc_running"]:
-                vnc_ps = container.exec_run("ps aux | grep x11vnc | grep -v grep")
+                vnc_ps = container.exec_run("ps | grep x11vnc")
                 results["vnc_process_details"] = vnc_ps.output.decode().strip()
             
             if results["websockify_running"]:
-                ws_ps = container.exec_run("ps aux | grep websockify | grep -v grep") 
+                ws_ps = container.exec_run("ps | grep websockify") 
                 results["websockify_process_details"] = ws_ps.output.decode().strip()
+            
+            # Additional debugging: check if noVNC directory exists
+            novnc_check = container.exec_run("ls -la /opt/noVNC/")
+            results["novnc_directory_exists"] = novnc_check.exit_code == 0
+            if novnc_check.exit_code == 0:
+                results["novnc_directory_contents"] = novnc_check.output.decode().strip()
+            
+            # Check if websockify binary exists and is executable
+            websockify_bin_check = container.exec_run("which websockify")
+            results["websockify_binary_found"] = websockify_bin_check.exit_code == 0
+            if websockify_bin_check.exit_code == 0:
+                results["websockify_binary_path"] = websockify_bin_check.output.decode().strip()
             
             return jsonify({
                 "success": True,
