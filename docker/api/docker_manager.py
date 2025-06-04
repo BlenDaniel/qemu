@@ -378,12 +378,13 @@ def generate_available_ports(exclude_ports=None):
         exclude_ports = get_used_ports_from_containers()
     
     # Define port ranges for different services
+    # Note: Avoid 6090-6180 which are pre-allocated by API container in docker-compose.yml
     port_ranges = {
         'console_port': (5000, 5999),
         'adb_port': (6000, 6999), 
         'internal_adb_server_port': (7000, 7999),
         'vnc_port': (5900, 5950),
-        'websockify_port': (6090, 6200)
+        'websockify_port': (6200, 6300)  # Changed from (6090, 6200) to avoid conflict
     }
     
     allocated_ports = set()

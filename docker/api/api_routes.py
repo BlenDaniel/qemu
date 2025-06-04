@@ -2,12 +2,14 @@ import uuid
 import subprocess
 import logging
 from flask import jsonify, request, abort, render_template
+import time
 
 # Import our custom modules
 from docker_manager import (
     get_docker_client, discover_existing_containers, create_emulator_container,
     generate_device_id, generate_available_ports, get_container_port_mappings,
-    wait_for_container_ports, cleanup_orphaned_containers, PREDEFINED_CONTAINERS
+    wait_for_container_ports, cleanup_orphaned_containers, PREDEFINED_CONTAINERS,
+    get_used_ports_from_containers
 )
 from adb_manager import (
     robust_adb_server_restart, detect_device_with_retry, run_adb_command,
@@ -493,8 +495,87 @@ def register_api_routes(app, sessions):
             }), 500
 
     # ============================================================================
-    # DEBUG AND TESTING ROUTES
+    # HEALTH CHECK AND DEBUGGING API ROUTES
     # ============================================================================
+
+    @app.route('/api/health', methods=['GET'])
+    def health_check():
+        """Health check endpoint that reports system status and port usage"""
+        try:
+            # Check Docker connection
+            docker_client = get_docker_client()
+            docker_status = "connected" if docker_client else "disconnected"
+            
+            # Get port usage
+            used_ports = get_used_ports_from_containers()
+            
+            # Count containers
+            container_counts = {"total": 0, "running": 0, "emulator": 0}
+            if docker_client:
+                all_containers = docker_client.containers.list(all=True)
+                container_counts["total"] = len(all_containers)
+                
+                running_containers = docker_client.containers.list()
+                container_counts["running"] = len(running_containers)
+                
+                emulator_containers = [c for c in all_containers if c.name.startswith('emu_') or 'emulator' in c.name.lower()]
+                container_counts["emulator"] = len(emulator_containers)
+            
+            # Check session status
+            session_count = len(sessions)
+            
+            health_status = {
+                "status": "healthy" if docker_status == "connected" else "unhealthy",
+                "timestamp": time.time(),
+                "docker": {
+                    "status": docker_status,
+                    "containers": container_counts
+                },
+                "ports": {
+                    "used_count": len(used_ports),
+                    "used_ports": sorted(list(used_ports)) if len(used_ports) < 50 else f"{len(used_ports)} ports in use"
+                },
+                "sessions": {
+                    "active_count": session_count,
+                    "session_ids": list(sessions.keys())
+                },
+                "port_ranges": {
+                    "console": "5000-5999",
+                    "adb": "6000-6999",
+                    "adb_server": "7000-7999",
+                    "vnc": "5900-5950",
+                    "websockify": "6200-6300"
+                }
+            }
+            
+            return jsonify(health_status)
+            
+        except Exception as e:
+            logger.error(f"Health check failed: {e}")
+            return jsonify({
+                "status": "error",
+                "timestamp": time.time(),
+                "error": str(e)
+            }), 500
+
+    @app.route('/api/cleanup', methods=['POST'])
+    def manual_cleanup():
+        """Manual cleanup endpoint for orphaned containers"""
+        try:
+            logger.info("Manual cleanup requested via API")
+            cleanup_orphaned_containers()
+            
+            return jsonify({
+                "success": True,
+                "message": "Cleanup completed successfully"
+            })
+            
+        except Exception as e:
+            logger.error(f"Manual cleanup failed: {e}")
+            return jsonify({
+                "success": False,
+                "error": str(e)
+            }), 500
 
     @app.route('/api/debug/test-networking', methods=['GET'])
     def test_networking():
