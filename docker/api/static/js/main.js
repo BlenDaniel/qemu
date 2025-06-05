@@ -73,7 +73,7 @@ function initializeCreateEmulatorForm() {
                 logMessage('creationLog', `Console Port: ${result.ports.console}`, 'success');
 
                 if (result.adb_setup) {
-                    logMessage('creationLog', '🔧 ADB Setup Commands:', 'info');
+                    logMessage('creationLog', 'ADB Setup Commands:', 'info');
                     logMessage('creationLog', `Windows: $env:ANDROID_ADB_SERVER_PORT = "${result.ports.adb_server}"`, 'info');
                     logMessage('creationLog', `Unix/Mac: export ANDROID_ADB_SERVER_PORT=${result.ports.adb_server}`, 'info');
                     logMessage('creationLog', `Connect: adb connect localhost:${result.ports.adb}`, 'info');
