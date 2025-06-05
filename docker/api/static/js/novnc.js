@@ -200,20 +200,20 @@ function initNoVNCViewer(emulatorId, wsPort) {
     function handleConnectionError() {
         loadingMessage.innerHTML = `
             <div class="error-message">
-                <h3>❌ Connection Failed</h3>
+                <h3>Connection Failed</h3>
                 <p>Unable to connect to the Android emulator screen after ${connectionAttempts} attempts.</p>
                 <p><strong>Troubleshooting steps:</strong></p>
                 <ol>
-                    <li>Click "🔧 Test Connection" to check the status</li>
-                    <li>Click "⚡ Wake Screen" to wake up the emulator</li>
-                    <li>Try "📺 Direct noVNC" for a direct connection</li>
-                    <li>Wait a few seconds and click "🔄 Reconnect"</li>
+                    <li>Click "Test Connection" to check the status</li>
+                    <li>Click "Wake Screen" to wake up the emulator</li>
+                    <li>Try "Direct noVNC" for a direct connection</li>
+                    <li>Wait a few seconds and click "Reconnect"</li>
                 </ol>
                 <div style="margin-top: 15px;">
-                    <button class="btn btn-primary" onclick="reconnectVNC()">🔄 Try Again</button>
-                    <button class="btn btn-warning" onclick="wakeEmulator()">⚡ Wake Emulator</button>
-                    <button class="btn btn-info" onclick="testConnection()">🔧 Test Connection</button>
-                    <button class="btn btn-secondary" onclick="openDirectNoVNC()">📺 Direct noVNC</button>
+                    <button class="btn btn-primary" onclick="reconnectVNC()">Try Again</button>
+                    <button class="btn btn-warning" onclick="wakeEmulator()">Wake Emulator</button>
+                    <button class="btn btn-info" onclick="testConnection()">Test Connection</button>
+                    <button class="btn btn-secondary" onclick="openDirectNoVNC()">Direct noVNC</button>
                 </div>
                 <div style="margin-top: 10px; font-size: 12px; color: #666;">
                     WebSocket Port: ${wsPort} | Attempts: ${connectionAttempts}/${maxRetries}
