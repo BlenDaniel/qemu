@@ -12,7 +12,13 @@ function logMessage(containerId, message, type = 'info') {
     logLine.className = `log-line log-${type}`;
 
     const timestamp = new Date().toLocaleTimeString();
-    const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : type === 'warning' ? '⚠️' : 'ℹ️';
+   const icon = type === 'success' 
+  ? '[✔]'    // check mark in brackets
+  : type === 'error' 
+    ? '[✖]'  // cross mark in brackets
+    : type === 'warning' 
+      ? '[!]' // exclamation mark in brackets
+      : '[i]'; // info icon in brackets
 
     logLine.innerHTML = `<span style="color: #888">[${timestamp}]</span> ${icon} ${message}`;
     container.appendChild(logLine);
@@ -59,12 +65,12 @@ function initializeCreateEmulatorForm() {
             if (response.ok) {
                 const result = await response.json();
 
-                logMessage('creationLog', `✅ Emulator created successfully!`, 'success');
-                logMessage('creationLog', `📱 Device ID: ${result.device_id}`, 'success');
-                logMessage('creationLog', `🤖 Android Version: ${result.android_version}`, 'success');
-                logMessage('creationLog', `🔌 ADB Port: ${result.ports.adb}`, 'success');
-                logMessage('creationLog', `🖥️ ADB Server Port: ${result.ports.adb_server}`, 'success');
-                logMessage('creationLog', `📟 Console Port: ${result.ports.console}`, 'success');
+                logMessage('creationLog', `Emulator created successfully!`, 'success');
+                logMessage('creationLog', `Device ID: ${result.device_id}`, 'success');
+                logMessage('creationLog', `Android Version: ${result.android_version}`, 'success');
+                logMessage('creationLog', `ADB Port: ${result.ports.adb}`, 'success');
+                logMessage('creationLog', `ADB Server Port: ${result.ports.adb_server}`, 'success');
+                logMessage('creationLog', `Console Port: ${result.ports.console}`, 'success');
 
                 if (result.adb_setup) {
                     logMessage('creationLog', '🔧 ADB Setup Commands:', 'info');
@@ -73,9 +79,9 @@ function initializeCreateEmulatorForm() {
                     logMessage('creationLog', `Connect: adb connect localhost:${result.ports.adb}`, 'info');
 
                     if (result.adb_setup.final_device_status === 'device') {
-                        logMessage('creationLog', '🎉 Emulator is ready and connected!', 'success');
+                        logMessage('creationLog', 'Emulator is ready and connected!', 'success');
                     } else {
-                        logMessage('creationLog', '⚠️ Emulator created but may still be starting up...', 'warning');
+                        logMessage('creationLog', 'Emulator created but may still be starting up...', 'warning');
                     }
                 }
 
@@ -159,7 +165,7 @@ async function connectAdbDevice() {
 // Emulator Management
 async function refreshEmulators() {
     const emulatorsList = document.getElementById('emulatorsList');
-    emulatorsList.innerHTML = '<p>🔄 Loading emulators...</p>';
+    emulatorsList.innerHTML = '<p>Loading emulators...</p>';
 
     try {
         const response = await fetch(`${API_BASE}/api/emulators`);
@@ -213,8 +219,8 @@ function createEmulatorCard(id, emulator) {
         </div>
         
         <div style="display: flex; gap: 10px; margin-top: 15px;">
-            <button onclick="deleteEmulator('${id}')" class="btn-danger" style="flex: 1;">🗑️ Delete</button>
-            <button onclick="openLiveView('${id}')" class="btn-info" style="flex: 1;">📺 Live View</button>
+            <button onclick="deleteEmulator('${id}')" class="btn-danger" style="flex: 1;">Delete</button>
+            <button onclick="openLiveView('${id}')" class="btn-info" style="flex: 1;">Live View</button>
             <button onclick="connectToEmulator('${emulator.ports.adb}', '${emulator.ports.adb_server}')" class="btn-info" style="flex: 1;">🔌 Connect ADB</button>
         </div>
         
