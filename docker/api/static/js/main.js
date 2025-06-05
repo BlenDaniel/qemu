@@ -195,7 +195,7 @@ function createEmulatorCard(id, emulator) {
 
     card.innerHTML = `
         <div class="emulator-header">
-            <div class="emulator-id">📱 ${emulator.device_id}</div>
+            <div class="emulator-id">${emulator.device_id}</div>
             <div class="status-badge ${statusClass}">${emulator.status}</div>
         </div>
         
